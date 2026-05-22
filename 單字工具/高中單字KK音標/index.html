@@ -742,7 +742,8 @@ function clearRecent() {
 function confirmWord() {
   const q = document.getElementById('searchInput').value.trim();
   if (!q) { showToast('請先輸入單字', 'error'); return; }
-  const match = allData.find(d => d.w === q);
+  const ql = q.toLowerCase();
+  const match = allData.find(d => d.w.toLowerCase() === ql);
   if (!match) { showToast('找不到完全匹配的單字', 'error'); return; }
   recordSearch(q);
   const btn = document.getElementById('confirmBtn');
