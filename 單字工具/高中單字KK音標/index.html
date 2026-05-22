@@ -431,6 +431,7 @@ body {
       <option value="ex">例句空值</option>
     </select>
     <button class="sync-btn" onclick="toggleSync()">🔄 同步 <span id="changeCount">0</span></button>
+    <button class="sync-btn" onclick="downloadWord()" style="background:#2563eb">📥 下載 Word</button>
   </div>
 </div>
 
@@ -725,13 +726,6 @@ function clearRecent() {
   renderRecent();
 }
 
-function clearRecent() {
-  if (!confirm('確定清空最近查詢記錄？')) return;
-  recent = [];
-  localStorage.setItem('kk_recent', JSON.stringify(recent));
-  renderRecent();
-}
-
 function getTimeAgo(ts) {
   const diff = Date.now() - ts;
   const m = Math.floor(diff/60000);
@@ -815,6 +809,57 @@ function showToast(msg, type='') {
   t.className = 'toast ' + type;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ══════ WORD EXPORT ══════
+function downloadWord() {
+  const total = filteredData.length;
+  if (total === 0) { showToast('沒有單字可下載', 'error'); return; }
+  
+  // 確認對話框
+  if (!confirm(`將下載目前搜尋結果 ${total} 筆單字為 Word 文件，確定嗎？`)) return;
+  
+  const btn = event && event.target ? event.target : document.querySelector('.sync-btn:last-child');
+  btn.textContent = '⏳ 產生中...';
+  btn.style.opacity = '0.6';
+  
+  // 只取目前頁面顯示的單字 (filteredData)
+  const payload = filteredData.map(item => ({
+    w: item.w || '',
+    k: item.k || '',
+    z: item.z || '',
+    e: item.e || '',
+    ez: item.ez || ''
+  }));
+  
+  fetch('http://127.0.0.1:8765/export', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('伺服器錯誤');
+    return res.blob();
+  })
+  .then(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `單字表_${new Date().toISOString().slice(0,10)}.docx`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    btn.textContent = '📥 下載 Word';
+    btn.style.opacity = '1';
+    showToast(`已下載 ${total} 筆單字 📄`, 'success');
+  })
+  .catch(err => {
+    console.error(err);
+    btn.textContent = '📥 下載 Word';
+    btn.style.opacity = '1';
+    showToast('下載失敗，請確認 word_server.py 正在執行', 'error');
+  });
 }
 
 function esc(s) {
