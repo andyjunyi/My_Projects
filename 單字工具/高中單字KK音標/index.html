@@ -541,10 +541,7 @@ function showLoadError() {
 }
 
 // ══════ SEARCH ══════
-let skipNextInput = false;
-
 function doSearch() {
-  if (skipNextInput) { skipNextInput = false; return; }
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   const level = document.getElementById('levelFilter').value;
   const cefr = document.getElementById('cefrFilter').value;
@@ -572,9 +569,10 @@ function doSearch() {
   if (q) {
     document.getElementById('confirmBtn').textContent = '✓ 記錄';
     const inp = document.getElementById('searchInput');
-    skipNextInput = true;
-    inp.value = '';
-    inp.focus();
+    setTimeout(() => {
+      inp.value = '';
+      inp.focus();
+    }, 0);
   }
 }
 
