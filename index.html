@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My_Projects - 專案結構總覽</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+  background: #f0f4ff;
+  color: #1e293b;
+  padding: 20px;
+}
+
+/* === Header === */
+.header {
+  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+  border-radius: 16px;
+  padding: 28px 32px;
+  color: #fff;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header h1 { font-size: 28px; font-weight: 800; letter-spacing: 1px; }
+.header .sub {
+  font-size: 14px; opacity: 0.85;
+}
+.header .stats {
+  display: flex; gap: 20px; font-size: 13px; background: rgba(255,255,255,0.15);
+  padding: 8px 16px; border-radius: 10px;
+}
+.header .stats span { white-space: nowrap; }
+
+/* === Controls === */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.controls input {
+  flex: 1; min-width: 200px;
+  padding: 10px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.controls input:focus { border-color: #3b82f6; }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  padding: 8px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn.active { border-color: #3b82f6; background: #eff6ff; color: #1e40af; font-weight: 600; }
+.btn:hover { border-color: #93c5fd; }
+.btn-add {
+  background: #1e40af; color: #fff; border-color: #1e40af;
+}
+.btn-add:hover { background: #1e3a8a; }
+
+/* === Category grid === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* === Category card === */
+.cat-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.cat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+.cat-header {
+  padding: 14px 18px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.cat-header h2 { font-size: 16px; font-weight: 700; }
+.cat-header .count {
+  font-size: 12px;
+  background: rgba(255,255,255,0.25);
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.cat-body { padding: 8px 0; }
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  transition: background 0.15s;
+  gap: 8px;
+}
+.project-item:last-child { border-bottom: none; }
+.project-item:hover { background: #f8fafc; }
+.project-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.project-desc {
+  font-size: 12px; color: #94a3b8;
+}
+.project-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-sm {
+  padding: 3px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.btn-sm:hover { border-color: #93c5fd; }
+.btn-sm-del:hover { border-color: #fca5a5; color: #dc2626; }
+
+/* === Modal === */
+.modal-overlay {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 100;
+  justify-content: center; align-items: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  width: 90%; max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.modal h3 { font-size: 18px; margin-bottom: 16px; }
+.modal .field { margin-bottom: 14px; }
+.modal label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #475569; }
+.modal input, .modal select {
+  width: 100%; padding: 9px 12px;
+  border: 2px solid #e2e8f0; border-radius: 8px;
+  font-size: 14px; font-family: inherit;
+  outline: none;
+}
+.modal input:focus, .modal select:focus { border-color: #3b82f6; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.modal-actions .btn { padding: 8px 20px; font-size: 14px; }
+
+/* === Empty state === */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* === Toast === */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff;
+  padding: 10px 24px; border-radius: 10px;
+  font-size: 14px;
+  opacity: 0; transition: opacity 0.3s;
+  z-index: 200;
+}
+.toast.show { opacity: 1; }
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .header .stats { width: 100%; justify-content: space-around; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📁 My_Projects</h1>
+    <div class="sub">完整專案結構總覽 · 點擊分類可摺疊</div>
+  </div>
+  <div class="stats" id="statsBar">
+    <span>📂 <span id="catCount">0</span> 分類</span>
+    <span>📦 <span id="projCount">0</span> 專案</span>
+    <span>📄 <span id="refCount">7</span> 參考文件</span>
+  </div>
+</div>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="🔍 搜尋分類或專案名稱..." oninput="render()">
+  <div class="btn-group">
+  </div>
+  <button class="btn btn-add" onclick="openModal()">＋ 新增專案</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">新增專案</h3>
+    <div class="field">
+      <label>分類</label>
+      <select id="modalCat"></select>
+    </div>
+    <div class="field">
+      <label>專案名稱</label>
+      <input id="modalName" placeholder="例如：voc-999">
+    </div>
+    <div class="field">
+      <label>說明（選填）</label>
+      <input id="modalDesc" placeholder="例如：新單字查詢系統">
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">取消</button>
+      <button class="btn btn-add" id="modalSaveBtn" onclick="saveProject()">新增</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════ DATA ══════
+const COLORS = {
+  '單字工具': '#2563eb',
+  '國中會考': '#0d7a5f',
+  '大學學測': '#7c3aed',
+  '多益與其他考試': '#f59e0b',
+  '教學互動工具': '#dc2626',
+  '文法句型': '#db2777',
+  '發音與KK音標': '#4f46e5',
+  '翻譯與句子分析': '#0891b2',
+  '影音與上傳工具': '#ea580c',
+  '參考資料': '#64748b',
+};
+
+let data = [
+  { cat: '單字工具', items: [
+    { name: '2000-voc', desc: '' },
+    { name: '935-Voc', desc: '' },
+    { name: 'Voc_15000', desc: '高中15000單字資料庫' },
+    { name: 'jr-voc', desc: '' },
+    { name: 'sr-collocation', desc: 'React 搭配詞學習' },
+    { name: 'voc-935', desc: '32天935字攻略' },
+    { name: 'voc-B-level', desc: '2000單查詢系統' },
+    { name: 'voc-king', desc: '即時搶答遊戲' },
+    { name: 'voc_online', desc: '' },
+  ]},
+  { cat: '國中會考', items: [
+    { name: 'cap-eng', desc: '英文閱讀分析' },
+    { name: 'cap-listening', desc: '聽力資料庫' },
+  ]},
+  { cat: '大學學測', items: [
+    { name: 'gsat-english-hub', desc: 'React 全方位學習平台' },
+  ]},
+  { cat: '多益與其他考試', items: [
+    { name: 'toeic', desc: '多益模擬測驗' },
+  ]},
+  { cat: '教學互動工具', items: [
+    { name: 'collocation-backup', desc: '搭配詞比對' },
+    { name: 'dwhs-english', desc: '大灣學測平台' },
+    { name: 'jutor-qr', desc: 'QR Code 出題系統' },
+    { name: 'jutor_intro', desc: 'Jutor 資源總覽' },
+    { name: '學生線上測驗', desc: '' },
+  ]},
+  { cat: '文法句型', items: [
+    { name: 'grammar', desc: '實驗中' },
+    { name: 'sentence-pattern-site', desc: 'Next.js 句型平台' },
+  ]},
+  { cat: '發音與KK音標', items: [
+    { name: 'KK_Lookup', desc: 'Flask + AI 補字查詢' },
+    { name: 'phonics-site', desc: '自然發音學習站' },
+  ]},
+  { cat: '翻譯與句子分析', items: [
+    { name: 'chinese-to-english', desc: 'React 中翻英引導' },
+    { name: 'sentence-analyzer', desc: '長句解析器' },
+    { name: 'translation', desc: '翻譯工具三合一' },
+  ]},
+  { cat: '影音與上傳工具', items: [
+    { name: 'Andy-Youtube', desc: '學測字彙影片平台' },
+  ]},
+];
+
+const REFS = [
+  '🎨 UI-設計風格規範.md',
+  '📖 單字系統開發參考.md',
+  '📝 考試分析網站開發參考.md',
+  '🛠️ 教學互動工具開發參考.md',
+  '📚 發音文法翻譯影音開發參考.md',
+  '📋 資料格式通用規範.md',
+  '🤖 AI協作開發慣例.md',
+];
+
+// ══════ STATE ══════
+let collapsed = {};
+let editingIdx = null; // {catIdx, itemIdx} or null for new
+
+// ══════ PERSIST ══════
+function saveState() {
+  localStorage.setItem('myprojects_data', JSON.stringify(data));
+  localStorage.setItem('myprojects_collapsed', JSON.stringify(collapsed));
+}
+function loadState() {
+  const d = localStorage.getItem('myprojects_data');
+  if (d) { try { data = JSON.parse(d); } catch(e) {} }
+  const c = localStorage.getItem('myprojects_collapsed');
+  if (c) { try { collapsed = JSON.parse(c); } catch(e) {} }
+}
+loadState();
+
+// ══════ RENDER ══════
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  let totalProjs = 0;
+  let totalCats = 0;
+
+  for (const group of data) {
+    const items = group.items.filter(p =>
+      !q || p.name.toLowerCase().includes(q) || group.cat.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
+    );
+    if (items.length === 0 && q) continue;
+    totalCats++;
+    totalProjs += items.length;
+
+    const color = COLORS[group.cat] || '#64748b';
+    const isCollapsed = collapsed[group.cat];
+
+    const card = document.createElement('div');
+    card.className = 'cat-card';
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'cat-header';
+    hdr.style.background = color;
+    hdr.innerHTML = `<h2>${group.cat}</h2><span class="count">${items.length}</span>`;
+    hdr.onclick = () => {
+      collapsed[group.cat] = !collapsed[group.cat];
+      saveState();
+      render();
+    };
+    card.appendChild(hdr);
+
+    // Body
+    if (!isCollapsed) {
+      const body = document.createElement('div');
+      body.className = 'cat-body';
+      for (const [idx, p] of items.entries()) {
+        const item = document.createElement('div');
+        item.className = 'project-item';
+        item.innerHTML = `
+          <div class="project-name">
+            <span class="project-dot" style="background:${color}"></span>
+            <span>${p.name}</span>
+            ${p.desc ? `<span class="project-desc">${p.desc}</span>` : ''}
+          </div>
+          <div class="project-actions">
+            <button class="btn-sm" onclick="editProject('${group.cat}', '${p.name}')">✏️</button>
+            <button class="btn-sm btn-sm-del" onclick="deleteProject('${group.cat}', '${p.name}')">🗑️</button>
+          </div>
+        `;
+        body.appendChild(item);
+      }
+      card.appendChild(body);
+    }
+
+    grid.appendChild(card);
+  }
+
+  // Refs card
+  const refCard = document.createElement('div');
+  refCard.className = 'cat-card';
+  const refHdr = document.createElement('div');
+  refHdr.className = 'cat-header';
+  refHdr.style.background = '#64748b';
+  refHdr.innerHTML = '<h2>📁 參考資料</h2><span class="count">7</span>';
+  refCard.appendChild(refHdr);
+
+  const refBody = document.createElement('div');
+  refBody.className = 'cat-body';
+  for (const r of REFS) {
+    const item = document.createElement('div');
+    item.className = 'project-item';
+    item.innerHTML = `<div class="project-name"><span>${r}</span></div>`;
+    refBody.appendChild(item);
+  }
+  refCard.appendChild(refBody);
+  grid.appendChild(refCard);
+
+  // Stats
+  document.getElementById('catCount').textContent = totalCats;
+  document.getElementById('projCount').textContent = totalProjs;
+
+  if (totalCats === 0 && totalProjs === 0 && q) {
+    grid.innerHTML = '<div class="empty">沒有符合的項目 🙁</div>';
+  }
+
+  saveState();
+}
+
+// ══════ CRUD ══════
+function openModal(cat, name) {
+  const overlay = document.getElementById('modal');
+  const sel = document.getElementById('modalCat');
+  sel.innerHTML = '';
+  for (const g of data) {
+    const opt = document.createElement('option');
+    opt.value = g.cat;
+    opt.textContent = g.cat;
+    sel.appendChild(opt);
+  }
+
+  if (cat) {
+    // Edit mode
+    editingIdx = findItem(cat, name);
+    document.getElementById('modalTitle').textContent = '編輯專案';
+    document.getElementById('modalSaveBtn').textContent = '儲存';
+    sel.value = cat;
+    document.getElementById('modalName').value = name;
+    const item = data[editingIdx.catIdx].items[editingIdx.itemIdx];
+    document.getElementById('modalDesc').value = item.desc || '';
+  } else {
+    // New mode
+    editingIdx = null;
+    document.getElementById('modalTitle').textContent = '新增專案';
+    document.getElementById('modalSaveBtn').textContent = '新增';
+    document.getElementById('modalName').value = '';
+    document.getElementById('modalDesc').value = '';
+  }
+
+  overlay.classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  editingIdx = null;
+}
+
+function saveProject() {
+  const cat = document.getElementById('modalCat').value;
+  const name = document.getElementById('modalName').value.trim();
+  const desc = document.getElementById('modalDesc').value.trim();
+  if (!name) { showToast('請輸入專案名稱'); return; }
+
+  if (editingIdx) {
+    // Update
+    data[editingIdx.catIdx].items[editingIdx.itemIdx].name = name;
+    data[editingIdx.catIdx].items[editingIdx.itemIdx].desc = desc;
+    showToast(`已更新「${name}」`);
+  } else {
+    // Add
+    const group = data.find(g => g.cat === cat);
+    if (group) {
+      group.items.push({ name, desc });
+      showToast(`已新增「${name}」`);
+    }
+  }
+
+  closeModal();
+  render();
+}
+
+function editProject(cat, name) { openModal(cat, name); }
+
+function deleteProject(cat, name) {
+  if (!confirm(`確定要刪除「${name}」？`)) return;
+  for (const [ci, g] of data.entries()) {
+    const ii = g.items.findIndex(p => p.name === name);
+    if (ii > -1) {
+      g.items.splice(ii, 1);
+      if (g.items.length === 0) { data.splice(ci, 1); }
+      showToast(`已刪除「${name}」`);
+      render();
+      return;
+    }
+  }
+}
+
+function findItem(cat, name) {
+  for (const [ci, g] of data.entries()) {
+    const ii = g.items.findIndex(p => p.name === name);
+    if (ii > -1) return { catIdx: ci, itemIdx: ii };
+  }
+  return null;
+}
+
+// ══════ TOAST ══════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ══════ INIT ══════
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15大高頻文法考點教學講義</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+  :root {
+    --purple: #6d28d9;
+    --blue:   #1d4ed8;
+    --teal:   #0d9488;
+    --amber:  #b45309;
+    --red:    #b91c1c;
+    --gray:   #6b7280;
+    --light:  #f5f3ff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    background: #e8eaf0;
+    color: #1f2937;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── Cover Page ── */
+  .cover {
+    max-width: 800px; margin: 2rem auto; background: #fff;
+    border-radius: 4px; box-shadow: 0 2px 16px rgba(0,0,0,.12);
+    padding: 4rem 3rem; text-align: center; page-break-after: always;
+  }
+  .cover-tag { font-size: .85rem; letter-spacing: 3px; color: var(--gray); margin-bottom: 1rem; text-transform: uppercase; }
+  .cover h1 { font-size: 2.4rem; font-weight: 900; color: #1e1b4b; line-height: 1.3; margin-bottom: .5rem; }
+  .cover h2 { font-size: 1.1rem; color: var(--gray); font-weight: 400; margin-bottom: 2rem; }
+  .cover-pills { display: flex; justify-content: center; gap: .8rem; flex-wrap: wrap; margin: 1.5rem 0; }
+  .cover-pill { background: #ede9fe; color: var(--purple); border-radius: 99px; padding: .3rem 1rem; font-size: .85rem; font-weight: 700; }
+  .cover-note { font-size: .82rem; color: var(--gray); margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1.5rem; }
+  .toc { text-align: left; max-width: 500px; margin: 2rem auto 0; }
+  .toc-title { font-weight: 700; color: #374151; margin-bottom: .7rem; font-size: .9rem; }
+  .toc-item { display: flex; justify-content: space-between; padding: .2rem 0; font-size: .85rem; border-bottom: 1px dotted #d1d5db; }
+  .toc-item .n { color: var(--purple); font-weight: 700; }
+
+  /* ── Grammar Unit ── */
+  .unit {
+    max-width: 800px; margin: 2rem auto; background: #fff;
+    border-radius: 4px; box-shadow: 0 2px 16px rgba(0,0,0,.12);
+    overflow: hidden; page-break-after: always;
+  }
+
+  /* Unit header */
+  .unit-hd {
+    background: linear-gradient(135deg, #4c1d95, #7c3aed);
+    color: #fff; padding: 1.4rem 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .unit-hd.tier2 { background: linear-gradient(135deg, #065f46, #10b981); }
+  .unit-hd.tier3 { background: linear-gradient(135deg, #78350f, #f59e0b); }
+
+  .unit-num {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: rgba(255,255,255,.25); font-size: 1.1rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .unit-hd-text h2 { font-size: 1.3rem; font-weight: 900; letter-spacing: 1px; }
+  .unit-hd-text p  { font-size: .85rem; opacity: .85; margin-top: .1rem; }
+  .unit-freq { margin-left: auto; text-align: right; flex-shrink: 0; }
+  .unit-freq .f  { font-size: 1.6rem; font-weight: 900; }
+  .unit-freq .fl { font-size: .72rem; opacity: .8; }
+
+  /* Body sections */
+  .unit-body { padding: 0 2rem 2rem; }
+
+  /* Structure box */
+  .struct-box {
+    background: #faf5ff; border: 1.5px solid #c4b5fd; border-radius: 10px;
+    padding: 1rem 1.3rem; margin: 1.3rem 0;
+  }
+  .struct-box.tier2 { background: #f0fdf4; border-color: #6ee7b7; }
+  .struct-box.tier3 { background: #fffbeb; border-color: #fcd34d; }
+  .struct-label { font-size: .72rem; font-weight: 700; letter-spacing: 1px; color: var(--purple); text-transform: uppercase; margin-bottom: .35rem; }
+  .struct-box.tier2 .struct-label { color: var(--teal); }
+  .struct-box.tier3 .struct-label { color: var(--amber); }
+  .struct-formula { font-family: 'Courier New', 'Consolas', monospace; font-size: 1.05rem; font-weight: 700; color: #1e1b4b; }
+  .struct-note { font-size: .83rem; color: #374151; margin-top: .4rem; }
+
+  /* Key rules */
+  .rules { margin: .5rem 0 1rem; }
+  .rules-label { font-size: .72rem; font-weight: 700; letter-spacing: 1px; color: var(--gray); text-transform: uppercase; margin-bottom: .4rem; }
+  .rule-item { display: flex; gap: .5rem; font-size: .87rem; padding: .2rem 0; }
+  .rule-item::before { content: '▸'; color: var(--purple); flex-shrink: 0; margin-top: .05rem; }
+
+  /* Section headings */
+  .sec-hd {
+    font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #fff; background: var(--purple); border-radius: 4px;
+    padding: .25rem .75rem; display: inline-block; margin: 1.2rem 0 .8rem;
+  }
+  .sec-hd.tier2 { background: var(--teal); }
+  .sec-hd.tier3 { background: var(--amber); }
+
+  /* Example sentences */
+  .example { display: flex; gap: .8rem; margin-bottom: .9rem; align-items: flex-start; }
+  .ex-num {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--purple);
+    color: #fff; font-size: .72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .15rem;
+  }
+  .tier2 .ex-num { background: var(--teal); }
+  .tier3 .ex-num { background: var(--amber); }
+  .ex-body {}
+  .ex-en { font-size: .97rem; color: #1e1b4b; font-weight: 500; }
+  .ex-en em { font-style: normal; color: var(--purple); font-weight: 700; border-bottom: 1.5px solid var(--purple); }
+  .unit.tier2 .ex-en em { color: var(--teal); border-bottom-color: var(--teal); }
+  .unit.tier3 .ex-en em { color: var(--amber); border-bottom-color: var(--amber); }
+  .ex-zh { font-size: .84rem; color: var(--gray); margin-top: .1rem; }
+
+  /* Practice question */
+  .practice {
+    background: #f8faff; border: 1.5px solid #c7d2fe; border-radius: 10px;
+    padding: 1.1rem 1.3rem; margin-top: 1.2rem;
+  }
+  .practice.tier2 { background: #f0fdf4; border-color: #6ee7b7; }
+  .practice.tier3 { background: #fffbeb; border-color: #fcd34d; }
+  .practice-label { font-size: .72rem; font-weight: 700; letter-spacing: 1px; color: var(--blue); text-transform: uppercase; margin-bottom: .6rem; }
+  .practice.tier2 .practice-label { color: var(--teal); }
+  .practice.tier3 .practice-label { color: var(--amber); }
+  .pq-stem { font-size: .97rem; font-weight: 500; color: #1e1b4b; margin-bottom: .8rem; line-height: 1.7; }
+  .pq-blank { display: inline-block; min-width: 80px; border-bottom: 2px solid #374151; vertical-align: bottom; }
+  .pq-opts { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .8rem; margin-bottom: .9rem; }
+  .pq-opt { font-size: .9rem; display: flex; gap: .4rem; align-items: baseline; }
+  .pq-opt .lbl { font-weight: 700; color: var(--purple); min-width: 18px; }
+  .practice.tier2 .pq-opt .lbl { color: var(--teal); }
+  .practice.tier3 .pq-opt .lbl { color: var(--amber); }
+  .answer-box { border-top: 1px dashed #c4b5fd; padding-top: .7rem; margin-top: .2rem; }
+  .practice.tier2 .answer-box { border-top-color: #6ee7b7; }
+  .practice.tier3 .answer-box { border-top-color: #fcd34d; }
+  .ans-row { font-size: .87rem; margin-bottom: .3rem; }
+  .ans-row strong { color: var(--purple); }
+  .practice.tier2 .ans-row strong { color: var(--teal); }
+  .practice.tier3 .ans-row strong { color: var(--amber); }
+  .ans-exp { font-size: .83rem; color: #374151; line-height: 1.65; }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; }
+    .unit, .cover { box-shadow: none; margin: 0; border-radius: 0; max-width: 100%; }
+    .unit { page-break-after: always; }
+    .cover { page-break-after: always; }
+  }
+
+  /* Nav buttons (screen only) */
+  .doc-nav {
+    max-width: 800px; margin: 1rem auto; display: flex; gap: .8rem; justify-content: center;
+  }
+  .doc-nav a {
+    background: #fff; border: 1.5px solid #e5e7eb; border-radius: 8px;
+    padding: .45rem 1.1rem; font-size: .85rem; text-decoration: none; color: #374151;
+    transition: all .15s;
+  }
+  .doc-nav a:hover { border-color: var(--purple); color: var(--purple); }
+  @media print { .doc-nav { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="doc-nav">
+  <a href="index.html">← 返回備考系統</a>
+  <a href="javascript:window.print()">🖨 列印 / 存成 PDF</a>
+</div>
+
+<!-- ══════════════════════════════════
+     COVER
+══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-tag">國中教育會考 英語科 教學講義</div>
+  <h1>15大高頻文法考點</h1>
+  <h2>102–114年試題統計 × 結構說明 × 例句翻譯 × 練習題</h2>
+  <div class="cover-pills">
+    <span class="cover-pill">紫色 Tier 1：第1–6名（必考）</span>
+    <span class="cover-pill">綠色 Tier 2：第7–12名</span>
+    <span class="cover-pill">橙色 Tier 3：第13–15名</span>
+  </div>
+  <div class="toc">
+    <div class="toc-title">目錄</div>
+    <div class="toc-item"><span><span class="n">01 </span>現在完成式</span><span>Present Perfect Tense</span></div>
+    <div class="toc-item"><span><span class="n">02 </span>間接問句／引述語氣</span><span>Indirect Questions</span></div>
+    <div class="toc-item"><span><span class="n">03 </span>過去完成式</span><span>Past Perfect Tense</span></div>
+    <div class="toc-item"><span><span class="n">04 </span>條件句（If 子句）</span><span>Conditional Sentences</span></div>
+    <div class="toc-item"><span><span class="n">05 </span>過去習慣（used to）</span><span>Used to / Habitual Past</span></div>
+    <div class="toc-item"><span><span class="n">06 </span>關係子句</span><span>Relative Clauses</span></div>
+    <div class="toc-item"><span><span class="n">07 </span>情態助動詞</span><span>Modal Verbs</span></div>
+    <div class="toc-item"><span><span class="n">08 </span>動名詞與不定詞</span><span>Gerunds & Infinitives</span></div>
+    <div class="toc-item"><span><span class="n">09 </span>被動語態</span><span>Passive Voice</span></div>
+    <div class="toc-item"><span><span class="n">10 </span>附加問句</span><span>Question Tags</span></div>
+    <div class="toc-item"><span><span class="n">11 </span>比較級與最高級</span><span>Comparative & Superlative</span></div>
+    <div class="toc-item"><span><span class="n">12 </span>假設語氣／wish</span><span>Subjunctive / Wish</span></div>
+    <div class="toc-item"><span><span class="n">13 </span>使役動詞</span><span>Causative Verbs</span></div>
+    <div class="toc-item"><span><span class="n">14 </span>分詞片語</span><span>Participle Phrases</span></div>
+    <div class="toc-item"><span><span class="n">15 </span>強調句型／分裂句</span><span>Emphatic / Cleft Sentences</span></div>
+  </div>
+  <div class="cover-note">本講義依據 102–114 年國中教育會考英語科歷屆試題文法統計編製</div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 1：現在完成式
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">1</div>
+    <div class="unit-hd-text">
+      <h2>現在完成式</h2>
+      <p>Present Perfect Tense</p>
+    </div>
+    <div class="unit-freq"><div class="f">12/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">S + has / have + 過去分詞（p.p.）</div>
+      <div class="struct-note">常見搭配：<strong>since</strong>（自從）、<strong>for</strong>（達…之久）、<strong>already</strong>（已經）、<strong>yet</strong>（尚未）、<strong>ever</strong>（曾經）、<strong>never</strong>（從未）</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">第三人稱單數主詞用 <strong>has</strong>，其餘主詞用 <strong>have</strong></div>
+      <div class="rule-item">表示過去動作對現在仍有影響，或從過去持續到現在的狀態</div>
+      <div class="rule-item">現在完成進行式：<strong>has / have + been + V-ing</strong>，強調動作持續進行中</div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">Ms. Johnson <em>has been taking</em> phone calls since she entered the office this morning.</div>
+        <div class="ex-zh">強森女士從今天早上進辦公室起，就一直在接電話。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">I <em>have tried</em> to call you many times, but you <em>have never answered</em>.</div>
+        <div class="ex-zh">我已經打電話給你很多次了，但你從沒接聽。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">For the past twenty years, my father <em>has worked</em> in a school library.</div>
+        <div class="ex-zh">過去二十年來，我父親一直在學校圖書館工作。</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Mary and her friends <span class="pq-blank"></span> at the restaurant for two hours. They are very hungry now.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> wait</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> waited</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> have been waiting</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> are waiting</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(C) have been waiting</strong></div>
+        <div class="ans-exp">for two hours 說明動作持續了一段時間，且 They are very hungry now 表示動作的影響延續至現在，應使用現在完成進行式 have been waiting。(A) 原形、(B) 過去式、(D) 現在進行式均不符合「持續到現在」的語意。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 2：間接問句/引述語氣
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">2</div>
+    <div class="unit-hd-text">
+      <h2>間接問句／引述語氣</h2>
+      <p>Reported Speech / Indirect Questions</p>
+    </div>
+    <div class="unit-freq"><div class="f">11/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">疑問詞 / if / whether + 主詞 + 動詞（直述語序）</div>
+      <div class="struct-note">重點：間接問句語序改回「主詞 + 動詞」，不倒裝；引述語氣時態常需後移</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">疑問詞保留，但語序改為直述句：Do you know <strong>where he lives</strong>?（非 where does he live）</div>
+      <div class="rule-item">Yes/No 問句改用 <strong>whether</strong> 或 <strong>if</strong> 引導</div>
+      <div class="rule-item">引述時常見動詞：say、tell、ask、wonder、know、find out</div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">Do you know <em>when Grandma is going to</em> visit us?</div>
+        <div class="ex-zh">你知道奶奶什麼時候要來看我們嗎？</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">Jane wants to know <em>whether the weather will be</em> fine tomorrow.</div>
+        <div class="ex-zh">Jane 想知道明天天氣是否會好。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">He told me <em>that Olivia likes nice surprises</em>, not scary ones.</div>
+        <div class="ex-zh">他告訴我 Olivia 喜歡美好的驚喜，不喜歡嚇人的。</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Can you tell me <span class="pq-blank"></span> the museum closes today?</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> when does</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> when</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> that when</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> what time does</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) when</strong></div>
+        <div class="ans-exp">間接問句的疑問詞後面應使用直述句語序（主詞 + 動詞），因此保留 when 並接 the museum closes（不倒裝）。(A)(D) 保留了 does 的倒裝語序，(C) that when 結構錯誤，均不符合間接問句規則。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 3：過去完成式
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">3</div>
+    <div class="unit-hd-text">
+      <h2>過去完成式</h2>
+      <p>Past Perfect Tense</p>
+    </div>
+    <div class="unit-freq"><div class="f">10/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">S + had + 過去分詞（p.p.）</div>
+      <div class="struct-note">常與 <strong>by the time</strong>、<strong>before</strong>、<strong>after</strong>、<strong>when</strong>、<strong>already</strong>、<strong>never</strong> 連用，強調「過去的過去」</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">主詞無論人稱皆用 <strong>had + p.p.</strong></div>
+      <div class="rule-item">表示在某個過去時間點「之前」就已完成的動作</div>
+      <div class="rule-item">否定：<strong>had not（hadn't）+ p.p.</strong></div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">Then he noticed the snake he <em>had just seen</em> crossing the road a moment ago.</div>
+        <div class="ex-zh">然後他注意到就是剛才他見過穿越馬路的那條蛇。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">By the time we arrived at the theater, the show <em>had already started</em>.</div>
+        <div class="ex-zh">當我們到達劇院的時候，表演已經開始了。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">She <em>had never eaten</em> sushi before she visited Japan for the first time.</div>
+        <div class="ex-zh">她在第一次造訪日本之前從未吃過壽司。</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">When Tom got to the station, the train <span class="pq-blank"></span> already left.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> has</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> had</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> was</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> is</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) had</strong></div>
+        <div class="ans-exp">「火車離開」發生在「Tom抵達車站」之前，屬於過去的過去，須用過去完成式 had + p.p.（had left）。(A) has 是現在完成式，(C) was 是過去進行式的助動詞，(D) is 是現在式，均不符合時態邏輯。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 4：條件句
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">4</div>
+    <div class="unit-hd-text">
+      <h2>條件句（If 子句）</h2>
+      <p>Conditional Sentences</p>
+    </div>
+    <div class="unit-freq"><div class="f">10/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構（三大類型）</div>
+      <div class="struct-formula">第一類（真實）：If + 現在式, will / can + 原形V<br>第二類（假設）：If + 過去式（were）, would / could + 原形V<br>第三類（過去假設）：If + had p.p., would have + p.p.</div>
+      <div class="struct-note">注意：If 子句中不使用 will 或 would</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">If 子句放句首時加逗號；放句尾時不需要逗號</div>
+      <div class="rule-item">第二類條件句：be 動詞一律用 <strong>were</strong>（所有人稱）</div>
+      <div class="rule-item">unless = if...not：Unless it rains = If it doesn't rain</div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>If you are taking your pet with you</em>, please buy a seat for it at half price.</div>
+        <div class="ex-zh">如果你要帶寵物同行，請以半價為牠購買一個座位。（第一類）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>If I were a bird</em>, I could fly to any place I wanted.</div>
+        <div class="ex-zh">如果我是一隻鳥，我就可以飛到任何我想去的地方。（第二類）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>If she had studied harder</em>, she would have passed the exam.</div>
+        <div class="ex-zh">如果她當時用功一點，她就會通過那場考試了。（第三類）</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">If it <span class="pq-blank"></span> tomorrow, we will cancel the outdoor activity.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> will rain</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> rained</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> rains</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> had rained</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(C) rains</strong></div>
+        <div class="ans-exp">主要子句為 will cancel（未來式），表示這是真實可能發生的情況（第一類條件句）。第一類條件句的 If 子句用現在式表未來，故選 (C) rains。(A) If 子句不能用 will，(B) 過去式用於第二類假設語氣，(D) 過去完成式用於第三類，均不正確。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 5：過去習慣
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">5</div>
+    <div class="unit-hd-text">
+      <h2>過去習慣（used to / would）</h2>
+      <p>Used to / Habitual Past</p>
+    </div>
+    <div class="unit-freq"><div class="f">9/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">S + used to + 原形V（過去習慣或狀態，現在已不如此）<br>S + would + 原形V（過去反覆的動作，不表狀態）</div>
+      <div class="struct-note">易混淆：<strong>be used to + V-ing</strong> = 習慣於某事（現在仍如此）</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">used to 可表過去習慣動作或過去狀態；would 只能表過去反覆動作</div>
+      <div class="rule-item">否定：<strong>didn't use to</strong> 或 used not to</div>
+      <div class="rule-item">疑問：<strong>Did + S + use to + V?</strong></div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">In my school days, I <em>used to listen</em> to English radio programs every day.</div>
+        <div class="ex-zh">在我求學時期，我每天都會收聽英語廣播節目。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">She <em>used to be</em> very shy, but now she loves talking to new people.</div>
+        <div class="ex-zh">她以前非常害羞，但現在她喜歡與新朋友交談。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">My grandfather <em>would tell</em> me stories every night before I fell asleep.</div>
+        <div class="ex-zh">每天晚上在我入睡之前，我祖父都會跟我說故事。</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">The town <span class="pq-blank"></span> a small fishing village before the tourists started coming.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> would be</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> used to be</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> is used to be</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> was used to be</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) used to be</strong></div>
+        <div class="ans-exp">句子描述小鎮過去的「狀態」（是個漁村），現在已改變，應用 used to be。(A) would be 只能表過去反覆動作，不能表過去狀態，故不適合。(C)(D) is used to / was used to 後接 V-ing，表示「習慣於某事（現在仍如此）」，語意不符。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 6：關係子句
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd">
+    <div class="unit-num">6</div>
+    <div class="unit-hd-text">
+      <h2>關係子句</h2>
+      <p>Relative Clauses (who, which, that, where, when)</p>
+    </div>
+    <div class="unit-freq"><div class="f">9/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">先行詞 + 關係代名詞（who / which / that / where / when）+ 子句</div>
+      <div class="struct-note">指人：who / that；指物：which / that；指地點：where；指時間：when</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">限定性關係子句（不加逗號）：The woman <strong>who lives next door</strong> is kind.</div>
+      <div class="rule-item">非限定性關係子句（加逗號，不用 that）：My sister, <strong>who lives in Taipei</strong>, is a nurse.</div>
+      <div class="rule-item">關係代名詞作受詞時可省略：The book (that) I bought is good.</div>
+    </div>
+
+    <div class="sec-hd">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">The woman <em>who lives next door</em> to Ken is a stranger to him.</div>
+        <div class="ex-zh">住在 Ken 隔壁的那位女性對他來說是個陌生人。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">This is the place <em>where I first met</em> my best friend ten years ago.</div>
+        <div class="ex-zh">這就是十年前我第一次遇見我最好朋友的地方。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">I still remember the day <em>when I got</em> my exam results and cried with joy.</div>
+        <div class="ex-zh">我仍然記得拿到考試成績、喜極而泣的那一天。</div>
+      </div>
+    </div>
+
+    <div class="practice">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">The tall man <span class="pq-blank"></span> you saw at the bookstore is my high school teacher.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> who</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> which</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> where</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> what</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(A) who</strong></div>
+        <div class="ans-exp">先行詞 The tall man 是人，關係子句中作受詞（you saw him），應用 who 或 that。(A) who 正確（也可用 that，但選項無 that）。(B) which 用於指物，(C) where 是關係副詞指地點，(D) what 不是關係代名詞，不可引導修飾名詞的子句。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 7：情態助動詞
+══════════════════════════════════ -->
+<div class="unit">
+  <div class="unit-hd tier2">
+    <div class="unit-num">7</div>
+    <div class="unit-hd-text">
+      <h2>情態助動詞</h2>
+      <p>Modal Verbs (can, could, may, might, must, should, would)</p>
+    </div>
+    <div class="unit-freq"><div class="f">9/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">S + 情態助動詞 + 原形動詞</div>
+      <div class="struct-note">情態助動詞本身無人稱變化，後面一律接<strong>原形動詞</strong>，且不與另一個助動詞連用</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">語意對照</div>
+      <div class="rule-item"><strong>can / could</strong>：能力、許可、可能（could 更委婉或表過去）</div>
+      <div class="rule-item"><strong>may / might</strong>：許可、可能（might 可能性更低）</div>
+      <div class="rule-item"><strong>must</strong>：強烈義務（must not = 禁止）；推測時 = 一定是</div>
+      <div class="rule-item"><strong>should</strong>：建議、輕度義務</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">You <em>should</em> take an umbrella with you in case it rains this afternoon.</div>
+        <div class="ex-zh">你應該帶把雨傘，以防今天下午下雨。（建議）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">She <em>must</em> be very tired after such a long trip without any rest.</div>
+        <div class="ex-zh">在這麼長途的旅程且毫無休息之後，她一定非常疲倦。（推測）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">You <em>might</em> find parking more difficult in this city than in others.</div>
+        <div class="ex-zh">你可能會發現在這座城市停車比在其他地方都要困難。（低度可能）</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Students <span class="pq-blank"></span> return library books within two weeks, or they will have to pay a fine.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> may</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> might</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> must</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> would</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(C) must</strong></div>
+        <div class="ans-exp">句子後半段 or they will have to pay a fine（否則就要罰款）表示強制性的規定，應使用表「義務」的 must。(A) may（可能/可以）、(B) might（也許）表可能性，語氣不夠強，(D) would 表意願或假設，均不符合規定的語意。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 8：動名詞與不定詞
+══════════════════════════════════ -->
+<div class="unit tier2">
+  <div class="unit-hd tier2">
+    <div class="unit-num">8</div>
+    <div class="unit-hd-text">
+      <h2>動名詞與不定詞</h2>
+      <p>Gerunds and Infinitives</p>
+    </div>
+    <div class="unit-freq"><div class="f">8/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">動名詞：V-ing（當名詞使用）<br>不定詞：to + 原形V</div>
+      <div class="struct-note">It is + adj. + <strong>to V</strong>；enjoy / avoid / mind + <strong>V-ing</strong>；want / decide / plan + <strong>to V</strong></div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則：只接 V-ing 的動詞</div>
+      <div class="rule-item">enjoy, finish, avoid, mind, keep, suggest, give up + <strong>V-ing</strong></div>
+      <div class="rule-item">want, decide, plan, promise, refuse, agree, hope + <strong>to V</strong></div>
+      <div class="rule-item">stop + V-ing（停止做）vs. stop + to V（停下來去做）</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>Making goulash</em> together is a special tradition — we don't talk much while cooking.</div>
+        <div class="ex-zh">一起做燉肉是我們家的特別傳統——煮飯的時候我們話不多。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">I enjoy <em>reading</em> books right before going to bed—it helps me relax.</div>
+        <div class="ex-zh">我喜歡在睡覺之前看書——這有助於我放鬆。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">It is important <em>to eat</em> a balanced breakfast every morning.</div>
+        <div class="ex-zh">每天早上都吃均衡的早餐是很重要的。</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Would you mind <span class="pq-blank"></span> the window? It's very hot in here.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> open</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> to open</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> opening</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> opened</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(C) opening</strong></div>
+        <div class="ans-exp">mind 是只能接動名詞（V-ing）的動詞，固定搭配為 Would you mind + V-ing?（你介意……嗎？）故選 (C) opening。(A) 原形 open 不可直接接在 mind 後，(B) to open 是不定詞，mind 不接 to V，(D) opened 是過去分詞，文法錯誤。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 9：被動語態
+══════════════════════════════════ -->
+<div class="unit tier2">
+  <div class="unit-hd tier2">
+    <div class="unit-num">9</div>
+    <div class="unit-hd-text">
+      <h2>被動語態</h2>
+      <p>Passive Voice (be + past participle)</p>
+    </div>
+    <div class="unit-freq"><div class="f">8/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構（各時態）</div>
+      <div class="struct-formula">現在被動：am / is / are + p.p.<br>過去被動：was / were + p.p.<br>未來被動：will be + p.p.<br>完成被動：has / have been + p.p.</div>
+      <div class="struct-note">說明執行者時用 <strong>by + 受詞格</strong>：The book was written <strong>by her</strong>.</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">被動語態將動作「接受者」移至主詞位置，強調動作本身</div>
+      <div class="rule-item">使役動詞被動：be made <strong>to</strong> + V（注意加 to！）</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">Popular singers like A-mei <em>are often seen</em> here with their friends.</div>
+        <div class="ex-zh">像阿妹這樣的知名歌手常常被看到在這裡與朋友相聚。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">The little girl <em>was hit</em> by a truck on her way home and was badly hurt.</div>
+        <div class="ex-zh">那個小女孩在回家途中被一輛卡車撞倒，受了重傷。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">The new community center <em>will be built</em> next to the park starting next year.</div>
+        <div class="ex-zh">新的社區中心將從明年開始在公園旁邊興建。</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">English <span class="pq-blank"></span> as an official language in more than 50 countries around the world.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> speaks</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> is spoken</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> was speaking</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> has spoken</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) is spoken</strong></div>
+        <div class="ans-exp">主詞 English 是語言，是被「說」的對象（動作接受者），應使用被動語態。句子描述現在普遍的事實，故用現在被動式 is spoken。(A) speaks 是主動式（English不能自己「說」），(C) 是過去進行式主動，(D) 是現在完成式主動，均不正確。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 10：附加問句
+══════════════════════════════════ -->
+<div class="unit tier2">
+  <div class="unit-hd tier2">
+    <div class="unit-num">10</div>
+    <div class="unit-hd-text">
+      <h2>附加問句</h2>
+      <p>Question Tags</p>
+    </div>
+    <div class="unit-freq"><div class="f">7/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">肯定主句 + 否定附加問句（助動詞 + not + 主詞代名詞）<br>否定主句 + 肯定附加問句</div>
+      <div class="struct-note">例外：<strong>I am → aren't I?</strong>；命令句 → will you? / shall we?</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">She is kind, <strong>isn't she?</strong>（肯定→否定）</div>
+      <div class="rule-item">He doesn't like it, <strong>does he?</strong>（否定→肯定）</div>
+      <div class="rule-item">主句無助動詞時，用 <strong>do / does / did</strong> 形成附加問句</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">We are still good friends, <em>aren't we</em>?</div>
+        <div class="ex-zh">我們還是好朋友，不是嗎？</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">She can speak three languages fluently, <em>can't she</em>?</div>
+        <div class="ex-zh">她能流利地說三種語言，不是嗎？</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">You haven't seen my bag anywhere, <em>have you</em>?</div>
+        <div class="ex-zh">你沒有在哪裡看到我的包包，有嗎？</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Tom didn't finish his homework last night, <span class="pq-blank"></span>?</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> didn't he</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> did he</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> doesn't he</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> does he</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) did he</strong></div>
+        <div class="ans-exp">主句為否定句（didn't finish），附加問句應用肯定形式；助動詞取自主句的 didn't，因此附加問句為 did he（不加 not）。(A) didn't he 是否定附加問句，不符規則；(C)(D) doesn't/does 時態不對（主句用過去式 didn't）。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 11：比較級與最高級
+══════════════════════════════════ -->
+<div class="unit tier2">
+  <div class="unit-hd tier2">
+    <div class="unit-num">11</div>
+    <div class="unit-hd-text">
+      <h2>比較級與最高級</h2>
+      <p>Comparative &amp; Superlative</p>
+    </div>
+    <div class="unit-freq"><div class="f">7/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">比較級：adj./adv. + -er + than / more + adj./adv. + than<br>最高級：the + adj./adv. + -est / the most + adj./adv.<br>同等比較：as + 原級 + as<br>雙重比較：The + 比較級, the + 比較級</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">不規則變化</div>
+      <div class="rule-item">good / well → better → best</div>
+      <div class="rule-item">bad / badly → worse → worst</div>
+      <div class="rule-item">many / much → more → most；little → less → least</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>The more</em> you practice, <em>the better</em> you will become.</div>
+        <div class="ex-zh">你練習得越多，你就會變得越好。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">The paint on the wall is not <em>as bright as</em> it was ten years ago.</div>
+        <div class="ex-zh">牆上的漆不像十年前那麼亮了。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">For Mike, the price is <em>the most important</em> thing when he shops for jeans.</div>
+        <div class="ex-zh">對 Mike 來說，買牛仔褲時價格是最重要的事。</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">The weather today is <span class="pq-blank"></span> than yesterday—perfect for a picnic!</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> more good</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> the best</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> much better</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> more better</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(C) much better</strong></div>
+        <div class="ans-exp">good 的比較級是 better（不規則），且有 than 引導比較，應用比較級。much 可用來強調比較級（much better = 好多了）。(A) more good 錯誤，good 的比較級不用 more；(B) the best 是最高級，不用 than；(D) more better 雙重比較，文法錯誤。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 12：假設語氣/wish
+══════════════════════════════════ -->
+<div class="unit tier2">
+  <div class="unit-hd tier2">
+    <div class="unit-num">12</div>
+    <div class="unit-hd-text">
+      <h2>假設語氣／wish 句型</h2>
+      <p>Subjunctive / Wish / Would Rather</p>
+    </div>
+    <div class="unit-freq"><div class="f">7/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier2">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">現在遺憾：I wish + S + 過去式（be 動詞一律用 were）<br>過去遺憾：I wish + S + had + p.p.<br>未來期望：I wish + S + would + V<br>寧願：would rather + V + than + V</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">wish 後接假設語氣，表達與現實相反的遺憾或願望</div>
+      <div class="rule-item">be 動詞在假設語氣中一律用 <strong>were</strong>（包括 I、he、she）</div>
+      <div class="rule-item">as if / as though + 過去式：好像……（He acts as if he were the boss.）</div>
+    </div>
+
+    <div class="sec-hd tier2">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">I <em>wish I were</em> able to go back in time and do things differently.</div>
+        <div class="ex-zh">我希望我能夠回到過去，把事情做得不一樣。（對現在的遺憾）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">If only <em>I had studied</em> harder for the exam—I really regret it now.</div>
+        <div class="ex-zh">如果當初我能更用功準備考試就好了——我現在真的很後悔。（對過去的遺憾）</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">I <em>would rather</em> stay home and read <em>than</em> go out in terrible weather.</div>
+        <div class="ex-zh">我寧願待在家讀書，也不想在這麼糟糕的天氣出門。</div>
+      </div>
+    </div>
+
+    <div class="practice tier2">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">Amy doesn't have enough time to travel. She wishes she <span class="pq-blank"></span> more free time.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> has</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> had</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> have</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> will have</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) had</strong></div>
+        <div class="ans-exp">wish 後面接的子句表達與現在事實相反的遺憾，須使用過去式。Amy 現在沒有足夠時間（現在事實），所以 wish 後用過去式 had 表達遺憾。(A) has 是現在式，(C) have 是原形，(D) will have 是未來式，均不符合 wish 假設語氣的規則。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 13：使役動詞
+══════════════════════════════════ -->
+<div class="unit tier3">
+  <div class="unit-hd tier3">
+    <div class="unit-num">13</div>
+    <div class="unit-hd-text">
+      <h2>使役動詞</h2>
+      <p>Causative Verbs (make / let / have / get)</p>
+    </div>
+    <div class="unit-freq"><div class="f">6/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier3">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">make / let / have + 受詞 + 原形V<br>get + 受詞 + to V<br>have / get + 受詞 + p.p.（被動意思）</div>
+      <div class="struct-note">被動式：be made <strong>to</strong> + V（注意補回 to！）</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">語意區別</div>
+      <div class="rule-item"><strong>make</strong>：強迫（The movie made me cry.）</div>
+      <div class="rule-item"><strong>let</strong>：允許（Let me try.）</div>
+      <div class="rule-item"><strong>have</strong>：安排（Have him call me.）</div>
+      <div class="rule-item"><strong>get</strong>：說服/設法（She got him to help.）</div>
+    </div>
+
+    <div class="sec-hd tier3">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">The teacher <em>made the students clean</em> the classroom after the art project.</div>
+        <div class="ex-zh">老師叫學生在美術課結束後把教室打掃乾淨。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en">Mom <em>let me stay</em> up late to watch the final game of the World Cup.</div>
+        <div class="ex-zh">媽媽讓我熬夜看世界盃的決賽。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">She <em>had her car fixed</em> by the mechanic before the long road trip.</div>
+        <div class="ex-zh">她在長途旅行之前請技師把她的車修好。</div>
+      </div>
+    </div>
+
+    <div class="practice tier3">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">The coach <span class="pq-blank"></span> all the players run ten laps before practice began.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> let</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> made</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> got</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> had</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) made</strong></div>
+        <div class="ans-exp">空格後接「受詞 + 原形V（run）」，make 表示「強迫/讓某人做某事」，且句意有強制性（跑十圈是訓練要求）。(A) let（允許）語意不符；(C) got 後應接 to run（to V），不是原形 run；(D) had 後接 to run（to V），也不是原形 run，故均不正確。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 14：分詞片語
+══════════════════════════════════ -->
+<div class="unit tier3">
+  <div class="unit-hd tier3">
+    <div class="unit-num">14</div>
+    <div class="unit-hd-text">
+      <h2>分詞片語</h2>
+      <p>Participle Phrases (-ing / -ed phrases)</p>
+    </div>
+    <div class="unit-freq"><div class="f">6/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier3">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">現在分詞（V-ing）：表主動或進行<br>過去分詞（p.p.）：表被動或完成<br>分詞片語放句首：Tired of waiting, she left.</div>
+      <div class="struct-note">注意：分詞的邏輯主詞必須與主句主詞一致，避免懸垂分詞</div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">名詞修飾（後位）：the man <strong>holding</strong> the bag = the man who is holding the bag</div>
+      <div class="rule-item">名詞修飾（後位）：the book <strong>written</strong> by him = the book that was written by him</div>
+      <div class="rule-item">常見開頭：Located, Based, Given, Covered, Tired, Excited + 主句</div>
+    </div>
+
+    <div class="sec-hd tier3">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en">The man <em>holding the goods</em> carefully packed them one by one into small boxes.</div>
+        <div class="ex-zh">那個拿著商品的男子小心地將它們一件件裝進小盒子裡。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>Sitting by the window</em>, he quietly watched the sunset fade over the mountains.</div>
+        <div class="ex-zh">坐在窗邊，他靜靜地看著夕陽在山後漸漸落下。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en">The words <em>printed on the package</em> were far too small for elderly people to read.</div>
+        <div class="ex-zh">包裝上印的字對老年人來說太小，根本看不清。</div>
+      </div>
+    </div>
+
+    <div class="practice tier3">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem"><span class="pq-blank"></span> about the upcoming trip, Lisa packed all her bags the night before.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> Exciting</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> Excited</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> She excited</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> To excite</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) Excited</strong></div>
+        <div class="ans-exp">Lisa 是感受到興奮的人（被某事物激起興奮感），應使用過去分詞 Excited（表被動/感受），且 Excited 的邏輯主詞與主句主詞 Lisa 一致。(A) Exciting 表「令人興奮的」是主動意義，用來形容事物而非人的感受；(C) 結構錯誤；(D) To excite 是不定詞，不構成分詞片語。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     UNIT 15：強調句型/分裂句
+══════════════════════════════════ -->
+<div class="unit tier3">
+  <div class="unit-hd tier3">
+    <div class="unit-num">15</div>
+    <div class="unit-hd-text">
+      <h2>強調句型／分裂句</h2>
+      <p>Emphatic Structures / Cleft Sentences</p>
+    </div>
+    <div class="unit-freq"><div class="f">6/13</div><div class="fl">年份出現</div></div>
+  </div>
+  <div class="unit-body">
+    <div class="struct-box tier3">
+      <div class="struct-label">句型結構</div>
+      <div class="struct-formula">It is / was + 【強調部分】 + that / who + 【其餘句子】<br>What + S + V + is / was + 【強調部分】<br>All + S + V + is / was + 名詞（最小化強調）</div>
+      <div class="struct-note">強調主詞（人）時用 <strong>who</strong>；強調其他成分用 <strong>that</strong></div>
+    </div>
+    <div class="rules">
+      <div class="rules-label">核心規則</div>
+      <div class="rule-item">It is Mary <strong>who</strong> called me.（強調主詞）</div>
+      <div class="rule-item">It was yesterday <strong>that</strong> I met him.（強調時間）</div>
+      <div class="rule-item"><strong>What</strong> I need is more time.（What 分裂句，強調述語）</div>
+    </div>
+
+    <div class="sec-hd tier3">例句</div>
+
+    <div class="example">
+      <div class="ex-num">1</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>It is</em> the friendship <em>that</em> truly matters in the end—not money or fame.</div>
+        <div class="ex-zh">到最後，真正重要的是友情——而非金錢或名聲。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">2</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>It was</em> her mother <em>who</em> gave her the most important advice in her life.</div>
+        <div class="ex-zh">給了她人生中最重要建議的人，正是她的母親。</div>
+      </div>
+    </div>
+    <div class="example">
+      <div class="ex-num">3</div>
+      <div class="ex-body">
+        <div class="ex-en"><em>What</em> surprised everyone most <em>was</em> how quickly he recovered from the injury.</div>
+        <div class="ex-zh">讓所有人最驚訝的，是他從受傷中恢復的速度之快。</div>
+      </div>
+    </div>
+
+    <div class="practice tier3">
+      <div class="practice-label">📝 練習題</div>
+      <div class="pq-stem">It was Amy <span class="pq-blank"></span> first suggested holding the party outdoors.</div>
+      <div class="pq-opts">
+        <div class="pq-opt"><span class="lbl">(A)</span> that</div>
+        <div class="pq-opt"><span class="lbl">(B)</span> who</div>
+        <div class="pq-opt"><span class="lbl">(C)</span> which</div>
+        <div class="pq-opt"><span class="lbl">(D)</span> when</div>
+      </div>
+      <div class="answer-box">
+        <div class="ans-row"><strong>答案：(B) who</strong></div>
+        <div class="ans-exp">分裂句 It was + 強調部分 + that/who + 其餘句子，強調的是主詞 Amy（人），因此用 who（也可用 that，但 who 更準確）。(B) who 正確。(C) which 指物，不指人；(D) when 是關係副詞，指時間；若選 (A) that 也可接受，但選項中 who 更精確，為最佳答案。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

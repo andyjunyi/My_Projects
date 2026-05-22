@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>國中英文解憂雜貨店 | 首頁</title>
+    <!-- 引入字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-dark: #1e293b;
+            --color-light: #F5EFED;
+            --color-primary: #2292A4;
+            --color-secondary: #BDBF09;
+            --color-accent: #D96C06;
+            --bg-gradient: linear-gradient(135deg, #F5EFED 0%, #E0D7D5 100%);
+            --card-bg: #FFFFFF;
+            --manga-dot: radial-gradient(rgba(34, 146, 164, 0.08) 1px, transparent 0);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--color-dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            /* 修正 iPhone 底部遮擋 */
+            padding-bottom: calc(80px + env(safe-area-inset-bottom));
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 50px 20px 30px;
+            background: var(--card-bg);
+            background-image: var(--manga-dot);
+            background-size: 15px 15px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .noren {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+        }
+        .noren-part {
+            width: 40px;
+            height: 50px;
+            background: var(--color-primary);
+            border-radius: 0 0 6px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .manga-sparkle {
+            position: absolute;
+            fill: var(--color-secondary);
+            animation: twinkle 2s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        .sparkle-1 { top: 10%; left: 5%; width: 30px; }
+        .sparkle-2 { top: 8%; right: 8%; width: 25px; animation-delay: 0.5s; }
+        .sparkle-3 { bottom: 10%; right: 3%; width: 25px; animation-delay: 1s; }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: clamp(1.6rem, 6vw, 2.5rem);
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(189, 191, 9, 0.2); 
+            z-index: -1;
+            border-radius: 4px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--color-dark);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Encouragement Section */
+        .encouragement {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: var(--color-primary);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(34, 146, 164, 0.1);
+        }
+
+        .encouragement-text h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--color-secondary);
+            font-weight: 700;
+        }
+
+        .encouragement-text p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: var(--color-accent);
+            margin: 8px auto;
+            border-radius: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 25px 20px;
+            border-radius: 25px;
+            text-align: center;
+            color: var(--color-dark);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(34, 146, 164, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .feature-card:active {
+            transform: scale(0.98);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .feature-card p { font-size: 0.9rem; }
+
+        /* Checklist Section */
+        .checklist-section { margin-top: 30px; }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .check-item {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border-left: 6px solid var(--color-secondary);
+        }
+
+        .check-item h3 {
+            color: var(--color-primary);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 45px 15px 25px; }
+            .encouragement { flex-direction: column; text-align: center; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .feature-card { padding: 20px 10px; }
+            .feature-card .icon { font-size: 2rem; }
+            .feature-card h3 { font-size: 1.1rem; }
+            .feature-card p { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Hero -->
+    <header class="hero">
+        <div class="noren">
+            <div class="noren-part">英</div>
+            <div class="noren-part">文</div>
+            <div class="noren-part">解</div>
+            <div class="noren-part">憂</div>
+        </div>
+        <svg class="manga-sparkle sparkle-1" viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg>
+        <svg class="manga-sparkle sparkle-2" viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg>
+        <h1>國中英文解憂雜貨店</h1>
+        <p>解決你的英文難題，穩紮穩打走過會考。</p>
+    </header>
+
+    <!-- Encouragement -->
+    <section class="encouragement">
+        <div class="encouragement-text">
+            <h2>單字是英文的靈魂</h2>
+            <p>累積磚塊，高分自然水到渠成！每天 10 分鐘，戰勝會考。</p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section">
+        <h2 class="section-title">核心測驗內容</h2>
+        <div class="features-grid">
+            <div onclick="go('國中基礎1200單線上挑戰')" class="feature-card">
+                <span class="icon">🌱</span>
+                <h3>基礎 1200 單字</h3>
+                <p>54 回挑戰。掌握核心詞彙。</p>
+            </div>
+            <div onclick="go('國中進階800單線上挑戰')" class="feature-card">
+                <span class="icon">🚀</span>
+                <h3>進階 800 單字</h3>
+                <p>39 回挑戰。邁向 A++ 門檻。</p>
+            </div>
+            <div onclick="go('線上文法選擇練習', true)" class="feature-card">
+                <span class="icon">💡</span>
+                <h3>文法常犯錯誤</h3>
+                <p>55 大專題。避開失分陷阱。</p>
+            </div>
+            <!-- 關鍵更新：對齊溫故知新頁面路徑 -->
+            <div onclick="go('溫故知新')" class="feature-card">
+                <span class="icon">📚</span>
+                <h3>溫故知新</h3>
+                <p>105-114 歷屆考古題實戰。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checklist -->
+    <section class="checklist-section">
+        <h2 class="section-title">會考高分清單</h2>
+        <div class="checklist-grid">
+            <div class="check-item">
+                <h3>🎧 聽力沉浸</h3>
+                <p>每天聽 5 分鐘，培養語感。</p>
+            </div>
+            <div class="check-item">
+                <h3>📖 閱讀策略</h3>
+                <p>上下文推敲，掌握大意。</p>
+            </div>
+            <div class="check-item">
+                <h3>⏰ 計時練習</h3>
+                <p>模擬壓力，穩定輸出。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>均一教育平台，Jutor AI 英文</strong></p>
+        <p>每一份努力，都會在考場上開花結果。💪</p>
+    </footer>
+</div>
+
+<script>
+    /**
+     * 強制跳轉函數：解決 Google Sites iframe 限制
+     * @param {string} path - 頁面路徑
+     * @param {boolean} auth - 是否增加 authuser 參數
+     */
+    function go(path, auth = false) {
+        const base = "https://sites.google.com/junyiacademy.org/junior-en-qa";
+        const url = `${base}/${encodeURIComponent(path)}${auth ? '?authuser=0' : ''}`;
+        try {
+            // 使用 _top 強制跳出 iframe 到最頂層視窗
+            window.open(url, '_top');
+        } catch (e) {
+            window.location.href = url;
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>題庫練習 | 學測英語通</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .quiz-container { max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .quiz-question { font-size: 1.2rem; margin-bottom: 20px; font-weight: bold; color: #2A5CAA; }
+        .quiz-options { display: grid; gap: 15px; }
+        .quiz-option { padding: 15px; background: #f8f9fa; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .quiz-option:hover { background: #e9ecef; border-color: #2A5CAA; }
+        .quiz-option.selected { background: #2A5CAA; color: white; border-color: #2A5CAA; }
+        .quiz-option.correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .quiz-option.incorrect { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .quiz-feedback { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; }
+        .quiz-feedback.show { display: block; animation: fadeIn 0.3s; }
+        .feedback-correct { background: #d4edda; color: #155724; border-left: 4px solid #28a745; }
+        .feedback-incorrect { background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }
+        .quiz-controls { display: flex; justify-content: space-between; margin-top: 30px; }
+        .score-display { text-align: center; font-size: 1.5rem; font-weight: bold; margin: 20px 0; color: #2A5CAA; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo"><i class="fas fa-graduation-cap"></i><span>學測英語通</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 首頁</a></li>
+                <li><a href="course.html">📚 課程</a></li>
+                <li><a href="quiz.html" class="active">📝 題庫</a></li>
+                <li><a href="vocabulary.html">📖 單字</a></li>
+                <li><a href="writing.html">✍️ 寫作</a></li>
+                <li><a href="profile.html">👤 學習檔案</a></li>
+            </ul>
+            <div class="nav-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-question-circle"></i> 學測英文題庫練習</h1>
+            <p>歷屆考古題 + 模擬題｜即時解析 + 錯題本</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="quiz-container">
+            <div class="score-display">🎯 答對 <span id="score">0</span>/10 題</div>
+            
+            <div id="quizContent">
+                <!-- 題目將由 JavaScript 動態生成 -->
+            </div>
+
+            <div class="quiz-controls">
+                <button id="prevBtn" class="btn btn-outline" disabled>
+                    <i class="fas fa-arrow-left"></i> 上一題
+                </button>
+                <button id="nextBtn" class="btn btn-primary">
+                    <span id="nextBtnText">下一題</span> <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo"><i class="fas fa-graduation-cap"></i><span>學測英語通</span></div>
+                <div class="footer-contact">
+                    <p>用輕鬆活潑的方式，讓每個高中生都能愛上英文！</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>

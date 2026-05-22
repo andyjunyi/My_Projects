@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Start-Process \"e:\\\\ClaudeCode Projects\\\\935 Voc\\\\vocab_search.html\")"
+    ]
+  }
+}

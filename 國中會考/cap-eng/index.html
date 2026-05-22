@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>115年國中會考英文 全方位備考系統</title>
+<style>
+  :root {
+    --w1: #4f6ef7;
+    --w2: #22b4a0;
+    --w3: #f59e0b;
+    --w4: #ef4444;
+    --w1-light: #eef1fe;
+    --w2-light: #e6f7f5;
+    --w3-light: #fef9ec;
+    --w4-light: #fef2f2;
+    --gray: #6b7280;
+    --dark: #1f2937;
+    --g1: #7c3aed;
+    --g2: #db2777;
+    --g1-light: #f5f3ff;
+    --g2-light: #fdf2f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #f0f4ff; color: var(--dark); line-height: 1.6; }
+
+  /* ── Global Header ── */
+  .global-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1d4ed8 100%);
+    color: #fff; padding: 2rem 2rem 0; text-align: center;
+  }
+  .global-header h1 { font-size: 1.9rem; letter-spacing: 2px; margin-bottom: .3rem; }
+  .global-header p { font-size: .95rem; opacity: .8; margin-bottom: 1.5rem; }
+
+  /* ── Tab Nav ── */
+  .tab-nav { display: flex; justify-content: center; gap: 0; max-width: 700px; margin: 0 auto; }
+  .tab-btn {
+    flex: 1; padding: .85rem 1.5rem; font-size: 1rem; font-weight: 700; cursor: pointer;
+    border: none; background: rgba(255,255,255,.15); color: rgba(255,255,255,.75);
+    border-radius: 10px 10px 0 0; transition: all .2s; letter-spacing: 1px;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,.25); color: #fff; }
+  .tab-btn.active { background: #f0f4ff; color: var(--dark); }
+
+  /* ── Tab Panels ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ════════════════════════════════
+     GRAMMAR ANALYSIS SECTION
+  ════════════════════════════════ */
+
+  /* ── Grammar header ── */
+  .gram-intro {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: #fff; padding: 2rem 2rem 1.5rem; text-align: center;
+  }
+  .gram-intro h2 { font-size: 1.5rem; margin-bottom: .4rem; }
+  .gram-intro p { opacity: .85; font-size: .92rem; }
+  .gram-badges { display: flex; justify-content: center; gap: .8rem; margin-top: 1rem; flex-wrap: wrap; }
+  .gram-badge { background: rgba(255,255,255,.2); border-radius: 999px; padding: .25rem .9rem; font-size: .82rem; }
+
+  /* ── Section title ── */
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 0; }
+  .section-title {
+    display: flex; align-items: center; gap: .6rem;
+    font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;
+    padding-bottom: .5rem; border-bottom: 2px solid #e5e7eb;
+  }
+  .section-title .icon { font-size: 1.4rem; }
+
+  /* ── Grammar cards grid ── */
+  .grammar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 1.5rem; }
+
+  .gram-card {
+    background: #fff; border-radius: 14px; padding: 1.3rem 1.4rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07); border-top: 4px solid var(--g1);
+    transition: transform .15s, box-shadow .15s;
+    cursor: pointer; text-decoration: none; display: block; color: inherit;
+  }
+  .gram-card:hover { transform: translateY(-3px); box-shadow: 0 6px 22px rgba(124,58,237,.18); }
+  .gram-card.tier2:hover { box-shadow: 0 6px 22px rgba(34,180,160,.18); }
+  .gram-card.tier3:hover { box-shadow: 0 6px 22px rgba(245,158,11,.18); }
+  .gram-card .click-hint { font-size: .72rem; color: var(--g1); margin-top: .6rem; opacity: .75; }
+  .gram-card.tier2 .click-hint { color: var(--w2); }
+  .gram-card.tier3 .click-hint { color: var(--w3); }
+  .gram-card.tier2 { border-top-color: var(--w2); }
+  .gram-card.tier3 { border-top-color: var(--w3); }
+
+  .gram-rank { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--g1); color: #fff; font-size: .8rem; font-weight: 700; margin-bottom: .5rem; }
+  .gram-card.tier2 .gram-rank { background: var(--w2); }
+  .gram-card.tier3 .gram-rank { background: var(--w3); }
+
+  .gram-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
+  .gram-cn { font-size: .82rem; color: var(--gray); margin-bottom: .7rem; }
+
+  /* frequency bar */
+  .freq-bar-wrap { margin-bottom: .7rem; }
+  .freq-label { display: flex; justify-content: space-between; font-size: .78rem; color: var(--gray); margin-bottom: .25rem; }
+  .freq-bar { height: 8px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+  .freq-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #7c3aed, #a855f7); }
+  .gram-card.tier2 .freq-fill { background: linear-gradient(90deg, #22b4a0, #34d399); }
+  .gram-card.tier3 .freq-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+  /* year tags */
+  .year-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .7rem; }
+  .year-tag { background: #f3f4f6; color: #374151; font-size: .72rem; border-radius: 4px; padding: .15rem .45rem; }
+  .year-tag.hot { background: #ede9fe; color: #6d28d9; }
+
+  /* example box */
+  .gram-example { background: #f8faff; border-left: 3px solid #c4b5fd; border-radius: 0 6px 6px 0; padding: .5rem .7rem; font-size: .8rem; color: #374151; }
+  .gram-example em { color: var(--g1); font-style: normal; font-weight: 600; }
+
+  /* ── Prediction Section ── */
+  .predict-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 1.5rem; }
+  .predict-header {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    color: #fff; border-radius: 14px 14px 0 0; padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .predict-header h3 { font-size: 1.1rem; }
+  .predict-body { background: #fff; border-radius: 0 0 14px 14px; box-shadow: 0 2px 10px rgba(0,0,0,.07); padding: 1.5rem; }
+  .predict-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .predict-tier { border-radius: 10px; padding: 1rem 1.2rem; }
+  .predict-tier.t1 { background: #fef2f2; border: 1px solid #fca5a5; }
+  .predict-tier.t2 { background: #fff7ed; border: 1px solid #fdba74; }
+  .predict-tier.t3 { background: #f0fdf4; border: 1px solid #86efac; }
+  .predict-tier h4 { font-size: .9rem; font-weight: 700; margin-bottom: .6rem; }
+  .predict-tier.t1 h4 { color: #b91c1c; }
+  .predict-tier.t2 h4 { color: #c2410c; }
+  .predict-tier.t3 h4 { color: #15803d; }
+  .predict-item { display: flex; align-items: center; gap: .5rem; font-size: .85rem; padding: .3rem 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+  .predict-item:last-child { border-bottom: none; }
+  .predict-prob { font-weight: 700; min-width: 38px; font-size: .8rem; }
+  .predict-tier.t1 .predict-prob { color: #b91c1c; }
+  .predict-tier.t2 .predict-prob { color: #c2410c; }
+  .predict-tier.t3 .predict-prob { color: #15803d; }
+
+  /* ── Grammar Study Plan ── */
+  .gram-plan-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 2rem; }
+  .gram-plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+  .gram-plan-card {
+    background: #fff; border-radius: 12px; padding: 1.1rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    border-left: 4px solid var(--g1);
+  }
+  .gram-plan-card:nth-child(2) { border-left-color: var(--w2); }
+  .gram-plan-card:nth-child(3) { border-left-color: var(--w3); }
+  .gram-plan-card:nth-child(4) { border-left-color: var(--w4); }
+  .gram-plan-week { font-size: .75rem; font-weight: 700; letter-spacing: 1px; color: var(--g1); margin-bottom: .3rem; }
+  .gram-plan-card:nth-child(2) .gram-plan-week { color: var(--w2); }
+  .gram-plan-card:nth-child(3) .gram-plan-week { color: var(--w3); }
+  .gram-plan-card:nth-child(4) .gram-plan-week { color: var(--w4); }
+  .gram-plan-title { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+  .gram-plan-items { list-style: none; font-size: .83rem; color: #374151; }
+  .gram-plan-items li { padding: .2rem 0; border-bottom: 1px solid #f3f4f6; display: flex; gap: .4rem; }
+  .gram-plan-items li:last-child { border-bottom: none; }
+  .gram-plan-items li::before { content: "▸"; color: var(--g1); flex-shrink: 0; }
+  .gram-plan-card:nth-child(2) .gram-plan-items li::before { color: var(--w2); }
+  .gram-plan-card:nth-child(3) .gram-plan-items li::before { color: var(--w3); }
+  .gram-plan-card:nth-child(4) .gram-plan-items li::before { color: var(--w4); }
+
+  /* ── Insights box ── */
+  .insights-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 1.5rem; }
+  .insights-box { background: linear-gradient(135deg, #1e1b4b, #312e81); color: #fff; border-radius: 14px; padding: 1.5rem 1.8rem; }
+  .insights-box h3 { font-size: 1.05rem; margin-bottom: 1rem; }
+  .insights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; }
+  .insight-item { background: rgba(255,255,255,.1); border-radius: 8px; padding: .7rem 1rem; font-size: .83rem; }
+  .insight-item strong { display: block; margin-bottom: .2rem; color: #c4b5fd; }
+
+  /* ════════════════════════════════
+     VOCABULARY PLAN SECTION (existing)
+  ════════════════════════════════ */
+
+  /* ── Header ── */
+  .vocab-header {
+    background: linear-gradient(135deg, #3b5bdb 0%, #1971c2 100%);
+    color: #fff; padding: 2.5rem 2rem 2rem; text-align: center;
+  }
+  .vocab-header h2 { font-size: 1.6rem; letter-spacing: 2px; margin-bottom: .4rem; }
+  .vocab-header p { font-size: 1rem; opacity: .85; }
+  .badges { display: flex; justify-content: center; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.2); border-radius: 999px; padding: .3rem 1rem; font-size: .85rem; }
+
+  /* ── Overview cards ── */
+  .overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .ov-card { background: #fff; border-radius: 12px; padding: 1.2rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+  .ov-card .num { font-size: 2.2rem; font-weight: 700; }
+  .ov-card .lbl { font-size: .85rem; color: var(--gray); margin-top: .2rem; }
+
+  /* ── Legend ── */
+  .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; padding: .8rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .leg { display: flex; align-items: center; gap: .4rem; font-size: .88rem; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* ── Week sections ── */
+  .week { max-width: 1100px; margin: 1rem auto; padding: 0 1.5rem; }
+  .week-header {
+    border-radius: 10px 10px 0 0; padding: .8rem 1.4rem;
+    color: #fff; font-size: 1.1rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .week-header span { font-size: .85rem; font-weight: 400; opacity: .9; }
+  .w1 .week-header { background: var(--w1); }
+  .w2 .week-header { background: var(--w2); }
+  .w3 .week-header { background: var(--w3); }
+  .w4 .week-header { background: var(--w4); }
+
+  /* ── Day grid ── */
+  .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1px; background: #e5e7eb; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px; overflow: hidden; }
+  .day-card { background: #fff; padding: 1.1rem 1.2rem; transition: background .15s, box-shadow .15s; }
+  .day-card:hover { background: #f0f4ff; box-shadow: inset 0 0 0 2px #4f6ef7; cursor: pointer; }
+
+  .day-num { font-size: .75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: .5rem; }
+  .w1 .day-num { color: var(--w1); }
+  .w2 .day-num { color: var(--w2); }
+  .w3 .day-num { color: var(--w3); }
+  .w4 .day-num { color: var(--w4); }
+
+  .day-title { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+  .day-goal  { font-size: .8rem; color: var(--gray); margin-bottom: .7rem; }
+
+  /* vocab chips */
+  .vocab-list { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .7rem; }
+  .chip {
+    border-radius: 6px; padding: .2rem .55rem; font-size: .78rem;
+    display: flex; align-items: center; gap: .3rem; cursor: default;
+  }
+  .chip .en  { font-weight: 700; }
+  .chip .zh  { color: #555; }
+  .chip.hi   { background: #dbeafe; color: #1e40af; }
+  .chip.mid  { background: #d1fae5; color: #065f46; }
+  .chip.lo   { background: #fef3c7; color: #92400e; }
+  .chip.vlo  { background: #fce7f3; color: #831843; }
+  .chip.rev  { background: #f3f4f6; color: #374151; }
+
+  /* method tag */
+  .method { display: flex; align-items: center; gap: .4rem; font-size: .78rem; }
+  .method-icon { font-size: 1rem; }
+  .method-text { color: var(--gray); }
+
+  /* special day (review/test) */
+  .day-card.review-day { background: linear-gradient(135deg, #f8faff, #eef1fe); }
+  .day-card.test-day   { background: linear-gradient(135deg, #fff8f0, #fef3c7); }
+  .day-card.final-day  { background: linear-gradient(135deg, #fef2f2, #fee2e2); }
+
+  /* tips box */
+  .tips { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.5rem; }
+  .tips-box { background: #fff; border-radius: 12px; padding: 1.5rem 1.8rem; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+  .tips-box h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--dark); }
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .tip-item { background: #f8faff; border-left: 4px solid var(--w1); border-radius: 0 8px 8px 0; padding: .7rem 1rem; font-size: .88rem; }
+  .tip-item strong { display: block; margin-bottom: .2rem; }
+
+  footer { text-align: center; color: var(--gray); font-size: .8rem; padding: 2rem; }
+</style>
+</head>
+<body>
+
+<!-- ══ Global Header with Tabs ══ -->
+<div class="global-header">
+  <h1>115年國中會考英文 全方位備考系統</h1>
+  <p>102–114年試題文法頻率分析 × 115年重點預測 × 30天詞彙學習計畫</p>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('grammar')">📊 文法頻率分析 & 115預測</button>
+    <button class="tab-btn" onclick="switchTab('vocab')">📅 30天詞彙學習計畫</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 1: GRAMMAR ANALYSIS
+════════════════════════════════════════════ -->
+<div id="tab-grammar" class="tab-panel active">
+
+  <div class="gram-intro">
+    <h2>102–114年文法出題頻率完整分析</h2>
+    <p>根據歷屆13年會考英文試題，統計各文法點出現次數，找出最高頻考點</p>
+    <div class="gram-badges">
+      <span class="gram-badge">📄 分析13年試題（102–114）</span>
+      <span class="gram-badge">🏆 15大高頻文法</span>
+      <span class="gram-badge">🔮 115年考點預測</span>
+      <span class="gram-badge">📋 文法學習計畫</span>
+    </div>
+  </div>
+
+  <!-- 15 Grammar Points -->
+  <div class="section-wrap">
+    <div class="section-title"><span class="icon">🏆</span>15大高頻文法考點（102–114年統計）</div>
+  </div>
+
+  <div class="grammar-grid">
+
+    <!-- #1 現在完成式 -->
+    <a class="gram-card" href="grammar_detail.html#1">
+      <div class="gram-rank">1</div>
+      <div class="gram-title">現在完成式</div>
+      <div class="gram-cn">Present Perfect Tense</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>12 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:92%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag hot">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag">111</span><span class="year-tag hot">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">Ms. Johnson <em>has been</em> taking phone calls since she entered the office. (109年)</div>
+      <div class="click-hint">點擊查看 8 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #2 間接問句/引述 -->
+    <a class="gram-card" href="grammar_detail.html#2">
+      <div class="gram-rank">2</div>
+      <div class="gram-title">間接問句／引述語氣</div>
+      <div class="gram-cn">Reported Speech / Indirect Questions</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>11 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:85%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">Do you know <em>when Grandma is going to</em> visit us? (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #3 過去完成式 -->
+    <a class="gram-card" href="grammar_detail.html#3">
+      <div class="gram-rank">3</div>
+      <div class="gram-title">過去完成式</div>
+      <div class="gram-cn">Past Perfect Tense</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>10 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:77%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">Froggie <em>had just seen</em> the snake before it disappeared. (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #4 條件句 -->
+    <a class="gram-card" href="grammar_detail.html#4">
+      <div class="gram-rank">4</div>
+      <div class="gram-title">條件句（If 子句）</div>
+      <div class="gram-cn">Conditional Sentences</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>10 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:77%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag">107</span><span class="year-tag hot">108</span><span class="year-tag">109</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag hot">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example"><em>If</em> you are taking your pet with you, make sure to check the rules. (108年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #5 used to -->
+    <a class="gram-card" href="grammar_detail.html#5">
+      <div class="gram-rank">5</div>
+      <div class="gram-title">過去習慣（used to / would）</div>
+      <div class="gram-cn">Used to / Habitual Past</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>9 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:69%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">In my school days, I <em>used to</em> listen to English radio programs every morning. (108年)</div>
+      <div class="click-hint">點擊查看 6 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #6 關係子句 -->
+    <a class="gram-card" href="grammar_detail.html#6">
+      <div class="gram-rank">6</div>
+      <div class="gram-title">關係子句</div>
+      <div class="gram-cn">Relative Clauses (who, which, that)</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>9 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:69%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">The woman <em>who lives</em> next door to Ken is a stranger from another city. (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #7 情態動詞 -->
+    <a class="gram-card tier2" href="grammar_detail.html#7">
+      <div class="gram-rank">7</div>
+      <div class="gram-title">情態助動詞</div>
+      <div class="gram-cn">Modal Verbs (can, could, may, must, should)</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>9 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:69%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag">105</span><span class="year-tag hot">106</span><span class="year-tag">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag">114</span>
+      </div>
+      <div class="gram-example">You <em>may</em> wonder why this <em>could</em> happen so often. (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #8 動名詞/不定詞 -->
+    <a class="gram-card tier2" href="grammar_detail.html#8">
+      <div class="gram-rank">8</div>
+      <div class="gram-title">動名詞與不定詞</div>
+      <div class="gram-cn">Gerunds and Infinitives</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>8 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:62%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span><span class="year-tag">114</span>
+      </div>
+      <div class="gram-example"><em>Making</em> goulash together is a special tradition — we don't talk much. (108年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #9 被動語態 -->
+    <a class="gram-card tier2" href="grammar_detail.html#9">
+      <div class="gram-rank">9</div>
+      <div class="gram-title">被動語態</div>
+      <div class="gram-cn">Passive Voice (be + past participle)</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>8 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:62%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag hot">110</span><span class="year-tag">111</span><span class="year-tag hot">112</span><span class="year-tag hot">113</span><span class="year-tag">114</span>
+      </div>
+      <div class="gram-example">Popular singers like A-mei <em>are often seen</em> performing here. (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #10 附加問句 -->
+    <a class="gram-card tier2" href="grammar_detail.html#10">
+      <div class="gram-rank">10</div>
+      <div class="gram-title">附加問句</div>
+      <div class="gram-cn">Question Tags</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>7 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:54%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag hot">106</span><span class="year-tag">107</span><span class="year-tag">108</span><span class="year-tag hot">109</span><span class="year-tag">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">We are still good friends, <em>aren't we</em>? (102年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #11 比較級/最高級 -->
+    <a class="gram-card tier2" href="grammar_detail.html#11">
+      <div class="gram-rank">11</div>
+      <div class="gram-title">比較級與最高級</div>
+      <div class="gram-cn">Comparative &amp; Superlative</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>7 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:54%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag">105</span><span class="year-tag">106</span><span class="year-tag">107</span><span class="year-tag hot">108</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag hot">112</span><span class="year-tag hot">113</span>
+      </div>
+      <div class="gram-example">The <em>more</em> you spend, the <em>more</em> energy you need to keep working. (107年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #12 假設語氣 -->
+    <a class="gram-card tier2" href="grammar_detail.html#12">
+      <div class="gram-rank">12</div>
+      <div class="gram-title">假設語氣／wish 句型</div>
+      <div class="gram-cn">Subjunctive / Wish / Would rather</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>7 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:54%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag">103</span><span class="year-tag hot">104</span><span class="year-tag hot">105</span><span class="year-tag hot">106</span><span class="year-tag">107</span><span class="year-tag hot">108</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag hot">113</span>
+      </div>
+      <div class="gram-example">I <em>wish</em> I <em>were</em> able to go back and do things differently. (110年)</div>
+      <div class="click-hint">點擊查看 7 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #13 使役動詞 -->
+    <a class="gram-card tier3" href="grammar_detail.html#13">
+      <div class="gram-rank">13</div>
+      <div class="gram-title">使役動詞</div>
+      <div class="gram-cn">Causative Verbs (have/let/make/get)</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>6 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:46%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag hot">102</span><span class="year-tag hot">103</span><span class="year-tag">104</span><span class="year-tag hot">105</span><span class="year-tag">106</span><span class="year-tag">107</span><span class="year-tag">108</span><span class="year-tag hot">109</span><span class="year-tag">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example">I have to <em>let</em> her know about the change right away. (110年)</div>
+      <div class="click-hint">點擊查看 6 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #14 分詞片語 -->
+    <a class="gram-card tier3" href="grammar_detail.html#14">
+      <div class="gram-rank">14</div>
+      <div class="gram-title">分詞片語</div>
+      <div class="gram-cn">Participle Phrases (-ing / -ed)</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>6 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:46%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag">103</span><span class="year-tag hot">104</span><span class="year-tag">105</span><span class="year-tag">106</span><span class="year-tag hot">107</span><span class="year-tag hot">108</span><span class="year-tag hot">109</span><span class="year-tag">110</span><span class="year-tag">111</span><span class="year-tag hot">112</span><span class="year-tag hot">113</span>
+      </div>
+      <div class="gram-example">The man <em>holding</em> the goods carefully packed them one by one. (109年)</div>
+      <div class="click-hint">點擊查看 6 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+    <!-- #15 強調句型 -->
+    <a class="gram-card tier3" href="grammar_detail.html#15">
+      <div class="gram-rank">15</div>
+      <div class="gram-title">強調句型／分裂句</div>
+      <div class="gram-cn">Emphatic Structures / Cleft Sentences</div>
+      <div class="freq-bar-wrap">
+        <div class="freq-label"><span>出現年份</span><span>6 / 13 年</span></div>
+        <div class="freq-bar"><div class="freq-fill" style="width:46%"></div></div>
+      </div>
+      <div class="year-tags">
+        <span class="year-tag">102</span><span class="year-tag hot">103</span><span class="year-tag hot">104</span><span class="year-tag">105</span><span class="year-tag">106</span><span class="year-tag">107</span><span class="year-tag hot">108</span><span class="year-tag hot">110</span><span class="year-tag hot">111</span><span class="year-tag">112</span><span class="year-tag">113</span><span class="year-tag hot">114</span>
+      </div>
+      <div class="gram-example"><em>It is</em> the friendship <em>that</em> truly matters in the end. (111年)</div>
+      <div class="click-hint">點擊查看 6 道歷屆例句 + KK音標 + 詞彙表 →</div>
+    </a>
+
+  </div><!-- /grammar-grid -->
+
+  <!-- Insights -->
+  <div class="insights-wrap">
+    <div class="insights-box">
+      <h3>📊 13年命題規律洞察</h3>
+      <div class="insights-grid">
+        <div class="insight-item"><strong>完成式稱霸榜首</strong>現在完成式12年連考，過去完成式10年出現，兩者合計是最穩定的考點。</div>
+        <div class="insight-item"><strong>複雜句結構為核心</strong>關係子句、間接問句、條件句構成「句型整合能力」三大支柱，每年必見其中2項以上。</div>
+        <div class="insight-item"><strong>情境整合考驗</strong>文法不單獨出現，均融入閱讀段落，強調在真實語境中識別文法的能力。</div>
+        <div class="insight-item"><strong>連續年份出現規律</strong>110–114年是近五年高頻期，本表標記為「熱門年份」(紫色)，命中率最高。</div>
+        <div class="insight-item"><strong>Tier 1–2 必全掌握</strong>前12個考點在近5年（110–114）幾乎全數出現，備考優先投入這12項。</div>
+        <div class="insight-item"><strong>詞性靈活運用</strong>分詞、使役、強調等進階句型（Tier 3）雖頻率較低，但每年仍有1–2題出現。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 115 Prediction -->
+  <div class="predict-wrap">
+    <div class="predict-header">
+      <span style="font-size:1.4rem">🔮</span>
+      <h3>115年（2026）文法重點預測</h3>
+    </div>
+    <div class="predict-body">
+      <div class="predict-tiers">
+
+        <div class="predict-tier t1">
+          <h4>🔴 Tier 1 ── 極高機率（85–95%）</h4>
+          <div class="predict-item"><span class="predict-prob">95%</span><span>現在完成式 (has/have + pp)</span></div>
+          <div class="predict-item"><span class="predict-prob">92%</span><span>間接問句／引述語氣</span></div>
+          <div class="predict-item"><span class="predict-prob">90%</span><span>條件句（if 子句）</span></div>
+          <div class="predict-item"><span class="predict-prob">88%</span><span>過去完成式 (had + pp)</span></div>
+          <div class="predict-item"><span class="predict-prob">85%</span><span>關係子句 (who/which/that)</span></div>
+        </div>
+
+        <div class="predict-tier t2">
+          <h4>🟠 Tier 2 ── 高機率（70–84%）</h4>
+          <div class="predict-item"><span class="predict-prob">82%</span><span>情態助動詞 (can/may/must)</span></div>
+          <div class="predict-item"><span class="predict-prob">80%</span><span>used to 過去習慣</span></div>
+          <div class="predict-item"><span class="predict-prob">78%</span><span>被動語態</span></div>
+          <div class="predict-item"><span class="predict-prob">75%</span><span>動名詞 vs 不定詞</span></div>
+          <div class="predict-item"><span class="predict-prob">72%</span><span>比較級 / 最高級</span></div>
+        </div>
+
+        <div class="predict-tier t3">
+          <h4>🟢 Tier 3 ── 中機率（55–70%）</h4>
+          <div class="predict-item"><span class="predict-prob">68%</span><span>假設語氣 / wish 句型</span></div>
+          <div class="predict-item"><span class="predict-prob">65%</span><span>附加問句 (question tags)</span></div>
+          <div class="predict-item"><span class="predict-prob">62%</span><span>分詞片語</span></div>
+          <div class="predict-item"><span class="predict-prob">60%</span><span>使役動詞 (make/let/have)</span></div>
+          <div class="predict-item"><span class="predict-prob">58%</span><span>強調句型 / 分裂句</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Grammar Study Plan -->
+  <div class="gram-plan-wrap">
+    <div class="section-title"><span class="icon">📋</span>115年文法備考學習計畫（4週攻略）</div>
+    <div class="gram-plan-grid">
+
+      <div class="gram-plan-card">
+        <div class="gram-plan-week">第一週 ─ 完成式核心</div>
+        <div class="gram-plan-title">時態精準掌控</div>
+        <ul class="gram-plan-items">
+          <li>現在完成式：結構、用法、since/for 搭配</li>
+          <li>過去完成式：before/after/by the time 結合</li>
+          <li>現在完成進行式：has/have been + Ving</li>
+          <li>時態比較：簡單過去 vs 現在完成式</li>
+          <li>每日練習：改寫完成式句子 × 10題</li>
+        </ul>
+      </div>
+
+      <div class="gram-plan-card">
+        <div class="gram-plan-week">第二週 ─ 複雜句結構</div>
+        <div class="gram-plan-title">句型整合能力</div>
+        <ul class="gram-plan-items">
+          <li>關係子句：who / which / that / where / when</li>
+          <li>間接問句：whether / if / 疑問詞 + 直述語序</li>
+          <li>條件句：第一、二、三條件句完整練習</li>
+          <li>假設語氣：I wish... / If I were...</li>
+          <li>每日練習：合併句子練習 × 8組</li>
+        </ul>
+      </div>
+
+      <div class="gram-plan-card">
+        <div class="gram-plan-week">第三週 ─ 動詞進階</div>
+        <div class="gram-plan-title">動詞句型強化</div>
+        <ul class="gram-plan-items">
+          <li>情態助動詞語意辨別（can vs may vs must）</li>
+          <li>used to + V vs be used to + Ving</li>
+          <li>被動語態：各時態被動形式轉換</li>
+          <li>動名詞 vs 不定詞：常見動詞搭配記憶</li>
+          <li>使役動詞：make/let/have/get + 受詞 + V原</li>
+        </ul>
+      </div>
+
+      <div class="gram-plan-card">
+        <div class="gram-plan-week">第四週 ─ 綜合衝刺</div>
+        <div class="gram-plan-title">模擬測驗＋弱點強化</div>
+        <ul class="gram-plan-items">
+          <li>比較級最高級：規則 / 不規則 / 雙重比較</li>
+          <li>附加問句：助動詞對應 + 正反搭配規則</li>
+          <li>分詞片語：現在分詞 / 過去分詞當修飾語</li>
+          <li>強調句型：It is...that / What...is 練習</li>
+          <li>每日：歷屆試題文法題全題型計時練習</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /tab-grammar -->
+
+<!-- ════════════════════════════════════════════
+     TAB 2: VOCABULARY 30-DAY PLAN
+════════════════════════════════════════════ -->
+<div id="tab-vocab" class="tab-panel">
+
+  <div class="vocab-header">
+    <h2>🎯 國中會考英文 30天備考計畫</h2>
+    <p>依據歷屆會考（102–114年）真實出題詞彙頻率設計・循序漸進・主題分組</p>
+    <div class="badges">
+      <span class="badge">📄 246個核心單字</span>
+      <span class="badge">📅 30天完整規劃</span>
+      <span class="badge">📊 依頻率分級</span>
+      <span class="badge">🗂️ 主題式分組</span>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="overview">
+    <div class="ov-card"><div class="num" style="color:#4f6ef7">7天</div><div class="lbl">第一週：核心高頻詞</div></div>
+    <div class="ov-card"><div class="num" style="color:#22b4a0">7天</div><div class="lbl">第二週：主題詞彙</div></div>
+    <div class="ov-card"><div class="num" style="color:#f59e0b">7天</div><div class="lbl">第三週：中低頻詞</div></div>
+    <div class="ov-card"><div class="num" style="color:#ef4444">9天</div><div class="lbl">第四週：綜合複習</div></div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="leg"><div class="dot" style="background:#93c5fd"></div> 高頻（≥10次）</div>
+    <div class="leg"><div class="dot" style="background:#6ee7b7"></div> 中高頻（5–9次）</div>
+    <div class="leg"><div class="dot" style="background:#fcd34d"></div> 中頻（3–4次）</div>
+    <div class="leg"><div class="dot" style="background:#f9a8d4"></div> 低頻（1–2次）</div>
+  </div>
+
+  <!-- ════ WEEK 1 ════ -->
+  <div class="week w1">
+    <div class="week-header">第一週：核心高頻詞彙 <span>Day 1–7 ｜目標：掌握出現頻率最高的40個單字</span></div>
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-num">Day 1</div>
+        <div class="day-title">🏆 最高頻動詞</div>
+        <div class="day-goal">每字出現10次以上，是考試必考核心</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">make</span><span class="zh">製作 (23)</span></span>
+          <span class="chip hi"><span class="en">get</span><span class="zh">得到 (14)</span></span>
+          <span class="chip hi"><span class="en">tell</span><span class="zh">告訴 (11)</span></span>
+          <span class="chip hi"><span class="en">ask</span><span class="zh">詢問 (10)</span></span>
+          <span class="chip hi"><span class="en">start</span><span class="zh">開始 (10)</span></span>
+          <span class="chip hi"><span class="en">pay</span><span class="zh">支付 (10)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">✏️</span><span class="method-text">每個字造3個句子，並記住常見搭配詞</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 2</div>
+        <div class="day-title">👥 高頻名詞</div>
+        <div class="day-goal">這些名詞在閱讀測驗段落中反覆出現</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">people</span><span class="zh">人們 (22)</span></span>
+          <span class="chip hi"><span class="en">work</span><span class="zh">工作 (17)</span></span>
+          <span class="chip hi"><span class="en">tree</span><span class="zh">樹 (15)</span></span>
+          <span class="chip hi"><span class="en">card</span><span class="zh">卡片 (13)</span></span>
+          <span class="chip hi"><span class="en">time</span><span class="zh">時間 (12)</span></span>
+          <span class="chip hi"><span class="en">day</span><span class="zh">天 (11)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🃏</span><span class="method-text">製作單字卡，正面英文+音標，背面中文+例句</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 3</div>
+        <div class="day-title">⚡ 主題詞：電力與社會</div>
+        <div class="day-goal">114年電力罷工段落的核心詞彙</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">electricity</span><span class="zh">電力 (10)</span></span>
+          <span class="chip hi"><span class="en">builder</span><span class="zh">建造者 (10)</span></span>
+          <span class="chip mid"><span class="en">government</span><span class="zh">政府 (6)</span></span>
+          <span class="chip mid"><span class="en">fight</span><span class="zh">爭鬥 (8)</span></span>
+          <span class="chip mid"><span class="en">year</span><span class="zh">年 (9)</span></span>
+          <span class="chip mid"><span class="en">job</span><span class="zh">職業 (6)</span></span>
+          <span class="chip mid"><span class="en">rise</span><span class="zh">上升 (3)</span></span>
+          <span class="chip mid"><span class="en">rule</span><span class="zh">規則 (2)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📰</span><span class="method-text">閱讀電力罷工段落，用這些單字還原段落大意</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 4</div>
+        <div class="day-title">🎁 主題詞：家庭與禮物</div>
+        <div class="day-goal">114年Cameron生日故事的核心詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">birthday</span><span class="zh">生日 (7)</span></span>
+          <span class="chip mid"><span class="en">gift</span><span class="zh">禮物 (7)</span></span>
+          <span class="chip mid"><span class="en">family</span><span class="zh">家庭 (7)</span></span>
+          <span class="chip mid"><span class="en">mom</span><span class="zh">媽媽 (9)</span></span>
+          <span class="chip mid"><span class="en">give</span><span class="zh">給予 (8)</span></span>
+          <span class="chip lo"><span class="en">dress</span><span class="zh">洋裝 (3)</span></span>
+          <span class="chip lo"><span class="en">cookie</span><span class="zh">餅乾 (2)</span></span>
+          <span class="chip lo"><span class="en">bake</span><span class="zh">烘焙</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📖</span><span class="method-text">將詞彙串成小故事，加深記憶</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 5</div>
+        <div class="day-title">🌿 主題詞：自然與環境</div>
+        <div class="day-goal">復活節島漫畫的環境詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">life</span><span class="zh">生活 (7)</span></span>
+          <span class="chip mid"><span class="en">ground</span><span class="zh">地面 (5)</span></span>
+          <span class="chip lo"><span class="en">land</span><span class="zh">土地 (2)</span></span>
+          <span class="chip lo"><span class="en">island</span><span class="zh">島嶼 (2)</span></span>
+          <span class="chip lo"><span class="en">earth</span><span class="zh">地球 (1)</span></span>
+          <span class="chip lo"><span class="en">plant</span><span class="zh">植物 (2)</span></span>
+          <span class="chip lo"><span class="en">rock</span><span class="zh">岩石 (1)</span></span>
+          <span class="chip lo"><span class="en">dry</span><span class="zh">乾燥的 (1)</span></span>
+          <span class="chip lo"><span class="en">water</span><span class="zh">水 (3)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🗺️</span><span class="method-text">畫心智圖，將自然類詞彙分類整理</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 6</div>
+        <div class="day-title">🛒 主題詞：購物與旅行</div>
+        <div class="day-goal">城市交通卡廣告的核心詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">buy</span><span class="zh">購買 (6)</span></span>
+          <span class="chip mid"><span class="en">buyer</span><span class="zh">買方 (6)</span></span>
+          <span class="chip mid"><span class="en">trip</span><span class="zh">旅行 (5)</span></span>
+          <span class="chip mid"><span class="en">weekend</span><span class="zh">週末 (6)</span></span>
+          <span class="chip mid"><span class="en">visit</span><span class="zh">拜訪 (4)</span></span>
+          <span class="chip lo"><span class="en">ticket</span><span class="zh">票券 (2)</span></span>
+          <span class="chip lo"><span class="en">train</span><span class="zh">火車 (3)</span></span>
+          <span class="chip lo"><span class="en">museum</span><span class="zh">博物館 (2)</span></span>
+          <span class="chip lo"><span class="en">hotel</span><span class="zh">飯店 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🗣️</span><span class="method-text">用這些詞彙模擬旅遊對話練習</span></div>
+      </div>
+
+      <div class="day-card review-day">
+        <div class="day-num">Day 7</div>
+        <div class="day-title">🔄 第一週複習 + 小測驗</div>
+        <div class="day-goal">複習Day 1–6所學，自我評估記憶程度</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">make</span><span class="zh">製作</span></span>
+          <span class="chip rev"><span class="en">people</span><span class="zh">人們</span></span>
+          <span class="chip rev"><span class="en">electricity</span><span class="zh">電力</span></span>
+          <span class="chip rev"><span class="en">government</span><span class="zh">政府</span></span>
+          <span class="chip rev"><span class="en">birthday</span><span class="zh">生日</span></span>
+          <span class="chip rev"><span class="en">island</span><span class="zh">島嶼</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📝</span><span class="method-text">遮住中文，測驗自己是否能說出每個單字的意思與音標</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════ WEEK 2 ════ -->
+  <div class="week w2">
+    <div class="week-header">第二週：主題式詞彙分組 <span>Day 8–14 ｜目標：以情境主題掌握中高頻詞彙</span></div>
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-num">Day 8</div>
+        <div class="day-title">🏫 學校與學習</div>
+        <div class="day-goal">會考必考情境：學校生活</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">school</span><span class="zh">學校 (7)</span></span>
+          <span class="chip mid"><span class="en">study</span><span class="zh">研究 (5)</span></span>
+          <span class="chip mid"><span class="en">learn</span><span class="zh">學習 (5)</span></span>
+          <span class="chip mid"><span class="en">know</span><span class="zh">知道 (6)</span></span>
+          <span class="chip mid"><span class="en">show</span><span class="zh">展示 (5)</span></span>
+          <span class="chip lo"><span class="en">classmate</span><span class="zh">同學 (1)</span></span>
+          <span class="chip lo"><span class="en">junior</span><span class="zh">初中的 (1)</span></span>
+          <span class="chip lo"><span class="en">teach</span><span class="zh">教導 (1)</span></span>
+          <span class="chip lo"><span class="en">read</span><span class="zh">閱讀 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">✏️</span><span class="method-text">將詞彙套入學校情境短文，練習閱讀理解</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 9</div>
+        <div class="day-title">🍽️ 飲食與生活</div>
+        <div class="day-goal">日常生活必備詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">eat</span><span class="zh">吃 (5)</span></span>
+          <span class="chip mid"><span class="en">vegetable</span><span class="zh">蔬菜 (7)</span></span>
+          <span class="chip lo"><span class="en">food</span><span class="zh">食物 (1)</span></span>
+          <span class="chip lo"><span class="en">fruit</span><span class="zh">水果 (3)</span></span>
+          <span class="chip lo"><span class="en">dinner</span><span class="zh">晚餐 (2)</span></span>
+          <span class="chip lo"><span class="en">lunch</span><span class="zh">午餐 (1)</span></span>
+          <span class="chip lo"><span class="en">meal</span><span class="zh">餐點 (1)</span></span>
+          <span class="chip lo"><span class="en">kitchen</span><span class="zh">廚房 (3)</span></span>
+          <span class="chip lo"><span class="en">delicious</span><span class="zh">美味的 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🍳</span><span class="method-text">用英文描述一頓飯，把學到的詞彙全部用進去</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 10</div>
+        <div class="day-title">💼 工作與職業</div>
+        <div class="day-goal">社會議題常見詞彙</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">work</span><span class="zh">工作 (17)</span></span>
+          <span class="chip mid"><span class="en">job</span><span class="zh">職業 (6)</span></span>
+          <span class="chip lo"><span class="en">business</span><span class="zh">商業 (2)</span></span>
+          <span class="chip lo"><span class="en">factory</span><span class="zh">工廠 (1)</span></span>
+          <span class="chip lo"><span class="en">office</span><span class="zh">辦公室 (1)</span></span>
+          <span class="chip lo"><span class="en">experience</span><span class="zh">經驗 (3)</span></span>
+          <span class="chip lo"><span class="en">exercise</span><span class="zh">運動 (3)</span></span>
+          <span class="chip lo"><span class="en">sacrifice</span><span class="zh">犧牲 (2)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">💡</span><span class="method-text">找出各詞彙的動詞/名詞/形容詞變化，一次學多種詞性</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 11</div>
+        <div class="day-title">😊 情緒與個性形容詞</div>
+        <div class="day-goal">描述人物特質的必備詞彙</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">happy</span><span class="zh">快樂的 (4)</span></span>
+          <span class="chip lo"><span class="en">brave</span><span class="zh">勇敢的 (2)</span></span>
+          <span class="chip vlo"><span class="en">shy</span><span class="zh">害羞的 (1)</span></span>
+          <span class="chip vlo"><span class="en">afraid</span><span class="zh">害怕的 (1)</span></span>
+          <span class="chip vlo"><span class="en">lazy</span><span class="zh">懶惰的 (1)</span></span>
+          <span class="chip vlo"><span class="en">friendly</span><span class="zh">友善的 (1)</span></span>
+          <span class="chip vlo"><span class="en">unhappy</span><span class="zh">不快樂的 (1)</span></span>
+          <span class="chip vlo"><span class="en">cute</span><span class="zh">可愛的 (1)</span></span>
+          <span class="chip vlo"><span class="en">handsome</span><span class="zh">英俊的 (1)</span></span>
+          <span class="chip vlo"><span class="en">lonely</span><span class="zh">孤獨的</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🎭</span><span class="method-text">對照反義詞一起記：happy ↔ unhappy, brave ↔ afraid</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 12</div>
+        <div class="day-title">🏃 常用動作動詞</div>
+        <div class="day-goal">閱讀測驗中描述行為的核心動詞</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">come</span><span class="zh">來 (5)</span></span>
+          <span class="chip mid"><span class="en">go</span><span class="zh">去 (7)</span></span>
+          <span class="chip mid"><span class="en">move</span><span class="zh">移動 (5)</span></span>
+          <span class="chip mid"><span class="en">save</span><span class="zh">節省 (5)</span></span>
+          <span class="chip mid"><span class="en">keep</span><span class="zh">保持 (5)</span></span>
+          <span class="chip mid"><span class="en">take</span><span class="zh">拿；帶 (4)</span></span>
+          <span class="chip lo"><span class="en">agree</span><span class="zh">同意 (3)</span></span>
+          <span class="chip lo"><span class="en">believe</span><span class="zh">相信 (3)</span></span>
+          <span class="chip lo"><span class="en">decide</span><span class="zh">決定 (4)</span></span>
+          <span class="chip lo"><span class="en">follow</span><span class="zh">跟隨 (3)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📋</span><span class="method-text">練習這些動詞的過去式與過去分詞，這是文法題常考重點</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 13</div>
+        <div class="day-title">🏡 家庭與人際關係</div>
+        <div class="day-goal">對話題型、書信題型必備詞彙</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">family</span><span class="zh">家庭 (7)</span></span>
+          <span class="chip lo"><span class="en">parent</span><span class="zh">父母 (2)</span></span>
+          <span class="chip lo"><span class="en">grandparent</span><span class="zh">祖父母 (2)</span></span>
+          <span class="chip lo"><span class="en">daughter</span><span class="zh">女兒 (2)</span></span>
+          <span class="chip lo"><span class="en">child</span><span class="zh">兒童 (2)</span></span>
+          <span class="chip vlo"><span class="en">grandchild</span><span class="zh">孫子女 (1)</span></span>
+          <span class="chip lo"><span class="en">friend</span><span class="zh">朋友 (2)</span></span>
+          <span class="chip vlo"><span class="en">wife</span><span class="zh">妻子 (1)</span></span>
+          <span class="chip vlo"><span class="en">marry</span><span class="zh">結婚 (2)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">👨‍👩‍👧</span><span class="method-text">畫出家庭樹，用英文標註每個成員的稱謂</span></div>
+      </div>
+
+      <div class="day-card review-day">
+        <div class="day-num">Day 14</div>
+        <div class="day-title">🔄 第二週複習 + 主題測驗</div>
+        <div class="day-goal">以主題情境複習，模擬閱讀理解題型</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">vegetable</span><span class="zh">蔬菜</span></span>
+          <span class="chip rev"><span class="en">experience</span><span class="zh">經驗</span></span>
+          <span class="chip rev"><span class="en">sacrifice</span><span class="zh">犧牲</span></span>
+          <span class="chip rev"><span class="en">decide</span><span class="zh">決定</span></span>
+          <span class="chip rev"><span class="en">grandparent</span><span class="zh">祖父母</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📝</span><span class="method-text">自行用10個本週單字寫一段短文（5–8句），測試理解深度</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════ WEEK 3 ════ -->
+  <div class="week w3">
+    <div class="week-header">第三週：中低頻詞彙 & 詞性擴充 <span>Day 15–21 ｜目標：擴大詞彙量，掌握形容詞與副詞</span></div>
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-num">Day 15</div>
+        <div class="day-title">🔨 建造與創作</div>
+        <div class="day-goal">折紙/IKEA效應/島嶼建設的詞彙</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">origami</span><span class="zh">摺紙 (10)</span></span>
+          <span class="chip mid"><span class="en">study</span><span class="zh">研究 (5)</span></span>
+          <span class="chip lo"><span class="en">build</span><span class="zh">建造 (3)</span></span>
+          <span class="chip lo"><span class="en">cabinet</span><span class="zh">櫥櫃 (4)</span></span>
+          <span class="chip lo"><span class="en">furniture</span><span class="zh">家具 (4)</span></span>
+          <span class="chip lo"><span class="en">effect</span><span class="zh">效應 (4)</span></span>
+          <span class="chip lo"><span class="en">part</span><span class="zh">零件 (4)</span></span>
+          <span class="chip lo"><span class="en">group</span><span class="zh">組別 (4)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🗂️</span><span class="method-text">找IKEA Effect相關英文短文，練習掌握段落重點</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 16</div>
+        <div class="day-title">💰 金錢與消費</div>
+        <div class="day-goal">廣告、表格題型常見詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">pay</span><span class="zh">支付 (10)</span></span>
+          <span class="chip mid"><span class="en">spend</span><span class="zh">花費 (4)</span></span>
+          <span class="chip lo"><span class="en">cost</span><span class="zh">費用 (3)</span></span>
+          <span class="chip lo"><span class="en">save</span><span class="zh">節省 (5)</span></span>
+          <span class="chip lo"><span class="en">money</span><span class="zh">金錢 (3)</span></span>
+          <span class="chip lo"><span class="en">price</span><span class="zh">價格 (1)</span></span>
+          <span class="chip lo"><span class="en">cent</span><span class="zh">分 (2)</span></span>
+          <span class="chip lo"><span class="en">free</span><span class="zh">免費的 (3)</span></span>
+          <span class="chip lo"><span class="en">public</span><span class="zh">公共的 (2)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📊</span><span class="method-text">練習看表格題（如City Card廣告），快速找出關鍵數字</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 17</div>
+        <div class="day-title">📱 媒體與通訊</div>
+        <div class="day-goal">現代生活與資訊相關詞彙</div>
+        <div class="vocab-list">
+          <span class="chip mid"><span class="en">picture</span><span class="zh">圖片 (6)</span></span>
+          <span class="chip mid"><span class="en">show</span><span class="zh">展示 (5)</span></span>
+          <span class="chip lo"><span class="en">video</span><span class="zh">影片 (2)</span></span>
+          <span class="chip lo"><span class="en">newspaper</span><span class="zh">報紙 (2)</span></span>
+          <span class="chip lo"><span class="en">news</span><span class="zh">消息 (2)</span></span>
+          <span class="chip lo"><span class="en">story</span><span class="zh">故事 (3)</span></span>
+          <span class="chip vlo"><span class="en">online</span><span class="zh">線上 (1)</span></span>
+          <span class="chip vlo"><span class="en">phone</span><span class="zh">電話 (1)</span></span>
+          <span class="chip vlo"><span class="en">station</span><span class="zh">電視台 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📺</span><span class="method-text">閱讀英文新聞標題，找出學過的詞彙並猜測文章大意</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 18</div>
+        <div class="day-title">🏥 健康與身體</div>
+        <div class="day-goal">健康、醫療類題型詞彙</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">hospital</span><span class="zh">醫院 (3)</span></span>
+          <span class="chip lo"><span class="en">exercise</span><span class="zh">運動 (3)</span></span>
+          <span class="chip vlo"><span class="en">health</span><span class="zh">健康 (1)</span></span>
+          <span class="chip vlo"><span class="en">healthy</span><span class="zh">健康的 (1)</span></span>
+          <span class="chip vlo"><span class="en">hurt</span><span class="zh">受傷 (3)</span></span>
+          <span class="chip vlo"><span class="en">doctor</span><span class="zh">醫生 (1)</span></span>
+          <span class="chip vlo"><span class="en">body</span><span class="zh">身體 (1)</span></span>
+          <span class="chip vlo"><span class="en">hungry</span><span class="zh">飢餓的 (1)</span></span>
+          <span class="chip vlo"><span class="en">thirsty</span><span class="zh">口渴的 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🏋️</span><span class="method-text">學習 health / healthy / healthily / healthier 等詞性變化</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 19</div>
+        <div class="day-title">⏰ 時間與頻率副詞</div>
+        <div class="day-goal">時態題型與段落連貫性的關鍵詞</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">morning</span><span class="zh">早晨 (4)</span></span>
+          <span class="chip lo"><span class="en">evening</span><span class="zh">傍晚 (1)</span></span>
+          <span class="chip lo"><span class="en">night</span><span class="zh">夜晚 (1)</span></span>
+          <span class="chip lo"><span class="en">later</span><span class="zh">後來 (2)</span></span>
+          <span class="chip lo"><span class="en">last</span><span class="zh">最後的 (7)</span></span>
+          <span class="chip lo"><span class="en">soon</span><span class="zh">很快 (1)</span></span>
+          <span class="chip vlo"><span class="en">anytime</span><span class="zh">隨時 (1)</span></span>
+          <span class="chip vlo"><span class="en">perhaps</span><span class="zh">也許 (1)</span></span>
+          <span class="chip vlo"><span class="en">probably</span><span class="zh">可能 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">⏳</span><span class="method-text">練習時態辨別：看時間副詞判斷用現在/過去/未來式</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 20</div>
+        <div class="day-title">🎨 藝術、文化與休閒</div>
+        <div class="day-goal">課外活動與文化題材詞彙</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">origami</span><span class="zh">摺紙 (10)</span></span>
+          <span class="chip lo"><span class="en">comic</span><span class="zh">漫畫 (2)</span></span>
+          <span class="chip lo"><span class="en">museum</span><span class="zh">博物館 (2)</span></span>
+          <span class="chip lo"><span class="en">history</span><span class="zh">歷史 (1)</span></span>
+          <span class="chip vlo"><span class="en">basketball</span><span class="zh">籃球 (1)</span></span>
+          <span class="chip vlo"><span class="en">dance</span><span class="zh">跳舞 (1)</span></span>
+          <span class="chip vlo"><span class="en">sing</span><span class="zh">歌唱 (1)</span></span>
+          <span class="chip vlo"><span class="en">hike</span><span class="zh">健行 (1)</span></span>
+          <span class="chip vlo"><span class="en">sail</span><span class="zh">航行 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🎭</span><span class="method-text">用這些詞彙描述你的興趣愛好，練習口語表達</span></div>
+      </div>
+
+      <div class="day-card review-day">
+        <div class="day-num">Day 21</div>
+        <div class="day-title">🔄 第三週複習 + 閱讀測驗</div>
+        <div class="day-goal">用一篇完整閱讀文章測試累積詞彙理解力</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">origami</span><span class="zh">摺紙</span></span>
+          <span class="chip rev"><span class="en">effect</span><span class="zh">效應</span></span>
+          <span class="chip rev"><span class="en">furniture</span><span class="zh">家具</span></span>
+          <span class="chip rev"><span class="en">probably</span><span class="zh">可能</span></span>
+          <span class="chip rev"><span class="en">healthy</span><span class="zh">健康的</span></span>
+        </div>
+        <div class="method"><span class="method-icon">📖</span><span class="method-text">選一篇114年閱讀測驗段落重新閱讀，計時並作答，檢驗進步幅度</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════ WEEK 4 ════ -->
+  <div class="week w4">
+    <div class="week-header">第四週：綜合複習 & 模擬衝刺 <span>Day 22–30 ｜目標：整合所有詞彙，熟練應試技巧</span></div>
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-num">Day 22</div>
+        <div class="day-title">📝 低頻詞彙補強（名詞）</div>
+        <div class="day-goal">容易忽略但偶爾出現的名詞</div>
+        <div class="vocab-list">
+          <span class="chip vlo"><span class="en">thunder</span><span class="zh">搶鋒頭 (2)</span></span>
+          <span class="chip vlo"><span class="en">stranger</span><span class="zh">陌生人 (1)</span></span>
+          <span class="chip vlo"><span class="en">excuse</span><span class="zh">藉口 (1)</span></span>
+          <span class="chip vlo"><span class="en">candle</span><span class="zh">蠟燭 (1)</span></span>
+          <span class="chip vlo"><span class="en">blanket</span><span class="zh">毛毯</span></span>
+          <span class="chip vlo"><span class="en">pond</span><span class="zh">池塘 (1)</span></span>
+          <span class="chip vlo"><span class="en">frog</span><span class="zh">青蛙 (1)</span></span>
+          <span class="chip vlo"><span class="en">statue</span><span class="zh">雕像</span></span>
+          <span class="chip vlo"><span class="en">camp</span><span class="zh">營地 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🧩</span><span class="method-text">利用上下文猜字義的技巧—即使不認識，也能從文章推斷</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 23</div>
+        <div class="day-title">🔤 低頻詞彙補強（形容詞/副詞）</div>
+        <div class="day-goal">增強答題精準度的描述詞彙</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">popular</span><span class="zh">受歡迎的 (2)</span></span>
+          <span class="chip lo"><span class="en">different</span><span class="zh">不同的 (2)</span></span>
+          <span class="chip lo"><span class="en">difficult</span><span class="zh">困難的 (2)</span></span>
+          <span class="chip lo"><span class="en">famous</span><span class="zh">著名的 (2)</span></span>
+          <span class="chip vlo"><span class="en">interestingly</span><span class="zh">有趣的是 (1)</span></span>
+          <span class="chip vlo"><span class="en">greatly</span><span class="zh">極大地 (1)</span></span>
+          <span class="chip vlo"><span class="en">blindly</span><span class="zh">盲目地 (1)</span></span>
+          <span class="chip vlo"><span class="en">surely</span><span class="zh">肯定地 (1)</span></span>
+          <span class="chip vlo"><span class="en">wise</span><span class="zh">有智慧的 (1)</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🎯</span><span class="method-text">這類副詞常是選擇題的陷阱，練習辨別語氣與程度差異</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 24</div>
+        <div class="day-title">🔁 易混淆詞彙整理</div>
+        <div class="day-goal">釐清形近義近詞，避免答題失誤</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">hear / listen</span><span class="zh">聽到 / 聆聽</span></span>
+          <span class="chip lo"><span class="en">look / see / watch</span><span class="zh">看的三種說法</span></span>
+          <span class="chip lo"><span class="en">cost / spend / pay</span><span class="zh">花費的三種說法</span></span>
+          <span class="chip lo"><span class="en">rise / raise</span><span class="zh">上升 / 舉起</span></span>
+          <span class="chip lo"><span class="en">believe / think / know</span><span class="zh">相信/認為/知道</span></span>
+          <span class="chip lo"><span class="en">story / history</span><span class="zh">故事 / 歷史</span></span>
+        </div>
+        <div class="method"><span class="method-icon">⚠️</span><span class="method-text">為每組易混淆詞彙各造一個例句，標示使用時機的差異</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 25</div>
+        <div class="day-title">🔗 重要片語與搭配詞</div>
+        <div class="day-goal">片語理解是閱讀的關鍵能力</div>
+        <div class="vocab-list">
+          <span class="chip lo"><span class="en">steal one's thunder</span><span class="zh">搶某人鋒頭</span></span>
+          <span class="chip lo"><span class="en">make sacrifices</span><span class="zh">做出犧牲</span></span>
+          <span class="chip lo"><span class="en">pay rise</span><span class="zh">加薪</span></span>
+          <span class="chip lo"><span class="en">go on vacation</span><span class="zh">去度假</span></span>
+          <span class="chip lo"><span class="en">pick up</span><span class="zh">接電話；撿起</span></span>
+          <span class="chip lo"><span class="en">cut down</span><span class="zh">砍倒；削減</span></span>
+          <span class="chip lo"><span class="en">walk away</span><span class="zh">離開；放棄</span></span>
+          <span class="chip lo"><span class="en">end up</span><span class="zh">最終導致</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🔗</span><span class="method-text">背誦片語時連同例句一起記，遇到文章中的慣用語才不會卡關</span></div>
+      </div>
+
+      <div class="day-card test-day">
+        <div class="day-num">Day 26</div>
+        <div class="day-title">📋 模擬測驗（第一回）</div>
+        <div class="day-goal">計時60分鐘，模擬正式考試流程</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">單題（第1–19題）</span><span class="zh">約20分鐘</span></span>
+          <span class="chip rev"><span class="en">題組（第20–43題）</span><span class="zh">約40分鐘</span></span>
+        </div>
+        <div class="method"><span class="method-icon">⏱️</span><span class="method-text">嚴格計時，做完後對照答案，把答錯的題目的關鍵詞彙整理出來</span></div>
+      </div>
+
+      <div class="day-card test-day">
+        <div class="day-num">Day 27</div>
+        <div class="day-title">🔍 錯題分析與弱點加強</div>
+        <div class="day-goal">針對昨日模擬測驗的錯誤進行深度復盤</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">找出答錯原因</span><span class="zh">詞彙？文法？閱讀理解？</span></span>
+          <span class="chip rev"><span class="en">詞彙題失分</span><span class="zh">加強低頻詞背誦</span></span>
+          <span class="chip rev"><span class="en">長段閱讀失分</span><span class="zh">練習找主旨句</span></span>
+        </div>
+        <div class="method"><span class="method-icon">🔬</span><span class="method-text">建立「錯題本」，記錄每次答錯的詞彙，每天翻閱複習</span></div>
+      </div>
+
+      <div class="day-card test-day">
+        <div class="day-num">Day 28</div>
+        <div class="day-title">📋 模擬測驗（第二回）</div>
+        <div class="day-goal">選用不同年份試題（建議102–110年任一份）</div>
+        <div class="vocab-list">
+          <span class="chip rev"><span class="en">限時作答</span><span class="zh">60分鐘</span></span>
+          <span class="chip rev"><span class="en">陌生詞彙</span><span class="zh">用上下文推敲字義</span></span>
+          <span class="chip rev"><span class="en">圖表題</span><span class="zh">快速掃描關鍵數字</span></span>
+        </div>
+        <div class="method"><span class="method-icon">⏱️</span><span class="method-text">重點練習：遇到不認識的單字，用文章脈絡猜測，不要卡住</span></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-num">Day 29</div>
+        <div class="day-title">⚡ 全單字快速複習</div>
+        <div class="day-goal">用最短時間掃過所有246個單字</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">高頻詞</span><span class="zh">各5秒快速確認</span></span>
+          <span class="chip mid"><span class="en">中頻詞</span><span class="zh">各10秒確認+例句</span></span>
+          <span class="chip lo"><span class="en">低頻詞</span><span class="zh">重點確認易忘的</span></span>
+          <span class="chip vlo"><span class="en">易混淆詞</span><span class="zh">再過一遍辨別重點</span></span>
+        </div>
+        <div class="method"><span class="method-icon">⚡</span><span class="method-text">用單字卡快速翻閱，有把握的跳過，不熟的再多看幾次</span></div>
+      </div>
+
+      <div class="day-card final-day">
+        <div class="day-num">Day 30</div>
+        <div class="day-title">🎯 考前最後衝刺</div>
+        <div class="day-goal">放鬆心情，確認基本功，保持最佳狀態</div>
+        <div class="vocab-list">
+          <span class="chip hi"><span class="en">people</span><span class="zh">人們 ✓</span></span>
+          <span class="chip hi"><span class="en">make</span><span class="zh">製作 ✓</span></span>
+          <span class="chip hi"><span class="en">work</span><span class="zh">工作 ✓</span></span>
+          <span class="chip hi"><span class="en">electricity</span><span class="zh">電力 ✓</span></span>
+          <span class="chip hi"><span class="en">government</span><span class="zh">政府 ✓</span></span>
+        </div>
+        <div class="method"><span class="method-icon">😴</span><span class="method-text">早點休息！充足睡眠比臨時抱佛腳更重要。明天全力以赴！</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="tips">
+    <div class="tips-box">
+      <h2>📚 學習方法建議</h2>
+      <div class="tips-grid">
+        <div class="tip-item">
+          <strong>🃏 單字卡法</strong>
+          正面：英文單字 + KK音標<br>背面：中文 + 例句。隨身攜帶，零碎時間複習。
+        </div>
+        <div class="tip-item">
+          <strong>📖 上下文推敲法</strong>
+          遇到不認識的字，先看前後句意再猜。會考設計讓你可以推測，不需要認識每個字。
+        </div>
+        <div class="tip-item">
+          <strong>🗂️ 主題分組記憶</strong>
+          把相關詞彙一起記（如：hospital, doctor, health, hurt），情境連結讓記憶更牢固。
+        </div>
+        <div class="tip-item">
+          <strong>⏱️ 計時練習習慣</strong>
+          正式考試60分鐘43題，平均每題不到1.5分鐘。每次模擬都要嚴格計時，養成節奏感。
+        </div>
+        <div class="tip-item">
+          <strong>📝 詞性變化一起學</strong>
+          一個字學四種：<em>health → healthy → healthily → healthier</em>。文法選擇題常考詞性。
+        </div>
+        <div class="tip-item">
+          <strong>🔄 間隔複習原則</strong>
+          新字學完後，第1天、第3天、第7天、第14天各複習一次，符合記憶曲線，效果最佳。
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-vocab -->
+
+<footer>
+  115年國中會考英文全方位備考系統・102–114年13年試題文法分析 × 246個核心詞彙 × 30天學習計畫
+</footer>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Make day cards clickable → vocab quiz ──
+  document.querySelectorAll('.day-card').forEach(card => {
+    const numEl = card.querySelector('.day-num');
+    if (!numEl) return;
+    const m = numEl.textContent.match(/\d+/);
+    if (!m) return;
+    const day = parseInt(m[0]);
+
+    // Add quiz badge
+    const badge = document.createElement('div');
+    badge.style.cssText = 'margin-top:.6rem; display:inline-flex; align-items:center; gap:.3rem; background:#ede9fe; color:#7c3aed; border-radius:6px; padding:.22rem .65rem; font-size:.75rem; font-weight:700; cursor:pointer;';
+    badge.innerHTML = '📝 開始測驗';
+    card.appendChild(badge);
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('click', () => {
+      window.location.href = `vocab_quiz.html?day=${day}`;
+    });
+  });
+</script>
+
+</body>
+</html>

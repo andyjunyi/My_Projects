@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國中2000單高頻單字查詢系統</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --accent: #f59e0b;
+    --accent-light: #fef3c7;
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 60%, #60a5fa 100%);
+    color: #fff;
+    padding: 28px 24px 24px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(30,64,175,.3);
+  }
+  header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: .02em; }
+  header p  { margin-top: 6px; font-size: .95rem; opacity: .85; }
+  #word-count-header {
+    display: inline-block;
+    margin-top: 10px;
+    background: rgba(255,255,255,.18);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: .85rem;
+    font-weight: 600;
+  }
+
+  /* ── Search Panel ── */
+  .search-panel {
+    max-width: 920px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+  }
+  .search-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 22px 18px;
+  }
+
+  /* Search mode tabs */
+  .mode-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    padding: 7px 18px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background: none;
+    color: var(--text-muted);
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mode-tab.active, .mode-tab:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .btn-guide {
+    margin-left: auto;
+    padding: 7px 16px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background: none;
+    color: var(--text-muted);
+    font-size: .86rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .btn-guide:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: #78350f;
+  }
+
+  /* Search row */
+  .search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  #search-input {
+    flex: 1;
+    padding: 11px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color .18s;
+  }
+  #search-input:focus { border-color: var(--primary); }
+  #search-input::placeholder { color: #aab; }
+
+  .btn-search {
+    padding: 11px 26px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .18s;
+    white-space: nowrap;
+  }
+  .btn-search:hover { background: var(--primary-dark); }
+  .btn-clear {
+    padding: 11px 16px;
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: .9rem;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .btn-clear:hover { background: #f1f5f9; color: var(--text); }
+
+  /* Search hint */
+  .search-hint {
+    margin-top: 10px;
+    font-size: .82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .search-hint code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+
+  /* ── Alphabet Quick Jump ── */
+  .alpha-bar {
+    max-width: 920px;
+    margin: 14px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .alpha-btn {
+    min-width: 30px; height: 30px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: #ccc;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    padding: 0 4px;
+    text-transform: uppercase;
+  }
+  .alpha-btn.has-words { color: var(--text); cursor: pointer; }
+  .alpha-btn:hover, .alpha-btn.active {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+  }
+
+  /* ── Filters ── */
+  .filters {
+    max-width: 920px;
+    margin: 14px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  select.filter-select {
+    padding: 6px 12px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background: var(--card-bg);
+    font-size: .84rem;
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    transition: border-color .18s;
+  }
+  select.filter-select:focus { border-color: var(--primary); }
+
+  .sort-btns { display: flex; gap: 6px; margin-left: auto; }
+  .btn-sort {
+    padding: 6px 13px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background: none;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all .18s;
+    white-space: nowrap;
+  }
+  .btn-sort.active, .btn-sort:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: #92400e;
+  }
+
+  /* ── Results bar ── */
+  .results-bar {
+    max-width: 920px;
+    margin: 18px auto 0;
+    padding: 0 16px;
+  }
+  .results-count {
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .results-count span { color: var(--primary); font-size: 1rem; }
+
+  /* ── Word Cards ── */
+  #results {
+    max-width: 920px;
+    margin: 14px auto 20px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .word-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1.5px solid transparent;
+    transition: border-color .18s, box-shadow .18s;
+  }
+  .word-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(37,99,235,.12);
+  }
+
+  /* Card header */
+  .card-head {
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .word-en {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    letter-spacing: .01em;
+  }
+  .word-phonetic {
+    font-size: .95rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .syl-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: .75rem;
+    color: var(--text-muted);
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 2px 8px;
+  }
+  .syl-dots { display: inline-flex; gap: 3px; align-items: center; }
+  .syl-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: .6;
+  }
+  .word-pos {
+    font-size: .78rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  .word-zh {
+    font-size: .98rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .card-badges {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: .73rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-level   { background: #ede9fe; color: #5b21b6; }
+  .badge-cefr    { background: #fce7f3; color: #9d174d; }
+  .badge-core    { background: var(--success-light); color: #065f46; }
+  .badge-consol  { background: var(--accent-light);  color: #78350f; }
+  .badge-rank    { background: #f1f5f9; color: #475569; }
+
+  /* Card body */
+  .card-body {
+    padding: 14px 20px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+  }
+  @media (max-width: 580px) { .card-body { grid-template-columns: 1fr; } }
+
+  .full-width { grid-column: 1 / -1; }
+
+  .field-label {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: 3px;
+  }
+  .field-value { font-size: .92rem; color: var(--text); line-height: 1.55; }
+  .field-value.italic { font-style: italic; color: #374151; }
+  .field-value.zh-small { color: #6b7280; font-size: .87rem; margin-top: 2px; }
+
+  .topic-tag {
+    display: inline-block;
+    padding: 3px 11px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: .82rem;
+    font-weight: 600;
+  }
+
+  /* Card stats strip */
+  .card-stats {
+    padding: 10px 20px;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 4px 18px 4px 0;
+    border-right: 1px solid var(--border);
+    margin-right: 18px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-label { font-size: .68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+  .stat-value { font-size: .88rem; font-weight: 600; color: var(--text); }
+  .stat-value.hi { color: var(--primary); }
+  .years-wrap { flex: 1; min-width: 200px; padding: 4px 0; }
+  .years-text { font-size: .78rem; color: #64748b; }
+
+  /* ── Pagination ── */
+  .pagination {
+    max-width: 920px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .page-btn {
+    min-width: 36px; height: 36px;
+    padding: 0 10px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: .86rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .page-btn:hover   { border-color: var(--primary); color: var(--primary); }
+  .page-btn.active  { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .page-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* ── Empty / Loading ── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 14px; }
+
+  #loading {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+  }
+  .spinner {
+    display: inline-block;
+    width: 36px; height: 36px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  mark { background: #fef08a; border-radius: 2px; padding: 0 1px; color: inherit; }
+
+  /* ── Exam Section ── */
+  #exam-section {
+    max-width: 920px;
+    margin: 24px auto 10px;
+    padding: 0 16px;
+  }
+  .exam-section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: #1e40af;
+    color: #fff;
+    border-radius: var(--radius) var(--radius) 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .exam-section-icon { font-size: 1.2rem; }
+  .exam-toggle-btn {
+    margin-left: auto;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    color: #fff;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .exam-toggle-btn:hover { background: rgba(255,255,255,.3); }
+
+  #exam-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1.5px solid #1e40af;
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
+  }
+  #exam-results.collapsed { display: none; }
+
+  /* Exam card */
+  .exam-card {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+  }
+  .exam-card:last-child { border-bottom: none; }
+
+  .exam-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .exam-file-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border-radius: 10px;
+    font-size: .75rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .exam-file-tag:hover { background: #bfdbfe; }
+  .exam-qnum {
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .exam-qtext {
+    font-size: .95rem;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .exam-blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--primary);
+    min-width: 60px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .exam-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 16px;
+    margin-bottom: 10px;
+    font-size: .88rem;
+  }
+  @media (max-width: 500px) { .exam-options { grid-template-columns: 1fr; } }
+
+  .exam-opt {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    color: var(--text);
+  }
+  .exam-opt.correct {
+    border-color: var(--success);
+    background: var(--success-light);
+    color: #065f46;
+    font-weight: 700;
+  }
+
+  .exam-full {
+    font-size: .87rem;
+  }
+  .exam-full-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #fffbeb;
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    transition: background .15s;
+  }
+  .exam-full-row.exam-selected {
+    background: #fef3c7;
+    border-left-color: #d97706;
+  }
+  .exam-full-text { flex: 1; min-width: 0; font-size: .87rem; line-height: 1.6; }
+  .exam-full .en { color: var(--text); }
+  .exam-full .zh { color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Example row with checkbox ── */
+  .example-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .example-text { flex: 1; min-width: 0; }
+
+  /* Custom checkbox */
+  .ex-check-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 2px;
+  }
+  .ex-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    transition: all .15s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .ex-check:hover { border-color: var(--primary); background: var(--primary-light); }
+  .ex-check:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+  .ex-check:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 1px;
+    width: 8px; height: 12px;
+    border: 2.5px solid #fff;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+
+  /* Selected card highlight */
+  .word-card.selected {
+    border-color: var(--primary);
+    background: #f0f7ff;
+  }
+  .word-card.selected .card-body { background: #f0f7ff; }
+
+  /* ── Floating copy toolbar ── */
+  #copy-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1e293b;
+    color: #fff;
+    border-radius: 14px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.28);
+    z-index: 1000;
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #copy-bar.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+  #copy-bar .sel-count {
+    font-size: .9rem;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+  #copy-bar .sel-count span { color: #7dd3fc; font-size: 1.05rem; }
+  .btn-copy-sel {
+    padding: 8px 20px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-copy-sel:hover { background: var(--primary-dark); }
+  .btn-clear-sel {
+    padding: 8px 14px;
+    background: rgba(255,255,255,.1);
+    color: #cbd5e1;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-clear-sel:hover { background: rgba(255,255,255,.2); }
+  .copy-done {
+    font-size: .82rem;
+    color: #86efac;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .copy-done.show { opacity: 1; }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: .78rem;
+    border-top: 1px solid var(--border);
+    margin-top: 10px;
+    line-height: 1.8;
+  }
+  footer code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-family: monospace; }
+
+  /* ── Add Word Button & Export ── */
+  .btn-add-word {
+    padding: 7px 15px;
+    background: var(--success);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+    white-space: nowrap;
+  }
+  .btn-add-word:hover { background: #059669; }
+  .btn-export {
+    padding: 7px 13px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .btn-export:hover { background: var(--border); color: var(--text); }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.2);
+    width: min(540px, 95vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 26px 30px;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .modal-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0 2px;
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-lookup-row { display: flex; gap: 8px; margin-bottom: 6px; }
+  .modal-lookup-row .form-input { flex: 1; font-size: 1rem; font-weight: 600; }
+  .form-row { margin-bottom: 13px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 13px; }
+  .form-label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: .91rem;
+    color: var(--text);
+    font-family: inherit;
+    background: #fff;
+    transition: border-color .15s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+  .form-textarea { resize: vertical; min-height: 58px; }
+  .btn-lookup {
+    padding: 9px 17px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: .88rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .btn-lookup:hover { background: var(--primary-dark); }
+  .btn-lookup:disabled { background: #94a3b8; cursor: not-allowed; }
+  .lookup-status {
+    font-size: .81rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    min-height: 17px;
+  }
+  .lookup-status.ok  { color: var(--success); }
+  .lookup-status.err { color: #ef4444; }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .btn-modal-cancel {
+    padding: 9px 18px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 8px;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-muted);
+  }
+  .btn-modal-cancel:hover { background: var(--border); }
+  .btn-modal-save {
+    padding: 9px 22px;
+    background: var(--success);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: .9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .btn-modal-save:hover { background: #059669; }
+  .badge-custom {
+    background: #fef9c3;
+    color: #713f12;
+    border: 1px solid #fde68a;
+  }
+  /* ── Inline add form (shown in-place when word not found) ── */
+  .inline-add-wrap {
+    margin: 20px auto 0;
+    max-width: 600px;
+    background: #f0fdf4;
+    border: 1.5px solid #a7f3d0;
+    border-radius: 14px;
+    padding: 22px 26px 18px;
+    text-align: left;
+  }
+  .inline-add-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 4px;
+  }
+  .inline-add-status {
+    font-size: .82rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    min-height: 16px;
+  }
+  .inline-add-status.ok  { color: var(--success); }
+  .inline-add-status.err { color: #ef4444; }
+  .inline-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+    margin-bottom: 14px;
+  }
+  .inline-full { grid-column: 1 / -1; }
+  .inline-field-label {
+    display: block;
+    font-size: .73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .inline-add-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #a7f3d0;
+  }
+  .inline-add-msg {
+    font-size: .82rem;
+    color: var(--success);
+    flex: 1;
+  }
+  .form-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239,68,68,.12) !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <h1>📚 國中2000單高頻單字查詢系統</h1>
+  <p>國中2000單字庫 × 歷屆會考高頻考題分析</p>
+  <div id="word-count-header">載入中…</div>
+</header>
+
+<!-- ── Search Panel ── -->
+<div class="search-panel">
+  <div class="search-card">
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="word">🔤 單字查詢</button>
+      <button class="mode-tab" data-mode="syllable">🎵 音節查詢</button>
+      <button class="mode-tab" data-mode="letter">🔡 字母查詢</button>
+      <a class="btn-guide" href="guide.html" target="_blank">📖 使用說明</a>
+    </div>
+    <div class="search-row">
+      <input id="search-input" type="text" placeholder="輸入單字或部分單字…"
+             autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="btn-search" onclick="doSearch()">搜尋</button>
+      <button class="btn-clear" onclick="clearAll()">清除</button>
+    </div>
+    <div class="search-hint" id="search-hint">
+      <strong>單字查詢：</strong>輸入完整或部分英文單字，例如輸入 <code>act</code> 可找到 act、action、active、react…
+    </div>
+  </div>
+</div>
+
+<!-- ── Alphabet Quick Jump ── -->
+<div class="alpha-bar" id="alpha-bar"></div>
+
+<!-- ── Filters & Sort ── -->
+<div class="filters">
+  <span class="filter-label">篩選：</span>
+
+  <select class="filter-select" id="filter-level" onchange="applyFiltersAndRender()">
+    <option value="">全部級別</option>
+    <option value="1200單">1200單</option>
+    <option value="800單">800單</option>
+  </select>
+
+  <select class="filter-select" id="filter-cefr" onchange="applyFiltersAndRender()">
+    <option value="">全部CEFR</option>
+    <option value="A1">A1</option>
+    <option value="A2">A2</option>
+    <option value="B1">B1</option>
+    <option value="B2">B2</option>
+  </select>
+
+  <select class="filter-select" id="filter-topic" onchange="applyFiltersAndRender()">
+    <option value="">全部主題</option>
+  </select>
+
+  <select class="filter-select" id="filter-syl" onchange="applyFiltersAndRender()">
+    <option value="">全部音節數</option>
+    <option value="1">1 音節</option>
+    <option value="2">2 音節</option>
+    <option value="3">3 音節</option>
+    <option value="4">4 音節</option>
+    <option value="5+">5+ 音節</option>
+  </select>
+
+  <select class="filter-select" id="filter-special" onchange="applyFiltersAndRender()">
+    <option value="">不限標記</option>
+    <option value="core300">核心300字</option>
+    <option value="consol450">鞏固450字</option>
+    <option value="exam">考題高頻字</option>
+  </select>
+
+  <div class="sort-btns">
+    <button class="btn-sort active" data-sort="alpha" onclick="setSort('alpha',this)">A→Z</button>
+    <button class="btn-sort" data-sort="freq"  onclick="setSort('freq',this)">依頻率</button>
+    <button class="btn-sort" data-sort="cefr"  onclick="setSort('cefr',this)">依難度</button>
+  </div>
+  <button class="btn-add-word" onclick="openAddModal()">＋ 新增單字</button>
+  <button class="btn-export" onclick="exportVocabJS()" title="下載含自訂單字的 vocab_data.js，覆蓋後即永久生效">↓ 匯出</button>
+</div>
+
+<!-- ── Results info ── -->
+<div class="results-bar">
+  <div class="results-count" id="results-count"></div>
+</div>
+
+<!-- ── Loading ── -->
+<div id="loading">
+  <div><div class="spinner"></div></div>
+  正在載入單字資料庫…
+</div>
+
+<!-- ── Cards ── -->
+<div id="results"></div>
+
+<!-- ── Pagination ── -->
+<div class="pagination" id="pagination"></div>
+
+<!-- ── Exam Results ── -->
+<div id="exam-section" style="display:none">
+  <div class="exam-section-head">
+    <span class="exam-section-icon">📝</span>
+    <span id="exam-section-title">相關試題</span>
+    <button class="exam-toggle-btn" id="exam-toggle-btn" onclick="toggleExamSection()">收合 ▲</button>
+  </div>
+  <div id="exam-results"></div>
+</div>
+
+<!-- ── Add Word Modal ── -->
+<div class="modal-overlay" id="add-modal" onclick="if(event.target===this)closeAddModal()">
+  <div class="modal">
+    <div class="modal-title">
+      ＋ 新增單字
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+    </div>
+
+    <div class="modal-lookup-row">
+      <input class="form-input" id="add-word" placeholder="輸入英文單字…"
+             autocomplete="off" autocorrect="off" spellcheck="false"
+             onkeydown="if(event.key==='Enter')lookupWord()">
+      <button class="btn-lookup" id="lookup-btn" onclick="lookupWord()">自動查詢</button>
+    </div>
+    <div class="lookup-status" id="lookup-status"></div>
+
+    <div class="form-row-2">
+      <div>
+        <label class="form-label">KK 音標</label>
+        <input class="form-input" id="add-phonetic" placeholder="如 ɡɜl" autocomplete="off" spellcheck="false">
+      </div>
+      <div>
+        <label class="form-label">詞性</label>
+        <select class="form-select" id="add-pos">
+          <option value="">（未指定）</option>
+          <option value="名詞">名詞</option>
+          <option value="動詞">動詞</option>
+          <option value="形容詞">形容詞</option>
+          <option value="副詞">副詞</option>
+          <option value="介系詞">介系詞</option>
+          <option value="連接詞">連接詞</option>
+          <option value="代名詞">代名詞</option>
+          <option value="感嘆詞">感嘆詞</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">中文釋義</label>
+      <input class="form-input" id="add-chinese" placeholder="如 (n.) 女孩">
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">英文例句</label>
+      <textarea class="form-textarea" id="add-example" rows="2" placeholder="英文例句…"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">例句中文翻譯</label>
+      <textarea class="form-textarea" id="add-example-zh" rows="2" placeholder="例句的中文翻譯…"></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <span id="add-msg" style="font-size:.82rem;color:var(--success);flex:1"></span>
+      <button class="btn-modal-cancel" onclick="closeAddModal()">取消</button>
+      <button class="btn-modal-save" onclick="saveWord()">新增單字</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Floating copy toolbar ── -->
+<div id="copy-bar">
+  <div class="sel-count">已選取 <span id="sel-num">0</span> 個例句</div>
+  <button class="btn-copy-sel" onclick="copySelected()">📋 複製到剪貼簿</button>
+  <button class="btn-clear-sel" onclick="clearSelection()">✕ 清除選取</button>
+  <span class="copy-done" id="copy-done">✓ 已複製！</span>
+</div>
+
+<footer>
+  國中2000單高頻單字查詢系統 &nbsp;·&nbsp; 資料來源：國中2000單高頻單字.xlsx<br>
+  如需更新單字資料，請更新 Excel 後重新執行 <code>generate_data.py</code>，覆蓋 <code>vocab_data.js</code> 即可
+</footer>
+
+<script src="vocab_data.js"></script>
+<script src="exam_data.js"></script>
+<script>
+/* ──────────────────────────────────────────
+   State
+────────────────────────────────────────── */
+let ALL = [];          // all words loaded from JSON
+let FILTERED = [];     // after search + filter
+let SELECTED      = new Set(); // selected vocab word keys (w.word)
+let SELECTED_EXAM = new Map(); // key: "file::num" → { en_full, zh_full }
+let EXAM_COLLAPSED = false;
+let MODE = 'word';
+let SORT = 'alpha';
+let PAGE = 1;
+const PER_PAGE = 20;
+
+const HINTS = {
+  word:     '<strong>單字查詢：</strong>輸入完整或部分英文單字，例如 <code>act</code> 可找到 act、action、active、react…',
+  syllable: '<strong>音節查詢：</strong>輸入數字（如 <code>3</code>）篩選特定音節數；或輸入音標片段（如 <code>eɪ</code>）找含該音的單字',
+  letter:   '<strong>字母查詢：</strong>輸入起始字母（如 <code>pre</code>）找以 pre 開頭的單字；加 <code>*</code> 前綴（如 <code>*tion</code>）找包含該字母組合的單字'
+};
+
+const CEFR_ORDER = { A1:1, A2:2, B1:3, B2:4 };
+
+/* ──────────────────────────────────────────
+   Selection & Copy
+────────────────────────────────────────── */
+function toggleSelect(checkbox) {
+  const word = checkbox.dataset.word;
+  const card = document.getElementById('card-' + word);
+  if (checkbox.checked) {
+    SELECTED.add(word);
+    card && card.classList.add('selected');
+  } else {
+    SELECTED.delete(word);
+    card && card.classList.remove('selected');
+  }
+  updateCopyBar();
+}
+
+function toggleExamSelect(checkbox) {
+  const key     = checkbox.dataset.key;
+  const en_full = checkbox.dataset.en;
+  const zh_full = checkbox.dataset.zh;
+  const keyword = checkbox.dataset.kw;
+  const wrap    = checkbox.closest('.exam-full-row');
+  if (checkbox.checked) {
+    SELECTED_EXAM.set(key, { en_full, zh_full, keyword });
+    wrap && wrap.classList.add('exam-selected');
+  } else {
+    SELECTED_EXAM.delete(key);
+    wrap && wrap.classList.remove('exam-selected');
+  }
+  updateCopyBar();
+}
+
+function updateCopyBar() {
+  const bar = document.getElementById('copy-bar');
+  const num = document.getElementById('sel-num');
+  const total = SELECTED.size + SELECTED_EXAM.size;
+  num.textContent = total;
+  bar.classList.toggle('visible', total > 0);
+}
+
+function clearSelection() {
+  SELECTED.clear();
+  SELECTED_EXAM.clear();
+  document.querySelectorAll('.ex-check').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.word-card.selected').forEach(c => c.classList.remove('selected'));
+  updateCopyBar();
+}
+
+function copySelected() {
+  if (SELECTED.size === 0 && SELECTED_EXAM.size === 0) return;
+
+  const vocabItems = ALL.filter(w => SELECTED.has(w.word));
+  const examItems  = [...SELECTED_EXAM.values()];
+
+  // 在句子中將關鍵字標記為粗體＋底線＋紅色
+  function highlightKeyword(sentence, keyword) {
+    if (!sentence || !keyword) return sentence || '';
+    const esc = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return sentence.replace(
+      new RegExp(`\\b${esc}\\b`, 'gi'),
+      m => `<b><u><span style="color:#cc0000">${m}</span></u></b>`
+    );
+  }
+
+  // 純文字版
+  const vocabPlain = vocabItems.map(w => [w.example, w.example_zh].filter(Boolean).join('\n'));
+  const examPlain  = examItems.map(e => [e.en_full, e.zh_full].filter(Boolean).join('\n'));
+  const plainText  = [...vocabPlain, ...examPlain].join('\n\n');
+
+  // HTML 版
+  const vocabHTML = vocabItems.map(w => {
+    const rows = [];
+    if (w.example)    rows.push(`<p style="margin:0 0 2px 0">${highlightKeyword(w.example, w.word)}</p>`);
+    if (w.example_zh) rows.push(`<p style="margin:0">${w.example_zh}</p>`);
+    return rows.join('');
+  });
+  const examHTML = examItems.map(e => {
+    const rows = [];
+    if (e.en_full) rows.push(`<p style="margin:0 0 2px 0">${highlightKeyword(e.en_full, e.keyword)}</p>`);
+    if (e.zh_full) rows.push(`<p style="margin:0">${e.zh_full}</p>`);
+    return rows.join('');
+  });
+  const sep = '<p style="margin:10px 0 0 0">&nbsp;</p>';
+  const htmlBody = [...vocabHTML, ...examHTML].join(sep);
+
+  const htmlContent = `<html><head><meta charset="utf-8"></head><body>${htmlBody}</body></html>`;
+
+  if (window.ClipboardItem) {
+    navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html':  new Blob([htmlContent], { type: 'text/html' }),
+        'text/plain': new Blob([plainText],   { type: 'text/plain' }),
+      })
+    ]).then(() => clearSelection())
+      .catch(() => fallbackCopy(plainText));
+  } else {
+    fallbackCopy(plainText);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  clearSelection();
+}
+
+/* ──────────────────────────────────────────
+   Load Data（從 vocab_data.js 讀取，支援 file:// 直接開啟）
+────────────────────────────────────────── */
+function loadData() {
+  // vocab_data.js 以 <script src> 方式載入，執行後 window.VOCAB_DATA 即存在
+  if (typeof window.VOCAB_DATA === 'undefined') {
+    document.getElementById('loading').innerHTML =
+      `<div style="color:#ef4444;font-size:.95rem">⚠️ 資料載入失敗<br>
+       <small>請確認 <strong>vocab_data.js</strong> 與 index.html 位於同一目錄，<br>
+       並重新執行 <code>generate_data.py</code> 產生此檔案。</small></div>`;
+    return;
+  }
+  const data = window.VOCAB_DATA;
+  ALL = data.words;
+
+  // 合併 localStorage 自訂單字
+  const customs = getCustomWords();
+  if (customs.length > 0) {
+    const baseKeys = new Set(ALL.map(w => w.word.toLowerCase()));
+    customs.forEach(cw => {
+      if (!baseKeys.has(cw.word.toLowerCase())) ALL.push(cw);
+    });
+  }
+
+  document.getElementById('word-count-header').textContent = `共 ${ALL.length} 個單字`;
+  document.getElementById('loading').style.display = 'none';
+  buildTopicFilter();
+  buildAlphaBar();
+  FILTERED = [...ALL];
+  sortWords();
+  renderPage(1);
+}
+
+/* ──────────────────────────────────────────
+   Build UI helpers
+────────────────────────────────────────── */
+function buildTopicFilter() {
+  const topics = [...new Set(ALL.map(w => w.topic).filter(Boolean))].sort();
+  const sel = document.getElementById('filter-topic');
+  topics.forEach(t => {
+    const o = document.createElement('option');
+    o.value = t; o.textContent = t;
+    sel.appendChild(o);
+  });
+}
+
+function buildAlphaBar() {
+  const bar = document.getElementById('alpha-bar');
+  const present = new Set(ALL.map(w => w.word[0].toLowerCase()));
+  'abcdefghijklmnopqrstuvwxyz'.split('').forEach(l => {
+    const btn = document.createElement('button');
+    const has = present.has(l);
+    btn.className = 'alpha-btn' + (has ? ' has-words' : '');
+    btn.textContent = l;
+    btn.title = has ? `以 ${l.toUpperCase()} 開頭的單字` : '無此字母開頭的單字';
+    if (has) btn.onclick = () => jumpToLetter(l, btn);
+    bar.appendChild(btn);
+  });
+}
+
+function jumpToLetter(letter, btn) {
+  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  setMode('letter');
+  document.getElementById('search-input').value = letter;
+  doSearch();
+}
+
+/* ──────────────────────────────────────────
+   Mode tabs
+────────────────────────────────────────── */
+document.querySelectorAll('.mode-tab').forEach(tab => {
+  tab.onclick = () => {
+    setMode(tab.dataset.mode);
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  };
+});
+
+function setMode(m) {
+  MODE = m;
+  document.querySelectorAll('.mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === m);
+  });
+  document.getElementById('search-hint').innerHTML = HINTS[m];
+  document.getElementById('search-input').placeholder = {
+    word:     '輸入單字或部分單字…',
+    syllable: '輸入音節數（數字）或音標片段…',
+    letter:   '輸入起始字母，或用 * 前綴搜尋含字母組合的單字…'
+  }[m];
+}
+
+/* ──────────────────────────────────────────
+   Search
+────────────────────────────────────────── */
+function doSearch() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  let res = [...ALL];
+
+  if (q) {
+    if (MODE === 'word') {
+      res = res.filter(w => w.word.toLowerCase().includes(q));
+    } else if (MODE === 'syllable') {
+      if (/^\d+$/.test(q)) {
+        const n = parseInt(q, 10);
+        res = res.filter(w => (w.syllable_count || 0) === n);
+      } else {
+        res = res.filter(w => w.phonetic && w.phonetic.toLowerCase().includes(q));
+      }
+    } else {
+      // letter mode
+      if (q.startsWith('*')) {
+        const pat = q.slice(1);
+        res = res.filter(w => w.word.toLowerCase().includes(pat));
+      } else {
+        res = res.filter(w => w.word.toLowerCase().startsWith(q));
+      }
+    }
+  }
+
+  FILTERED = res;
+  applyFiltersAndRender();
+}
+
+function clearAll() {
+  document.getElementById('search-input').value = '';
+  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filter-select').forEach(s => s.value = '');
+  FILTERED = [...ALL];
+  sortWords();
+  renderPage(1);
+  renderExams('');
+}
+
+/* ──────────────────────────────────────────
+   Filters (applied on top of search results)
+────────────────────────────────────────── */
+function applyFiltersAndRender() {
+  // Re-run search first to get fresh search results
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  let res = [...ALL];
+
+  if (q) {
+    if (MODE === 'word') {
+      res = res.filter(w => w.word.toLowerCase().includes(q));
+    } else if (MODE === 'syllable') {
+      if (/^\d+$/.test(q)) {
+        res = res.filter(w => (w.syllable_count||0) === parseInt(q,10));
+      } else {
+        res = res.filter(w => w.phonetic && w.phonetic.toLowerCase().includes(q));
+      }
+    } else {
+      if (q.startsWith('*')) res = res.filter(w => w.word.toLowerCase().includes(q.slice(1)));
+      else res = res.filter(w => w.word.toLowerCase().startsWith(q));
+    }
+  }
+
+  // Now apply dropdown filters
+  const level   = document.getElementById('filter-level').value;
+  const cefr    = document.getElementById('filter-cefr').value;
+  const topic   = document.getElementById('filter-topic').value;
+  const sylSel  = document.getElementById('filter-syl').value;
+  const special = document.getElementById('filter-special').value;
+
+  if (level)  res = res.filter(w => w.level === level);
+  if (cefr)   res = res.filter(w => w.cefr  === cefr);
+  if (topic)  res = res.filter(w => w.topic === topic);
+  if (sylSel) {
+    if (sylSel === '5+') res = res.filter(w => (w.syllable_count||0) >= 5);
+    else res = res.filter(w => (w.syllable_count||0) === parseInt(sylSel,10));
+  }
+  if (special === 'core300')   res = res.filter(w => w.core300);
+  if (special === 'consol450') res = res.filter(w => w.consolidate450);
+  if (special === 'exam')      res = res.filter(w => w.rank_935 != null);
+
+  FILTERED = res;
+  sortWords();
+  renderPage(1);
+  renderExams(q);
+}
+
+/* ──────────────────────────────────────────
+   Sort
+────────────────────────────────────────── */
+function setSort(s, btn) {
+  SORT = s;
+  document.querySelectorAll('.btn-sort').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  sortWords();
+  renderPage(1);
+}
+
+function sortWords() {
+  if (SORT === 'alpha') {
+    FILTERED.sort((a,b) => a.word.localeCompare(b.word));
+  } else if (SORT === 'freq') {
+    FILTERED.sort((a,b) => {
+      if (a.rank_935 == null && b.rank_935 == null) return a.word.localeCompare(b.word);
+      if (a.rank_935 == null) return 1;
+      if (b.rank_935 == null) return -1;
+      return a.rank_935 - b.rank_935;
+    });
+  } else if (SORT === 'cefr') {
+    FILTERED.sort((a,b) => {
+      const ca = CEFR_ORDER[a.cefr] ?? 9;
+      const cb = CEFR_ORDER[b.cefr] ?? 9;
+      return ca !== cb ? ca - cb : a.word.localeCompare(b.word);
+    });
+  }
+}
+
+/* ──────────────────────────────────────────
+   Render
+────────────────────────────────────────── */
+function renderPage(p) {
+  PAGE = p;
+  const total = FILTERED.length;
+  const pages = Math.ceil(total / PER_PAGE);
+  const start = (p - 1) * PER_PAGE;
+  const slice = FILTERED.slice(start, start + PER_PAGE);
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+
+  // Count label
+  const _q0 = document.getElementById('search-input').value.trim().toLowerCase();
+  const _canAdd = total === 0 && MODE === 'word'
+    && /^[a-z'-]+$/.test(_q0) && _q0.length >= 2
+    && !ALL.some(w => w.word.toLowerCase() === _q0);
+  document.getElementById('results-count').innerHTML = total === 0
+    ? (_canAdd ? `「<strong>${_q0}</strong>」尚未收錄，請填寫下方表單新增` : '找不到符合條件的單字')
+    : `找到 <span>${total}</span> 個單字（第 ${start+1}–${Math.min(start+PER_PAGE,total)} 個）`;
+
+  // Header count — reflect current filtered count vs total
+  document.getElementById('word-count-header').textContent =
+    total === ALL.length ? `共 ${ALL.length} 個單字` : `共 ${total} / ${ALL.length} 個單字`;
+
+  const container = document.getElementById('results');
+  if (total === 0) {
+    const q = document.getElementById('search-input').value.trim().toLowerCase();
+    const canAdd = MODE === 'word'
+      && /^[a-z'-]+$/.test(q) && q.length >= 2
+      && !ALL.some(w => w.word.toLowerCase() === q);
+    const posOptions = ['名詞','動詞','形容詞','副詞','介系詞','連接詞','代名詞','感嘆詞']
+      .map(p => `<option value="${p}">${p}</option>`).join('');
+    container.innerHTML = `<div class="empty-state">
+      <div class="icon">🔍</div>
+      <p>找不到符合條件的單字${canAdd ? '' : '，請嘗試其他搜尋詞或調整篩選條件'}</p>
+      ${canAdd ? `
+      <div class="inline-add-wrap">
+        <div class="inline-add-title">「<strong>${q}</strong>」尚未收錄 — 查詢並新增</div>
+        <div class="inline-add-status" id="il-status">查詢字典中…</div>
+        <div class="inline-fields">
+          <div>
+            <label class="inline-field-label">KK 音標</label>
+            <input id="il-phonetic" class="form-input" autocomplete="off" spellcheck="false" placeholder="音標">
+          </div>
+          <div>
+            <label class="inline-field-label">詞性</label>
+            <select id="il-pos" class="form-select">
+              <option value="">（未指定）</option>
+              ${posOptions}
+            </select>
+          </div>
+          <div class="inline-full">
+            <label class="inline-field-label">中文釋義 <span style="color:#ef4444">*</span></label>
+            <input id="il-chinese" class="form-input" placeholder="如 (n.) 大氣層">
+          </div>
+          <div class="inline-full">
+            <label class="inline-field-label">英文例句</label>
+            <textarea id="il-example" class="form-textarea" rows="2" placeholder="英文例句…"></textarea>
+          </div>
+          <div class="inline-full">
+            <label class="inline-field-label">例句中文翻譯</label>
+            <textarea id="il-example-zh" class="form-textarea" rows="2" placeholder="中文翻譯…"></textarea>
+          </div>
+        </div>
+        <div class="inline-add-actions">
+          <span class="inline-add-msg" id="il-msg"></span>
+          <button class="btn-modal-cancel" onclick="clearAll()">取消</button>
+          <button class="btn-modal-save" onclick="saveInlineWord()">確認新增</button>
+        </div>
+      </div>` : ''}
+    </div>`;
+    document.getElementById('pagination').innerHTML = '';
+    if (canAdd) lookupInline(q);
+    return;
+  }
+
+  container.innerHTML = slice.map(w => cardHTML(w, q)).join('');
+  renderPagination(p, pages);
+  window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+}
+
+/* ── Card HTML ── */
+function hl(text, q) {
+  if (!q || !text) return escHTML(text || '');
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return escHTML(text).replace(new RegExp(escHTML(esc), 'gi'), m => `<mark>${m}</mark>`);
+}
+function escHTML(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function cardHTML(w, q) {
+  // Syllable dots (max 6)
+  const n = Math.min(w.syllable_count || 0, 6);
+  const dots = n ? `<span class="syl-info">
+    <span class="syl-dots">${'<span class="syl-dot"></span>'.repeat(n)}</span>
+    ${w.syllable_count}音節
+  </span>` : '';
+
+  // Badges
+  const badges = [
+    w._custom ? `<span class="badge badge-custom">手動新增</span>` : '',
+    w.level  ? `<span class="badge badge-level">${escHTML(w.level)}</span>` : '',
+    w.cefr   ? `<span class="badge badge-cefr">${escHTML(w.cefr)}</span>` : '',
+    w.core300 ? `<span class="badge badge-core">核心300</span>` : '',
+    w.consolidate450 ? `<span class="badge badge-consol">鞏固450</span>` : '',
+    w.rank_935 != null ? `<span class="badge badge-rank">考頻 #${w.rank_935}</span>` : '',
+  ].filter(Boolean).join('');
+
+  // Highlight by mode
+  const wordHL = (MODE === 'word' || (MODE === 'letter' && !q.startsWith('*')))
+    ? hl(w.word, q) : escHTML(w.word);
+  const phonHL = MODE === 'syllable' && !/^\d+$/.test(q) ? hl(w.phonetic, q) : escHTML(w.phonetic || '');
+
+  // Stats strip (only for exam words)
+  const statsStrip = w.rank_935 != null ? `
+    <div class="card-stats">
+      <div class="stat-item">
+        <div class="stat-label">考頻排名</div>
+        <div class="stat-value hi">#${w.rank_935}</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">出現次數</div>
+        <div class="stat-value hi">${w.frequency} 次</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">出現年份數</div>
+        <div class="stat-value">${w.years_count} / 10 年</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">佔總詞頻</div>
+        <div class="stat-value">${(w.freq_percent||0).toFixed(3)}%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">累積詞頻</div>
+        <div class="stat-value">${(w.cumulative_percent||0).toFixed(2)}%</div>
+      </div>
+      ${w.years_list ? `<div class="years-wrap">
+        <div class="stat-label">出現年份（民國）</div>
+        <div class="years-text">${escHTML(w.years_list)}</div>
+      </div>` : ''}
+    </div>` : '';
+
+  const wordKey = escHTML(w.word);
+  const isChecked = SELECTED.has(w.word) ? 'checked' : '';
+
+  return `
+<div class="word-card${SELECTED.has(w.word) ? ' selected' : ''}" id="card-${wordKey}">
+  <div class="card-head">
+    <span class="word-en">${wordHL}</span>
+    ${w.phonetic ? `<span class="word-phonetic">[${phonHL}]</span>` : ''}
+    ${dots}
+    ${w.pos ? `<span class="word-pos">${escHTML(w.pos)}</span>` : ''}
+    <span class="word-zh">${escHTML(w.chinese)}</span>
+    <div class="card-badges">${badges}</div>
+  </div>
+  <div class="card-body">
+    ${w.example ? `<div class="full-width">
+      <div class="field-label">例句 / Example</div>
+      <div class="example-row">
+        <div class="example-text">
+          <div class="field-value italic">${hl(w.example, MODE==='word'?q:'')}</div>
+          <div class="field-value zh-small">${escHTML(w.example_zh)}</div>
+        </div>
+        <div class="ex-check-wrap">
+          <input type="checkbox" class="ex-check" ${isChecked}
+                 data-word="${wordKey}"
+                 onchange="toggleSelect(this)">
+        </div>
+      </div>
+    </div>` : ''}
+    ${w.topic ? `<div>
+      <div class="field-label">主題分類</div>
+      <div class="field-value"><span class="topic-tag">📌 ${escHTML(w.topic)}</span></div>
+    </div>` : ''}
+    ${w.phonetic ? `<div>
+      <div class="field-label">KK音標</div>
+      <div class="field-value" style="font-size:1.05rem;letter-spacing:.04em">${phonHL}</div>
+    </div>` : ''}
+  </div>
+  ${statsStrip}
+</div>`;
+}
+
+/* ── Pagination ── */
+function renderPagination(page, total) {
+  const pag = document.getElementById('pagination');
+  if (total <= 1) { pag.innerHTML = ''; return; }
+
+  const btn = (label, p, disabled=false, active=false) =>
+    `<button class="page-btn${active?' active':''}"
+             onclick="renderPage(${p})" ${disabled?'disabled':''}>${label}</button>`;
+
+  let html = btn('‹ 上頁', page-1, page===1);
+
+  const delta = 2;
+  const pages = new Set([1, total]);
+  for (let i = Math.max(1,page-delta); i <= Math.min(total,page+delta); i++) pages.add(i);
+  const sorted = [...pages].sort((a,b)=>a-b);
+
+  let prev = 0;
+  for (const p of sorted) {
+    if (p - prev > 1) html += `<button class="page-btn" disabled>…</button>`;
+    html += btn(p, p, false, p===page);
+    prev = p;
+  }
+
+  html += btn('下頁 ›', page+1, page===total);
+  pag.innerHTML = html;
+}
+
+/* ──────────────────────────────────────────
+   Exam Search & Render
+────────────────────────────────────────── */
+function examSearchKeyword() {
+  // Use plain text keyword (strip * prefix for letter mode)
+  const raw = document.getElementById('search-input').value.trim().toLowerCase();
+  if (MODE === 'letter' && raw.startsWith('*')) return raw.slice(1);
+  if (MODE === 'syllable') return '';   // syllable mode: no exam search
+  return raw;
+}
+
+function renderExams(q) {
+  const sec = document.getElementById('exam-section');
+  const container = document.getElementById('exam-results');
+
+  // Only search in word/letter mode with non-empty, non-numeric keyword
+  const kw = q && !/^\d+$/.test(q) ? q.replace(/^\*/, '') : '';
+  if (!kw || !window.EXAM_DATA) { sec.style.display = 'none'; return; }
+
+  // Collect matching questions across all files
+  const matches = [];
+  for (const exam of window.EXAM_DATA) {
+    for (const qObj of exam.questions) {
+      if (qObj.search_text.includes(kw)) {
+        matches.push({ exam, qObj });
+      }
+    }
+  }
+
+  // Always show section when there is a keyword; show message if no matches
+  sec.style.display = 'block';
+  document.getElementById('exam-results').className = EXAM_COLLAPSED ? 'collapsed' : '';
+
+  if (matches.length === 0) {
+    document.getElementById('exam-section-title').textContent = '相關試題';
+    container.innerHTML = `<div style="padding:18px 20px;color:var(--text-muted);font-size:.9rem">
+      目前題庫（${window.EXAM_DATA.length} 份試題，共
+      ${window.EXAM_DATA.reduce((s,e)=>s+e.questions.length,0)} 題）中
+      未找到含有「<strong>${escHTMLExam(kw)}</strong>」的試題。
+    </div>`;
+    return;
+  }
+
+  // Title
+  document.getElementById('exam-section-title').textContent =
+    `相關試題（共 ${matches.length} 題）`;
+
+  // Render question cards
+  container.innerHTML = matches.map(({ exam, qObj }) => {
+    // Render question text: replace blank span, highlight keyword
+    const qtDisplay = hlExam(
+      qObj.q_html
+        .replace(/<span class="blank">&nbsp;<\/span>/g,
+                 '<span class="exam-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'),
+      kw
+    );
+
+    // Options
+    const optsHTML = ['A','B','C','D']
+      .filter(v => qObj.options[v])
+      .map(v => {
+        const isAns = v === qObj.answer;
+        return `<div class="exam-opt${isAns ? ' correct' : ''}">
+          ${hlExam(escHTMLExam(qObj.options[v]), kw)}${isAns ? ' ✓' : ''}
+        </div>`;
+      }).join('');
+
+    // Full sentence with checkbox
+    const examKey = `${exam.file}::${qObj.num}`;
+    const isExamChecked = SELECTED_EXAM.has(examKey) ? 'checked' : '';
+    const fullHTML = (qObj.en_full || qObj.zh_full) ? `
+      <div class="exam-full">
+        <div class="exam-full-row${SELECTED_EXAM.has(examKey) ? ' exam-selected' : ''}">
+          <div class="exam-full-text">
+            ${qObj.en_full ? `<div class="en">${hlExam(escHTMLExam(qObj.en_full), kw)}</div>` : ''}
+            ${qObj.zh_full ? `<div class="zh">${escHTMLExam(qObj.zh_full)}</div>` : ''}
+          </div>
+          <div class="ex-check-wrap" style="padding-top:0">
+            <input type="checkbox" class="ex-check" ${isExamChecked}
+                   data-key="${escHTMLExam(examKey)}"
+                   data-en="${escHTMLExam(qObj.en_full)}"
+                   data-zh="${escHTMLExam(qObj.zh_full)}"
+                   data-kw="${escHTMLExam(kw)}"
+                   onchange="toggleExamSelect(this)">
+          </div>
+        </div>
+      </div>` : '';
+
+    // File label: shorten title
+    const label = exam.title.replace('年國中會考英文科試題（原題互動版）', '年').replace('年模擬試題', '年模擬');
+
+    return `
+<div class="exam-card">
+  <div class="exam-meta">
+    <a class="exam-file-tag" href="${exam.file}" target="_blank">📄 ${label}</a>
+    <span class="exam-qnum">第 ${qObj.num} 題</span>
+  </div>
+  <div class="exam-qtext">${qtDisplay}</div>
+  <div class="exam-options">${optsHTML}</div>
+  ${fullHTML}
+</div>`;
+  }).join('');
+}
+
+function hlExam(text, kw) {
+  if (!kw || !text) return text || '';
+  const esc = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`\\b${esc}\\b`, 'gi'), m => `<mark>${m}</mark>`);
+}
+function escHTMLExam(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleExamSection() {
+  EXAM_COLLAPSED = !EXAM_COLLAPSED;
+  document.getElementById('exam-results').className = EXAM_COLLAPSED ? 'collapsed' : '';
+  document.getElementById('exam-toggle-btn').textContent = EXAM_COLLAPSED ? '展開 ▼' : '收合 ▲';
+}
+
+/* ──────────────────────────────────────────
+   Enter key + Init
+────────────────────────────────────────── */
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+/* ──────────────────────────────────────────
+   Custom Words — localStorage
+────────────────────────────────────────── */
+const CUSTOM_KEY = 'vocab_custom_words';
+
+function getCustomWords() {
+  try { return JSON.parse(localStorage.getItem(CUSTOM_KEY) || '[]'); }
+  catch { return []; }
+}
+function saveCustomWords(words) {
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(words));
+}
+
+/* ── Syllable counter (JS port) ── */
+function countSyllablesJS(phonetic) {
+  if (!phonetic) return 1;
+  const DIPHTHONGS = ['aɪ','aʊ','ɔɪ','eɪ','oʊ','ɪr','ɛr','ʊr','ɑr'];
+  const MONO = new Set([...'æɛɑɔʊʌəɪɝɚiueoaɔ']);
+  const clean = phonetic.replace(/[ˈˌː]/g, '');
+  let count = 0, i = 0;
+  while (i < clean.length) {
+    let matched = false;
+    for (const d of DIPHTHONGS) {
+      if (clean.slice(i, i + d.length) === d) { count++; i += d.length; matched = true; break; }
+    }
+    if (!matched) { if (MONO.has(clean[i])) count++; i++; }
+  }
+  return Math.max(1, count);
+}
+
+/* ── POS mapping (EN → 中文) ── */
+const POS_MAP = {
+  noun:'名詞', verb:'動詞', adjective:'形容詞', adverb:'副詞',
+  preposition:'介系詞', conjunction:'連接詞', pronoun:'代名詞',
+  interjection:'感嘆詞', article:'冠詞', numeral:'數詞'
+};
+
+/* ── Modal open / close ── */
+function openAddModal() {
+  document.getElementById('add-modal').classList.add('open');
+  document.getElementById('add-word').focus();
+}
+
+function openAddModalWith(word) {
+  openAddModal();
+  document.getElementById('add-word').value = word;
+  lookupWord();
+}
+
+/* ── POS abbreviation map ── */
+const POS_ABBR = {
+  '名詞':'n.', '動詞':'v.', '形容詞':'adj.', '副詞':'adv.',
+  '介系詞':'prep.', '連接詞':'conj.', '代名詞':'pron.', '感嘆詞':'int.'
+};
+
+/* ── MyMemory translate helper ── */
+async function translateToZh(text) {
+  if (!text || !text.trim()) return '';
+  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|zh-TW`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const translated = data?.responseData?.translatedText || '';
+  // MyMemory sometimes returns all-caps error strings
+  return /^[A-Z\s]+$/.test(translated) ? '' : translated;
+}
+
+/* ── Inline form: auto-lookup ── */
+async function lookupInline(word) {
+  const statusEl = document.getElementById('il-status');
+  if (!statusEl) return;
+  statusEl.className = 'inline-add-status';
+  statusEl.textContent = '查詢字典中…';
+  try {
+    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+    const entry = data[0];
+
+    // 音標
+    const ph = (entry.phonetics || []).find(p => p.text)?.text || entry.phonetic || '';
+    const cleanPh = ph.replace(/^\//, '').replace(/\/$/, '');
+    const phEl = document.getElementById('il-phonetic');
+    if (phEl && cleanPh) phEl.value = cleanPh;
+
+    // 詞性 + 英文定義 + 英文例句
+    const meaning = (entry.meanings || [])[0];
+    let posCh = '', engDef = '', engExample = '';
+    if (meaning) {
+      posCh = POS_MAP[meaning.partOfSpeech] || '';
+      const posEl = document.getElementById('il-pos');
+      if (posEl && posCh) posEl.value = posCh;
+      engDef     = meaning.definitions?.[0]?.definition || '';
+      engExample = meaning.definitions?.[0]?.example || '';
+      const exEl = document.getElementById('il-example');
+      if (exEl) exEl.value = engExample;
+    }
+
+    statusEl.textContent = '翻譯中…';
+
+    // 並行翻譯：中文釋義 + 例句中文翻譯
+    const [zhDef, zhEx] = await Promise.all([
+      translateToZh(engDef),
+      translateToZh(engExample),
+    ]);
+
+    const abbr = POS_ABBR[posCh] || '';
+    const chEl = document.getElementById('il-chinese');
+    if (chEl) chEl.value = abbr && zhDef ? `(${abbr}) ${zhDef}` : zhDef;
+
+    const zhExEl = document.getElementById('il-example-zh');
+    if (zhExEl) zhExEl.value = zhEx;
+
+    statusEl.className = 'inline-add-status ok';
+    statusEl.textContent = '✓ 已自動填入，請確認內容後按「確認新增」';
+  } catch {
+    statusEl.className = 'inline-add-status err';
+    statusEl.textContent = '✗ 字典查無此字，請手動填寫';
+  }
+}
+
+/* ── Inline form: save ── */
+function saveInlineWord() {
+  const word = document.getElementById('search-input').value.trim().toLowerCase();
+  if (!word) return;
+  const phonetic   = document.getElementById('il-phonetic')?.value.trim() || '';
+  const pos        = document.getElementById('il-pos')?.value || '';
+  const chinese    = document.getElementById('il-chinese')?.value.trim() || '';
+  const example    = document.getElementById('il-example')?.value.trim() || '';
+  const example_zh = document.getElementById('il-example-zh')?.value.trim() || '';
+
+  if (!chinese) {
+    document.getElementById('il-chinese')?.focus();
+    document.getElementById('il-chinese')?.classList.add('form-error');
+    return;
+  }
+
+  const entry = {
+    word, phonetic, chinese, example, example_zh, pos,
+    rank_935: null, frequency: 0, years_count: 0,
+    years_list: '', freq_percent: 0.0, cumulative_percent: 0.0,
+    cefr: '', level: '', topic: '',
+    core300: false, consolidate450: false,
+    syllable_count: countSyllablesJS(phonetic),
+    _custom: true,
+  };
+
+  // 儲存到 localStorage
+  const customs = getCustomWords();
+  const idx = customs.findIndex(w => w.word.toLowerCase() === word);
+  if (idx >= 0) customs[idx] = entry; else customs.push(entry);
+  saveCustomWords(customs);
+
+  // 合併到 ALL
+  const allIdx = ALL.findIndex(w => w.word.toLowerCase() === word);
+  if (allIdx >= 0) ALL[allIdx] = entry; else ALL.push(entry);
+
+  sortWords();
+
+  const msgEl = document.getElementById('il-msg');
+  if (msgEl) msgEl.textContent = `✓「${word}」已新增！`;
+
+  setTimeout(() => {
+    document.getElementById('search-input').value = word;
+    doSearch();
+  }, 800);
+}
+function closeAddModal() {
+  document.getElementById('add-modal').classList.remove('open');
+  ['add-word','add-phonetic','add-chinese','add-example','add-example-zh']
+    .forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('add-pos').value = '';
+  document.getElementById('lookup-status').textContent = '';
+  document.getElementById('add-msg').textContent = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAddModal();
+});
+
+/* ── Dictionary API auto-lookup (Modal) ── */
+async function lookupWord() {
+  const word = document.getElementById('add-word').value.trim().toLowerCase();
+  if (!word) return;
+  const statusEl = document.getElementById('lookup-status');
+  const btn = document.getElementById('lookup-btn');
+  statusEl.className = 'lookup-status';
+  statusEl.textContent = '查詢字典中…';
+  btn.disabled = true;
+  try {
+    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const entry = data[0];
+
+    // 音標
+    const ph = (entry.phonetics || []).find(p => p.text)?.text || entry.phonetic || '';
+    const cleanPh = ph.replace(/^\//, '').replace(/\/$/, '');
+    if (cleanPh) document.getElementById('add-phonetic').value = cleanPh;
+
+    // 詞性 + 英文定義 + 英文例句
+    const meaning = (entry.meanings || [])[0];
+    let posCh = '', engDef = '', engExample = '';
+    if (meaning) {
+      posCh = POS_MAP[meaning.partOfSpeech] || '';
+      if (posCh) document.getElementById('add-pos').value = posCh;
+      engDef     = meaning.definitions?.[0]?.definition || '';
+      engExample = meaning.definitions?.[0]?.example || '';
+      if (engExample && !document.getElementById('add-example').value)
+        document.getElementById('add-example').value = engExample;
+    }
+
+    statusEl.textContent = '翻譯中…';
+
+    // 並行翻譯
+    const [zhDef, zhEx] = await Promise.all([
+      translateToZh(engDef),
+      translateToZh(engExample),
+    ]);
+
+    const abbr = POS_ABBR[posCh] || '';
+    const chEl = document.getElementById('add-chinese');
+    if (chEl && !chEl.value)
+      chEl.value = abbr && zhDef ? `(${abbr}) ${zhDef}` : zhDef;
+
+    const zhExEl = document.getElementById('add-example-zh');
+    if (zhExEl && !zhExEl.value) zhExEl.value = zhEx;
+
+    statusEl.className = 'lookup-status ok';
+    statusEl.textContent = '✓ 已自動填入，請確認內容後按「新增單字」';
+  } catch {
+    statusEl.className = 'lookup-status err';
+    statusEl.textContent = '✗ 查無此字，請手動填寫';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* ── Save word ── */
+function saveWord() {
+  const word = document.getElementById('add-word').value.trim();
+  if (!word) { alert('請輸入英文單字'); return; }
+
+  const phonetic   = document.getElementById('add-phonetic').value.trim();
+  const pos        = document.getElementById('add-pos').value;
+  const chinese    = document.getElementById('add-chinese').value.trim();
+  const example    = document.getElementById('add-example').value.trim();
+  const example_zh = document.getElementById('add-example-zh').value.trim();
+
+  const entry = {
+    word, phonetic, chinese, example, example_zh, pos,
+    rank_935: null, frequency: 0, years_count: 0,
+    years_list: '', freq_percent: 0.0, cumulative_percent: 0.0,
+    cefr: '', level: '', topic: '',
+    core300: false, consolidate450: false,
+    syllable_count: countSyllablesJS(phonetic),
+    _custom: true,
+  };
+
+  if (ALL.some(w => w.word.toLowerCase() === word.toLowerCase()) &&
+      !confirm(`「${word}」已存在於詞庫，仍要新增嗎？`)) return;
+
+  // 更新 localStorage
+  const customs = getCustomWords();
+  const idx = customs.findIndex(w => w.word.toLowerCase() === word.toLowerCase());
+  if (idx >= 0) customs[idx] = entry; else customs.push(entry);
+  saveCustomWords(customs);
+
+  // 合併到執行期 ALL
+  const allIdx = ALL.findIndex(w => w.word.toLowerCase() === word.toLowerCase());
+  if (allIdx >= 0) ALL[allIdx] = entry; else ALL.push(entry);
+
+  sortWords();
+
+  // 更新 header 計數
+  const total = ALL.length;
+  const filtered = FILTERED.length;
+  document.getElementById('word-count-header').textContent =
+    filtered === total ? `共 ${total} 個單字` : `共 ${filtered} / ${total} 個單字`;
+
+  document.getElementById('add-msg').textContent = `✓「${word}」已新增！`;
+  setTimeout(closeAddModal, 1200);
+  applyFiltersAndRender();
+}
+
+/* ── Export vocab_data.js ── */
+function exportVocabJS() {
+  const data = { words: ALL, total: ALL.length };
+  const js = '/* 自動產生，請勿手動編輯 — 更新請重執行 generate_data.py */\n'
+           + 'window.VOCAB_DATA = ' + JSON.stringify(data) + ';\n';
+  const blob = new Blob([js], { type: 'application/javascript;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'vocab_data.js';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+loadData();
+</script>
+</body>
+</html>
+

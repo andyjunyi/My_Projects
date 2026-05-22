@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import pdfminer; print\\('pdfminer available'\\)\")",
+      "Bash(python -m pip install pdfminer.six)",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import nltk; print\\('nltk ok'\\)\")",
+      "Bash(python -m pip install nltk)"
+    ]
+  }
+}

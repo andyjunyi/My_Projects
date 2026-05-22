@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英文長句解析器 v11</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Noto+Serif+TC:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg:#f7f5f0; --surface:#fff; --border:#e2ddd6; --text:#1c1917;
+  --muted:#78716c; --accent:#2563eb; --accent-light:#eff6ff; --ink:#1e3a5f;
+  --cs:#1d4ed8; --cvt:#b91c1c; --co:#c2410c; --cadv:#b45309;
+  --cbc:#047857; --cal:#6d28d9; --cprep:#7c3aed; --cdet:#166534;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif TC',serif;min-height:100vh;}
+
+/* nav */
+nav{background:var(--ink);padding:14px 32px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;color:#fff;letter-spacing:.5px;cursor:pointer;}
+.nav-sub{font-size:12px;color:rgba(255,255,255,.45);border-left:1px solid rgba(255,255,255,.2);padding-left:12px;letter-spacing:1px;text-transform:uppercase;}
+.nav-tabs{display:flex;gap:4px;margin-left:auto;}
+.nav-tab{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 16px;border-radius:8px;cursor:pointer;font-family:'Noto Serif TC',serif;font-size:13px;transition:all .2s;}
+.nav-tab:hover,.nav-tab.active{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4);}
+
+/* hero */
+.hero{background:var(--ink);padding:48px 32px 60px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 50%,rgba(37,99,235,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 30%,rgba(109,40,217,.15) 0%,transparent 70%);}
+.hero-inner{position:relative;z-index:1;max-width:780px;margin:0 auto;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,48px);color:#fff;line-height:1.2;margin-bottom:10px;}
+.hero-desc{color:rgba(255,255,255,.55);font-size:15px;margin-bottom:32px;line-height:1.7;}
+.input-wrap{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);border-radius:16px;padding:18px 20px 14px;text-align:left;backdrop-filter:blur(8px);transition:border-color .2s;}
+.input-wrap:focus-within{border-color:rgba(96,165,250,.7);background:rgba(255,255,255,.09);}
+.input-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;display:block;}
+#sentenceInput{width:100%;background:transparent;border:none;outline:none;font-family:'Source Code Pro',monospace;font-size:15px;color:#fff;resize:none;min-height:72px;line-height:1.7;}
+#sentenceInput::placeholder{color:rgba(255,255,255,.25);}
+.input-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:8px;}
+.input-meta{display:flex;flex-direction:column;gap:4px;}
+.char-count{font-size:12px;color:rgba(255,255,255,.3);}
+.examples-hint{font-size:12px;color:rgba(255,255,255,.35);}
+.examples-hint span{color:rgba(96,165,250,.8);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.examples-hint span:hover{color:#93c5fd;}
+.name-row{display:flex;align-items:center;gap:8px;}
+.name-label{font-size:12px;color:rgba(255,255,255,.4);}
+#nameInput{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 10px;font-family:'Noto Serif TC',serif;font-size:13px;color:#fff;outline:none;width:110px;}
+#nameInput::placeholder{color:rgba(255,255,255,.25);}
+.btn-analyze{background:#2563eb;color:#fff;border:none;border-radius:10px;padding:11px 24px;font-family:'Noto Serif TC',serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(37,99,235,.4);display:flex;align-items:center;gap:8px;}
+.btn-analyze:hover{background:#1d4ed8;}
+.btn-analyze:active{transform:scale(.97);}
+.btn-analyze:disabled{background:#64748b;box-shadow:none;cursor:not-allowed;}
+.spinner{width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* pages */
+main{max-width:980px;margin:0 auto;padding:40px 24px 80px;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* empty / loading / error */
+.empty-state{text-align:center;padding:64px 24px;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:14px;opacity:.4;}
+.empty-state h2{font-size:17px;font-weight:400;margin-bottom:8px;color:var(--text);opacity:.5;}
+.empty-state p{font-size:13.5px;line-height:1.7;}
+.error-box{background:#fef2f2;border:1px solid #fca5a5;border-left:4px solid #ef4444;border-radius:10px;padding:16px 20px;color:#7f1d1d;font-size:13.5px;display:none;margin-bottom:24px;}
+.loading-box{text-align:center;padding:56px;display:none;}
+.loading-bar{width:200px;height:3px;background:var(--border);border-radius:3px;margin:14px auto 0;overflow:hidden;}
+.loading-bar::after{content:'';display:block;height:100%;width:40%;background:var(--accent);border-radius:3px;animation:slide 1.2s ease-in-out infinite;}
+@keyframes slide{0%{transform:translateX(-100%);}100%{transform:translateX(350%);}}
+.loading-text{color:var(--muted);font-size:14px;}
+
+/* cards */
+.section-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.section-pad{padding:22px 26px;}
+.full-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.full-text{font-family:'Source Code Pro',monospace;font-size:16px;line-height:1.6;color:var(--text);margin-bottom:14px;}
+.full-zh{font-size:17px;color:var(--muted);line-height:1.8;border-top:1px solid var(--border);padding-top:12px;}
+
+/* save button */
+.save-row{display:flex;justify-content:flex-end;margin-top:14px;}
+.btn-save{background:#059669;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Serif TC',serif;display:flex;align-items:center;gap:6px;transition:background .2s;}
+.btn-save:hover{background:#047857;}
+.btn-save:disabled{background:#9ca3af;cursor:not-allowed;}
+.save-ok{color:#059669;font-size:13px;font-weight:600;display:none;align-items:center;gap:5px;}
+
+/* step cards */
+.step-card{border:1px solid var(--border);border-radius:14px;margin-bottom:6px;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.04);}
+.step-btn{width:100%;display:flex;align-items:center;gap:12px;padding:13px 18px;background:none;border:none;cursor:pointer;text-align:left;}
+.step-btn:hover{filter:brightness(.97);}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:13px;font-weight:700;flex-shrink:0;color:#fff;}
+.step-title-wrap{flex:1;}
+.step-title{font-size:13px;font-weight:700;color:#1c1917;}
+.step-sub{font-size:11px;color:#44403c;margin-top:2px;}
+.step-arrow{font-size:22px;color:var(--muted);transition:transform .25s;margin-left:auto;}
+.step-arrow.open{transform:rotate(180deg);}
+.step-body{padding:16px 20px;display:none;}
+.step-body.open{display:block;}
+.step-connector{display:flex;align-items:center;justify-content:center;height:36px;position:relative;}
+.step-connector::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--border);}
+.conn-dot{position:relative;z-index:1;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:#fff;border:2px solid var(--border);color:var(--muted);}
+
+/* anno */
+.anno{display:flex;flex-wrap:wrap;gap:0 8px;align-items:flex-end;line-height:1;overflow-x:auto;padding-bottom:4px;}
+.w{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:2px;}
+.wd{font-family:'Source Code Pro',monospace;font-size:16px;font-weight:400;white-space:nowrap;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+.wd.new{font-weight:700;text-decoration-thickness:2px;}
+.star{font-size:10px;font-weight:700;vertical-align:super;line-height:0;opacity:.75;margin-right:1px;}
+.wl{font-size:10px;font-weight:600;letter-spacing:.3px;white-space:nowrap;}
+.punct{font-family:'Source Code Pro',monospace;font-size:16px;color:var(--text);align-self:flex-end;padding-bottom:16px;}
+.sep{align-self:flex-end;padding-bottom:10px;color:#bbb;font-size:18px;}
+.cs{color:var(--cs);} .ls{color:var(--cs);}
+.cvt{color:var(--cvt);} .lvt{color:var(--cvt);}
+.co{color:var(--co);} .lo{color:var(--co);}
+.cadv{color:var(--cadv);} .ladv{color:var(--cadv);}
+.cbc{color:var(--cbc);} .lbc{color:var(--cbc);}
+.cal{color:var(--cal);} .lal{color:var(--cal);}
+.cprep{color:var(--cprep);} .lprep{color:var(--cprep);}
+.cdet{color:var(--cdet);} .ldet{color:var(--cdet);}
+
+.ni-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.ni{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;font-size:12.5px;line-height:1.6;background:rgba(0,0,0,.03);}
+.ni-icon{font-size:13px;flex-shrink:0;margin-top:2px;}
+
+/* vocab */
+.vocab-toggle-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:none;border:none;cursor:pointer;text-align:left;border-bottom:1px solid transparent;}
+.vocab-toggle-btn:hover{background:rgba(37,99,235,.03);}
+.vocab-toggle-left{display:flex;align-items:center;gap:10px;}
+.vocab-label-txt{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+.vocab-badge{font-size:12px;background:var(--accent-light);color:var(--accent);padding:2px 9px;border-radius:20px;}
+.vocab-chev{font-size:26px;color:var(--muted);transition:transform .3s;}
+.vocab-chev.open{transform:rotate(180deg);}
+.vocab-grid-wrap{padding:0 22px 20px;display:none;}
+.vocab-grid-wrap.open{display:block;}
+.vocab-list{display:flex;flex-direction:column;gap:0;margin-top:4px;}
+.vocab-row{display:flex;align-items:baseline;gap:0;padding:9px 0;border-bottom:1px solid var(--border);}
+.vocab-row:last-child{border-bottom:none;}
+.vocab-num{font-size:13px;color:var(--muted);min-width:28px;flex-shrink:0;}
+.vocab-word{font-family:'Source Code Pro',monospace;font-size:15px;font-weight:600;color:var(--ink);margin-right:6px;}
+.vocab-kk{font-size:13.5px;color:var(--muted);margin-right:6px;}
+.vocab-pos{font-size:13.5px;color:var(--muted);margin-right:6px;}
+.vocab-zh{font-size:14px;color:var(--text);}
+
+/* legend */
+.legend-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:20px;box-shadow:0 1px 5px rgba(0,0,0,.04);}
+.legend-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.legend-grid{display:flex;flex-wrap:wrap;gap:7px 20px;}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── Browse page ── */
+.browse-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.browse-title{font-family:'Playfair Display',serif;font-size:24px;color:var(--ink);}
+.search-wrap{display:flex;gap:8px;flex:1;max-width:360px;}
+#searchInput{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'Noto Serif TC',serif;font-size:13px;outline:none;background:var(--surface);}
+#searchInput:focus{border-color:var(--accent);}
+.btn-search{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;transition:background .2s;}
+.btn-search:hover{background:#1d4ed8;}
+
+.sentence-cards{display:flex;flex-direction:column;gap:14px;}
+.sentence-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;box-shadow:0 1px 6px rgba(0,0,0,.05);transition:box-shadow .2s;}
+.sentence-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.sc-sentence{font-family:'Source Code Pro',monospace;font-size:14px;line-height:1.7;color:var(--text);margin-bottom:8px;}
+.sc-translation{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.sc-meta{font-size:11.5px;color:#a8a29e;display:flex;align-items:center;gap:10px;}
+.sc-by{background:#f1f5f9;padding:2px 8px;border-radius:12px;}
+.sc-date{}
+.sc-actions{display:flex;gap:8px;align-items:center;}
+.btn-like{background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:5px;transition:all .2s;color:var(--muted);}
+.btn-like:hover{border-color:#f43f5e;color:#f43f5e;background:#fff1f2;}
+.btn-like.liked{border-color:#f43f5e;color:#f43f5e;background:#fff1f2;}
+.btn-view{background:var(--accent-light);color:var(--accent);border:1.5px solid #bfdbfe;border-radius:8px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:600;font-family:'Noto Serif TC',serif;transition:all .2s;}
+.btn-view:hover{background:#dbeafe;}
+
+.no-results{text-align:center;padding:48px;color:var(--muted);font-size:14px;}
+.browse-loading{text-align:center;padding:48px;color:var(--muted);}
+
+/* sort/filter bar */
+.filter-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.filter-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12.5px;cursor:pointer;font-family:'Noto Serif TC',serif;color:var(--muted);transition:all .2s;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:18px;max-width:900px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+.modal-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:4px;}
+.modal-body{padding:24px;}
+@media print {
+  @page { size: A4 portrait; margin: 15mm 12mm; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* ── 列印解析結果 ── */
+  body[data-print="analysis"] nav,
+  body[data-print="analysis"] .hero,
+  body[data-print="analysis"] #page-browse,
+  body[data-print="analysis"] .modal-overlay,
+  body[data-print="analysis"] .save-row,
+  body[data-print="analysis"] .save-row,
+  body[data-print="analysis"] button { display: none !important; }
+
+
+  body[data-print="analysis"] #page-analyze { display: block !important; }
+  body[data-print="analysis"] #result { display: block !important; }
+  body[data-print="analysis"] .step-body { display: block !important; max-height: none !important; }
+  body[data-print="analysis"] .step-card { break-inside: avoid; margin-bottom: 12px; box-shadow: none !important; }
+  body[data-print="analysis"] .step-connector { display: none !important; }
+  body[data-print="analysis"] .section-box { box-shadow: none !important; border: 1px solid #ddd !important; }
+  body[data-print="analysis"] .vocab-grid-wrap { display: block !important; }
+  body[data-print="analysis"] .vocab-toggle-btn { display: none !important; }
+  body[data-print="analysis"] #vocabSection { display: block !important; }
+
+  /* ── 列印句庫查看解析 ── */
+  body[data-print="modal"] nav,
+  body[data-print="modal"] #page-analyze,
+  body[data-print="modal"] #page-browse,
+  body[data-print="modal"] .modal-overlay { display: none !important; }
+
+  body[data-print="modal"] .modal-overlay {
+    display: block !important;
+    position: static !important;
+    background: none !important;
+  }
+  body[data-print="modal"] .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+  body[data-print="modal"] .modal-header button { display: none !important; }
+  body[data-print="modal"] .modal-body {
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 40px;
+  }
+  body[data-print="modal"] .step-body { display: block !important; max-height: none !important; }
+  body[data-print="modal"] .step-card { break-inside: avoid; box-shadow: none !important; }
+  body[data-print="modal"] .step-connector { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showPage('analyze')">文法解析器</span>
+  <span class="nav-sub">Grammar Analyzer</span>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-analyze" onclick="showPage('analyze')">✏️ 解析句子</button>
+    <button class="nav-tab" id="tab-browse" onclick="showPage('browse')">📚 句庫瀏覽</button>
+  </div>
+</nav>
+
+<!-- Hero (only on analyze page) -->
+<div class="hero" id="heroSection">
+  <div class="hero-inner">
+    <h1>英文長句結構解析</h1>
+    <p class="hero-desc">貼上任何英文複雜句，AI 自動逐層拆解句子結構<br>標示文法角色，並提供中文翻譯與單字解析</p>
+    <div class="input-wrap">
+      <label class="input-label" for="sentenceInput">貼上或輸入英文句子</label>
+      <textarea id="sentenceInput" rows="3" placeholder="例：Although scientists have made significant progress in developing renewable energy sources, many countries still rely heavily on fossil fuels because the transition requires enormous financial investment."></textarea>
+      <div class="input-footer">
+        <div class="input-meta">
+          <div class="char-count"><span id="charCount">0</span> 個字元</div>
+          <div class="examples-hint">範例：<span onclick="loadExample(0)">能源句</span> · <span onclick="loadExample(1)">教育句</span> · <span onclick="loadExample(2)">科技句</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div class="name-row">
+            <span class="name-label">姓名：</span>
+            <input type="text" id="nameInput" placeholder="匿名" maxlength="20">
+          </div>
+          <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
+            <span id="btnText">開始解析</span>
+            <div class="spinner" id="spinner"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ── ANALYZE PAGE ── -->
+  <div class="page active" id="page-analyze">
+    <div class="error-box" id="errorBox"></div>
+    <div class="loading-box" id="loadingBox">
+      <div class="loading-text">AI 正在解析句子結構⋯⋯</div>
+      <div class="loading-bar"></div>
+    </div>
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">✏️</div>
+      <h2>輸入句子後，解析結果將顯示於此</h2>
+      <p>支援 B1–C1 程度的英文複雜句<br>建議句長 15–50 個單字</p>
+    </div>
+    <div id="result" style="display:none;">
+      <!-- full sentence -->
+      <div class="section-box" style="border-left:4px solid var(--accent);">
+        <div class="section-pad">
+          <div class="full-label">📌 完整句子 · Full Sentence</div>
+          <div class="full-text" id="fullSentenceText"></div>
+          <div class="full-zh" id="fullSentenceZh"></div>
+          <div class="save-row">
+            <span class="save-ok" id="saveOk">✓ 已儲存到句庫</span>
+            <button class="btn-save" id="saveBtn" onclick="saveSentence()">💾 儲存到句庫，分享給同學</button>
+          </div>
+        </div>
+      </div>
+      <!-- vocab -->
+      <div class="section-box" id="vocabSection">
+        <button class="vocab-toggle-btn" onclick="toggleVocab()">
+          <div class="vocab-toggle-left">
+            <span class="vocab-label-txt">📖 必備單字</span>
+            <span class="vocab-badge" id="vocabCount"></span>
+          </div>
+          <span class="vocab-chev" id="vocabChev">▾</span>
+        </button>
+        <div class="vocab-grid-wrap" id="vocabGridWrap">
+          <div class="vocab-grid" id="vocabGrid"></div>
+        </div>
+      </div>
+      <!-- legend -->
+      <div class="legend-box">
+        <div class="legend-title">文法標籤圖例</div>
+        <div class="legend-grid">
+          <div class="leg"><div class="leg-dot" style="background:var(--cs)"></div><b style="color:var(--cs)">主</b> 主詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cvt)"></div><b style="color:var(--cvt)">動</b> 動詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--co)"></div><b style="color:var(--co)">受</b> 受詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cadv)"></div><b style="color:var(--cadv)">副</b> 副詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cdet)"></div><b style="color:var(--cdet)">限/形</b> 限定詞/形容詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cprep)"></div><b style="color:var(--cprep)">介</b> 介系詞</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cbc)"></div><b style="color:var(--cbc)">連（原因）</b></div>
+          <div class="leg"><div class="leg-dot" style="background:var(--cal)"></div><b style="color:var(--cal)">連（讓步）</b></div>
+          <div class="leg"><span style="font-size:11px;background:#f1f5f9;padding:2px 7px;border-radius:4px;color:var(--muted);">★ 新加入的成分</span></div>
+        </div>
+      </div>
+      <!-- steps -->
+      <div id="stepsContainer"></div>
+      <!-- print button -->
+      <div style="text-align:center;margin-top:32px;padding-bottom:40px;">
+        <button onclick="printAnalysis()" style="background:#1a1d2e;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.5px;">🖨️ 列印 / 儲存 PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BROWSE PAGE ── -->
+  <div class="page" id="page-browse">
+    <div class="browse-header">
+      <div class="browse-title">📚 句庫瀏覽</div>
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="搜尋關鍵字⋯⋯" onkeydown="if(event.key==='Enter')doSearch()">
+        <button class="btn-search" onclick="doSearch()">搜尋</button>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setSort('newest',this)">🕐 最新</button>
+      <button class="filter-btn" onclick="setSort('likes',this)">❤️ 最多按讚</button>
+    </div>
+    <div class="browse-loading" id="browseLoading">載入中⋯⋯</div>
+    <div class="sentence-cards" id="sentenceCards"></div>
+    <div class="no-results" id="noResults" style="display:none;">找不到相關句子</div>
+  </div>
+
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <div class="modal-header">
+      <span class="modal-title">句子解析詳情</span>
+      <div style="display:flex;gap:8px;align-items:center;"><button onclick="printModal()" style="background:#1a1d2e;color:#fff;border:none;padding:7px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;">🖨 列印/PDF</button><button class="modal-close" onclick="closeModalDirect()">✕</button></div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── Config ──
+const SUPABASE_URL = 'https://zdjbauujitbholsbdtts.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_qnMdUTrouVjUry2nbQw39g_I32sWLA7';
+
+const WORKER_URL = 'https://claude-proxy.andy-cheng-1ad.workers.dev';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const examples = [
+  "Although scientists have made significant progress in developing renewable energy sources, many countries still rely heavily on fossil fuels because the transition requires enormous financial investment.",
+  "While education systems around the world have increasingly adopted digital technologies in classrooms, many educators still argue that traditional teaching methods foster deeper critical thinking skills among students.",
+  "Since artificial intelligence has begun to transform the global economy at an unprecedented rate, governments are now struggling to develop regulatory frameworks that balance innovation with the protection of workers' rights."
+];
+
+let currentAnalysis = null;
+let currentSentence = '';
+let sortMode = 'newest';
+let searchKeyword = '';
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  const _t = document.getElementById('sentenceInput');
+  const _u = () => { document.getElementById('charCount').textContent = _t.value.length; };
+  _t.addEventListener('input', _u);
+  _t.addEventListener('keyup', _u);
+  _t.addEventListener('paste', () => setTimeout(_u, 50));
+});
+
+function loadExample(i) {
+  const inp = document.getElementById('sentenceInput');
+  inp.value = examples[i];
+  document.getElementById('charCount').textContent = inp.value.length;
+  inp.focus();
+}
+
+// ── Page switching ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('heroSection').style.display = name === 'analyze' ? 'block' : 'none';
+  if (name === 'browse') loadBrowse();
+}
+
+// ── Toggle vocab ──
+function toggleVocab() {
+  document.getElementById('vocabGridWrap').classList.toggle('open');
+  document.getElementById('vocabChev').classList.toggle('open');
+}
+function toggleStep(btn) {
+  const body = btn.nextElementSibling;
+  const arrow = btn.querySelector('.step-arrow');
+  body.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open');
+}
+
+// ── Analyze ──
+async function analyze() {
+  const sentence = document.getElementById('sentenceInput').value.trim();
+  if (!sentence) { alert('請先輸入英文句子'); document.getElementById('sentenceInput').focus(); return; }
+
+  setLoading(true);
+  hide('emptyState'); hide('result'); hide('errorBox');
+  currentAnalysis = null; currentSentence = sentence;
+
+  const prompt = `Analyze this English sentence and return JSON only (starts {, ends }, no markdown).
+
+Sentence: ${sentence}
+
+STRICT STEP ORDER:
+Step1: Main clause BARE CORE only (S+V or S+V+O). FORBIDDEN to include any subordinate clauses!
+Step2: Add determiners (the/a/many) and adjectives
+Step3: Add prepositional phrases (on/in/for...)
+Step4: Add adverbs (still/heavily/already...)
+Step5: First subordinate clause core (conjunction+S+V)
+Step6: Expand first subordinate clause  
+Step7: Second subordinate clause core (ONLY if sentence has a second subordinate clause, otherwise OMIT Step7 and Step8 entirely)
+Step8: Expand second subordinate clause (ONLY if Step7 was included)
+Rule: Each step adds only 1-2 NEW elements; old elements isNew:false
+Separator between clauses: {"text":"|","isSep":true,"colorClass":"","label":"","isNew":false}
+
+label: subject=主/主(主句)/主(子句) | verb=動/不及動/動(現完) | object=受/介受 | adverb=副(時)/副(程) | det=限 | adj=形 | prep=介 | gerund=介+動名 | conj-cause=連(原因) | conj-concession=連(讓步)
+colorClass: cs=subject cvt=verb co=object cadv=adverb cdet=det/adj cprep=prep cbc=because/since/as cal=although/though/while
+
+vocabulary: list exactly 8 most important content words
+notes: keep each note under 20 characters total
+CRITICAL: Keep entire JSON response under 2500 tokens. Be extremely concise in notes and subtitles.
+
+JSON structure:
+{
+"sentence":"original sentence",
+"translation":"Chinese translation",
+"vocabulary":[{"word":"base form","kk":"IPA phonetics without slashes","pos":"abbreviation only: n./vt./vi./adj./adv./conj./prep.","zh":"Chinese; use semicolon for multiple meanings"}],
+"steps":[{"title":"步驟N:中文名稱·English","subtitle":"brief description of what was added","color":"#hexcolor","words":[{"text":"word","colorClass":"cs","label":"主","isNew":true,"isSep":false}],"notes":[{"icon":"🔵","text":"brief note 中:「meaning」"}]}]
+}`;
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 16000, messages: [{ role: 'user', content: prompt }] })
+    });
+    if (!res.ok) { const ed = await res.json().catch(()=>({})); throw new Error(`API錯誤 ${res.status}: ${JSON.stringify(ed)}`); }
+    const data = await res.json();
+    let raw = data.content?.[0]?.text || '';
+    // Strip markdown fences
+    raw = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+    // Extract only the JSON object
+    const si = raw.indexOf('{'), ei = raw.lastIndexOf('}');
+    if (si !== -1 && ei !== -1) raw = raw.substring(si, ei + 1);
+    // Fix trailing commas before ] or }
+    raw = raw.replace(/,\s*([}\]])/g, '$1');
+    // Fix unescaped control characters inside JSON strings
+    // Replace raw newlines/tabs inside string values with spaces
+    raw = raw.replace(/"((?:[^"\\]|\\.)*)"/g, (match, inner) => {
+      const fixed = inner
+        .replace(/\n/g, ' ')
+        .replace(/\r/g, '')
+        .replace(/\t/g, ' ')
+        .replace(/[\x00-\x1f\x7f]/g, ' ');
+      return '"' + fixed + '"';
+    });
+    // One more pass for trailing commas
+    raw = raw.replace(/,\s*([}\]])/g, '$1');
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch(jsonErr) {
+      throw new Error('JSON解析失敗，請再試一次：' + jsonErr.message);
+    }
+    currentAnalysis = parsed;
+    renderResult(parsed);
+  } catch(e) {
+    showError('解析失敗：' + e.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+// ── Render result ──
+function renderResult(data) {
+  document.getElementById('fullSentenceText').textContent = data.sentence;
+  document.getElementById('fullSentenceZh').textContent = data.translation;
+  document.getElementById('saveBtn').disabled = false;
+  document.getElementById('saveOk').style.display = 'none';
+
+  // vocab
+  document.getElementById('vocabCount').textContent = `${data.vocabulary.length} 個單字`;
+  document.getElementById('vocabGrid').innerHTML = '<ol class="vocab-list">' + data.vocabulary.map((v,i) => `
+    <li class="vocab-row">
+      <span class="vocab-word">${esc(v.word)}</span>
+      <span class="vocab-kk">[${esc(v.kk.replace(/^\//,'').replace(/\/$/,''))}]</span>
+      <span class="vocab-pos">(${esc(v.pos)})</span>
+      <span class="vocab-zh">${esc(v.zh)}</span>
+    </li>`).join('') + '</ol>';
+
+  // steps
+  const colors = ['#1565c0','#2e7d32','#e65100','#f57f17','#00695c','#00838f','#4527a0','#6a1b9a'];
+  const deepColors = ["#1565c0","#2e7d32","#bf360c","#e65100","#00695c","#006064","#4527a0","#880e4f"];
+  const colorBgs = ['linear-gradient(90deg,#e8f4fd,#f5f9ff)','linear-gradient(90deg,#e8f5e9,#f4fdf4)','linear-gradient(90deg,#fff3e0,#fff9f0)','linear-gradient(90deg,#fffde7,#fffff5)','linear-gradient(90deg,#e0f2f1,#f0fdfb)','linear-gradient(90deg,#e0f7fa,#f0feff)','linear-gradient(90deg,#ede7f6,#f7f3ff)','linear-gradient(90deg,#fce4ec,#fff5f7)'];
+  const colorBorders = ['#b3d4f0','#a5d6a7','#ffcc80','#ffe082','#80cbc4','#80deea','#ce93d8','#f48fb1'];
+  // Filter out empty steps (no words or words array is empty/only punct)
+  const validSteps = data.steps.filter(step => 
+    step.words && step.words.length > 0 && 
+    step.words.some(w => !w.isSep && w.text && w.text.trim() !== '')
+  );
+
+  document.getElementById('stepsContainer').innerHTML = validSteps.map((step, i) => {
+    const col = step.color || colors[i % colors.length];
+    const anno = step.words.map(w => {
+      if (w.isSep) return `<span class="sep">|</span>`;
+      const star = '';
+      const wordStyle = w.isNew
+        ? `class="wd new ${w.colorClass}"`
+        : `class="wd" style="color:#666;text-decoration-color:#999;"`;
+      const labelStyle = w.isNew
+        ? `class="wl l${w.colorClass}"`
+        : `class="wl" style="color:#999;"`;
+      const labelHtml = w.label ? `<span ${labelStyle}>${esc(w.label)}</span>` : '';
+      return `<span class="w">
+        <span ${wordStyle}>${star}${esc(w.text)}</span>
+        ${labelHtml}
+      </span>`;
+    }).join('');
+    const notes = (step.notes||[]).map(n =>
+      `<div class="ni"><span class="ni-icon">${n.icon}</span><div>${esc(n.text)}</div></div>`).join('');
+    const conn = i > 0 ? `<div class="step-connector"><div class="conn-dot" style="border-color:${col};color:${col};">＋</div></div>` : '';
+    return `${conn}<div class="step-card">
+      <button class="step-btn" onclick="toggleStep(this)" style="background:#fff;border-bottom:3px solid ${deepColors[i%8]};padding-left:0;overflow:hidden;">
+        <div style="background:${deepColors[i%8]};width:52px;min-height:54px;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:stretch;">
+          <span style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;">${i+1}</span>
+        </div>
+        <div class="step-title-wrap" style="padding:12px 16px;flex:1;">
+          <div class="step-title" style="color:#1c1917;font-size:14px;font-weight:700;">${esc(step.title)}</div>
+          <div class="step-sub" style="color:#44403c;font-size:12px;margin-top:3px;">${esc(step.subtitle)}</div>
+        </div>
+        <span class="step-arrow open">▾</span>
+      </button>
+      <div class="step-body open">
+        <div style="background:rgba(0,0,0,.025);border-radius:10px;padding:16px 18px 14px;border-left:3px solid ${col};overflow-x:auto;">
+          <div class="anno">${anno}<span class="punct">.</span></div>
+        </div>
+        <div class="ni-list">${notes}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  show('result');
+  document.getElementById('result').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ── Save to DB ──
+async function saveSentence() {
+  if (!currentAnalysis) return;
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = '儲存中⋯⋯';
+  const name = document.getElementById('nameInput').value.trim() || '匿名';
+  try {
+    const { error } = await sb.from('sentences').insert({
+      sentence: currentAnalysis.sentence,
+      translation: currentAnalysis.translation,
+      analysis: currentAnalysis,
+      submitted_by: name,
+      likes: 0
+    });
+    if (error) throw error;
+    const ok = document.getElementById('saveOk');
+    ok.style.display = 'flex';
+    btn.style.display = 'none';
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = '💾 儲存到句庫';
+    alert('儲存失敗：' + e.message);
+  }
+}
+
+// ── Browse ──
+async function loadBrowse() {
+  document.getElementById('browseLoading').style.display = 'block';
+  document.getElementById('sentenceCards').innerHTML = '';
+  hide('noResults');
+  try {
+    let query = sb.from('sentences').select('*');
+    if (searchKeyword) query = query.ilike('sentence', `%${searchKeyword}%`);
+    if (sortMode === 'likes') query = query.order('likes', { ascending: false });
+    else query = query.order('created_at', { ascending: false });
+    query = query.limit(50);
+    const { data, error } = await query;
+    if (error) throw error;
+    renderCards(data || []);
+  } catch(e) {
+    document.getElementById('browseLoading').style.display = 'none';
+    document.getElementById('sentenceCards').innerHTML = `<div style="color:#ef4444;padding:24px;font-size:14px;">載入失敗：${e.message}</div>`;
+  }
+}
+
+function renderCards(rows) {
+  document.getElementById('browseLoading').style.display = 'none';
+  if (!rows.length) { show('noResults'); return; }
+  const liked = JSON.parse(localStorage.getItem('liked_ids') || '[]');
+  document.getElementById('sentenceCards').innerHTML = rows.map(r => {
+    const date = new Date(r.created_at).toLocaleDateString('zh-TW');
+    const isLiked = liked.includes(r.id);
+    return `<div class="sentence-card">
+      <div class="sc-sentence">${esc(r.sentence)}</div>
+      <div class="sc-translation">${esc(r.translation || '')}</div>
+      <div class="sc-footer">
+        <div class="sc-meta">
+          <span class="sc-by">👤 ${esc(r.submitted_by||'匿名')}</span>
+          <span class="sc-date">📅 ${date}</span>
+        </div>
+        <div class="sc-actions">
+          <button class="btn-like ${isLiked?'liked':''}" onclick="toggleLike('${r.id}',${r.likes},this)">
+            ${isLiked?'❤️':'🤍'} <span class="like-count">${r.likes}</span>
+          </button>
+          ${r.analysis ? `<button class="btn-view" onclick="viewAnalysis('${r.id}')">查看解析 →</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function toggleLike(id, currentLikes, btn) {
+  const liked = JSON.parse(localStorage.getItem('liked_ids') || '[]');
+  const isLiked = liked.includes(id);
+  const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
+  btn.querySelector('.like-count').textContent = newLikes;
+  btn.innerHTML = `${isLiked?'🤍':'❤️'} <span class="like-count">${newLikes}</span>`;
+  btn.classList.toggle('liked');
+  if (isLiked) {
+    localStorage.setItem('liked_ids', JSON.stringify(liked.filter(x => x !== id)));
+  } else {
+    liked.push(id);
+    localStorage.setItem('liked_ids', JSON.stringify(liked));
+  }
+  await sb.from('sentences').update({ likes: newLikes }).eq('id', id);
+}
+
+async function viewAnalysis(id) {
+  const { data, error } = await sb.from('sentences').select('analysis').eq('id', id).single();
+  if (error || !data?.analysis) { alert('找不到解析資料'); return; }
+  let analysis = data.analysis;
+  if (typeof analysis === 'string') {
+    try { analysis = JSON.parse(analysis); } catch(e) { alert('解析資料格式錯誤'); return; }
+  }
+  openModal(analysis);
+}
+
+function openModal(data) {
+  const body = document.getElementById('modalBody');
+  // Reuse renderResult logic but into modal
+  let html = `<div style="font-family:'Source Code Pro',monospace;font-size:15px;line-height:1.6;margin-bottom:12px;">${esc(data.sentence)}</div>`;
+  html += `<div style="font-size:16px;color:var(--muted);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);">${esc(data.translation)}</div>`;
+  const colors = ['#1565c0','#2e7d32','#e65100','#f57f17','#00695c','#00838f','#4527a0','#6a1b9a'];
+  const deepColors = ["#1565c0","#2e7d32","#bf360c","#e65100","#00695c","#006064","#4527a0","#880e4f"];
+  html += (data.steps||[]).map((step,i) => {
+    const col = step.color || colors[i % colors.length];
+    const anno = (step.words||[]).map(w => {
+      if (w.isSep) return `<span class="sep">|</span>`;
+      const star = '';
+      const wordStyle2 = w.isNew ? `class="wd new ${w.colorClass}"` : `class="wd" style="color:#666;text-decoration-color:#999;"`;
+      const labelStyle2 = w.isNew ? `class="wl l${w.colorClass}"` : `class="wl" style="color:#999;"`;
+      return `<span class="w"><span ${wordStyle2}>${star}${esc(w.text)}</span>${w.label ? `<span ${labelStyle2}>${esc(w.label)}</span>` : ''}</span>`;
+    }).join('');
+    const conn = i > 0 ? `<div class="step-connector"><div class="conn-dot" style="border-color:${deepColors[i%8]};color:${deepColors[i%8]};">＋</div></div>` : '';
+    return `${conn}<div class="step-card" style="margin-bottom:6px;">
+      <div style="display:flex;align-items:center;gap:0;background:#fff;border-bottom:3px solid ${deepColors[i%8]};padding-left:0;overflow:hidden;border-radius:10px 10px 0 0;">
+        <div style="background:${deepColors[i%8]};width:52px;min-height:50px;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:stretch;">
+          <span style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;">${i+1}</span>
+        </div>
+        <div style="padding:10px 16px;flex:1;">
+          <div class="step-title" style="color:#1c1917;font-size:14px;font-weight:700;">${esc(step.title)}</div>
+          <div class="step-sub" style="color:#44403c;font-size:12px;margin-top:2px;">${esc(step.subtitle)}</div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;">
+        <div style="background:rgba(0,0,0,.025);border-radius:8px;padding:14px 16px;border-left:3px solid ${col};overflow-x:auto;">
+          <div class="anno">${anno}<span class="punct">.</span></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Add vocabulary section
+  if (data.vocabulary && data.vocabulary.length > 0) {
+    const vocabRows = data.vocabulary.map(function(v) {
+      return '<li class="vocab-row">'
+        + '<span class="vocab-word">' + esc(v.word) + '</span>'
+        + '<span class="vocab-kk">[' + esc((v.kk||'').replace(/^\//,'').replace(/\/$/,'')) + ']</span>'
+        + '<span class="vocab-pos">(' + esc(v.pos||'') + ')</span>'
+        + '<span class="vocab-zh">' + esc(v.zh||'') + '</span>'
+        + '</li>';
+    }).join('');
+    html += '<div style="margin-top:24px;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;">'
+      + '<div style="padding:14px 20px;background:#f8f9ff;border-bottom:1px solid #e0e0e0;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#2563eb;font-weight:600;">'
+      + '📖 必備單字 <span style="background:#eff6ff;color:#2563eb;padding:2px 9px;border-radius:20px;font-size:12px;">' + data.vocabulary.length + ' 個單字</span>'
+      + '</div>'
+      + '<div style="padding:8px 20px 12px;"><ol class="vocab-list">' + vocabRows + '</ol></div>'
+      + '</div>';
+  }
+
+  body.innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function printAnalysis() {
+  // Force vocab section open before printing
+  const vocabWrap = document.getElementById('vocabGridWrap');
+  const wasOpen = vocabWrap && vocabWrap.classList.contains('open');
+  if (vocabWrap) vocabWrap.classList.add('open');
+
+  document.body.setAttribute('data-print', 'analysis');
+  window.print();
+  document.body.removeAttribute('data-print');
+
+  // Restore original state
+  if (vocabWrap && !wasOpen) vocabWrap.classList.remove('open');
+}
+
+function printModal() {
+  const overlay = document.getElementById('modalOverlay');
+  overlay.style.display = 'block';
+  document.body.setAttribute('data-print', 'modal');
+  window.print();
+  document.body.removeAttribute('data-print');
+  overlay.style.display = '';
+}
+
+function doSearch() {
+  searchKeyword = document.getElementById('searchInput').value.trim();
+  loadBrowse();
+}
+function setSort(mode, btn) {
+  sortMode = mode;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadBrowse();
+}
+
+// ── Helpers ──
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function show(id) { document.getElementById(id).style.display = 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+function setLoading(on) {
+  const btn = document.getElementById('analyzeBtn');
+  document.getElementById('spinner').style.display = on ? 'block' : 'none';
+  document.getElementById('btnText').textContent = on ? '解析中⋯⋯' : '開始解析';
+  btn.disabled = on;
+  document.getElementById('loadingBox').style.display = on ? 'block' : 'none';
+}
+function showError(msg) {
+  const el = document.getElementById('errorBox');
+  el.textContent = msg; el.style.display = 'block';
+  show('emptyState');
+}
+</script>
+</body>
+</html>

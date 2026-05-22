@@ -1,0 +1,33 @@
+
+brackets in kk_phonetics: 5
+  id=70 word=accident | kk=['æksədənt]
+  id=452 word=ambush | kk=['æmˌbʊʃ]
+  id=490 word=analyze | kk=['ænəˌlaɪz]
+  id=500 word=aneurysm | kk=['æn.jə.rɪ.zəm]
+  id=508 word=angular | kk=['æŋɡjəlɚ]
+
+iː in kk: 9
+  id=2074 word=ceaseless | kk='siːsləs
+  id=2103 word=CEO | kk='siːo
+  id=2700 word=complete | kk=kəm'pliːt
+  id=4441 word=egregious | kk=ɪ'griːdʒəs
+  id=8355 word=media | kk='miːdiə
+  id=9425 word=overseas | kk=ˌoʊvɚ'siːz
+  id=10961 word=reconfirm | kk=ˌriːkən'fɝːm
+  id=10962 word=reconsider | kk=ˌriːkən'sɪdɚ
+  id=14555 word=upheaval | kk=ʌp'hiːvəl
+
+oeɪ odd combo: 1
+  id=2478 word=coating | kk='koeɪtɪŋ
+
+ɔɪ correct: 115
+  id=155 word=acupoint | kk='ækjuˌpɔɪnt
+  id=187 word=adjoin | kk=ə'dʒɔɪn
+  id=188 word=adjoining | kk=ə'dʒɔɪnɪŋ
+  id=398 word=alloy | kk=ə'lɔɪ
+  id=523 word=annoy | kk=ə'nɔɪ
+  id=524 word=annoyance | kk=ə'nɔɪəns
+  id=525 word=annoyed | kk=ə'nɔɪd
+  id=526 word=annoying | kk=ə'nɔɪ.ɪŋ
+  id=531 word=anoint | kk='ɔɪnt
+  id=618 word=appoint | kk=ə'pɔɪnt

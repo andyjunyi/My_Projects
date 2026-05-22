@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會考單字特訓 - 人物篇總匯</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* 主題色：深紅木色漸層 */
+            --primary-gradient: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+            --bg-color: #f3f0ff;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --accent-color: #6c5ce7;
+            --success-color: #00b894;
+            --error-color: #d63031;
+        }
+
+        html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        body::-webkit-scrollbar { display: none; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; flex-direction: column; align-items: center; }
+        
+        header { width: 100%; background: var(--primary-gradient); color: white; padding: 1.2rem 0; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        
+        .stats-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 0.5rem; padding: 0 10px; }
+        .stat-box { background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
+        
+        .container { width: 92%; max-width: 900px; padding: 1.5rem 0 4rem 0; }
+        
+        /* 選單區域 */
+        #menu-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; animation: fadeIn 0.5s; }
+        .menu-card {
+            background: white; padding: 2rem; border-radius: 15px; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 5px solid var(--accent-color);
+        }
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .menu-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .menu-title { font-size: 1.4rem; font-weight: bold; color: var(--text-main); margin-bottom: 0.5rem; }
+        .menu-desc { font-size: 0.9rem; color: #636e72; }
+
+        /* 複習列表 */
+        #review-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; }
+        .card { background: var(--card-bg); padding: 1rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid var(--accent-color); display: flex; flex-direction: column; }
+        .word-en { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 2px; }
+        .word-kk { font-size: 0.85rem; color: #747d8c; font-family: 'Arial', sans-serif; margin-bottom: 4px; }
+        .word-zh { font-size: 1rem; color: var(--text-main); line-height: 1.3; }
+
+        /* 測驗區域 */
+        #quiz-section { display: none; background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; animation: slideUp 0.4s; }
+        .question-text { font-size: 1.15rem; line-height: 1.5; margin-bottom: 1.5rem; background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-color); }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .option-btn { 
+            padding: 12px 18px; border: 1.5px solid #dfe6e9; border-radius: 12px; 
+            background: white; cursor: pointer; font-size: 1.05rem; text-align: left; transition: all 0.2s;
+        }
+        .option-btn:hover { background-color: #f1f2f6; border-color: var(--accent-color); }
+        .correct { background-color: #d1fae5 !important; border-color: var(--success-color) !important; color: #065f46; font-weight: bold; }
+        .wrong { background-color: #fee2e2 !important; border-color: var(--error-color) !important; color: #991b1b; }
+        
+        #feedback { margin-top: 1.5rem; padding: 1.2rem; border-radius: 10px; background: #fdfafb; border: 1px solid #eef2f1; display: none; font-size: 0.95rem; line-height: 1.6; }
+        .analysis-title { color: var(--accent-color); font-weight: bold; margin-bottom: 8px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .feedback-item { margin-bottom: 8px; }
+        .feedback-label { font-weight: bold; color: #4a4a4a; margin-right: 5px; }
+        .vocab-compact-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .vocab-tag { background: white; padding: 6px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; color: #2d3436; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        
+        .btn-next { background: var(--primary-gradient); color: white; margin-top: 1.5rem; width: 100%; padding: 14px; border-radius: 25px; font-weight: bold; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-home { background: #636e72; margin-top: 1rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 600px) { 
+            #menu-section { grid-template-columns: 1fr; } 
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="margin:0; font-size: 1.4rem;">人物篇 (People) - 單字挑戰</h1>
+    <div class="stats-container">
+        <div class="stat-box"><i class="fas fa-layer-group"></i> 題庫：<span id="current-topic-name">請選擇</span></div>
+        <div class="stat-box"><i class="fas fa-history"></i> 同步：<span id="last-global-time">等待中</span></div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- 主選單 -->
+    <div id="menu-section">
+        <div class="menu-card" onclick="selectRound('part1')">
+            <div class="menu-icon"><i class="fas fa-child"></i></div>
+            <div class="menu-title">人物篇 Part 1</div>
+            <div class="menu-desc">基礎身分與家庭稱謂 (17字)</div>
+        </div>
+        <div class="menu-card" onclick="selectRound('part2')">
+            <div class="menu-icon"><i class="fas fa-user-tie"></i></div>
+            <div class="menu-title">人物篇 Part 2</div>
+            <div class="menu-desc">社會角色與尊稱 (17字)</div>
+        </div>
+        <div class="menu-card" onclick="selectRound('part3')">
+            <div class="menu-icon"><i class="fas fa-magic"></i></div>
+            <div class="menu-title">個人特質篇</div>
+            <div class="menu-desc">外貌與身體特徵 (22字)</div>
+        </div>
+    </div>
+
+    <!-- 複習與測驗區 -->
+    <div id="review-wrapper" style="display:none;">
+        <h2 style="color:var(--text-main); margin-bottom:1rem; text-align:center;">單字預習</h2>
+        <div id="review-section"></div>
+        <button class="btn-next" onclick="startFullQuiz()">開始挑戰</button>
+        <button class="btn-next btn-home" onclick="goHome()">回首頁</button>
+    </div>
+
+    <div id="quiz-section">
+        <div id="quiz-content">
+            <div id="progress" style="font-size:0.9rem; color:#636e72; margin-bottom:8px;">題號：1 / 20</div>
+            <div class="question-text" id="q-text"></div>
+            <div class="options-grid" id="q-options"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="btn-next" style="display:none;" onclick="nextQuestion()">下一題</button>
+        </div>
+        <div id="quiz-result" style="display:none; text-align:center; padding: 2rem 1rem;">
+            <i class="fas fa-trophy" style="font-size:4rem; color:#6c5ce7; margin-bottom:1.5rem;"></i>
+            <h2 id="final-score-text" style="font-size: 1.8rem;">測驗完成！</h2>
+            <button id="retry-btn" class="btn-next" style="background:#e17055; display:none;" onclick="startRetryQuiz()">挑戰錯題</button>
+            <button class="btn-next" onclick="showReviewPage()">回到單字清單</button>
+            <button class="btn-next btn-home" onclick="goHome()">回首頁</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxh2sJTNMfWYvmr622mIXjp81EVy7OGizUDoAct20aWpv7upbEicdAEAlXDCaG6_jgT/exec";
+
+// 資料庫：分為三組
+const db = {
+    part1: {
+        title: "人物篇 Part 1",
+        code: "CAP_Vocab_People_1",
+        vocab: [
+            {en: "adult", kk: "/əˈdʌlt/", zh: "(n.) 成人"}, {en: "angel", kk: "/ˈendʒəl/", zh: "(n.) 天使"},
+            {en: "baby", kk: "/ˈbebi/", zh: "(n.) 嬰兒"}, {en: "boy", kk: "/bɔɪ/", zh: "(n.) 男孩"},
+            {en: "child", kk: "/tʃaɪld/", zh: "(n.) 小孩"}, {en: "couple", kk: "/ˈkʌpəl/", zh: "(n.) 伴侶；一對"},
+            {en: "customer", kk: "/ˈkʌstəmɚ/", zh: "(n.) 顧客"}, {en: "fool", kk: "/ful/", zh: "(n.) 傻瓜"},
+            {en: "genius", kk: "/ˈdʒinjəs/", zh: "(n.) 天才"}, {en: "gentleman", kk: "/ˈdʒɛntlmən/", zh: "(n.) 紳士"},
+            {en: "giant", kk: "/ˈdʒaɪənt/", zh: "(n.) 巨人"}, {en: "girl", kk: "/ɡɝl/", zh: "(n.) 女孩"},
+            {en: "guest", kk: "/ɡɛst/", zh: "(n.) 客人"}, {en: "guy", kk: "/ɡaɪ/", zh: "(n.) 傢伙；人"},
+            {en: "hero", kk: "/ˈhɪro/", zh: "(n.) 英雄"}, {en: "host", kk: "/host/", zh: "(n.) 主人"},
+            {en: "kid", kk: "/kɪd/", zh: "(n.) 小孩"}
+        ],
+        questions: [
+            { q: "The tickets are cheaper for children, but you pay full price if you are an ________.", a: "adult", options: ["adult", "angel", "baby", "fool"], trans: "兒童票比較便宜，但如果你是成人就必須付全額。", grammar: "children (兒童) vs. adult (成人)。", vocab: [{w:"adult", k:"/əˈdʌlt/", p:"n.", z:"成人"}] },
+            { q: "My grandmother says my sister is a perfect ________, but she is actually quite naughty.", a: "angel", options: ["angel", "giant", "king", "guy"], trans: "祖母說妹妹是完美的天使，但其實她很頑皮。", grammar: "but 顯示前後反差。naughty (頑皮的)。", vocab: [{w:"angel", k:"/ˈendʒəl/", p:"n.", z:"天使"}] },
+            { q: "Please be quiet because the newborn ________ is sleeping in the bedroom.", a: "baby", options: ["baby", "hero", "host", "male"], trans: "請安靜，因為新生嬰兒正在臥室睡覺。", grammar: "newborn (新生的) 暗示 baby。", vocab: [{w:"baby", k:"/ˈbebi/", p:"n.", z:"嬰兒"}] },
+            { q: "The little ________ is crying because he lost his toy car.", a: "boy", options: ["boy", "lady", "girl", "couple"], trans: "那個小男孩在哭，因為弄丟了玩具車。", grammar: "he (他) 指涉男性。toy car 符合孩童情境。", vocab: [{w:"boy", k:"/bɔɪ/", p:"n.", z:"男孩"}] },
+            { q: "It costs a lot to raise a ________, so some people choose not to have kids.", a: "child", options: ["child", "adult", "host", "gentleman"], trans: "養小孩很花錢，所以有些人選擇不生。", grammar: "raise (養育)。have kids 對應 child。", vocab: [{w:"child", k:"/tʃaɪld/", p:"n.", z:"小孩"}] },
+            { q: "The ________ at the next table is celebrating their 50th wedding anniversary.", a: "couple", options: ["couple", "hero", "giant", "guest"], trans: "隔壁桌的夫婦正在慶祝金婚紀念日。", grammar: "wedding anniversary 暗示 couple。", vocab: [{w:"couple", k:"/ˈkʌpəl/", p:"n.", z:"伴侶"}] },
+            { q: "The shopkeeper was angry because a rude ________ shouted at him.", a: "customer", options: ["customer", "king", "fool", "angel"], trans: "店主很生氣，因為一位粗魯的顧客對他大吼。", grammar: "shopkeeper (店主) 對應 customer。", vocab: [{w:"customer", k:"/ˈkʌstəmɚ/", p:"n.", z:"顧客"}] },
+            { q: "I felt like a ________ when I realized I wore two different shoes.", a: "fool", options: ["fool", "genius", "host", "hero"], trans: "當我發現穿錯鞋時，覺得自己像個傻瓜。", grammar: "feel like a fool (覺得像傻瓜)。", vocab: [{w:"fool", k:"/ful/", p:"n.", z:"傻瓜"}] },
+            { q: "Einstein is a ________ because he changed how we see the universe.", a: "genius", options: ["genius", "baby", "fool", "giant"], trans: "愛因斯坦是天才，因他改變了我們對宇宙的認知。", grammar: "universe (宇宙) 暗示極高智慧。", vocab: [{w:"genius", k:"/ˈdʒinjəs/", p:"n.", z:"天才"}] },
+            { q: "He offered his seat to the lady, acting like a true ________.", a: "gentleman", options: ["gentleman", "giant", "kid", "male"], trans: "他讓座給女士，表現得像個真正的紳士。", grammar: "offer seat (讓座) 是 gentleman 的表現。", vocab: [{w:"gentleman", k:"/ˈdʒɛntlmən/", p:"n.", z:"紳士"}] },
+            { q: "Jack climbed the beanstalk and found a scary ________ in the castle.", a: "giant", options: ["giant", "baby", "girl", "lady"], trans: "傑克爬上豆莖，發現城堡裡有個可怕的巨人。", grammar: "Jack & beanstalk 對應 giant。", vocab: [{w:"giant", k:"/ˈdʒaɪənt/", p:"n.", z:"巨人"}] },
+            { q: "The teenage ________ practiced dancing to become a famous star, and she hopes to perform on stage one day.", a: "girl", options: ["girl", "boy", "guy", "gentleman"], trans: "那位十幾歲的女孩練習跳舞，想成為明星，且她希望有一天能登台表演。", grammar: "she (她) 的情境對應 girl。", vocab: [{w:"girl", k:"/ɡɝl/", p:"n.", z:"女孩"}] },
+            { q: "We must clean the room because our special ________ will arrive soon.", a: "guest", options: ["guest", "host", "hero", "king"], trans: "我們必須打掃房間，因為特別來賓快到了。", grammar: "clean (打掃) 是為了迎接 guest。", vocab: [{w:"guest", k:"/ɡɛst/", p:"n.", z:"客人"}] },
+            { q: "Do you know that tall ________ in the blue jacket? He looks like someone I met at the party.", a: "guy", options: ["guy", "girl", "lady", "baby"], trans: "你認識那個穿藍夾克的高個子傢伙嗎？他看起來像我在派對上遇過的人。", grammar: "He (他) 指涉男性。guy 為口語常見的「男人」。", vocab: [{w:"guy", k:"/ɡaɪ/", p:"n.", z:"傢伙"}] },
+            { q: "The firefighter became a ________ after saving the family.", a: "hero", options: ["hero", "fool", "host", "customer"], trans: "消防員救了這家人後成了英雄。", grammar: "save (拯救) 對應 hero。", vocab: [{w:"hero", k:"/ˈhɪro/", p:"n.", z:"英雄"}] },
+            { q: "As the ________, he needs to interview many famous people.", a: "host", options: ["host", "guest", "customer", "child"], trans: "身為主持人，他需要採訪許多名人。", grammar: "interview (採訪) 是 host 的工作。", vocab: [{w:"host", k:"/host/", p:"n.", z:"主持人"}] },
+            { q: "Stop acting like a spoiled ________! Take responsibility.", a: "kid", options: ["kid", "adult", "giant", "king"], trans: "別表現得像個被寵壞的小孩！負起責任來。", grammar: "spoiled (被寵壞的) 常修飾 kid。", vocab: [{w:"kid", k:"/kɪd/", p:"n.", z:"小孩"}] }
+        ]
+    },
+    part2: {
+        title: "人物篇 Part 2",
+        code: "CAP_Vocab_People_2",
+        vocab: [
+            {en: "king", kk: "/kɪŋ/", zh: "(n.) 國王"}, {en: "lady", kk: "/ˈledi/", zh: "(n.) 女士"},
+            {en: "male", kk: "/mel/", zh: "(n.) 男性"}, {en: "man", kk: "/mæn/", zh: "(n.) 男人"},
+            {en: "master", kk: "/ˈmæstɚ/", zh: "(n.) 主人；大師"}, {en: "neighbor", kk: "/ˈnebɚ/", zh: "(n.) 鄰居"},
+            {en: "partner", kk: "/ˈpɑrtnɚ/", zh: "(n.) 夥伴；搭檔"}, {en: "people", kk: "/ˈpipəl/", zh: "(n.) 人們"},
+            {en: "person", kk: "/ˈpɝsn/", zh: "(n.) 人"}, {en: "prince", kk: "/prɪns/", zh: "(n.) 王子"},
+            {en: "princess", kk: "/ˈprɪnsɛs/", zh: "(n.) 公主"}, {en: "queen", kk: "/kwin/", zh: "(n.) 皇后"},
+            {en: "stranger", kk: "/ˈstrendʒɚ/", zh: "(n.) 陌生人"}, {en: "teenager", kk: "/ˈtineˌdʒɚ/", zh: "(n.) 青少年"},
+            {en: "visitor", kk: "/ˈvɪzɪtɚ/", zh: "(n.) 訪客"}, {en: "woman", kk: "/ˈwʊmən/", zh: "(n.) 女人"},
+            {en: "youth", kk: "/juθ/", zh: "(n.) 青春；年輕人"}
+        ],
+        questions: [
+            { q: "The old ________ ruled the country for sixty years with kindness.", a: "king", options: ["king", "angel", "hero", "guy"], trans: "老國王仁慈地統治了國家六十年。", grammar: "rule (統治) 是 king 的動作。", vocab: [{w:"king", k:"/kɪŋ/", p:"n.", z:"國王"}] },
+            { q: "Excuse me, ________, I think you dropped your wallet.", a: "lady", options: ["lady", "boy", "gentleman", "male"], trans: "不好意思，女士，我想妳掉了錢包。", grammar: "Lady 為對女性的禮貌稱呼。", vocab: [{w:"lady", k:"/ˈledi/", p:"n.", z:"女士"}] },
+            { q: "Statistics show that the average ________ height is increasing faster than the female height.", a: "male", options: ["male", "female", "lady", "girl"], trans: "統計顯示男性平均身高的增長速度快於女性。", grammar: "對比關係：male (男性) vs. female (女性)。", vocab: [{w:"male", k:"/mel/", p:"n.", z:"男性"}] },
+            { q: "That tall ________ in the suit is my uncle.", a: "man", options: ["man", "woman", "girl", "lady"], trans: "那個穿西裝的高個子男人是我叔叔。", grammar: "uncle (叔叔) 暗示性別為 man。", vocab: [{w:"man", k:"/mæn/", p:"n.", z:"男人"}] },
+            { q: "The loyal dog followed its ________ everywhere he went.", a: "master", options: ["master", "stranger", "visitor", "youth"], trans: "這隻忠誠的狗跟著主人到處走。", grammar: "dog (狗) 跟隨 master (主人)。", vocab: [{w:"master", k:"/ˈmæstɚ/", p:"n.", z:"主人"}] },
+            { q: "My next-door ________ is very noisy; he plays drums at night.", a: "neighbor", options: ["neighbor", "partner", "stranger", "king"], trans: "我的隔壁鄰居很吵；他晚上打鼓。", grammar: "next-door (隔壁的) 修飾 neighbor。", vocab: [{w:"neighbor", k:"/ˈnebɚ/", p:"n.", z:"鄰居"}] },
+            { q: "She is my business ________; we started this company together.", a: "partner", options: ["partner", "people", "person", "master"], trans: "她是我的商業夥伴；我們一起創立這家公司。", grammar: "business partner (商業夥伴)。", vocab: [{w:"partner", k:"/ˈpɑrtnɚ/", p:"n.", z:"夥伴"}] },
+            { q: "Many ________ gathered in the square to watch the fireworks.", a: "people", options: ["people", "person", "man", "woman"], trans: "許多人聚集在廣場看煙火。", grammar: "Many 接複數名詞 people。", vocab: [{w:"people", k:"/ˈpipəl/", p:"n.", z:"人們"}] },
+            { q: "He is the only ________ I know who doesn't like chocolate.", a: "person", options: ["person", "people", "couple", "youth"], trans: "他是我認識唯一不喜歡巧克力的人。", grammar: "only person (唯一的人)。", vocab: [{w:"person", k:"/ˈpɝsn/", p:"n.", z:"人"}] },
+            { q: "The ________ will become king when his father dies.", a: "prince", options: ["prince", "princess", "queen", "lady"], trans: "當父親過世後，王子將成為國王。", grammar: "become king (成為國王) 的是 prince。", vocab: [{w:"prince", k:"/prɪns/", p:"n.", z:"王子"}] },
+            { q: "In the fairytale, the ________ kissed a frog and it turned into a prince.", a: "princess", options: ["princess", "queen", "woman", "neighbor"], trans: "童話中，公主親吻青蛙，青蛙變成了王子。", grammar: "turn into a prince (變成王子) 對應 princess。", vocab: [{w:"princess", k:"/ˈprɪnsɛs/", p:"n.", z:"公主"}] },
+            { q: "The ________ wore a beautiful crown and sat beside the king.", a: "queen", options: ["queen", "prince", "master", "youth"], trans: "皇后戴著美麗皇冠，坐在國王身旁。", grammar: "beside the king (在國王旁) 通常是 queen。", vocab: [{w:"queen", k:"/kwin/", p:"n.", z:"皇后"}] },
+            { q: "My mother told me never to talk to a ________ on the street.", a: "stranger", options: ["stranger", "neighbor", "partner", "visitor"], trans: "媽媽告訴我絕不要跟街上的陌生人說話。", grammar: "talk to a stranger (跟陌生人說話)。", vocab: [{w:"stranger", k:"/ˈstrendʒɚ/", p:"n.", z:"陌生人"}] },
+            { q: "As a rebellious ________, he often argued with his parents.", a: "teenager", options: ["teenager", "adult", "baby", "master"], trans: "身為叛逆的青少年，他常跟父母爭吵。", grammar: "rebellious (叛逆的) 常形容 teenager。", vocab: [{w:"teenager", k:"/ˈtineˌdʒɚ/", p:"n.", z:"青少年"}] },
+            { q: "The museum welcomes every ________ with a free map.", a: "visitor", options: ["visitor", "stranger", "neighbor", "master"], trans: "博物館歡迎每位訪客，並提供免費地圖。", grammar: "museum (博物館) 的客人是 visitor。", vocab: [{w:"visitor", k:"/ˈvɪzɪtɚ/", p:"n.", z:"訪客"}] },
+            { q: "That ________ over there is a famous doctor in our town, and she is very kind to her patients.", a: "woman", options: ["woman", "man", "boy", "guy"], trans: "那邊那位女士是我們鎮上有名的醫生，而且她對病人非常親切。", grammar: "代名詞 she (她) 指涉女性。kind (親切的)。", vocab: [{w:"woman", k:"/ˈwʊmən/", p:"n.", z:"女人"}] },
+            { q: "In his ________, he traveled around the world before getting a job.", a: "youth", options: ["youth", "adult", "old", "master"], trans: "在他年輕時，他在工作前環遊了世界。", grammar: "In his youth (在他年輕時期)。", vocab: [{w:"youth", k:"/juθ/", p:"n.", z:"青春/年輕時期"}] }
+        ]
+    },
+    part3: {
+        title: "個人特質篇",
+        code: "CAP_Vocab_People_3",
+        vocab: [
+            {en: "beautiful", kk: "/ˈbjutəfəl/", zh: "(adj.) 美麗的"}, {en: "blind", kk: "/blaɪnd/", zh: "(adj.) 盲的"},
+            {en: "chubby", kk: "/ˈtʃʌbi/", zh: "(adj.) 圓胖的"}, {en: "cute", kk: "/kjut/", zh: "(adj.) 可愛的"},
+            {en: "deaf", kk: "/dɛf/", zh: "(adj.) 聾的"}, {en: "dumb", kk: "/dʌm/", zh: "(adj.) 啞的；愚笨的"},
+            {en: "fat", kk: "/fæt/", zh: "(adj.) 胖的"}, {en: "handsome", kk: "/ˈhænsəm/", zh: "(adj.) 英俊的"},
+            {en: "heavy", kk: "/ˈhɛvi/", zh: "(adj.) 重的"}, {en: "nice-looking", kk: "/naɪs ˈlʊkɪŋ/", zh: "(adj.) 好看的"},
+            {en: "old", kk: "/old/", zh: "(adj.) 老的"}, {en: "over-weight", kk: "/ˌovɚˈwet/", zh: "(adj.) 過重的"},
+            {en: "pretty", kk: "/ˈprɪti/", zh: "(adj.) 漂亮的"}, {en: "short", kk: "/ʃɔrt/", zh: "(adj.) 矮的；短的"},
+            {en: "skinny", kk: "/ˈskɪni/", zh: "(adj.) 皮包骨的"}, {en: "slender", kk: "/ˈslɛndɚ/", zh: "(adj.) 苗條的"},
+            {en: "slim", kk: "/slɪm/", zh: "(adj.) 纖細的"}, {en: "tall", kk: "/tɔl/", zh: "(adj.) 高的"},
+            {en: "thin", kk: "/θɪn/", zh: "(adj.) 瘦的"}, {en: "under-weight", kk: "/ˌʌndɚˈwet/", zh: "(adj.) 過輕的"},
+            {en: "ugly", kk: "/ˈʌɡli/", zh: "(adj.) 醜陋的"}, {en: "young", kk: "/jʌŋ/", zh: "(adj.) 年輕的"}
+        ],
+        questions: [
+            { q: "The flowers in the garden are very ________, with bright colors and a sweet smell.", a: "beautiful", options: ["beautiful", "blind", "chubby", "deaf"], trans: "花園裡的花非常美麗，顏色鮮豔且氣味芬芳。", grammar: "修飾 flowers (花朵) 的正面形容詞。", vocab: [{w:"beautiful", k:"/ˈbjutəfəl/", p:"adj.", z:"美麗的"}] },
+            { q: "The old man is ________ and needs a guide dog to help him walk safely.", a: "blind", options: ["blind", "cute", "fat", "young"], trans: "這位老人失明了，需要導盲犬協助他安全行走。", grammar: "guide dog (導盲犬) 暗示 blind (盲的)。", vocab: [{w:"blind", k:"/blaɪnd/", p:"adj.", z:"盲的"}] },
+            { q: "The baby has ________ cheeks that everyone loves to pinch because they are so soft.", a: "chubby", options: ["chubby", "heavy", "old", "ugly"], trans: "這嬰兒有圓胖的臉頰，大家因為太軟嫩都愛捏。", grammar: "cheeks (臉頰) 常搭配 chubby。", vocab: [{w:"chubby", k:"/ˈtʃʌbi/", p:"adj.", z:"圓胖的"}] },
+            { q: "Look at that ________ little puppy playing with a ball; it makes everyone smile happily.", a: "cute", options: ["cute", "dumb", "tall", "thin"], trans: "看那隻玩球的可愛小狗；牠讓大家都開心地微笑了。", grammar: "puppy (小狗) 常搭配 cute。", vocab: [{w:"cute", k:"/kjut/", p:"adj.", z:"可愛的"}] },
+            { q: "She is ________, so she uses sign language to communicate with her friends and family.", a: "deaf", options: ["deaf", "handsome", "nice-looking", "skinny"], trans: "她是聽障人士，所以她用手語和親友溝通。", grammar: "sign language (手語) 暗示 deaf (聾的)。", vocab: [{w:"deaf", k:"/dɛf/", p:"adj.", z:"聾的"}] },
+            { q: "It was a ________ idea to go out in the rain without an umbrella.", a: "dumb", options: ["dumb", "beautiful", "pretty", "slender"], trans: "沒帶傘就跑進雨中真是個愚笨的主意。", grammar: "dumb idea (笨主意)。", vocab: [{w:"dumb", k:"/dʌm/", p:"adj.", z:"愚笨的"}] },
+            { q: "The doctor told him he is too ________ and needs to exercise more to stay healthy.", a: "fat", options: ["fat", "nice-looking", "short", "young"], trans: "醫生告訴他太胖了，需要多運動以保持健康。", grammar: "exercise (運動) 對應 fat/over-weight。", vocab: [{w:"fat", k:"/fæt/", p:"adj.", z:"胖的"}] },
+            { q: "The actor is so ________ that many fans scream loudly whenever he appears on stage.", a: "handsome", options: ["handsome", "blind", "heavy", "old"], trans: "那位男演員太英俊了，粉絲一看到他就尖叫。", grammar: "fans scream (粉絲尖叫) 暗示 handsome。", vocab: [{w:"handsome", k:"/ˈhænsəm/", p:"adj.", z:"英俊的"}] },
+            { q: "This box is too ________ for me to lift, so I need you to help me.", a: "heavy", options: ["heavy", "chubby", "pretty", "thin"], trans: "這箱子太重我搬不動，所以需要你幫忙。", grammar: "lift (搬運) 對應 heavy (重的)。", vocab: [{w:"heavy", k:"/ˈhɛvi/", p:"adj.", z:"重的"}] },
+            { q: "She is a ________ girl with a warm smile that makes people feel comfortable.", a: "nice-looking", options: ["nice-looking", "deaf", "fat", "ugly"], trans: "她是個好看的女孩，溫暖笑容讓人感到自在。", grammar: "warm smile (溫暖笑容) 對應 nice-looking。", vocab: [{w:"nice-looking", k:"/naɪs ˈlʊkɪŋ/", p:"adj.", z:"好看的"}] },
+            { q: "My grandfather is very ________, but he still remembers many stories from when he was young.", a: "old", options: ["old", "cute", "skinny", "tall"], trans: "我祖父很老了，但他仍記得年輕時的故事。", grammar: "grandfather (祖父) 對應 old。", vocab: [{w:"old", k:"/old/", p:"adj.", z:"老的"}] },
+            { q: "He is slightly ________, so the doctor suggested he should go on a diet immediately.", a: "over-weight", options: ["over-weight", "blind", "dumb", "short"], trans: "他稍微過重，所以醫生建議他立刻節食。", grammar: "go on a diet (節食) 對應 over-weight。", vocab: [{w:"over-weight", k:"/ˌovɚˈwet/", p:"adj.", z:"過重的"}] },
+            { q: "The girl wore a ________ dress to the party and looked like a princess.", a: "pretty", options: ["pretty", "heavy", "slender", "under-weight"], trans: "那女孩穿著漂亮的洋裝去派對，看起來像公主。", grammar: "princess (公主) 對應 pretty dress。", vocab: [{w:"pretty", k:"/ˈprɪti/", p:"adj.", z:"漂亮的"}] },
+            { q: "He is too ________ to reach the top shelf, so he needs a ladder.", a: "short", options: ["short", "tall", "handsome", "young"], trans: "他太矮搆不到頂層架子，所以需要梯子。", grammar: "ladder (梯子) 暗示 short (矮的)。", vocab: [{w:"short", k:"/ʃɔrt/", p:"adj.", z:"矮的"}] },
+            { q: "The stray dog was so ________ that you could see its ribs, so we fed it.", a: "skinny", options: ["skinny", "chubby", "fat", "heavy"], trans: "那隻流浪狗瘦到皮包骨，可見肋骨，所以我們餵牠。", grammar: "ribs (肋骨) 暗示 skinny (極瘦的)。", vocab: [{w:"skinny", k:"/ˈskɪni/", p:"adj.", z:"皮包骨的"}] },
+            { q: "Models usually have ________ figures because they need to fit into sample clothes.", a: "slender", options: ["slender", "blind", "dumb", "ugly"], trans: "模特兒通常有苗條的身材，因為要穿得下樣衣。", grammar: "Models (模特兒) 常對應 slender。", vocab: [{w:"slender", k:"/ˈslɛndɚ/", p:"adj.", z:"苗條的"}] },
+            { q: "She stays ________ by eating healthy food and doing yoga every morning.", a: "slim", options: ["slim", "fat", "heavy", "old"], trans: "她靠吃健康食物和做瑜珈保持纖細身材。", grammar: "healthy/yoga (健康/瑜珈) 對應 slim。", vocab: [{w:"slim", k:"/slɪm/", p:"adj.", z:"纖細的"}] },
+            { q: "The basketball player is very ________, which helps him easily block shots.", a: "tall", options: ["tall", "short", "cute", "deaf"], trans: "那位籃球員很高，這幫他輕鬆蓋火鍋。", grammar: "basketball player (籃球員) 對應 tall。", vocab: [{w:"tall", k:"/tɔl/", p:"adj.", z:"高的"}] },
+            { q: "After being sick for a week, he looks very ________ and needs to eat more.", a: "thin", options: ["thin", "chubby", "fat", "heavy"], trans: "病了一週後，他看起來很瘦，需要多吃點。", grammar: "sick (生病) 導致變 thin (瘦)。", vocab: [{w:"thin", k:"/θɪn/", p:"adj.", z:"瘦的"}] },
+            { q: "The baby was born ________, so the doctors kept him in the hospital for observation.", a: "under-weight", options: ["under-weight", "handsome", "nice-looking", "tall"], trans: "那嬰兒出生體重過輕，所以醫生留院觀察。", grammar: "hospital/observation 對應 under-weight。", vocab: [{w:"under-weight", k:"/ˌʌndɚˈwet/", p:"adj.", z:"過輕的"}] },
+            { q: "The witch in the story was ________, with a big nose and warts on her face.", a: "ugly", options: ["ugly", "beautiful", "cute", "pretty"], trans: "故事裡的巫婆很醜陋，有個大鼻子和臉上的疣。", grammar: "witch/warts (巫婆/疣) 對應 ugly。", vocab: [{w:"ugly", k:"/ˈʌɡli/", p:"adj.", z:"醜陋的"}] },
+            { q: "The ________ boy has a lot of energy and loves to run around the park.", a: "young", options: ["young", "old", "blind", "heavy"], trans: "那個年輕男孩精力充沛，喜愛在公園跑來跑去。", grammar: "energy (精力) 暗示 young。", vocab: [{w:"young", k:"/jʌŋ/", p:"adj.", z:"年輕的"}] }
+        ]
+    }
+};
+
+let currentTopic = "";
+let quizPool = [];
+let currentQIndex = 0;
+let score = 0;
+let wrongQuestions = [];
+
+// 切換頁面
+function selectRound(part) {
+    currentTopic = db[part].code;
+    const roundData = db[part];
+    
+    // 更新標題
+    document.getElementById('current-topic-name').innerText = roundData.title;
+    
+    // 渲染複習列表
+    const container = document.getElementById('review-section');
+    container.innerHTML = roundData.vocab.map(item => `
+        <div class="card">
+            <div class="word-en">${item.en}</div>
+            <div class="word-kk">${item.kk || '--'}</div>
+            <div class="word-zh">${item.zh}</div>
+        </div>
+    `).join('');
+
+    // UI 切換
+    document.getElementById('menu-section').style.display = 'none';
+    document.getElementById('review-wrapper').style.display = 'block';
+    
+    // 準備題庫
+    quizPool = [...roundData.questions]; 
+    
+    // 嘗試讀取 GAS 數據
+    loadGlobalStats();
+}
+
+function goHome() {
+    document.getElementById('review-wrapper').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('menu-section').style.display = 'grid';
+    document.getElementById('current-topic-name').innerText = "請選擇";
+}
+
+async function loadGlobalStats() {
+    try {
+        document.getElementById('last-global-time').innerText = "讀取中...";
+        const res = await fetch(`${GAS_URL}?topic=${currentTopic}`);
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
+        document.getElementById('last-global-time').innerText = data.lastTime || "已同步";
+    } catch (e) { 
+        console.log("Offline mode");
+        document.getElementById('last-global-time').innerText = "本機模式";
+    }
+}
+
+function startFullQuiz() {
+    quizPool.sort(() => Math.random() - 0.5); // 隨機排序
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startRetryQuiz() {
+    quizPool = [...wrongQuestions];
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startQuizUI() {
+    document.getElementById('review-wrapper').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('quiz-result').style.display = 'none';
+    currentQIndex = 0; score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    if(currentQIndex >= quizPool.length) return finishQuiz();
+    const q = quizPool[currentQIndex];
+    document.getElementById('progress').innerText = `題號：${currentQIndex + 1} / ${quizPool.length}`;
+    document.getElementById('q-text').innerText = q.q;
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+    
+    const shuffledOptions = q.options.sort(() => Math.random() - 0.5);
+    const optionsHtml = shuffledOptions.map(opt => 
+        `<button class="option-btn" onclick="checkAnswer(\`${opt}\`, this)">${opt}</button>`
+    ).join('');
+    document.getElementById('q-options').innerHTML = optionsHtml;
+}
+
+function checkAnswer(ans, btn) {
+    const q = quizPool[currentQIndex];
+    const allBtns = document.querySelectorAll('.option-btn');
+    allBtns.forEach(b => b.disabled = true);
+    if(ans === q.a) { btn.classList.add('correct'); score++; }
+    else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
+        if (!wrongQuestions.find(item => item.q === q.q)) wrongQuestions.push(q);
+    }
+    
+    const vocabTags = q.vocab.map(v => `<div class="vocab-tag"><b>${v.w}</b> ${v.k} [${v.p}] ${v.z}</div>`).join('');
+    
+    document.getElementById('feedback').innerHTML = `
+        <div class="analysis-title"><i class="fas fa-search-plus"></i> 專家解析</div>
+        <div class="feedback-item"><span class="feedback-label">[翻譯]</span>${q.trans}</div>
+        <div class="feedback-item"><span class="feedback-label">[文法重點]</span>${q.grammar}</div>
+        <div class="feedback-item"><span class="feedback-label">[必備單字]</span></div>
+        <div class="vocab-compact-list">${vocabTags}</div>
+    `;
+    document.getElementById('feedback').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() { currentQIndex++; showQuestion(); }
+
+function finishQuiz() {
+    const finalScore = Math.round((score/quizPool.length)*100);
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'block';
+    document.getElementById('final-score-text').innerText = `測驗得分：${finalScore}`;
+    
+    const retryBtn = document.getElementById('retry-btn');
+    if (wrongQuestions.length > 0) {
+        retryBtn.style.display = 'inline-block';
+        retryBtn.innerText = `複習錯題 (${wrongQuestions.length})`;
+    } else { retryBtn.style.display = 'none'; }
+    
+    fetch(GAS_URL, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ topic: currentTopic, score: finalScore }) 
+    }).catch(e => console.log("Upload failed"));
+}
+
+function showReviewPage() {
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('review-wrapper').style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1090 @@
+Total fixes: 363
+  [kk_phonetics] id=70 word=accident
+    BEFORE: ['æksədənt]
+    AFTER:  'æksədənt
+  [kk_phonetics] id=120 word=acquaint
+    BEFORE: ə'kweɪnt
+    AFTER:  ə'kwent
+  [kk_phonetics] id=121 word=acquaintance
+    BEFORE: ə'kweɪntəns
+    AFTER:  ə'kwentəns
+  [kk_phonetics] id=122 word=acquainted
+    BEFORE: ə'kweɪntɪd
+    AFTER:  ə'kwentɪd
+  [kk_phonetics] id=246 word=aerate
+    BEFORE: 'ɛreɪt
+    AFTER:  'ɛret
+  [kk_phonetics] id=251 word=aerospace
+    BEFORE: 'ɛrəspeɪs
+    AFTER:  'ɛrəspes
+  [kk_phonetics] id=303 word=aging
+    BEFORE: 'eɪdʒɪŋ
+    AFTER:  'edʒɪŋ
+  [kk_phonetics] id=328 word=ailment
+    BEFORE: 'eɪlmənt
+    AFTER:  'elmənt
+  [kk_phonetics] id=339 word=airmail
+    BEFORE: 'ɛrmeɪl
+    AFTER:  'ɛrmel
+  [kk_phonetics] id=340 word=airplane
+    BEFORE: 'ɛrpleɪn
+    AFTER:  'ɛrplen
+  [kk_phonetics] id=440 word=amazing
+    BEFORE: ə'meɪzɪŋ
+    AFTER:  ə'mezɪŋ
+  [kk_phonetics] id=452 word=ambush
+    BEFORE: ['æmˌbʊʃ]
+    AFTER:  'æmˌbʊʃ
+  [kk_phonetics] id=490 word=analyze
+    BEFORE: ['ænəˌlaɪz]
+    AFTER:  'ænəˌlaɪz
+  [kk_phonetics] id=500 word=aneurysm
+    BEFORE: ['æn.jə.rɪ.zəm]
+    AFTER:  'æn.jə.rɪ.zəm
+  [kk_phonetics] id=508 word=angular
+    BEFORE: ['æŋɡjəlɚ]
+    AFTER:  'æŋɡjəlɚ
+  [kk_phonetics] id=559 word=antiquated
+    BEFORE: æn'tɪkweɪtɪd
+    AFTER:  æn'tɪkwetɪd
+  [kk_phonetics] id=622 word=appraisal
+    BEFORE: ə'preɪzəl
+    AFTER:  ə'prezəl
+  [kk_phonetics] id=696 word=arrange
+    BEFORE: ə'reɪndʒ
+    AFTER:  ə'rendʒ
+  [kk_phonetics] id=841 word=attainment
+    BEFORE: ə'teɪnmənt
+    AFTER:  ə'tenmənt
+  [kk_phonetics] id=866 word=audacious
+    BEFORE: ɔ'deɪʃəs
+    AFTER:  ɔ'deʃəs
+  [kk_phonetics] id=898 word=automate
+    BEFORE: 'ɔtəˌmeɪt
+    AFTER:  'ɔtəˌmet
+  [kk_phonetics] id=913 word=available
+    BEFORE: ə'veɪləbəl
+    AFTER:  ə'veləbəl
+  [kk_phonetics] id=980 word=bait
+    BEFORE: 'beɪt
+    AFTER:  'bet
+  [kk_phonetics] id=998 word=band-aid
+    BEFORE: 'bænd eɪd
+    AFTER:  'bænd ed
+  [kk_phonetics] id=1054 word=basically
+    BEFORE: 'beɪsɪkli
+    AFTER:  'besɪkli
+  [kk_phonetics] id=1056 word=basin
+    BEFORE: 'beɪsən
+    AFTER:  'besən
+  [kk_phonetics] id=1183 word=bebasedon
+    BEFORE: bi''beɪsd ɑn
+    AFTER:  bi''besd ɑn
+  [kk_phonetics] id=1259 word=beret
+    BEFORE: bə'reɪ
+    AFTER:  bə're
+  [kk_phonetics] id=1304 word=biodegradable
+    BEFORE: .baɪo dɪ'ɡreɪdəbəl
+    AFTER:  .baɪo dɪ'ɡredəbəl
+  [kk_phonetics] id=1548 word=brain
+    BEFORE: breɪn
+    AFTER:  bren
+  [kk_phonetics] id=1563 word=brave
+    BEFORE: 'breɪv
+    AFTER:  'brev
+  [kk_phonetics] id=1567 word=brazen
+    BEFORE: 'breɪzən
+    AFTER:  'brezən
+  [kk_phonetics] id=1590 word=breakthrough
+    BEFORE: 'brɛkθruː
+    AFTER:  'brɛkθru
+  [kk_phonetics] id=1612 word=brewery
+    BEFORE: 'bruːɛri
+    AFTER:  'bruɛri
+  [kk_phonetics] id=1623 word=bridesmaid
+    BEFORE: 'braɪdzmeɪd
+    AFTER:  'braɪdzmed
+  [kk_phonetics] id=1848 word=cage
+    BEFORE: 'keɪdʒ
+    AFTER:  'kedʒ
+  [kk_phonetics] id=1850 word=caladium
+    BEFORE: kə'leɪdiəm
+    AFTER:  kə'lediəm
+  [kk_phonetics] id=1910 word=canoe
+    BEFORE: 'kænuː
+    AFTER:  'kænu
+  [kk_phonetics] id=1932 word=captivate
+    BEFORE: kæp'tɪveɪt
+    AFTER:  kæp'tɪvet
+  [kk_phonetics] id=2074 word=ceaseless
+    BEFORE: 'siːsləs
+    AFTER:  'sisləs
+  [kk_phonetics] id=2103 word=CEO
+    BEFORE: 'siːo
+    AFTER:  'sio
+  [kk_phonetics] id=2118 word=chaebol
+    BEFORE: 'tʃeɪbɔl
+    AFTER:  'tʃebɔl
+  [kk_phonetics] id=2133 word=chamber
+    BEFORE: 'tʃeɪmbɚ
+    AFTER:  'tʃembɚ
+  [kk_phonetics] id=2135 word=champagne
+    BEFORE: 'ʃæmpeɪn
+    AFTER:  'ʃæmpen
+  [kk_phonetics] id=2147 word=changeable
+    BEFORE: 'tʃeɪndʒəbəl
+    AFTER:  'tʃendʒəbəl
+  [kk_phonetics] id=2457 word=clueless
+    BEFORE: 'kluːlɪs
+    AFTER:  'klulɪs
+  [kk_phonetics] id=2478 word=coating
+    BEFORE: 'koeɪtɪŋ
+    AFTER:  'koʊtɪŋ
+  [kk_phonetics] id=2481 word=cocaine
+    BEFORE: ko'keɪn
+    AFTER:  ko'ken
+  [kk_phonetics] id=2488 word=cocktail
+    BEFORE: 'kɑkteɪl
+    AFTER:  'kɑktel
+  [kk_phonetics] id=2700 word=complete
+    BEFORE: kəm'pliːt
+    AFTER:  kəm'plit
+  [kk_phonetics] id=2910 word=consternate
+    BEFORE: kən'stɝneɪt
+    AFTER:  kən'stɝnet
+  [kk_phonetics] id=2940 word=contagious
+    BEFORE: kən'teɪdʒəs
+    AFTER:  kən'tedʒəs
+  [kk_phonetics] id=3033 word=cooperate
+    BEFORE: koʊ'ɑpəreɪt
+    AFTER:  koʊ'ɑpəret
+  [kk_phonetics] id=3198 word=crazy
+    BEFORE: 'kreɪzi
+    AFTER:  'krezi
+  [kk_phonetics] id=3326 word=cumulative
+    BEFORE: 'kjuːmjələtɪv
+    AFTER:  'kjumjələtɪv
+  [kk_phonetics] id=3393 word=daily
+    BEFORE: 'deɪli
+    AFTER:  'deli
+  [kk_phonetics] id=3414 word=dangerous
+    BEFORE: 'deɪndʒɚəs
+    AFTER:  'dendʒɚəs
+  [kk_phonetics] id=3426 word=database
+    BEFORE: 'deɪtəbɛs
+    AFTER:  'detəbɛs
+  [kk_phonetics] id=3439 word=daylight
+    BEFORE: 'deɪˌlaɪt
+    AFTER:  'deˌlaɪt
+  [kk_phonetics] id=3462 word=debasement
+    BEFORE: dɪ'beɪsmənt
+    AFTER:  dɪ'besmənt
+  [kk_phonetics] id=3463 word=debatable
+    BEFORE: dɪ'beɪtəbəl
+    AFTER:  dɪ'betəbəl
+  [kk_phonetics] id=3464 word=debate
+    BEFORE: dɪ'beɪt
+    AFTER:  dɪ'bet
+  [kk_phonetics] id=3471 word=decade
+    BEFORE: 'dɛkeɪd
+    AFTER:  'dɛked
+  [kk_phonetics] id=3472 word=decaffeinated
+    BEFORE: dɪ'kæfɪneɪtɪd
+    AFTER:  dɪ'kæfɪnetɪd
+  [kk_phonetics] id=3507 word=decorate
+    BEFORE: dɪ'kɔreɪt
+    AFTER:  dɪ'kɔret
+  [kk_phonetics] id=3571 word=dehydrated
+    BEFORE: dɪ'haɪdreɪtɪd
+    AFTER:  dɪ'haɪdretɪd
+  [kk_phonetics] id=3679 word=derailment
+    BEFORE: dɪ'reɪlmənt
+    AFTER:  dɪ'relmənt
+  [kk_phonetics] id=3681 word=deranged
+    BEFORE: dɪ'reɪndʒd
+    AFTER:  dɪ'rendʒd
+  [kk_phonetics] id=3734 word=detailed
+    BEFORE: 'dɪteɪld
+    AFTER:  'dɪteld
+  [kk_phonetics] id=3745 word=deteriorated
+    BEFORE: dɪ'tɪrɪɚeɪtɪd
+    AFTER:  dɪ'tɪrɪɚetɪd
+  [kk_phonetics] id=3771 word=deviant
+    BEFORE: dɪ'veɪʃən
+    AFTER:  dɪ'veʃən
+  [kk_phonetics] id=3847 word=dilapidate
+    BEFORE: dɪ'læpɪdeɪt
+    AFTER:  dɪ'læpɪdet
+  [kk_phonetics] id=3922 word=disclaimer
+    BEFORE: dɪs'kleɪmɚ
+    AFTER:  dɪs'klemɚ
+  [kk_phonetics] id=4006 word=displaced
+    BEFORE: dɪs'pleɪst
+    AFTER:  dɪs'plest
+  [kk_phonetics] id=4176 word=downscale
+    BEFORE: 'daʊnˌskeɪl
+    AFTER:  'daʊnˌskel
+  [kk_phonetics] id=4196 word=drainage
+    BEFORE: 'dreɪnɪdʒ
+    AFTER:  'drenɪdʒ
+  [kk_phonetics] id=4324 word=duration
+    BEFORE: 'djuːrəʃən
+    AFTER:  'djurəʃən
+  [kk_phonetics] id=4334 word=duvet
+    BEFORE: 'duːvɛt
+    AFTER:  'duvɛt
+  [kk_phonetics] id=4441 word=egregious
+    BEFORE: ɪ'griːdʒəs
+    AFTER:  ɪ'gridʒəs
+  [kk_phonetics] id=4519 word=embrace
+    BEFORE: ɪm'breɪs
+    AFTER:  ɪm'bres
+  [kk_phonetics] id=4568 word=enclave
+    BEFORE: 'ɛŋkleɪv
+    AFTER:  'ɛŋklev
+  [kk_phonetics] id=4610 word=engage
+    BEFORE: ɪn'ɡeɪdʒ
+    AFTER:  ɪn'ɡedʒ
+  [kk_phonetics] id=4612 word=engagement
+    BEFORE: ɪn'geɪdʒmənt
+    AFTER:  ɪn'gedʒmənt
+  [kk_phonetics] id=4645 word=enraged
+    BEFORE: ɪn'reɪdʒd
+    AFTER:  ɪn'redʒd
+  [kk_phonetics] id=4704 word=equate
+    BEFORE: ɪ'kweɪt
+    AFTER:  ɪ'kwet
+  [kk_phonetics] id=4706 word=equator
+    BEFORE: ɪ'kweɪtɚ
+    AFTER:  ɪ'kwetɚ
+  [kk_phonetics] id=4744 word=estate
+    BEFORE: 'ɛsteɪt
+    AFTER:  'ɛstet
+  [kk_phonetics] id=4827 word=exasperated
+    BEFORE: ɪg'zæspəreɪtɪd
+    AFTER:  ɪg'zæspəretɪd
+  [kk_phonetics] id=4866 word=exhale
+    BEFORE: ɪg'zheɪl
+    AFTER:  ɪg'zhel
+  [kk_phonetics] id=5010 word=factuality
+    BEFORE: fæk'tʃuːəlɪtɪ
+    AFTER:  fæk'tʃuəlɪtɪ
+  [kk_phonetics] id=5027 word=faith
+    BEFORE: 'feɪθ
+    AFTER:  'feθ
+  [kk_phonetics] id=5028 word=faithful
+    BEFORE: 'feɪθfəl
+    AFTER:  'feθfəl
+  [kk_phonetics] id=5029 word=faithfully
+    BEFORE: 'feɪθfəlɪ
+    AFTER:  'feθfəlɪ
+  [kk_phonetics] id=5102 word=fatal
+    BEFORE: 'feɪtəl
+    AFTER:  'fetəl
+  [kk_phonetics] id=5154 word=feisty
+    BEFORE: 'feɪsti
+    AFTER:  'festi
+  [kk_phonetics] id=5159 word=female
+    BEFORE: 'fɛmeɪl
+    AFTER:  'fɛmel
+  [kk_phonetics] id=5242 word=filmmaker
+    BEFORE: 'fɪlmˌmeɪkɚ
+    AFTER:  'fɪlmˌmekɚ
+  [kk_phonetics] id=5503 word=fornicate
+    BEFORE: 'fɔrnɪkeɪt
+    AFTER:  'fɔrnɪket
+  [kk_phonetics] id=5538 word=foyer
+    BEFORE: 'fɔɪeɪ
+    AFTER:  'fɔɪe
+  [kk_phonetics] id=5621 word=front-page
+    BEFORE: 'frʌnt-'peɪdʒ
+    AFTER:  'frʌnt-'pedʒ
+  [kk_phonetics] id=5636 word=fruitfully
+    BEFORE: 'fruːtfəlɪ
+    AFTER:  'frutfəlɪ
+  [kk_phonetics] id=5668 word=funeral
+    BEFORE: 'fjuːnɚɛl
+    AFTER:  'fjunɚɛl
+  [kk_phonetics] id=5977 word=good-natured
+    BEFORE: 'gud 'neɪtʃɚd
+    AFTER:  'gud 'netʃɚd
+  [kk_phonetics] id=6030 word=grapevine
+    BEFORE: 'greɪpvaɪn
+    AFTER:  'grepvaɪn
+  [kk_phonetics] id=6040 word=grateful
+    BEFORE: 'greɪtfəl
+    AFTER:  'gretfəl
+  [kk_phonetics] id=6046 word=gratuitous
+    BEFORE: grə'tʃuːɪtəs
+    AFTER:  grə'tʃuɪtəs
+  [kk_phonetics] id=6197 word=handmade
+    BEFORE: 'hændmeɪd
+    AFTER:  'hændmed
+  [kk_phonetics] id=6198 word=handmaiden
+    BEFORE: 'hændˌmeɪdn
+    AFTER:  'hændˌmedn
+  [kk_phonetics] id=6300 word=headway
+    BEFORE: 'hɛdweɪ
+    AFTER:  'hɛdwe
+  [kk_phonetics] id=6378 word=heyday
+    BEFORE: 'heɪdeɪ
+    AFTER:  'hede
+  [kk_phonetics] id=6379 word=hiatus
+    BEFORE: haɪ'eɪtəs
+    AFTER:  haɪ'etəs
+  [kk_phonetics] id=6380 word=hibernate
+    BEFORE: 'haɪbɚˌneɪt
+    AFTER:  'haɪbɚˌnet
+  [kk_phonetics] id=6383 word=hideaway
+    BEFORE: 'haɪd əˌweɪ
+    AFTER:  'haɪd əˌwe
+  [kk_phonetics] id=6550 word=humiliate
+    BEFORE: hju'mɪlieɪt
+    AFTER:  hju'mɪliet
+  [kk_phonetics] id=6552 word=humility
+    BEFORE: 'hjuːmɪlɪti
+    AFTER:  'hjumɪlɪti
+  [kk_phonetics] id=6555 word=humorous
+    BEFORE: 'hjuːmərəs
+    AFTER:  'hjumərəs
+  [kk_phonetics] id=6565 word=hurricane
+    BEFORE: 'hɝɪkeɪn
+    AFTER:  'hɝɪken
+  [kk_phonetics] id=6762 word=improvement
+    BEFORE: ɪm'pruːvmənt
+    AFTER:  ɪm'pruvmənt
+  [kk_phonetics] id=6909 word=indicate
+    BEFORE: ɪn'dɪkeɪt
+    AFTER:  ɪn'dɪket
+  [kk_phonetics] id=6997 word=infotainment
+    BEFORE: ˌɪnfoʊ'teɪnmənt
+    AFTER:  ˌɪnfoʊ'tenmənt
+  [kk_phonetics] id=7003 word=infuriate
+    BEFORE: ɪn'fjʊrieɪt
+    AFTER:  ɪn'fjʊriet
+  [kk_phonetics] id=7011 word=ingrained
+    BEFORE: ɪn'greɪnd
+    AFTER:  ɪn'grend
+  [kk_phonetics] id=7042 word=inmate
+    BEFORE: 'ɪnmeɪt
+    AFTER:  'ɪnmet
+  [kk_phonetics] id=7122 word=insulate
+    BEFORE: ɪn'sʌleɪt
+    AFTER:  ɪn'sʌlet
+  [kk_phonetics] id=7243 word=inudate
+    BEFORE: ɪn'ʌndeɪt
+    AFTER:  ɪn'ʌndet
+  [kk_phonetics] id=7283 word=IQ
+    BEFORE: 'aɪ kjuː
+    AFTER:  'aɪ kju
+  [kk_phonetics] id=7311 word=irritating
+    BEFORE: 'ɪrɪˌteɪtɪŋ
+    AFTER:  'ɪrɪˌtetɪŋ
+  [kk_phonetics] id=7398 word=judicious
+    BEFORE: 'dʒuːdɪʃəs
+    AFTER:  'dʒudɪʃəs
+  [kk_phonetics] id=7404 word=July
+    BEFORE: 'dʒuːlaɪ
+    AFTER:  'dʒulaɪ
+  [kk_phonetics] id=7622 word=latency
+    BEFORE: 'leɪtənsi
+    AFTER:  'letənsi
+  [kk_phonetics] id=7647 word=lawmaker
+    BEFORE: 'lɔmeɪkɚ
+    AFTER:  'lɔmekɚ
+  [definition_zh] id=7655 word=lay in on
+    BEFORE: (動) 鋪設；放置　(動片) leɪ ɪn ɑn 猛烈攻擊；痛罵
+    AFTER:  (動) 鋪設；放置　(動片) le ɪn ɑn 猛烈攻擊；痛罵
+  [kk_phonetics] id=7662 word=layman
+    BEFORE: 'leɪmən
+    AFTER:  'lemən
+  [kk_phonetics] id=7664 word=layover
+    BEFORE: 'leɪˌoʊvɚ
+    AFTER:  'leˌoʊvɚ
+  [kk_phonetics] id=7778 word=liberate
+    BEFORE: lɪ'bɛreɪt
+    AFTER:  lɪ'bɛret
+  [kk_phonetics] id=7780 word=liberator
+    BEFORE: 'lɪbəreɪtɚ
+    AFTER:  'lɪbəretɚ
+  [kk_phonetics] id=7818 word=lightweight
+    BEFORE: 'laɪtweɪt
+    AFTER:  'laɪtwet
+  [kk_phonetics] id=7920 word=located
+    BEFORE: 'lokeɪtɪd
+    AFTER:  'loketɪd
+  [kk_phonetics] id=7963 word=long-range
+    BEFORE: 'lɔŋ 'reɪndʒ
+    AFTER:  'lɔŋ 'rendʒ
+  [kk_phonetics] id=8090 word=made-up
+    BEFORE: 'meɪd 'ʌp
+    AFTER:  'med 'ʌp
+  [kk_phonetics] id=8119 word=mainstream
+    BEFORE: 'meɪnstrim
+    AFTER:  'menstrim
+  [kk_phonetics] id=8126 word=major
+    BEFORE: 'meɪdʒɚ
+    AFTER:  'medʒɚ
+  [kk_phonetics] id=8197 word=man-made
+    BEFORE: 'mæn meɪd
+    AFTER:  'mæn med
+  [kk_phonetics] id=8215 word=mania
+    BEFORE: 'meɪniə
+    AFTER:  'meniə
+  [kk_phonetics] id=8286 word=mason
+    BEFORE: 'meɪsən
+    AFTER:  'mesən
+  [kk_phonetics] id=8323 word=mayonnaise
+    BEFORE: 'meɪəne͜z
+    AFTER:  'meəne͜z
+  [kk_phonetics] id=8355 word=media
+    BEFORE: 'miːdiə
+    AFTER:  'midiə
+  [kk_phonetics] id=8358 word=mediator
+    BEFORE: 'mɛdieɪtɚ
+    AFTER:  'mɛdietɚ
+  [kk_phonetics] id=8378 word=megalomania
+    BEFORE: ˌmɛgə'lomeɪniə
+    AFTER:  ˌmɛgə'lomeniə
+  [kk_phonetics] id=8428 word=mermaid
+    BEFORE: 'mɝˌmeɪd
+    AFTER:  'mɝˌmed
+  [kk_phonetics] id=8432 word=mesmerization
+    BEFORE: 'mɛzməreɪʃən
+    AFTER:  'mɛzməreʃən
+  [kk_phonetics] id=8472 word=microwave
+    BEFORE: 'maɪkroweɪv
+    AFTER:  'maɪkrowev
+  [kk_phonetics] id=8478 word=middle-aged
+    BEFORE: 'mɪdl 'eɪdʒd
+    AFTER:  'mɪdl 'edʒd
+  [kk_phonetics] id=8814 word=mutate
+    BEFORE: 'mjuːteɪt
+    AFTER:  'mjutet
+  [kk_phonetics] id=8815 word=mutation
+    BEFORE: 'mjuːteʃən
+    AFTER:  'mjuteʃən
+  [kk_phonetics] id=8817 word=mutilate
+    BEFORE: 'mjutəleɪt
+    AFTER:  'mjutəlet
+  [kk_phonetics] id=8839 word=nail
+    BEFORE: neɪl
+    AFTER:  nel
+  [kk_phonetics] id=8841 word=naively
+    BEFORE: 'neɪvli
+    AFTER:  'nevli
+  [kk_phonetics] id=8904 word=negate
+    BEFORE: nɪ'geɪt
+    AFTER:  nɪ'get
+  [kk_phonetics] id=8916 word=neighborhood
+    BEFORE: 'neɪbɚˌhʊd
+    AFTER:  'nebɚˌhʊd
+  [kk_phonetics] id=8935 word=neuter
+    BEFORE: 'njuːtɚ
+    AFTER:  'njutɚ
+  [kk_phonetics] id=8949 word=newspaper
+    BEFORE: 'njuzpeɪpɚ
+    AFTER:  'njuzpepɚ
+  [kk_phonetics] id=8960 word=nickname
+    BEFORE: 'nɪkneɪm
+    AFTER:  'nɪknem
+  [kk_phonetics] id=8981 word=no-brainer
+    BEFORE: 'no-ˌbreɪnɚ
+    AFTER:  'no-ˌbrenɚ
+  [kk_phonetics] id=9073 word=nowadays
+    BEFORE: naʊə'deɪz
+    AFTER:  naʊə'dez
+  [kk_phonetics] id=9319 word=originate
+    BEFORE: ə'rɪdʒəneɪt
+    AFTER:  ə'rɪdʒənet
+  [kk_phonetics] id=9366 word=outpace
+    BEFORE: aʊt'peɪs
+    AFTER:  aʊt'pes
+  [kk_phonetics] id=9387 word=outweigh
+    BEFORE: aʊt'weɪ
+    AFTER:  aʊt'we
+  [kk_phonetics] id=9390 word=ovation
+    BEFORE: o'veɪʃən
+    AFTER:  o'veʃən
+  [kk_phonetics] id=9425 word=overseas
+    BEFORE: ˌoʊvɚ'siːz
+    AFTER:  ˌoʊvɚ'siz
+  [kk_phonetics] id=9432 word=overstate
+    BEFORE: ˌoʊvɚ'steɪt
+    AFTER:  ˌoʊvɚ'stet
+  [kk_phonetics] id=9436 word=overtake
+    BEFORE: oʊvɚ'teɪk
+    AFTER:  oʊvɚ'tek
+  [kk_phonetics] id=9463 word=pace
+    BEFORE: peɪs
+    AFTER:  pes
+  [kk_phonetics] id=9464 word=pacemaker
+    BEFORE: 'peɪsˌmeɪkɚ
+    AFTER:  'pesˌmekɚ
+  [kk_phonetics] id=9465 word=pacesetter
+    BEFORE: 'peɪsˌsɛtɚ
+    AFTER:  'pesˌsɛtɚ
+  [kk_phonetics] id=9490 word=page
+    BEFORE: peɪdʒ
+    AFTER:  pedʒ
+  [kk_phonetics] id=9498 word=painstakingly
+    BEFORE: penz'teɪkɪŋli
+    AFTER:  penz'tekɪŋli
+  [kk_phonetics] id=9525 word=pancake
+    BEFORE: 'pæn.keɪk
+    AFTER:  'pæn.kek
+  [kk_phonetics] id=9541 word=papain
+    BEFORE: pə'peɪɪn
+    AFTER:  pə'peɪn
+  [kk_phonetics] id=9547 word=paperback
+    BEFORE: 'peɪpɚˌbæk
+    AFTER:  'pepɚˌbæk
+  [kk_phonetics] id=9548 word=papers
+    BEFORE: 'peɪpɚz
+    AFTER:  'pepɚz
+  [kk_phonetics] id=9550 word=paperwork
+    BEFORE: 'peɪpɚˌwɝk
+    AFTER:  'pepɚˌwɝk
+  [kk_phonetics] id=9553 word=parade
+    BEFORE: pə'reɪd
+    AFTER:  pə'red
+  [kk_phonetics] id=9590 word=partake
+    BEFORE: pɑr'teɪk
+    AFTER:  pɑr'tek
+  [kk_phonetics] id=9657 word=patriotic
+    BEFORE: ˌpeɪtri'ɑtɪk
+    AFTER:  ˌpetri'ɑtɪk
+  [kk_phonetics] id=9660 word=patron
+    BEFORE: 'peɪtrən
+    AFTER:  'petrən
+  [kk_phonetics] id=9661 word=patronage
+    BEFORE: 'peɪtrənɪdʒ
+    AFTER:  'petrənɪdʒ
+  [kk_phonetics] id=9668 word=pave
+    BEFORE: peɪv
+    AFTER:  pev
+  [kk_phonetics] id=9682 word=pay
+    BEFORE: peɪ
+    AFTER:  pe
+  [kk_phonetics] id=9684 word=payment
+    BEFORE: 'peɪmənt
+    AFTER:  'pemənt
+  [kk_phonetics] id=9685 word=payoff
+    BEFORE: 'peɪˌɔf
+    AFTER:  'peˌɔf
+  [kk_phonetics] id=9686 word=payroll
+    BEFORE: 'peɪˌroʊl
+    AFTER:  'peˌroʊl
+  [kk_phonetics] id=9743 word=penetrate
+    BEFORE: 'pɛnəˌtreɪt
+    AFTER:  'pɛnəˌtret
+  [kk_phonetics] id=9803 word=permeate
+    BEFORE: pɝ'mɪeɪt
+    AFTER:  pɝ'mɪet
+  [kk_phonetics] id=9812 word=perpetuate
+    BEFORE: pɚ'pɛtʃu.eɪt
+    AFTER:  pɚ'pɛtʃu.et
+  [kk_phonetics] id=9815 word=persecute
+    BEFORE: 'pɝsɪˌkjuːt
+    AFTER:  'pɝsɪˌkjut
+  [kk_phonetics] id=9840 word=pervade
+    BEFORE: pɚ'veɪd
+    AFTER:  pɚ'ved
+  [kk_phonetics] id=9862 word=phase
+    BEFORE: feɪz
+    AFTER:  fez
+  [kk_phonetics] id=9889 word=phrase
+    BEFORE: freɪz
+    AFTER:  frez
+  [kk_phonetics] id=9985 word=placate
+    BEFORE: 'pleɪkeɪt
+    AFTER:  'pleket
+  [kk_phonetics] id=9987 word=placement
+    BEFORE: pleɪsmənt
+    AFTER:  plesmənt
+  [kk_phonetics] id=10007 word=plate
+    BEFORE: pleɪt
+    AFTER:  plet
+  [kk_phonetics] id=10027 word=player
+    BEFORE: 'pleɪɚ
+    AFTER:  'pleɚ
+  [kk_phonetics] id=10028 word=playful
+    BEFORE: 'pleɪfəl
+    AFTER:  'plefəl
+  [kk_phonetics] id=10030 word=playwright
+    BEFORE: 'pleɪraɪt
+    AFTER:  'pleraɪt
+  [kk_phonetics] id=10185 word=portray
+    BEFORE: pɔr'treɪ
+    AFTER:  pɔr'tre
+  [kk_phonetics] id=10186 word=portrayal
+    BEFORE: pɔr'treɪəl
+    AFTER:  pɔr'treəl
+  [kk_phonetics] id=10212 word=potato
+    BEFORE: pə'teɪtoʊ
+    AFTER:  pə'tetoʊ
+  [kk_phonetics] id=10214 word=potentate
+    BEFORE: 'poʊtənˌteɪt
+    AFTER:  'poʊtənˌtet
+  [kk_phonetics] id=10249 word=praise
+    BEFORE: preɪz
+    AFTER:  prez
+  [kk_phonetics] id=10256 word=pray
+    BEFORE: preɪ
+    AFTER:  pre
+  [kk_phonetics] id=10292 word=prefabricate
+    BEFORE: pri'fæbrɪ.keɪt
+    AFTER:  pri'fæbrɪ.ket
+  [kk_phonetics] id=10315 word=prenatal
+    BEFORE: pri'neɪtəl
+    AFTER:  pri'netəl
+  [kk_phonetics] id=10333 word=preservation
+    BEFORE: ˌprɛzɚ'veɪʃən
+    AFTER:  ˌprɛzɚ'veʃən
+  [kk_phonetics] id=10370 word=prey
+    BEFORE: preɪ
+    AFTER:  pre
+  [kk_phonetics] id=10433 word=procreate
+    BEFORE: proʊ'krieɪt
+    AFTER:  proʊ'kriet
+  [kk_phonetics] id=10435 word=procreative
+    BEFORE: pro'krieɪtɪv
+    AFTER:  pro'krietɪv
+  [kk_phonetics] id=10536 word=prostate
+    BEFORE: 'prɑsteɪt
+    AFTER:  'prɑstet
+  [kk_phonetics] id=10662 word=purveyor
+    BEFORE: pɚ'veɪɚ
+    AFTER:  pɚ'veɚ
+  [kk_phonetics] id=10710 word=quake
+    BEFORE: kweɪk
+    AFTER:  kwek
+  [kk_phonetics] id=10767 word=race
+    BEFORE: reɪs
+    AFTER:  res
+  [kk_phonetics] id=10779 word=radiate
+    BEFORE: 'reɪdi.eɪt
+    AFTER:  'redi.et
+  [kk_phonetics] id=10792 word=rage
+    BEFORE: reɪdʒ
+    AFTER:  redʒ
+  [kk_phonetics] id=10796 word=raider
+    BEFORE: 'reɪdɚ
+    AFTER:  'redɚ
+  [kk_phonetics] id=10804 word=rain
+    BEFORE: reɪn
+    AFTER:  ren
+  [kk_phonetics] id=10807 word=raindrop
+    BEFORE: 'reɪn.drɑp
+    AFTER:  'ren.drɑp
+  [kk_phonetics] id=10813 word=raisin
+    BEFORE: 'reɪzən
+    AFTER:  'rezən
+  [kk_phonetics] id=10832 word=range
+    BEFORE: reɪndʒ
+    AFTER:  rendʒ
+  [kk_phonetics] id=10857 word=rate
+    BEFORE: reɪt
+    AFTER:  ret
+  [kk_phonetics] id=10874 word=ray
+    BEFORE: reɪ
+    AFTER:  re
+  [kk_phonetics] id=10894 word=reagent
+    BEFORE: ri'eɪdʒənt
+    AFTER:  ri'edʒənt
+  [kk_phonetics] id=10914 word=rebate
+    BEFORE: 'ribeɪt
+    AFTER:  'ribet
+  [kk_phonetics] id=10961 word=reconfirm
+    BEFORE: ˌriːkən'fɝːm
+    AFTER:  ˌrikən'fɝm
+  [kk_phonetics] id=10962 word=reconsider
+    BEFORE: ˌriːkən'sɪdɚ
+    AFTER:  ˌrikən'sɪdɚ
+  [kk_phonetics] id=11045 word=regain
+    BEFORE: rɪ'geɪn
+    AFTER:  rɪ'gen
+  [kk_phonetics] id=11075 word=reign
+    BEFORE: reɪn
+    AFTER:  ren
+  [kk_phonetics] id=11080 word=reincarnate
+    BEFORE: ri'ɪnkɑrneɪt
+    AFTER:  ri'ɪnkɑrnet
+  [kk_phonetics] id=11082 word=reincarnationist
+    BEFORE: ˌriɪnˌkɑrnə'ʃeɪʃənɪst
+    AFTER:  ˌriɪnˌkɑrnə'ʃeʃənɪst
+  [kk_phonetics] id=11085 word=reinstate
+    BEFORE: ˌriɪn'steɪt
+    AFTER:  ˌriɪn'stet
+  [kk_phonetics] id=11093 word=relate
+    BEFORE: rɪ'leɪt
+    AFTER:  rɪ'let
+  [kk_phonetics] id=11104 word=relay
+    BEFORE: rɪ'leɪ
+    AFTER:  rɪ'le
+  [kk_phonetics] id=11126 word=relocate
+    BEFORE: ri'loʊkeɪt
+    AFTER:  ri'loʊket
+  [kk_phonetics] id=11134 word=remaining
+    BEFORE: rɪ'meɪnɪŋ
+    AFTER:  rɪ'menɪŋ
+  [kk_phonetics] id=11194 word=replicate
+    BEFORE: 'rɛplɪˌkeɪt
+    AFTER:  'rɛplɪˌket
+  [kk_phonetics] id=11214 word=repudiate
+    BEFORE: rɪ'pjudɪeɪt
+    AFTER:  rɪ'pjudɪet
+  [kk_phonetics] id=11246 word=resignation
+    BEFORE: ˌrɛzɪg'neɪʃən
+    AFTER:  ˌrɛzɪg'neʃən
+  [kk_phonetics] id=11296 word=restraint
+    BEFORE: rɪ'streɪnt
+    AFTER:  rɪ'strent
+  [kk_phonetics] id=11316 word=retaliate
+    BEFORE: rɪ'tæliˌeɪt
+    AFTER:  rɪ'tæliˌet
+  [kk_phonetics] id=11501 word=roommate
+    BEFORE: rumˌmeɪt
+    AFTER:  rumˌmet
+  [kk_phonetics] id=11518 word=rotate
+    BEFORE: ro'teɪt
+    AFTER:  ro'tet
+  [kk_phonetics] id=11519 word=rotating
+    BEFORE: ro'teɪtɪŋ
+    AFTER:  ro'tetɪŋ
+  [kk_phonetics] id=11623 word=saber
+    BEFORE: 'seɪbɚ
+    AFTER:  'sebɚ
+  [kk_phonetics] id=11638 word=safe
+    BEFORE: seɪf
+    AFTER:  sef
+  [kk_phonetics] id=11640 word=safely
+    BEFORE: 'seɪfli
+    AFTER:  'sefli
+  [kk_phonetics] id=11648 word=sail
+    BEFORE: seɪl
+    AFTER:  sel
+  [kk_phonetics] id=11652 word=sake
+    BEFORE: seɪk
+    AFTER:  sek
+  [kk_phonetics] id=11655 word=sale
+    BEFORE: seɪl
+    AFTER:  sel
+  [kk_phonetics] id=11664 word=saloon
+    BEFORE: sə'luːn
+    AFTER:  sə'lun
+  [kk_phonetics] id=11708 word=Saturday
+    BEFORE: 'sætɚdeɪ
+    AFTER:  'sætɚde
+  [kk_phonetics] id=11714 word=saute
+    BEFORE: so'teɪ
+    AFTER:  so'te
+  [kk_phonetics] id=11731 word=say
+    BEFORE: seɪ
+    AFTER:  se
+  [kk_phonetics] id=11732 word=saying
+    BEFORE: 'seɪɪŋ
+    AFTER:  'seɪŋ
+  [kk_phonetics] id=11736 word=scale
+    BEFORE: skeɪl
+    AFTER:  skel
+  [kk_phonetics] id=11776 word=schoolmate
+    BEFORE: skul.meɪt
+    AFTER:  skul.met
+  [kk_phonetics] id=11808 word=scrape
+    BEFORE: skreɪp
+    AFTER:  skrep
+  [kk_phonetics] id=11878 word=sedate
+    BEFORE: sɪ'deɪt
+    AFTER:  sɪ'det
+  [kk_phonetics] id=11904 word=segregate
+    BEFORE: 'sɛgrəˌgeɪt
+    AFTER:  'sɛgrəˌget
+  [kk_phonetics] id=12058 word=shame
+    BEFORE: ʃeɪm
+    AFTER:  ʃem
+  [kk_phonetics] id=12062 word=shape
+    BEFORE: ʃeɪp
+    AFTER:  ʃep
+  [kk_phonetics] id=12063 word=shaped
+    BEFORE: ʃeɪpt
+    AFTER:  ʃept
+  [kk_phonetics] id=12208 word=sideways
+    BEFORE: 'saɪdˌweɪz
+    AFTER:  'saɪdˌwez
+  [kk_phonetics] id=12261 word=simultaneous
+    BEFORE: ˌsaɪməl'teɪniəs
+    AFTER:  ˌsaɪməl'teniəs
+  [kk_phonetics] id=12262 word=simultaneously
+    BEFORE: ˌsaɪməl'teɪniəsli
+    AFTER:  ˌsaɪməl'teniəsli
+  [kk_phonetics] id=12307 word=situate
+    BEFORE: 'sɪtʃu.eɪt
+    AFTER:  'sɪtʃu.et
+  [kk_phonetics] id=12308 word=situated
+    BEFORE: 'sɪtʃu.eɪtɪd
+    AFTER:  'sɪtʃu.etɪd
+  [kk_phonetics] id=12366 word=slavery
+    BEFORE: 'sleɪvəri
+    AFTER:  'slevəri
+  [kk_phonetics] id=12367 word=slay
+    BEFORE: sleɪ
+    AFTER:  sle
+  [kk_phonetics] id=12383 word=sleigh
+    BEFORE: sleɪ
+    AFTER:  sle
+  [kk_phonetics] id=12576 word=sophistication
+    BEFORE: səˌfɪs.tɪ'keɪ.ʃən
+    AFTER:  səˌfɪs.tɪ'ke.ʃən
+  [kk_phonetics] id=12608 word=spaceship
+    BEFORE: 'speɪsʃɪp
+    AFTER:  'spesʃɪp
+  [kk_phonetics] id=12628 word=spay
+    BEFORE: speɪ
+    AFTER:  spe
+  [kk_phonetics] id=12651 word=spectator
+    BEFORE: spɛk'teɪtɚ
+    AFTER:  spɛk'tetɚ
+  [kk_phonetics] id=12747 word=spray
+    BEFORE: spreɪ
+    AFTER:  spre
+  [kk_phonetics] id=12792 word=sruvey
+    BEFORE: sɚ'veɪ
+    AFTER:  sɚ've
+  [kk_phonetics] id=12796 word=stabilization
+    BEFORE: ˌsteɪbəlɪ'zeɪʃən
+    AFTER:  ˌstebəlɪ'zeʃən
+  [kk_phonetics] id=12797 word=stabilize
+    BEFORE: 'steɪbəlaɪz
+    AFTER:  'stebəlaɪz
+  [kk_phonetics] id=12802 word=stadium
+    BEFORE: 'steɪdiəm
+    AFTER:  'stediəm
+  [kk_phonetics] id=12806 word=stage
+    BEFORE: steɪdʒ
+    AFTER:  stedʒ
+  [kk_phonetics] id=12810 word=stagnate
+    BEFORE: stæg'neɪt
+    AFTER:  stæg'net
+  [kk_phonetics] id=12814 word=staircase
+    BEFORE: 'stɛr.keɪs
+    AFTER:  'stɛr.kes
+  [kk_phonetics] id=12816 word=stairway
+    BEFORE: 'stɛrˌweɪ
+    AFTER:  'stɛrˌwe
+  [kk_phonetics] id=12817 word=stake
+    BEFORE: steɪk
+    AFTER:  stek
+  [kk_phonetics] id=12818 word=stakeholder
+    BEFORE: 'steɪkˌhoʊldɚ
+    AFTER:  'stekˌhoʊldɚ
+  [kk_phonetics] id=12880 word=starvation
+    BEFORE: stɑr'veɪʃən
+    AFTER:  stɑr'veʃən
+  [kk_phonetics] id=12884 word=state
+    BEFORE: steɪt
+    AFTER:  stet
+  [kk_phonetics] id=12891 word=stationery
+    BEFORE: 'steɪʃəˌnɛri
+    AFTER:  'steʃəˌnɛri
+  [kk_phonetics] id=12899 word=status
+    BEFORE: 'steɪtəs
+    AFTER:  'stetəs
+  [kk_phonetics] id=12994 word=stipulate
+    BEFORE: 'stɪpjəˌleɪt
+    AFTER:  'stɪpjəˌlet
+  [kk_phonetics] id=12995 word=stipulation
+    BEFORE: ˌstɪpju'leɪʃən
+    AFTER:  ˌstɪpju'leʃən
+  [kk_phonetics] id=13045 word=straight
+    BEFORE: streɪt
+    AFTER:  stret
+  [kk_phonetics] id=13050 word=strain
+    BEFORE: streɪn
+    AFTER:  stren
+  [kk_phonetics] id=13051 word=strained
+    BEFORE: streɪnd
+    AFTER:  strend
+  [kk_phonetics] id=13052 word=strainer
+    BEFORE: 'streɪnɚ
+    AFTER:  'strenɚ
+  [kk_phonetics] id=13053 word=strait
+    BEFORE: streɪt
+    AFTER:  stret
+  [kk_phonetics] id=13056 word=strange
+    BEFORE: streɪndʒ
+    AFTER:  strendʒ
+  [kk_phonetics] id=13066 word=stray
+    BEFORE: streɪ
+    AFTER:  stre
+  [kk_phonetics] id=13195 word=substantiate
+    BEFORE: səb'stænʃɪeɪt
+    AFTER:  səb'stænʃɪet
+  [kk_phonetics] id=13205 word=subway
+    BEFORE: 'sʌbˌweɪ
+    AFTER:  'sʌbˌwe
+  [kk_phonetics] id=13339 word=surveillance
+    BEFORE: sɚ'veɪləns
+    AFTER:  sɚ'veləns
+  [kk_phonetics] id=13341 word=surveyor
+    BEFORE: sɚ'veɪɚ
+    AFTER:  sɚ'veɚ
+  [kk_phonetics] id=13359 word=sustainable
+    BEFORE: sə'steɪnəbəl
+    AFTER:  sə'stenəbəl
+  [kk_phonetics] id=13372 word=sway
+    BEFORE: sweɪ
+    AFTER:  swe
+  [kk_phonetics] id=13483 word=tainted
+    BEFORE: teɪntɪd
+    AFTER:  tentɪd
+  [kk_phonetics] id=13515 word=take
+    BEFORE: teɪk
+    AFTER:  tek
+  [kk_phonetics] id=13516 word=takeaway
+    BEFORE: 'teɪkəˌweɪ
+    AFTER:  'tekəˌwe
+  [kk_phonetics] id=13517 word=takeoff
+    BEFORE: 'teɪkˌɔf
+    AFTER:  'tekˌɔf
+  [kk_phonetics] id=13520 word=tale
+    BEFORE: teɪl
+    AFTER:  tel
+  [kk_phonetics] id=13562 word=tapered
+    BEFORE: 'teɪpɚd
+    AFTER:  'tepɚd
+  [kk_phonetics] id=13624 word=teenage
+    BEFORE: 'tineɪdʒ
+    AFTER:  'tinedʒ
+  [kk_phonetics] id=13646 word=telltale
+    BEFORE: 'tɛlˌteɪl
+    AFTER:  'tɛlˌtel
+  [kk_phonetics] id=13697 word=terrain
+    BEFORE: tə'reɪn
+    AFTER:  tə'ren
+  [kk_phonetics] id=13777 word=they
+    BEFORE: ðeɪ
+    AFTER:  ðe
+  [kk_phonetics] id=13856 word=Thursday
+    BEFORE: 'θɝzdeɪ
+    AFTER:  'θɝzde
+  [kk_phonetics] id=13933 word=toenail
+    BEFORE: 'toʊneɪl
+    AFTER:  'toʊnel
+  [kk_phonetics] id=13947 word=tollway
+    BEFORE: 'toʊlˌweɪ
+    AFTER:  'toʊlˌwe
+  [kk_phonetics] id=14065 word=trail
+    BEFORE: treɪl
+    AFTER:  trel
+  [kk_phonetics] id=14066 word=trailblazer
+    BEFORE: 'treɪlˌbleɪzɚ
+    AFTER:  'trelˌblezɚ
+  [kk_phonetics] id=14072 word=trait
+    BEFORE: treɪt
+    AFTER:  tret
+  [kk_phonetics] id=14097 word=transformational
+    BEFORE: ˌtrænsfɚ'meɪʃənəl
+    AFTER:  ˌtrænsfɚ'meʃənəl
+  [kk_phonetics] id=14132 word=tray
+    BEFORE: treɪ
+    AFTER:  tre
+  [kk_phonetics] id=14241 word=Tuesday
+    BEFORE: 'tuzdeɪ
+    AFTER:  'tuzde
+  [kk_phonetics] id=14332 word=unabated
+    BEFORE: ˌʌnə'beɪtɪd
+    AFTER:  ˌʌnə'betɪd
+  [kk_phonetics] id=14415 word=undertaking
+    BEFORE: ˌʌndɚ'teɪkɪŋ
+    AFTER:  ˌʌndɚ'tekɪŋ
+  [kk_phonetics] id=14417 word=underway
+    BEFORE: ˌʌndɚ'weɪ
+    AFTER:  ˌʌndɚ'we
+  [kk_phonetics] id=14540 word=unveil
+    BEFORE: ʌn'veɪl
+    AFTER:  ʌn'vel
+  [kk_phonetics] id=14548 word=up-to-dat
+    BEFORE: ʌptə'deɪt
+    AFTER:  ʌptə'det
+  [definition_zh] id=14552 word=update
+    BEFORE: (動) [ʌp'deɪt] 更新；使現代化　(名) ['ʌp.deɪt] 更新；最新消息
+    AFTER:  (動) [ʌp'det] 更新；使現代化　(名) ['ʌp.det] 更新；最新消息
+  [kk_phonetics] id=14555 word=upheaval
+    BEFORE: ʌp'hiːvəl
+    AFTER:  ʌp'hivəl
+  [kk_phonetics] id=14612 word=vacancy
+    BEFORE: ve'keɪnsi
+    AFTER:  ve'kensi
+  [kk_phonetics] id=14621 word=vague
+    BEFORE: veɪg
+    AFTER:  veg
+  [kk_phonetics] id=14684 word=vein
+    BEFORE: veɪn
+    AFTER:  ven
+  [kk_phonetics] id=14692 word=venerate
+    BEFORE: 'vɛnə.reɪt
+    AFTER:  'vɛnə.ret
+  [kk_phonetics] id=14693 word=veneration
+    BEFORE: ˌvɛnə'reɪʃən
+    AFTER:  ˌvɛnə'reʃən
+  [kk_phonetics] id=14740 word=vibrate
+    BEFORE: vaɪ'breɪt
+    AFTER:  vaɪ'bret
+  [kk_phonetics] id=14775 word=violate
+    BEFORE: 'vaɪəˌleɪt
+    AFTER:  'vaɪəˌlet
+  [kk_phonetics] id=14814 word=vocational
+    BEFORE: vo'keɪʃənəl
+    AFTER:  vo'keʃənəl
+  [kk_phonetics] id=14862 word=wail
+    BEFORE: weɪl
+    AFTER:  wel
+  [kk_phonetics] id=14872 word=wait
+    BEFORE: weɪt
+    AFTER:  wet
+  [kk_phonetics] id=14874 word=waitress
+    BEFORE: 'weɪtrəs
+    AFTER:  'wetrəs
+  [kk_phonetics] id=14875 word=waive
+    BEFORE: weɪv
+    AFTER:  wev
+  [kk_phonetics] id=14876 word=waiver
+    BEFORE: 'weɪvɚ
+    AFTER:  'wevɚ
+  [kk_phonetics] id=14904 word=wane
+    BEFORE: weɪn
+    AFTER:  wen
+  [kk_phonetics] id=14970 word=wave
+    BEFORE: weɪv
+    AFTER:  wev
+  [kk_phonetics] id=14972 word=wavy
+    BEFORE: 'weɪvi
+    AFTER:  'wevi
+  [kk_phonetics] id=14975 word=way
+    BEFORE: weɪ
+    AFTER:  we
+  [kk_phonetics] id=14999 word=Wednesday
+    BEFORE: 'wɛnzdeɪ
+    AFTER:  'wɛnzde
+  [kk_phonetics] id=15016 word=weigh
+    BEFORE: weɪ
+    AFTER:  we
+  [kk_phonetics] id=15017 word=weight
+    BEFORE: weɪt
+    AFTER:  wet
+  [kk_phonetics] id=15035 word=whale
+    BEFORE: weɪl
+    AFTER:  wel
+  [kk_phonetics] id=15059 word=whey
+    BEFORE: weɪ
+    AFTER:  we
+  [kk_phonetics] id=15160 word=wiseacre
+    BEFORE: 'waɪzˌeɪkɚ
+    AFTER:  'waɪzˌekɚ
+  [kk_phonetics] id=15298 word=yesterday
+    BEFORE: 'jɛstɚdeɪ
+    AFTER:  'jɛstɚde
+  [kk_phonetics] id=15375 word=email
+    BEFORE: 'iˌmeɪl
+    AFTER:  'iˌmel

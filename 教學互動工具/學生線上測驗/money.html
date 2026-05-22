@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會考單字特訓 - 金錢篇 (Money)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* 主題色：祖母綠與金黃色漸層 (象徵金錢與財富) */
+            --primary-gradient: linear-gradient(135deg, #134E5E 0%, #71B280 100%);
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #14532d;
+            --accent-color: #059669;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        body::-webkit-scrollbar { display: none; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; flex-direction: column; align-items: center; }
+        
+        header { width: 100%; background: var(--primary-gradient); color: white; padding: 1.2rem 0; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        
+        .stats-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 0.5rem; padding: 0 10px; }
+        .stat-box { background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
+        
+        .container { width: 92%; max-width: 900px; padding: 1.5rem 0 4rem 0; }
+        
+        /* 複習列表 */
+        #review-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+        .card { background: var(--card-bg); padding: 1rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid var(--accent-color); display: flex; flex-direction: column; }
+        .word-en { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 2px; }
+        .word-kk { font-size: 0.85rem; color: #64748b; font-family: 'Arial', sans-serif; margin-bottom: 4px; }
+        .word-zh { font-size: 1rem; color: var(--text-main); line-height: 1.3; }
+
+        /* 測驗區域 */
+        #quiz-section { display: none; background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; animation: slideUp 0.4s; }
+        .question-text { font-size: 1.15rem; line-height: 1.5; margin-bottom: 1.5rem; background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent-color); }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .option-btn { 
+            padding: 12px 18px; border: 1.5px solid #cbd5e1; border-radius: 12px; 
+            background: white; cursor: pointer; font-size: 1.05rem; text-align: left; transition: all 0.2s;
+        }
+        .option-btn:hover { background-color: #d1fae5; border-color: var(--accent-color); }
+        .correct { background-color: #d1fae5 !important; border-color: var(--success-color) !important; color: #065f46; font-weight: bold; }
+        .wrong { background-color: #fee2e2 !important; border-color: var(--error-color) !important; color: #991b1b; }
+        
+        #feedback { margin-top: 1.5rem; padding: 1.2rem; border-radius: 10px; background: #fafafa; border: 1px solid #e2e8f0; display: none; font-size: 0.95rem; line-height: 1.6; }
+        .analysis-title { color: var(--accent-color); font-weight: bold; margin-bottom: 8px; font-size: 1.1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .feedback-item { margin-bottom: 8px; }
+        .feedback-label { font-weight: bold; color: #334155; margin-right: 5px; }
+        .vocab-compact-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .vocab-tag { background: white; padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        
+        .btn-next { background: var(--primary-gradient); color: white; margin-top: 1.5rem; width: 100%; padding: 14px; border-radius: 25px; font-weight: bold; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="margin:0; font-size: 1.4rem;"><i class="fas fa-coins"></i> 金錢篇 (Money)</h1>
+    <div class="stats-container">
+        <div class="stat-box"><i class="fas fa-list-ol"></i> 題數：19 題</div>
+        <div class="stat-box"><i class="fas fa-history"></i> 狀態：獨立測驗</div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- 複習與測驗區 -->
+    <div id="review-wrapper">
+        <h2 style="color:var(--text-main); margin-bottom:1rem; text-align:center;">單字預習</h2>
+        <div id="review-section"></div>
+        <button class="btn-next" onclick="startFullQuiz()">開始挑戰</button>
+    </div>
+
+    <div id="quiz-section">
+        <div id="quiz-content">
+            <div id="progress" style="font-size:0.9rem; color:#64748b; margin-bottom:8px;">題號：1 / 19</div>
+            <div class="question-text" id="q-text"></div>
+            <div class="options-grid" id="q-options"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="btn-next" style="display:none;" onclick="nextQuestion()">下一題</button>
+        </div>
+        <div id="quiz-result" style="display:none; text-align:center; padding: 2rem 1rem;">
+            <i class="fas fa-award" style="font-size:4rem; color:#f59e0b; margin-bottom:1.5rem;"></i>
+            <h2 id="final-score-text" style="font-size: 1.8rem; color: var(--text-main);">測驗完成！</h2>
+            <p style="color:#64748b;">掌握金錢單字，就是掌握財富的第一步！</p>
+            <button id="retry-btn" class="btn-next" style="background:#ef4444; display:none;" onclick="startRetryQuiz()">挑戰錯題</button>
+            <button class="btn-next" onclick="location.reload()">重新開始</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// 獨立題庫資料
+const vocabData = [
+    // 貨幣
+    {en: "bill", kk: "/bɪl/", zh: "(n.) 帳單；鈔票"}, 
+    {en: "cash", kk: "/kæʃ/", zh: "(n.) 現金"},
+    {en: "cent", kk: "/sɛnt/", zh: "(n.) 分 (貨幣單位)"}, 
+    {en: "change", kk: "/tʃendʒ/", zh: "(n.) 零錢；找零"},
+    {en: "coin", kk: "/kɔɪn/", zh: "(n.) 硬幣"}, 
+    {en: "credit card", kk: "/ˈkrɛdɪt kɑrd/", zh: "(n.) 信用卡"},
+    {en: "dollar", kk: "/ˈdɑlɚ/", zh: "(n.) 元 (貨幣單位)"}, 
+    {en: "money", kk: "/ˈmʌni/", zh: "(n.) 錢"},
+    {en: "price", kk: "/praɪs/", zh: "(n.) 價格"},
+    // 動詞
+    {en: "borrow", kk: "/ˈbɑro/", zh: "(v.) 借入"}, 
+    {en: "buy", kk: "/baɪ/", zh: "(v.) 買"},
+    {en: "charge", kk: "/tʃɑrdʒ/", zh: "(v.) 收費；充電"}, 
+    {en: "cost", kk: "/kɔst/", zh: "(v.) 花費 (n.) 費用"},
+    {en: "earn", kk: "/ɝn/", zh: "(v.) 賺取"}, 
+    {en: "lend", kk: "/lɛnd/", zh: "(v.) 借出"},
+    {en: "pay", kk: "/pe/", zh: "(v.) 付錢"}, 
+    {en: "spend", kk: "/spɛnd/", zh: "(v.) 花費(錢或時間)"},
+    // 形容詞
+    {en: "cheap", kk: "/tʃip/", zh: "(adj.) 便宜的"}, 
+    {en: "expensive", kk: "/ɪkˈspɛnsɪv/", zh: "(adj.) 昂貴的"}
+];
+
+const questionData = [
+    { q: "The waiter brought the ________ to our table after we finished our delicious meal.", a: "bill", options: ["bill", "coin", "cent", "price"], trans: "我們吃完美味的一餐後，服務生把帳單拿到了我們的桌上。", grammar: "bring the bill (拿帳單) 是餐廳結帳用語。", vocab: [{w:"bill", k:"/bɪl/", p:"n.", z:"帳單"}] },
+    { q: "I don't have any ________ on me, so I have to use my credit card.", a: "cash", options: ["cash", "change", "price", "bill"], trans: "我身上沒有現金，所以我必須用信用卡。", grammar: "credit card (信用卡) 的替代選項通常是 cash。", vocab: [{w:"cash", k:"/kæʃ/", p:"n.", z:"現金"}] },
+    { q: "This candy is very cheap; it only costs fifty ________s.", a: "cent", options: ["cent", "dollar", "bill", "money"], trans: "這糖果很便宜；只要五十美分。", grammar: "fifty cents (小額貨幣單位)。", vocab: [{w:"cent", k:"/sɛnt/", p:"n.", z:"分"}] },
+    { q: "The cashier gave me the wrong ________, so I went back to get my money back.", a: "change", options: ["change", "price", "credit card", "bill"], trans: "收銀員找錯錢給我，所以我回去把錢拿回來。", grammar: "wrong change (找錯零錢)。", vocab: [{w:"change", k:"/tʃendʒ/", p:"n.", z:"找零"}] },
+    { q: "He put a silver ________ into the vending machine to buy a soda.", a: "coin", options: ["coin", "bill", "card", "price"], trans: "他投了一枚銀幣進販賣機買汽水。", grammar: "vending machine (販賣機) 投入的是 coin。", vocab: [{w:"coin", k:"/kɔɪn/", p:"n.", z:"硬幣"}] },
+    { q: "It is dangerous to lose your ________ because someone might steal your money online.", a: "credit card", options: ["credit card", "coin", "change", "cash"], trans: "遺失信用卡很危險，因為有人可能會在線上偷你的錢。", grammar: "steal money online (線上盜刷) 對應 credit card。", vocab: [{w:"credit card", k:"/ˈkrɛdɪt kɑrd/", p:"n.", z:"信用卡"}] },
+    { q: "The exchange rate for the US ________ has gone up recently.", a: "dollar", options: ["dollar", "cent", "coin", "money"], trans: "美金的匯率最近上漲了。", grammar: "US dollar (美金) 是常見貨幣單位。", vocab: [{w:"dollar", k:"/ˈdɑlɚ/", p:"n.", z:"元"}] },
+    { q: "They say that ________ cannot buy happiness, but it certainly helps.", a: "money", options: ["money", "price", "bill", "change"], trans: "人家說金錢買不到快樂，但肯定有幫助。", grammar: "Money can't buy happiness 是著名諺語。", vocab: [{w:"money", k:"/ˈmʌni/", p:"n.", z:"錢"}] },
+    { q: "The ________ of gas has increased significantly this month.", a: "price", options: ["price", "money", "cash", "change"], trans: "這個月汽油的價格顯著上漲了。", grammar: "price of gas (油價)。", vocab: [{w:"price", k:"/praɪs/", p:"n.", z:"價格"}] },
+    { q: "I need to ________ some money from the bank to buy a new house.", a: "borrow", options: ["borrow", "lend", "pay", "spend"], trans: "我需要向銀行借一些錢來買新房子。", grammar: "borrow from (從...借入)。", vocab: [{w:"borrow", k:"/ˈbɑro/", p:"v.", z:"借入"}] },
+    { q: "She saves half her salary to ________ a house for her parents.", a: "buy", options: ["buy", "sell", "borrow", "lend"], trans: "她存了一半的薪水要買一棟房子給父母。", grammar: "save to buy (存錢為了買)。", vocab: [{w:"buy", k:"/baɪ/", p:"v.", z:"買"}] },
+    { q: "The hotel will ________ you extra if you check out late.", a: "charge", options: ["charge", "pay", "cost", "spend"], trans: "如果你晚退房，飯店會額外向你收費。", grammar: "charge someone (向某人收費)。", vocab: [{w:"charge", k:"/tʃɑrdʒ/", p:"v.", z:"收費"}] },
+    { q: "A good education can ________ a fortune, but it is an investment in the future.", a: "cost", options: ["cost", "pay", "spend", "buy"], trans: "良好的教育可能花費不貲，但這是對未來的投資。", grammar: "cost a fortune (花大錢) 是慣用語。", vocab: [{w:"cost", k:"/kɔst/", p:"v.", z:"花費"}] },
+    { q: "He works two jobs to ________ enough money to support his family.", a: "earn", options: ["earn", "spend", "borrow", "cost"], trans: "他做兩份工作以賺取足夠的錢養家。", grammar: "earn money (賺錢)。", vocab: [{w:"earn", k:"/ɝn/", p:"v.", z:"賺取"}] },
+    { q: "I will never ________ money to him again because he never pays me back.", a: "lend", options: ["lend", "borrow", "spend", "earn"], trans: "我再也不會借錢給他，因為他從不還錢。", grammar: "lend to (借出給...)；pay back (還錢) 暗示借出。", vocab: [{w:"lend", k:"/lɛnd/", p:"v.", z:"借出"}] },
+    { q: "You must ________ the bill before you leave the restaurant.", a: "pay", options: ["pay", "buy", "cost", "lend"], trans: "離開餐廳前你必須付帳單。", grammar: "pay the bill (付帳單)。", vocab: [{w:"pay", k:"/pe/", p:"v.", z:"付錢"}] },
+    { q: "Don't ________ all your money on clothes; save some for rainy days.", a: "spend", options: ["spend", "earn", "lend", "cost"], trans: "別把所有的錢都花在衣服上；存一點以備不時之需。", grammar: "spend on (花費在...)。", vocab: [{w:"spend", k:"/spɛnd/", p:"v.", z:"花費"}] },
+    { q: "These shoes were very ________, but they fell apart after one week.", a: "cheap", options: ["cheap", "expensive", "good", "rich"], trans: "這雙鞋很便宜，但一週後就壞了。", grammar: "fell apart (壞掉) 暗示品質差，通常便宜 (cheap)。", vocab: [{w:"cheap", k:"/tʃip/", p:"adj.", z:"便宜的"}] },
+    { q: "Owning a luxury car is very ________ because of the maintenance costs.", a: "expensive", options: ["expensive", "cheap", "poor", "free"], trans: "擁有一輛豪車非常昂貴，因為維修費用高。", grammar: "luxury (奢華) 對應 expensive。", vocab: [{w:"expensive", k:"/ɪkˈspɛnsɪv/", p:"adj.", z:"昂貴的"}] }
+];
+
+let quizPool = [];
+let currentQIndex = 0;
+let score = 0;
+let wrongQuestions = [];
+
+function init() {
+    // 渲染複習列表
+    const container = document.getElementById('review-section');
+    container.innerHTML = vocabData.map(item => `
+        <div class="card">
+            <div class="word-en">${item.en}</div>
+            <div class="word-kk">${item.kk || '--'}</div>
+            <div class="word-zh">${item.zh}</div>
+        </div>
+    `).join('');
+}
+
+function startFullQuiz() {
+    quizPool = [...questionData].sort(() => Math.random() - 0.5); // 隨機排序
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startRetryQuiz() {
+    quizPool = [...wrongQuestions];
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startQuizUI() {
+    document.getElementById('review-wrapper').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('quiz-result').style.display = 'none';
+    currentQIndex = 0; score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    if(currentQIndex >= quizPool.length) return finishQuiz();
+    const q = quizPool[currentQIndex];
+    document.getElementById('progress').innerText = `題號：${currentQIndex + 1} / ${quizPool.length}`;
+    document.getElementById('q-text').innerText = q.q;
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+    
+    const shuffledOptions = q.options.sort(() => Math.random() - 0.5);
+    const optionsHtml = shuffledOptions.map(opt => 
+        `<button class="option-btn" onclick="checkAnswer(\`${opt}\`, this)">${opt}</button>`
+    ).join('');
+    document.getElementById('q-options').innerHTML = optionsHtml;
+}
+
+function checkAnswer(ans, btn) {
+    const q = quizPool[currentQIndex];
+    const allBtns = document.querySelectorAll('.option-btn');
+    allBtns.forEach(b => b.disabled = true);
+    
+    if(ans === q.a) { 
+        btn.classList.add('correct'); 
+        score++; 
+    } else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
+        if (!wrongQuestions.find(item => item.q === q.q)) wrongQuestions.push(q);
+    }
+    
+    const vocabTags = q.vocab.map(v => `<div class="vocab-tag"><b>${v.w}</b> ${v.k} [${v.p}] ${v.z}</div>`).join('');
+    
+    document.getElementById('feedback').innerHTML = `
+        <div class="analysis-title"><i class="fas fa-search-plus"></i> 專家解析</div>
+        <div class="feedback-item"><span class="feedback-label">[翻譯]</span>${q.trans}</div>
+        <div class="feedback-item"><span class="feedback-label">[文法重點]</span>${q.grammar}</div>
+        <div class="feedback-item"><span class="feedback-label">[必備單字]</span></div>
+        <div class="vocab-compact-list">${vocabTags}</div>
+    `;
+    document.getElementById('feedback').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() { currentQIndex++; showQuestion(); }
+
+function finishQuiz() {
+    const finalScore = Math.round((score/quizPool.length)*100);
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'block';
+    document.getElementById('final-score-text').innerText = `測驗得分：${finalScore}`;
+    
+    const retryBtn = document.getElementById('retry-btn');
+    if (wrongQuestions.length > 0) {
+        retryBtn.style.display = 'inline-block';
+        retryBtn.innerText = `複習錯題 (${wrongQuestions.length})`;
+    } else { retryBtn.style.display = 'none'; }
+}
+
+function showReviewPage() {
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('review-wrapper').style.display = 'block';
+}
+
+window.onload = init;
+</script>
+</body>
+</html>

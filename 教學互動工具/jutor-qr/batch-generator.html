@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台南市立白河國小 QR Code 講義產生器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* ══════════════════════════════
+   介面樣式
+══════════════════════════════ */
+:root {
+  --bg:#f0f4ff; --card:#fff; --primary:#4f46e5; --primary-dark:#3730a3;
+  --primary-light:#818cf8; --green:#10b981; --text:#1e1b4b; --muted:#6b7280; --border:#e0e7ff;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ background:var(--bg); font-family:'Noto Sans TC',sans-serif; color:var(--text); min-height:100vh; padding:32px 16px 80px; }
+@media print{ body{ padding:0; background:white; } }
+
+.screen{ max-width:700px; margin:0 auto; }
+.header{ text-align:center; margin-bottom:32px; animation:fadeDown .5s ease both; }
+.header .icon{ font-size:48px; display:block; margin-bottom:8px; }
+.header h1{ font-size:24px; font-weight:900; color:var(--primary-dark); }
+.header p{ color:var(--muted); font-size:13px; margin-top:6px; }
+@keyframes fadeDown{ from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+
+.card{ background:var(--card); border-radius:20px; padding:28px; box-shadow:0 4px 24px rgba(79,70,229,.08); border:1px solid var(--border); margin-bottom:20px; animation:fadeUp .5s ease both; }
+@keyframes fadeUp{ from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.card-title{ font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--primary); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+
+label{ display:block; font-size:12px; font-weight:700; color:var(--muted); margin-bottom:6px; }
+input[type=text], textarea{ width:100%; padding:11px 14px; border-radius:10px; border:1.5px solid var(--border); font-size:14px; font-family:'Noto Sans TC',sans-serif; color:var(--text); outline:none; transition:border .2s,box-shadow .2s; background:white; }
+input[type=text]:focus, textarea:focus{ border-color:var(--primary-light); box-shadow:0 0 0 3px rgba(129,140,248,.15); }
+textarea{ resize:vertical; min-height:140px; line-height:1.8; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.form-group{ margin-bottom:14px; }
+.roster-hint{ background:#f0f4ff; border-radius:8px; padding:10px 14px; font-size:12px; color:var(--primary-dark); margin-bottom:12px; line-height:1.8; }
+.roster-hint code{ background:white; padding:1px 6px; border-radius:4px; font-size:11px; }
+
+/* 列印模式選擇 */
+.mode-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.mode-btn{
+  border:2px solid var(--border); border-radius:14px; padding:16px 12px;
+  text-align:center; cursor:pointer; transition:all .2s; background:white;
+  font-family:'Noto Sans TC',sans-serif;
+}
+.mode-btn:hover{ border-color:var(--primary-light); background:#f5f3ff; }
+.mode-btn.active{ border-color:var(--primary); background:#f0f4ff; box-shadow:0 0 0 3px rgba(79,70,229,.12); }
+.mode-btn .mode-icon{ font-size:28px; display:block; margin-bottom:6px; }
+.mode-btn .mode-title{ font-size:14px; font-weight:900; color:var(--primary-dark); }
+.mode-btn .mode-desc{ font-size:11px; color:var(--muted); margin-top:3px; }
+
+/* QR 大小滑桿 */
+.slider-row{ display:flex; align-items:center; gap:12px; background:#f0f4ff; border-radius:10px; padding:12px 16px; border:1px solid var(--border); }
+.slider-row label{ margin:0; white-space:nowrap; font-size:13px; color:var(--primary-dark); }
+.slider-row input[type=range]{ flex:1; accent-color:var(--primary); border:none; padding:0; background:transparent; }
+.slider-val{ font-size:13px; font-weight:900; color:var(--primary-dark); min-width:44px; text-align:right; }
+
+.btn{ width:100%; padding:15px; border-radius:14px; border:none; font-size:16px; font-weight:900; cursor:pointer; font-family:'Noto Sans TC',sans-serif; transition:transform .15s,box-shadow .15s; }
+.btn-primary{ background:linear-gradient(135deg,var(--primary),var(--primary-light)); color:white; box-shadow:0 4px 16px rgba(79,70,229,.3); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(79,70,229,.4); }
+.btn-print{ background:linear-gradient(135deg,var(--green),#34d399); color:white; box-shadow:0 4px 16px rgba(16,185,129,.3); }
+.btn-print:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(16,185,129,.4); }
+.btn:active{ transform:scale(.98); }
+
+.preview-bar{ display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+.preview-count{ background:var(--primary); color:white; padding:6px 16px; border-radius:99px; font-size:13px; font-weight:700; }
+.progress-wrap{ display:none; margin-bottom:20px; }
+.progress-bar-bg{ height:8px; background:var(--border); border-radius:99px; overflow:hidden; }
+.progress-bar-fill{ height:100%; background:linear-gradient(90deg,var(--primary),var(--primary-light)); border-radius:99px; transition:width .3s ease; width:0%; }
+.progress-text{ font-size:12px; color:var(--muted); margin-top:6px; text-align:center; }
+#print-area{ display:none; }
+
+/* ══════════════════════════════
+   共用列印元件
+══════════════════════════════ */
+@media print{
+  .screen,.preview-bar,.progress-wrap{ display:none !important; }
+  #print-area{ display:block !important; }
+}
+
+/* ══════════════════════════════
+   模式A：1人1張
+══════════════════════════════ */
+.page-1up{
+  width:210mm; min-height:297mm; background:white;
+  margin:0 auto 32px; box-shadow:0 4px 32px rgba(0,0,0,.12);
+  position:relative; overflow:hidden; page-break-after:always;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:18mm 14mm 16mm;
+}
+@media print{ .page-1up{ box-shadow:none; margin:0; width:210mm; min-height:297mm; padding:16mm 14mm 14mm; } }
+
+/* 頂部列 */
+.top-bar{
+  position:absolute; top:0; left:0; right:0; height:13mm;
+  background:linear-gradient(135deg,#4f46e5,#818cf8);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 14mm;
+}
+.top-bar .tb-school{ font-size:10pt; font-weight:700; color:white; font-family:'Noto Sans TC',sans-serif; }
+.top-bar .tb-task{ font-size:9pt; color:rgba(255,255,255,.85); font-family:'Noto Sans TC',sans-serif; }
+
+/* 底部列 */
+.bottom-bar{
+  position:absolute; bottom:0; left:0; right:0; height:11mm;
+  background:#f0f4ff; border-top:1.5px solid #e0e7ff;
+  display:flex; align-items:center; justify-content:center;
+}
+.bottom-bar .bb-text{ font-size:8.5pt; color:#6b7280; font-weight:700; letter-spacing:1.5px; font-family:'Noto Sans TC',sans-serif; }
+
+/* 學生名字（1up） */
+.name-block-1up{ text-align:center; margin-bottom:7mm; }
+.name-block-1up .nb-label{ font-size:8.5pt; color:#94a3b8; font-weight:700; letter-spacing:3px; font-family:'Noto Sans TC',sans-serif; margin-bottom:2mm; }
+.name-block-1up .nb-name{ font-family:'Noto Serif TC','Noto Sans TC',sans-serif; font-size:44pt; font-weight:900; color:#1e1b4b; line-height:1; letter-spacing:4px; }
+.name-block-1up .nb-chips{ display:flex; gap:8px; justify-content:center; margin-top:3.5mm; }
+.name-block-1up .nb-chip{ background:#f0f4ff; border:1.5px solid #c7d2fe; color:#4f46e5; border-radius:99px; padding:3px 14px; font-size:11pt; font-weight:700; font-family:'Noto Sans TC',sans-serif; }
+
+/* QR 區（1up）*/
+.qr-block-1up{ display:flex; flex-direction:column; align-items:center; margin-bottom:7mm; }
+.qr-box-1up{ border:3px solid #e0e7ff; border-radius:14px; padding:5mm; background:white; box-shadow:0 4px 20px rgba(79,70,229,.10); margin-bottom:3mm; }
+.qr-hint-1up{ font-size:10pt; color:#6b7280; font-weight:700; letter-spacing:1px; font-family:'Noto Sans TC',sans-serif; display:flex; align-items:center; gap:6px; }
+.qr-hint-1up::before,.qr-hint-1up::after{ content:''; display:block; height:1px; width:18mm; background:#e0e7ff; }
+
+/* 文章區（1up）*/
+.article-block-1up{ width:100%; background:#f0fdf4; border:2px solid #86efac; border-radius:12px; padding:5mm 7mm; margin-bottom:6mm; }
+.article-block-1up .ab-title{ font-size:9pt; font-weight:900; color:#166534; font-family:'Noto Sans TC',sans-serif; margin-bottom:3mm; }
+.article-block-1up .ab-text{ font-size:18pt; color:#14532d; line-height:1.95; font-family:'Noto Sans TC',sans-serif; white-space:pre-wrap; letter-spacing:0.5px; }
+
+/* 步驟（1up）*/
+.steps-block-1up{ width:100%; background:#f8faff; border:1.5px solid #e0e7ff; border-radius:12px; padding:5mm 7mm; margin-bottom:5mm; }
+.steps-block-1up .sb-title{ font-size:9.5pt; font-weight:900; color:#4f46e5; font-family:'Noto Sans TC',sans-serif; margin-bottom:2.5mm; }
+.step-row-1up{ display:flex; align-items:flex-start; gap:7px; margin-bottom:2mm; }
+.step-num-1up{ width:17px; height:17px; border-radius:50%; background:#4f46e5; color:white; font-size:8pt; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; font-family:'Noto Sans TC',sans-serif; }
+.step-text-1up{ font-size:10pt; color:#374151; line-height:1.6; font-family:'Noto Sans TC',sans-serif; }
+
+/* 作業說明（1up）*/
+.hw-block-1up{ width:100%; background:#fffbeb; border:1.5px solid #fde68a; border-radius:12px; padding:4mm 7mm; }
+.hw-block-1up .hb-title{ font-size:9pt; font-weight:900; color:#b45309; font-family:'Noto Sans TC',sans-serif; margin-bottom:2mm; }
+.hw-block-1up .hb-text{ font-size:10pt; color:#92400e; line-height:1.8; font-family:'Noto Sans TC',sans-serif; white-space:pre-wrap; }
+
+/* ══════════════════════════════
+   模式B：2人1張（上下並排）
+══════════════════════════════ */
+.page-2up{
+  width:210mm; height:297mm; background:white;
+  margin:0 auto 32px; box-shadow:0 4px 32px rgba(0,0,0,.12);
+  position:relative; overflow:hidden; page-break-after:always;
+  display:flex; flex-direction:column;
+}
+@media print{ .page-2up{ box-shadow:none; margin:0; width:210mm; height:297mm; } }
+
+/* 每個半頁 */
+.slot{
+  flex:1; display:flex; flex-direction:column;
+  padding:3mm 10mm 3mm; min-height:0; overflow:hidden;
+}
+.slot:first-child{ border-bottom:2px dashed #c7d2fe; }
+
+/* 上方標題列（2up，每個slot各自有） */
+.slot-header-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  background:linear-gradient(135deg,#4f46e5,#818cf8);
+  border-radius:8px; padding:2mm 5mm; margin-bottom:2.5mm; flex-shrink:0;
+}
+.slot-header-bar .shb-school{ font-size:8pt; font-weight:700; color:white; font-family:'Noto Sans TC',sans-serif; }
+.slot-header-bar .shb-task{ font-size:7.5pt; color:rgba(255,255,255,.85); font-family:'Noto Sans TC',sans-serif; }
+
+/* 名字列（2up）*/
+.name-row-2up{ display:flex; align-items:center; justify-content:space-between; margin-bottom:2mm; flex-shrink:0; }
+.nr-name{ font-family:'Noto Serif TC','Noto Sans TC',sans-serif; font-size:24pt; font-weight:900; color:#1e1b4b; letter-spacing:2px; line-height:1; }
+.nr-chips{ display:flex; gap:4px; }
+.nr-chip{ background:#f0f4ff; border:1.5px solid #c7d2fe; color:#4f46e5; border-radius:99px; padding:2px 9px; font-size:8.5pt; font-weight:700; font-family:'Noto Sans TC',sans-serif; }
+
+/* 主體：文章（左）+ QR（右）*/
+.slot-body{ display:flex; gap:4mm; flex:1; min-height:0; }
+
+/* 文章（2up）*/
+.slot-article{
+  flex:1; background:#f0fdf4; border:1.5px solid #86efac;
+  border-radius:8px; padding:2.5mm 4mm; overflow:hidden; display:flex; flex-direction:column;
+}
+.slot-article .sa-title{ font-size:7pt; font-weight:900; color:#166534; font-family:'Noto Sans TC',sans-serif; margin-bottom:1.5mm; flex-shrink:0; }
+.slot-article .sa-text{ font-size:16pt; color:#14532d; line-height:1.85; font-family:'Noto Sans TC',sans-serif; white-space:pre-wrap; letter-spacing:0.3px; flex:1; overflow:hidden; }
+
+/* QR（2up）*/
+.slot-qr{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; gap:1.5mm; }
+.slot-qr-box{ border:2.5px solid #e0e7ff; border-radius:10px; padding:2.5mm; background:white; box-shadow:0 2px 10px rgba(79,70,229,.10); }
+.slot-qr-label{ font-size:7pt; color:#6b7280; font-weight:700; font-family:'Noto Sans TC',sans-serif; text-align:center; }
+
+/* 頁腳（步驟＋老師的話，2up）*/
+.slot-footer{ display:flex; gap:3mm; margin-top:2mm; flex-shrink:0; }
+.slot-steps{ flex:1; background:#f8faff; border:1px solid #e0e7ff; border-radius:7px; padding:2mm 3mm; }
+.slot-steps .ss-title{ font-size:7pt; font-weight:900; color:#4f46e5; font-family:'Noto Sans TC',sans-serif; margin-bottom:1.5mm; }
+.slot-step-row{ display:flex; align-items:flex-start; gap:3.5px; margin-bottom:1mm; }
+.slot-step-num{ width:12px; height:12px; border-radius:50%; background:#4f46e5; color:white; font-size:6pt; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'Noto Sans TC',sans-serif; }
+.slot-step-text{ font-size:7pt; color:#374151; line-height:1.5; font-family:'Noto Sans TC',sans-serif; }
+.slot-hw{ flex:1; background:#fffbeb; border:1px solid #fde68a; border-radius:7px; padding:2mm 3mm; }
+.slot-hw .sh-title{ font-size:7pt; font-weight:900; color:#b45309; font-family:'Noto Sans TC',sans-serif; margin-bottom:1.5mm; }
+.slot-hw .sh-text{ font-size:7pt; color:#92400e; line-height:1.55; font-family:'Noto Sans TC',sans-serif; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <div class="header">
+    <span class="icon">📋</span>
+    <h1>台南市立白河國小 QR Code 講義產生器</h1>
+    <p>貼上名單 → 一鍵產生全班講義 → 直接列印</p>
+  </div>
+
+  <!-- 基本設定 -->
+  <div class="card" style="animation-delay:.05s">
+    <div class="card-title">⚙️ 基本設定</div>
+    <input type="hidden" id="baseUrl" value="https://andyjunyi.github.io/jutor-qr/student.html" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>班級名稱</label>
+        <input type="text" id="className" placeholder="例：5年甲班" />
+      </div>
+      <div class="form-group">
+        <label>學校／班級抬頭</label>
+        <input type="text" id="schoolName" placeholder="例：台南市立白河國小 5年甲班" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>作業名稱</label>
+      <input type="text" id="taskName" value="Jutor 文章朗讀練習" />
+    </div>
+
+    <!-- 列印模式 -->
+    <label style="margin-bottom:10px">列印模式</label>
+    <div class="mode-row">
+      <div class="mode-btn active" id="mode-1up" onclick="setMode(1)">
+        <span class="mode-icon">📄</span>
+        <div class="mode-title">1人 1張 A4</div>
+        <div class="mode-desc">版面寬敞，文章字大<br>適合低年級</div>
+      </div>
+      <div class="mode-btn" id="mode-2up" onclick="setMode(2)">
+        <span class="mode-icon">📋</span>
+        <div class="mode-title">2人 1張 A4</div>
+        <div class="mode-desc">節省紙張，上下並排<br>中間虛線裁切</div>
+      </div>
+    </div>
+
+    <!-- QR Code 大小 -->
+    <label style="margin-bottom:8px">QR Code 大小</label>
+    <div class="slider-row">
+      <label>小</label>
+      <input type="range" id="qrSize" min="100" max="220" value="170" step="10" oninput="document.getElementById('qrSizeVal').textContent=this.value+'px'" />
+      <label>大</label>
+      <span class="slider-val" id="qrSizeVal">170px</span>
+    </div>
+  </div>
+
+  <!-- 名單 -->
+  <div class="card" style="animation-delay:.1s">
+    <div class="card-title">👥 步驟一：貼上學生名單</div>
+    <div class="roster-hint">
+      每行一位學生，格式：<code>座號 姓名</code>（空格或 Tab 分隔）<br>
+      例：<code>1 王小明</code>、<code>2 李小華</code>、<code>10 Andy</code>
+    </div>
+    <div class="form-group">
+      <label>名單（直接從 Excel 複製貼上也可以）</label>
+      <textarea id="roster" placeholder="1 王小明&#10;2 李小華&#10;3 張小美&#10;4 陳大偉&#10;5 林小玲"></textarea>
+    </div>
+  </div>
+
+  <!-- 練習文章 -->
+  <div class="card" style="animation-delay:.13s">
+    <div class="card-title">📖 步驟二：貼上練習文章</div>
+    <div class="form-group">
+      <label>貼上要給學生朗讀的英文文章（印在講義上，學生可拍照上傳到 Jutor）</label>
+      <textarea id="article" style="min-height:160px;font-size:15px;line-height:1.9" placeholder="The sun rises in the east and sets in the west. Every morning, the light fills the sky with beautiful colors."></textarea>
+    </div>
+  </div>
+
+  <!-- 作業說明 -->
+  <div class="card" style="animation-delay:.15s">
+    <div class="card-title">📝 步驟三：老師的話</div>
+    <div class="form-group">
+      <label>給學生的作業說明（印在每張講義上）</label>
+      <textarea id="homework" style="min-height:90px">請用手機掃描 QR Code，開啟 Jutor 文章朗讀練習。
+完成後點「✅ 我完成了」，輸入最佳成績回報老師。</textarea>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="generate()">🚀 產生全班講義</button>
+
+  <div class="progress-wrap" id="progress-wrap" style="margin-top:16px">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    <div class="progress-text" id="progress-text">準備中...</div>
+  </div>
+
+  <div class="preview-bar" id="preview-bar" style="margin-top:16px">
+    <span class="preview-count" id="preview-count"></span>
+    <button class="btn btn-print" style="width:auto;padding:12px 28px" onclick="window.print()">🖨️ 列印 / 儲存 PDF</button>
+  </div>
+</div>
+
+<div id="print-area"></div>
+
+<script>
+let currentMode = 1;
+
+function setMode(m) {
+  currentMode = m;
+  document.getElementById('mode-1up').classList.toggle('active', m===1);
+  document.getElementById('mode-2up').classList.toggle('active', m===2);
+}
+
+window.addEventListener('load', () => {
+  ['className','schoolName','taskName'].forEach(id => {
+    const v = localStorage.getItem('bgen_'+id);
+    if (v) document.getElementById(id).value = v;
+  });
+});
+
+async function generate() {
+  ['className','schoolName','taskName'].forEach(id =>
+    localStorage.setItem('bgen_'+id, document.getElementById(id).value));
+
+  const baseUrl    = document.getElementById('baseUrl').value.trim();
+  const className  = document.getElementById('className').value.trim();
+  const schoolName = document.getElementById('schoolName').value.trim() || className;
+  const taskName   = document.getElementById('taskName').value.trim();
+  const rosterRaw  = document.getElementById('roster').value.trim();
+  const homework   = document.getElementById('homework').value.trim();
+  const article    = document.getElementById('article').value.trim();
+  const qrSize     = parseInt(document.getElementById('qrSize').value);
+
+  if (!className) return alert('請填寫班級名稱！');
+  if (!rosterRaw) return alert('請貼上學生名單！');
+
+  const students = [];
+  rosterRaw.split('\n').forEach(line => {
+    line = line.trim(); if (!line) return;
+    const m = line.match(/^(\d+)\s+(.+)$/);
+    if (m) students.push({ num: m[1], name: m[2].trim() });
+  });
+  if (!students.length) return alert('名單格式不對，請確認每行格式為「座號 姓名」');
+
+  const pw = document.getElementById('progress-wrap');
+  const pf = document.getElementById('progress-fill');
+  const pt = document.getElementById('progress-text');
+  pw.style.display = 'block';
+  document.getElementById('preview-bar').style.display = 'none';
+
+  const printArea = document.getElementById('print-area');
+  printArea.innerHTML = '';
+  printArea.style.display = 'block';
+
+  const stepsHtml1up = `
+    <div class="step-row-1up"><div class="step-num-1up">1</div><div class="step-text-1up">用手機或平板掃描 QR Code</div></div>
+    <div class="step-row-1up"><div class="step-num-1up">2</div><div class="step-text-1up">確認出現你的名字後，點「🚀 開始朗讀練習」</div></div>
+    <div class="step-row-1up"><div class="step-num-1up">3</div><div class="step-text-1up">完成後點「✅ 我完成了！」</div></div>
+    <div class="step-row-1up"><div class="step-num-1up">4</div><div class="step-text-1up">輸入最佳成績，按「送出 🎯」</div></div>`;
+
+  const stepsHtml2up = `
+    <div class="slot-step-row"><div class="slot-step-num">1</div><div class="slot-step-text">掃描 QR Code</div></div>
+    <div class="slot-step-row"><div class="slot-step-num">2</div><div class="slot-step-text">確認名字後開始練習</div></div>
+    <div class="slot-step-row"><div class="slot-step-num">3</div><div class="slot-step-text">完成後點「✅ 我完成了」</div></div>
+    <div class="slot-step-row"><div class="slot-step-num">4</div><div class="slot-step-text">輸入成績送出</div></div>`;
+
+  let qrIndex = 0;
+
+  if (currentMode === 1) {
+    // ── 1人1張 ──
+    for (let i = 0; i < students.length; i++) {
+      const s = students[i];
+      pf.style.width = ((i+1)/students.length*100)+'%';
+      pt.textContent = `產生中 ${i+1} / ${students.length}：${s.name}`;
+
+      const url = `${baseUrl}?class=${encodeURIComponent(className)}&num=${encodeURIComponent(s.num)}&name=${encodeURIComponent(s.name)}`;
+      const idx = qrIndex++;
+
+      const page = document.createElement('div');
+      page.className = 'page-1up';
+      page.innerHTML = `
+        <div class="top-bar">
+          <span class="tb-school">${schoolName}</span>
+          <span class="tb-task">${taskName}</span>
+        </div>
+        <div class="name-block-1up">
+          <div class="nb-label">學生姓名</div>
+          <div class="nb-name">${s.name}</div>
+          <div class="nb-chips">
+            <span class="nb-chip">🏫 ${className}</span>
+            <span class="nb-chip"># ${s.num} 號</span>
+          </div>
+        </div>
+        <div class="qr-block-1up">
+          <div class="qr-box-1up"><div id="qr-${idx}"></div></div>
+          <div class="qr-hint-1up">掃描 QR Code 開始練習</div>
+        </div>
+        ${article ? `<div class="article-block-1up">
+          <div class="ab-title">📖 練習文章（拍照上傳到 Jutor 即可朗讀）</div>
+          <div class="ab-text">${article}</div>
+        </div>` : ''}
+        <div class="steps-block-1up">
+          <div class="sb-title">📱 使用步驟</div>
+          ${stepsHtml1up}
+        </div>
+        ${homework ? `<div class="hw-block-1up">
+          <div class="hb-title">📌 老師的話</div>
+          <div class="hb-text">${homework}</div>
+        </div>` : ''}
+        <div class="bottom-bar"><span class="bb-text">🎤 JUTOR AI 文章朗讀練習</span></div>`;
+
+      printArea.appendChild(page);
+      await makeQR(`qr-${idx}`, url, qrSize);
+    }
+
+  } else {
+    // ── 2人1張 ──
+    for (let i = 0; i < students.length; i += 2) {
+      pf.style.width = ((i+2)/students.length*100)+'%';
+      pt.textContent = `產生中 ${i+1}–${Math.min(i+2,students.length)} / ${students.length}`;
+
+      const page = document.createElement('div');
+      page.className = 'page-2up';
+
+      const slotHtml = (s, slotIdx) => {
+        if (!s) return '<div class="slot"></div>';
+        const url = `${baseUrl}?class=${encodeURIComponent(className)}&num=${encodeURIComponent(s.num)}&name=${encodeURIComponent(s.name)}`;
+        const idx = qrIndex++;
+        // 計算2up的QR尺寸（上限130）
+        const sz = Math.min(qrSize, 130);
+        return `
+        <div class="slot">
+          <div class="slot-header-bar">
+            <span class="shb-school">${schoolName}</span>
+            <span class="shb-task">${taskName}</span>
+          </div>
+          <div class="name-row-2up">
+            <div class="nr-name">${s.name}</div>
+            <div class="nr-chips">
+              <span class="nr-chip">🏫 ${className}</span>
+              <span class="nr-chip"># ${s.num} 號</span>
+            </div>
+          </div>
+          <div class="slot-body">
+            ${article ? `<div class="slot-article">
+              <div class="sa-title">📖 練習文章（拍照上傳 Jutor）</div>
+              <div class="sa-text">${article}</div>
+            </div>` : '<div style="flex:1"></div>'}
+            <div class="slot-qr" style="width:${sz+14}px">
+              <div class="slot-qr-box"><div id="qr-${idx}"></div></div>
+              <div class="slot-qr-label">掃描開始練習</div>
+            </div>
+          </div>
+          <div class="slot-footer">
+            <div class="slot-steps">
+              <div class="ss-title">📱 步驟</div>
+              ${stepsHtml2up}
+            </div>
+            ${homework ? `<div class="slot-hw">
+              <div class="sh-title">📌 老師的話</div>
+              <div class="sh-text">${homework}</div>
+            </div>` : ''}
+          </div>
+        </div>`;
+      };
+
+      const s1 = students[i];
+      const s2 = students[i+1];
+      page.innerHTML = slotHtml(s1, 0) + slotHtml(s2, 1);
+      printArea.appendChild(page);
+
+      // 產生 QR（需在 DOM 插入後）
+      await makeQR(`qr-${qrIndex-2}`, `${baseUrl}?class=${encodeURIComponent(className)}&num=${encodeURIComponent(s1.num)}&name=${encodeURIComponent(s1.name)}`, Math.min(qrSize,130));
+      if (s2) await makeQR(`qr-${qrIndex-1}`, `${baseUrl}?class=${encodeURIComponent(className)}&num=${encodeURIComponent(s2.num)}&name=${encodeURIComponent(s2.name)}`, Math.min(qrSize,130));
+    }
+  }
+
+  pf.style.width = '100%';
+  const total = currentMode===1 ? students.length : Math.ceil(students.length/2);
+  pt.textContent = `✅ 完成！共 ${total} 張 A4（${students.length} 位學生）`;
+  const pb = document.getElementById('preview-bar');
+  pb.style.display = 'flex';
+  document.getElementById('preview-count').textContent = `共 ${total} 張 A4，${students.length} 位學生`;
+  setTimeout(() => printArea.scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+}
+
+function makeQR(id, url, size) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) new QRCode(el, { text: url, width: size, height: size, colorDark:'#3730a3', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.H });
+      resolve();
+    }, 30);
+  });
+}
+</script>
+</body>
+</html>

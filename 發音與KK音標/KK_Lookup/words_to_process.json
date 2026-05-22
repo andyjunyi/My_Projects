@@ -1,0 +1,3738 @@
+[
+  {
+    "word": "person",
+    "current": "(名) 人"
+  },
+  {
+    "word": "about",
+    "current": "(介) 有關"
+  },
+  {
+    "word": "from",
+    "current": "(介) 從…"
+  },
+  {
+    "word": "with",
+    "current": "(介) 有；用"
+  },
+  {
+    "word": "good",
+    "current": "(形) 好的"
+  },
+  {
+    "word": "get",
+    "current": "(動) 得到"
+  },
+  {
+    "word": "time",
+    "current": "(名) 時間"
+  },
+  {
+    "word": "city",
+    "current": "(名) 城市"
+  },
+  {
+    "word": "think",
+    "current": "(動) 想"
+  },
+  {
+    "word": "know",
+    "current": "(動) 知道"
+  },
+  {
+    "word": "work",
+    "current": "(動) 工作"
+  },
+  {
+    "word": "say",
+    "current": "(動) 說"
+  },
+  {
+    "word": "day",
+    "current": "(名) 一天"
+  },
+  {
+    "word": "book",
+    "current": "(名) 書"
+  },
+  {
+    "word": "learn",
+    "current": "(動) 學習"
+  },
+  {
+    "word": "all",
+    "current": "(形) 全部的"
+  },
+  {
+    "word": "picture",
+    "current": "(名) 照片"
+  },
+  {
+    "word": "find",
+    "current": "(動) 找到"
+  },
+  {
+    "word": "food",
+    "current": "(名) 食物"
+  },
+  {
+    "word": "change",
+    "current": "(動) 改變"
+  },
+  {
+    "word": "give",
+    "current": "(動) 給予"
+  },
+  {
+    "word": "other",
+    "current": "(形) 其他的"
+  },
+  {
+    "word": "year",
+    "current": "(名) 年"
+  },
+  {
+    "word": "than",
+    "current": "(連) 比…"
+  },
+  {
+    "word": "out",
+    "current": "(副) 向外"
+  },
+  {
+    "word": "just",
+    "current": "(副) 剛才"
+  },
+  {
+    "word": "after",
+    "current": "(連) 在…之後"
+  },
+  {
+    "word": "tell",
+    "current": "(動) 說"
+  },
+  {
+    "word": "start",
+    "current": "(動) 開始"
+  },
+  {
+    "word": "because",
+    "current": "(連) 因為"
+  },
+  {
+    "word": "only",
+    "current": "(形) 唯一的"
+  },
+  {
+    "word": "before",
+    "current": "(連) 在…之前"
+  },
+  {
+    "word": "keep",
+    "current": "(動) (使)保持"
+  },
+  {
+    "word": "life",
+    "current": "(名) 生命"
+  },
+  {
+    "word": "school",
+    "current": "(名) 學校"
+  },
+  {
+    "word": "thing",
+    "current": "(名) 事情"
+  },
+  {
+    "word": "mean",
+    "current": "(動) 意指"
+  },
+  {
+    "word": "family",
+    "current": "(名) 家"
+  },
+  {
+    "word": "way",
+    "current": "(名) 方式"
+  },
+  {
+    "word": "now",
+    "current": "(副) 現在"
+  },
+  {
+    "word": "friend",
+    "current": "(名) 朋友"
+  },
+  {
+    "word": "first",
+    "current": "(形) 第一的"
+  },
+  {
+    "word": "need",
+    "current": "(動) 需要"
+  },
+  {
+    "word": "show",
+    "current": "(動) 展現"
+  },
+  {
+    "word": "problem",
+    "current": "(名) 問題"
+  },
+  {
+    "word": "country",
+    "current": "(名) 國家"
+  },
+  {
+    "word": "away",
+    "current": "(副) 不在"
+  },
+  {
+    "word": "ask",
+    "current": "(動) 詢問"
+  },
+  {
+    "word": "also",
+    "current": "(副) 也"
+  },
+  {
+    "word": "become",
+    "current": "(動) 成為"
+  },
+  {
+    "word": "bus",
+    "current": "(名) 公車"
+  },
+  {
+    "word": "different",
+    "current": "(形) 不同的"
+  },
+  {
+    "word": "last",
+    "current": "(形) 最後的"
+  },
+  {
+    "word": "hour",
+    "current": "(名) 小時"
+  },
+  {
+    "word": "shop",
+    "current": "(名) 商店"
+  },
+  {
+    "word": "woman",
+    "current": "(名) 女人"
+  },
+  {
+    "word": "free",
+    "current": "(形) 自由的"
+  },
+  {
+    "word": "often",
+    "current": "(副) 經常"
+  },
+  {
+    "word": "animal",
+    "current": "(名) 動物"
+  },
+  {
+    "word": "buy",
+    "current": "(動) 買"
+  },
+  {
+    "word": "back",
+    "current": "(名) 背部"
+  },
+  {
+    "word": "town",
+    "current": "(名) 城鎮"
+  },
+  {
+    "word": "child",
+    "current": "(名) 小孩"
+  },
+  {
+    "word": "man",
+    "current": "(名) 男人"
+  },
+  {
+    "word": "every",
+    "current": "(形) 每個"
+  },
+  {
+    "word": "line",
+    "current": "(名) 線"
+  },
+  {
+    "word": "business",
+    "current": "(名) 商業"
+  },
+  {
+    "word": "home",
+    "current": "(名) 家"
+  },
+  {
+    "word": "right",
+    "current": "(形) 正確的"
+  },
+  {
+    "word": "train",
+    "current": "(名) 訓練"
+  },
+  {
+    "word": "well",
+    "current": "(副) 很好地"
+  },
+  {
+    "word": "visit",
+    "current": "(動) 探訪"
+  },
+  {
+    "word": "bring",
+    "current": "(動) 帶來"
+  },
+  {
+    "word": "decide",
+    "current": "(動) 決定"
+  },
+  {
+    "word": "however",
+    "current": "(副) 然而"
+  },
+  {
+    "word": "teacher",
+    "current": "(名) 老師"
+  },
+  {
+    "word": "weekend",
+    "current": "(名) 週末"
+  },
+  {
+    "word": "popular",
+    "current": "(形) 受歡迎的"
+  },
+  {
+    "word": "second",
+    "current": "(形) 第二的"
+  },
+  {
+    "word": "water",
+    "current": "(名) 水"
+  },
+  {
+    "word": "likely",
+    "current": "(副) 可能"
+  },
+  {
+    "word": "try",
+    "current": "(動) 試圖"
+  },
+  {
+    "word": "news",
+    "current": "(名) 新聞"
+  },
+  {
+    "word": "bird",
+    "current": "(名) 鳥"
+  },
+  {
+    "word": "move",
+    "current": "(動) 移動"
+  },
+  {
+    "word": "save",
+    "current": "(動) 拯救"
+  },
+  {
+    "word": "word",
+    "current": "(名) 字"
+  },
+  {
+    "word": "plan",
+    "current": "(名) 計畫"
+  },
+  {
+    "word": "coffee",
+    "current": "(名) 咖啡"
+  },
+  {
+    "word": "pay",
+    "current": "(動) 付款"
+  },
+  {
+    "word": "feel",
+    "current": "(動) 感覺"
+  },
+  {
+    "word": "report",
+    "current": "(名) 報告"
+  },
+  {
+    "word": "experience",
+    "current": "(名) 經驗"
+  },
+  {
+    "word": "enjoy",
+    "current": "(動) 享受"
+  },
+  {
+    "word": "even",
+    "current": "(副) 甚至"
+  },
+  {
+    "word": "kind",
+    "current": "(形) 仁慈的"
+  },
+  {
+    "word": "enough",
+    "current": "(形) 足夠的"
+  },
+  {
+    "word": "use",
+    "current": "(動) 使用"
+  },
+  {
+    "word": "money",
+    "current": "(名) 錢"
+  },
+  {
+    "word": "important",
+    "current": "(形) 重要的"
+  },
+  {
+    "word": "call",
+    "current": "(名) 呼叫"
+  },
+  {
+    "word": "story",
+    "current": "(名) 故事"
+  },
+  {
+    "word": "any",
+    "current": "(形) 任何的"
+  },
+  {
+    "word": "love",
+    "current": "(名) 愛"
+  },
+  {
+    "word": "fall",
+    "current": "(動) 倒下"
+  },
+  {
+    "word": "island",
+    "current": "(名) 島"
+  },
+  {
+    "word": "whale",
+    "current": "(名) 鯨魚"
+  },
+  {
+    "word": "leave",
+    "current": "(動) 離開"
+  },
+  {
+    "word": "writer",
+    "current": "(名) 作者"
+  },
+  {
+    "word": "never",
+    "current": "(副) 從未"
+  },
+  {
+    "word": "week",
+    "current": "(名) 週"
+  },
+  {
+    "word": "live",
+    "current": "(動) 居住"
+  },
+  {
+    "word": "idea",
+    "current": "(名) 想法"
+  },
+  {
+    "word": "still",
+    "current": "(副) 仍然"
+  },
+  {
+    "word": "same",
+    "current": "(形) 相同的"
+  },
+  {
+    "word": "put",
+    "current": "(動) 放置"
+  },
+  {
+    "word": "hard",
+    "current": "(形) 難的"
+  },
+  {
+    "word": "then",
+    "current": "(副) 然後"
+  },
+  {
+    "word": "during",
+    "current": "(介) 在…期間"
+  },
+  {
+    "word": "game",
+    "current": "(名) 遊戲"
+  },
+  {
+    "word": "job",
+    "current": "(名) 工作"
+  },
+  {
+    "word": "sale",
+    "current": "(名) 出售"
+  },
+  {
+    "word": "street",
+    "current": "(名) 街道"
+  },
+  {
+    "word": "lose",
+    "current": "(動) 失去"
+  },
+  {
+    "word": "lot",
+    "current": "(名) 許多"
+  },
+  {
+    "word": "card",
+    "current": "(名) 卡片"
+  },
+  {
+    "word": "shake",
+    "current": "(動) 搖動"
+  },
+  {
+    "word": "class",
+    "current": "(名) 班級"
+  },
+  {
+    "word": "world",
+    "current": "(名) 世界"
+  },
+  {
+    "word": "house",
+    "current": "(名) 房子"
+  },
+  {
+    "word": "around",
+    "current": "(副) 在附近"
+  },
+  {
+    "word": "stay",
+    "current": "(動) 停留"
+  },
+  {
+    "word": "sell",
+    "current": "(動) 販賣"
+  },
+  {
+    "word": "few",
+    "current": "(形) 少數的"
+  },
+  {
+    "word": "into",
+    "current": "(介) 進入…之內"
+  },
+  {
+    "word": "chance",
+    "current": "(名) 機會"
+  },
+  {
+    "word": "park",
+    "current": "(名) 公園"
+  },
+  {
+    "word": "happy",
+    "current": "(形) 快樂的"
+  },
+  {
+    "word": "down",
+    "current": "(副) 向下"
+  },
+  {
+    "word": "sun",
+    "current": "(名) 太陽"
+  },
+  {
+    "word": true,
+    "current": "(形) 真的"
+  },
+  {
+    "word": "example",
+    "current": "(名) 例子"
+  },
+  {
+    "word": "library",
+    "current": "(名) 圖書館"
+  },
+  {
+    "word": "baby",
+    "current": "(名) 嬰兒"
+  },
+  {
+    "word": "tree",
+    "current": "(名) 樹"
+  },
+  {
+    "word": "worker",
+    "current": "(名) 工人"
+  },
+  {
+    "word": "care",
+    "current": "(動) 關心"
+  },
+  {
+    "word": "hurt",
+    "current": "(動) 受傷"
+  },
+  {
+    "word": "summer",
+    "current": "(名) 夏天"
+  },
+  {
+    "word": "surprise",
+    "current": "(動) 驚訝"
+  },
+  {
+    "word": "cook",
+    "current": "(動) 煮"
+  },
+  {
+    "word": "festival",
+    "current": "(名) 節慶"
+  },
+  {
+    "word": "morning",
+    "current": "(名) 早上"
+  },
+  {
+    "word": "chocolate",
+    "current": "(名) 巧克力"
+  },
+  {
+    "word": "war",
+    "current": "(名) 戰爭"
+  },
+  {
+    "word": "birthday",
+    "current": "(名) 生日"
+  },
+  {
+    "word": "parent",
+    "current": "(名) 父親(或母親)"
+  },
+  {
+    "word": "next",
+    "current": "(形) 下一個的"
+  },
+  {
+    "word": "worry",
+    "current": "(動) 擔心"
+  },
+  {
+    "word": "white",
+    "current": "(形) 白色的"
+  },
+  {
+    "word": "english",
+    "current": "n. 英語"
+  },
+  {
+    "word": "really",
+    "current": "(副) 真實地"
+  },
+  {
+    "word": "little",
+    "current": "(形) 少的"
+  },
+  {
+    "word": "between",
+    "current": "(介) 在…之間"
+  },
+  {
+    "word": "fight",
+    "current": "(名) 戰鬥"
+  },
+  {
+    "word": "fact",
+    "current": "(名) 事實"
+  },
+  {
+    "word": "share",
+    "current": "(動) 分享"
+  },
+  {
+    "word": "market",
+    "current": "(名) 市場"
+  },
+  {
+    "word": "over",
+    "current": "(介) 在…之上"
+  },
+  {
+    "word": "place",
+    "current": "(名) 地方"
+  },
+  {
+    "word": "restaurant",
+    "current": "(名) 餐廳"
+  },
+  {
+    "word": "whether",
+    "current": "(連) 是否"
+  },
+  {
+    "word": "girl",
+    "current": "(名) 女孩"
+  },
+  {
+    "word": "hit",
+    "current": "(動) 打"
+  },
+  {
+    "word": "hope",
+    "current": "(名) 希望"
+  },
+  {
+    "word": "store",
+    "current": "(名) 商店"
+  },
+  {
+    "word": "choose",
+    "current": "(動) 選擇"
+  },
+  {
+    "word": "hear",
+    "current": "(動) 聽"
+  },
+  {
+    "word": "price",
+    "current": "(名) 價格"
+  },
+  {
+    "word": "trip",
+    "current": "(名) 旅行"
+  },
+  {
+    "word": "team",
+    "current": "(名) 隊伍"
+  },
+  {
+    "word": "rain",
+    "current": "(名) 雨"
+  },
+  {
+    "word": "exercise",
+    "current": "(名) 運動"
+  },
+  {
+    "word": "until",
+    "current": "(介) 直到…"
+  },
+  {
+    "word": "shirt",
+    "current": "(名) 襯衫"
+  },
+  {
+    "word": "body",
+    "current": "(名) 身體"
+  },
+  {
+    "word": "evening",
+    "current": "(名) 傍晚"
+  },
+  {
+    "word": "least",
+    "current": "(副) 最少"
+  },
+  {
+    "word": "wrong",
+    "current": "(形) 不對的"
+  },
+  {
+    "word": "invite",
+    "current": "(動) 邀請"
+  },
+  {
+    "word": "spend",
+    "current": "(動) 花費(時間)"
+  },
+  {
+    "word": "together",
+    "current": "(副) 一起"
+  },
+  {
+    "word": "apartment",
+    "current": "(名) 公寓"
+  },
+  {
+    "word": "happen",
+    "current": "(動) 發生"
+  },
+  {
+    "word": "kill",
+    "current": "(動) 殺死"
+  },
+  {
+    "word": "party",
+    "current": "(名) 派對"
+  },
+  {
+    "word": "sugar",
+    "current": "(名) 糖"
+  },
+  {
+    "word": "great",
+    "current": "(形) 傑出的"
+  },
+  {
+    "word": "gift",
+    "current": "(名) 禮物"
+  },
+  {
+    "word": "sure",
+    "current": "(形) 確定的"
+  },
+  {
+    "word": "weather",
+    "current": "(名) 天氣"
+  },
+  {
+    "word": "own",
+    "current": "(動) 擁有"
+  },
+  {
+    "word": "believe",
+    "current": "(動) 相信"
+  },
+  {
+    "word": "month",
+    "current": "(名) 月份"
+  },
+  {
+    "word": "rise",
+    "current": "(動) 上升"
+  },
+  {
+    "word": "bag",
+    "current": "(名) 袋子"
+  },
+  {
+    "word": "truck",
+    "current": "(名) 卡車"
+  },
+  {
+    "word": "ticket",
+    "current": "(名) 票"
+  },
+  {
+    "word": "ice",
+    "current": "(名) 冰"
+  },
+  {
+    "word": "station",
+    "current": "(名) 車站"
+  },
+  {
+    "word": "collect",
+    "current": "(動) 收集"
+  },
+  {
+    "word": "catch",
+    "current": "(動) 追捕"
+  },
+  {
+    "word": "turn",
+    "current": "(動) 轉彎"
+  },
+  {
+    "word": "join",
+    "current": "(動) 參加"
+  },
+  {
+    "word": "spring",
+    "current": "(名) 春天"
+  },
+  {
+    "word": "order",
+    "current": "(名) 命令"
+  },
+  {
+    "word": "remember",
+    "current": "(動) 記得"
+  },
+  {
+    "word": "name",
+    "current": "(名) 名字"
+  },
+  {
+    "word": "dinner",
+    "current": "(名) 晚餐"
+  },
+  {
+    "word": "finally",
+    "current": "(副) 最後"
+  },
+  {
+    "word": "agree",
+    "current": "(動) 同意"
+  },
+  {
+    "word": "without",
+    "current": "(介) 沒有"
+  },
+  {
+    "word": "later",
+    "current": "(形) 稍晚的"
+  },
+  {
+    "word": "celebrate",
+    "current": "(動) 慶祝"
+  },
+  {
+    "word": "lake",
+    "current": "(名) 湖泊"
+  },
+  {
+    "word": "apple",
+    "current": "(名) 蘋果"
+  },
+  {
+    "word": "prize",
+    "current": "(名) 獎"
+  },
+  {
+    "word": "build",
+    "current": "(動) 建造"
+  },
+  {
+    "word": "again",
+    "current": "(副) 再度"
+  },
+  {
+    "word": "drink",
+    "current": "(動) 喝"
+  },
+  {
+    "word": "meet",
+    "current": "(動) 見面"
+  },
+  {
+    "word": "car",
+    "current": "(名) 車子"
+  },
+  {
+    "word": "notice",
+    "current": "(動) 注意到"
+  },
+  {
+    "word": "below",
+    "current": "(副) 在下面"
+  },
+  {
+    "word": "art",
+    "current": "(名) 藝術"
+  },
+  {
+    "word": "kitchen",
+    "current": "(名) 廚房"
+  },
+  {
+    "word": "under",
+    "current": "(介) 在…下面"
+  },
+  {
+    "word": "fly",
+    "current": "(動) 飛"
+  },
+  {
+    "word": "rule",
+    "current": "(動) 統治"
+  },
+  {
+    "word": "answer",
+    "current": "(名) 答案"
+  },
+  {
+    "word": "understand",
+    "current": "(動) 了解"
+  },
+  {
+    "word": "prepare",
+    "current": "(動) 準備"
+  },
+  {
+    "word": "farmer",
+    "current": "(名) 農夫"
+  },
+  {
+    "word": "grow",
+    "current": "(動) 生長"
+  },
+  {
+    "word": "holiday",
+    "current": "(名) 假日"
+  },
+  {
+    "word": "special",
+    "current": "(形) 特別的"
+  },
+  {
+    "word": "night",
+    "current": "(名) 夜晚"
+  },
+  {
+    "word": "season",
+    "current": "(名) 季節"
+  },
+  {
+    "word": "high",
+    "current": "(形) 高的"
+  },
+  {
+    "word": "student",
+    "current": "(名) 學生"
+  },
+  {
+    "word": "dark",
+    "current": "(形) 黑的"
+  },
+  {
+    "word": "already",
+    "current": "(副) 已經"
+  },
+  {
+    "word": "follow",
+    "current": "(動) 跟隨"
+  },
+  {
+    "word": "hospital",
+    "current": "(名) 醫院"
+  },
+  {
+    "word": "since",
+    "current": "(介) 從…時起"
+  },
+  {
+    "word": "cow",
+    "current": "(名) 母牛"
+  },
+  {
+    "word": "interest",
+    "current": "(名) 興趣"
+  },
+  {
+    "word": "wait",
+    "current": "(動) 等待"
+  },
+  {
+    "word": "travel",
+    "current": "(動) 旅行"
+  },
+  {
+    "word": "famous",
+    "current": "(形) 著名的"
+  },
+  {
+    "word": "usually",
+    "current": "(副) 通常"
+  },
+  {
+    "word": "green",
+    "current": "(形) 綠色的"
+  },
+  {
+    "word": "fix",
+    "current": "(動) 固定"
+  },
+  {
+    "word": "cat",
+    "current": "(名) 貓"
+  },
+  {
+    "word": "miss",
+    "current": "(名) 小姐"
+  },
+  {
+    "word": "history",
+    "current": "(名) 歷史"
+  },
+  {
+    "word": "crazy",
+    "current": "(形) 瘋狂的"
+  },
+  {
+    "word": "today",
+    "current": "(名) 今天"
+  },
+  {
+    "word": "safe",
+    "current": "(形) 安全的"
+  },
+  {
+    "word": "dangerous",
+    "current": "(形) 危險的"
+  },
+  {
+    "word": "soldier",
+    "current": "(名) 士兵"
+  },
+  {
+    "word": "able",
+    "current": "(形) 有能力的"
+  },
+  {
+    "word": "marry",
+    "current": "(動) 結婚"
+  },
+  {
+    "word": "drop",
+    "current": "(動) 落下"
+  },
+  {
+    "word": "sister",
+    "current": "(名) 姊妹"
+  },
+  {
+    "word": "wear",
+    "current": "(動) 穿戴著"
+  },
+  {
+    "word": "saturday",
+    "current": "(名) 星期六"
+  },
+  {
+    "word": "mind",
+    "current": "(動) 介意"
+  },
+  {
+    "word": "successful",
+    "current": "(形) 成功的"
+  },
+  {
+    "word": "space",
+    "current": "(名) 空間"
+  },
+  {
+    "word": "difficult",
+    "current": "(形) 困難的"
+  },
+  {
+    "word": "garden",
+    "current": "(名) 花園"
+  },
+  {
+    "word": "weekday",
+    "current": "(名) 平日"
+  },
+  {
+    "word": "government",
+    "current": "(名) 政府"
+  },
+  {
+    "word": "dog",
+    "current": "(名) 狗"
+  },
+  {
+    "word": "color",
+    "current": "(名) 顏色"
+  },
+  {
+    "word": "size",
+    "current": "(名) 尺碼"
+  },
+  {
+    "word": "mark",
+    "current": "(名) 標記"
+  },
+  {
+    "word": "forget",
+    "current": "(動) 忘記"
+  },
+  {
+    "word": "almost",
+    "current": "(副) 幾乎"
+  },
+  {
+    "word": "paint",
+    "current": "(動) 畫圖"
+  },
+  {
+    "word": "ago",
+    "current": "(副) …之前"
+  },
+  {
+    "word": "young",
+    "current": "(形) 年輕的"
+  },
+  {
+    "word": "welcome",
+    "current": "(動) 歡迎"
+  },
+  {
+    "word": "cry",
+    "current": "(動) 哭"
+  },
+  {
+    "word": "dream",
+    "current": "(名) 夢"
+  },
+  {
+    "word": "easy",
+    "current": "(形) 容易的"
+  },
+  {
+    "word": "past",
+    "current": "(形) 過去的"
+  },
+  {
+    "word": "dead",
+    "current": "(形) 死的"
+  },
+  {
+    "word": "date",
+    "current": "(名) 日期"
+  },
+  {
+    "word": "july",
+    "current": "(名) 七月"
+  },
+  {
+    "word": "moment",
+    "current": "(名) 片刻"
+  },
+  {
+    "word": "brother",
+    "current": "(名) 兄弟"
+  },
+  {
+    "word": "half",
+    "current": "(形) 一半的"
+  },
+  {
+    "word": "heart",
+    "current": "(名) 心臟"
+  },
+  {
+    "word": "group",
+    "current": "(名) 群，組"
+  },
+  {
+    "word": "lesson",
+    "current": "(名) 課"
+  },
+  {
+    "word": "winter",
+    "current": "(名) 冬天"
+  },
+  {
+    "word": "piece",
+    "current": "(名) 一張"
+  },
+  {
+    "word": "fun",
+    "current": "(名) 趣味"
+  },
+  {
+    "word": "Taiwanese",
+    "current": "(名) 台灣人 (形) 台灣的"
+  },
+  {
+    "word": "august",
+    "current": "(名) 八月"
+  },
+  {
+    "word": "mosquito",
+    "current": "(名) 蚊子"
+  },
+  {
+    "word": "sick",
+    "current": "(形) 生病的"
+  },
+  {
+    "word": "soon",
+    "current": "(副) 不久"
+  },
+  {
+    "word": "bake",
+    "current": "(動) 烘烤"
+  },
+  {
+    "word": "face",
+    "current": "(名) 臉"
+  },
+  {
+    "word": "piano",
+    "current": "(名) 鋼琴"
+  },
+  {
+    "word": "lunch",
+    "current": "(名) 午餐"
+  },
+  {
+    "word": "shoe",
+    "current": "(名) 鞋子"
+  },
+  {
+    "word": "except",
+    "current": "(介) 除…之外"
+  },
+  {
+    "word": "pick",
+    "current": "(動) 挑選"
+  },
+  {
+    "word": "king",
+    "current": "(名) 國王"
+  },
+  {
+    "word": "hide",
+    "current": "(動) 藏"
+  },
+  {
+    "word": "ever",
+    "current": "(副) 從來"
+  },
+  {
+    "word": "scared",
+    "current": "(形) 驚恐的"
+  },
+  {
+    "word": "else",
+    "current": "(副) 其他"
+  },
+  {
+    "word": "paper",
+    "current": "(名) 紙"
+  },
+  {
+    "word": "south",
+    "current": "(名) 南方"
+  },
+  {
+    "word": "farm",
+    "current": "(名) 農場"
+  },
+  {
+    "word": "power",
+    "current": "(名) 力量"
+  },
+  {
+    "word": "map",
+    "current": "(名) 地圖"
+  },
+  {
+    "word": "flower",
+    "current": "(名) 花"
+  },
+  {
+    "word": "end",
+    "current": "(動) 結束"
+  },
+  {
+    "word": "serious",
+    "current": "(形) 嚴重的"
+  },
+  {
+    "word": "American",
+    "current": "(形) 美國的 (名) 美國人"
+  },
+  {
+    "word": "send",
+    "current": "(動) 送"
+  },
+  {
+    "word": "march",
+    "current": "(名) 三月"
+  },
+  {
+    "word": "behind",
+    "current": "(副) 在之後"
+  },
+  {
+    "word": "vegetable",
+    "current": "(名) 蔬菜"
+  },
+  {
+    "word": "throw",
+    "current": "(動) 投，扔"
+  },
+  {
+    "word": "movie",
+    "current": "(名) 電影"
+  },
+  {
+    "word": "son",
+    "current": "(名) 兒子"
+  },
+  {
+    "word": "maybe",
+    "current": "(副) 也許"
+  },
+  {
+    "word": "begin",
+    "current": "(動) 開始"
+  },
+  {
+    "word": "strong",
+    "current": "(形) 強壯的"
+  },
+  {
+    "word": "head",
+    "current": "(名) 頭"
+  },
+  {
+    "word": "late",
+    "current": "(形) 晚的"
+  },
+  {
+    "word": "early",
+    "current": "(形) 早的"
+  },
+  {
+    "word": "point",
+    "current": "(動) 指出"
+  },
+  {
+    "word": "yard",
+    "current": "(名) 院子"
+  },
+  {
+    "word": "butter",
+    "current": "(名) 奶油"
+  },
+  {
+    "word": "letter",
+    "current": "(名) 信"
+  },
+  {
+    "word": "museum",
+    "current": "(名) 博物館"
+  },
+  {
+    "word": "roll",
+    "current": "(動) 滾動"
+  },
+  {
+    "word": "social",
+    "current": "(形) 社會的"
+  },
+  {
+    "word": "distance",
+    "current": "(名) 距離"
+  },
+  {
+    "word": "shape",
+    "current": "(名) 形狀"
+  },
+  {
+    "word": "smile",
+    "current": "(動) 微笑"
+  },
+  {
+    "word": "voice",
+    "current": "(名) 聲音"
+  },
+  {
+    "word": "sport",
+    "current": "(名) 體育活動"
+  },
+  {
+    "word": "heavy",
+    "current": "(形) 重的"
+  },
+  {
+    "word": "pass",
+    "current": "(動) 通過"
+  },
+  {
+    "word": "cover",
+    "current": "(動) 覆蓋"
+  },
+  {
+    "word": "fire",
+    "current": "(名) 火"
+  },
+  {
+    "word": "office",
+    "current": "(名) 辦公室"
+  },
+  {
+    "word": "vacation",
+    "current": "(名) 假期"
+  },
+  {
+    "word": "near",
+    "current": "(形) 接近的"
+  },
+  {
+    "word": "afternoon",
+    "current": "(名) 下午"
+  },
+  {
+    "word": "wind",
+    "current": "(名) 風"
+  },
+  {
+    "word": "door",
+    "current": "(名) 門"
+  },
+  {
+    "word": "ground",
+    "current": "(名) 土地"
+  },
+  {
+    "word": "break",
+    "current": "(動) 弄壞"
+  },
+  {
+    "word": "speaker",
+    "current": "(名) 演講者"
+  },
+  {
+    "word": "appear",
+    "current": "(動) 出現"
+  },
+  {
+    "word": "deal",
+    "current": "(名) 交易"
+  },
+  {
+    "word": "fast",
+    "current": "(形) 快的"
+  },
+  {
+    "word": "possible",
+    "current": "(形) 有可能的"
+  },
+  {
+    "word": "inside",
+    "current": "(副) 在內部地"
+  },
+  {
+    "word": "friday",
+    "current": "(名) 星期五"
+  },
+  {
+    "word": "action",
+    "current": "(名) 活動"
+  },
+  {
+    "word": "trouble",
+    "current": "(名) 麻煩"
+  },
+  {
+    "word": "box",
+    "current": "(名) 箱子"
+  },
+  {
+    "word": "orange",
+    "current": "(名) 柑橘"
+  },
+  {
+    "word": "cost",
+    "current": "(動) 花費"
+  },
+  {
+    "word": "enter",
+    "current": "(動) 進入"
+  },
+  {
+    "word": "sharp",
+    "current": "(形) 銳利的"
+  },
+  {
+    "word": "pocket",
+    "current": "(名) 口袋"
+  },
+  {
+    "word": "dry",
+    "current": "(形) 乾的"
+  },
+  {
+    "word": "mouse",
+    "current": "(名) 老鼠"
+  },
+  {
+    "word": "cup",
+    "current": "(名) 杯子"
+  },
+  {
+    "word": "finish",
+    "current": "(動) 結束"
+  },
+  {
+    "word": "center",
+    "current": "(名) 中央"
+  },
+  {
+    "word": "born",
+    "current": "(形) 天生的"
+  },
+  {
+    "word": "cloud",
+    "current": "(名) 雲"
+  },
+  {
+    "word": "future",
+    "current": "(名) 未來"
+  },
+  {
+    "word": "nest",
+    "current": "(名) 鳥巢"
+  },
+  {
+    "word": "frog",
+    "current": "(名) 青蛙"
+  },
+  {
+    "word": "excite",
+    "current": "(動) 使…興奮"
+  },
+  {
+    "word": "bread",
+    "current": "(名) 麵包"
+  },
+  {
+    "word": "health",
+    "current": "(名) 健康"
+  },
+  {
+    "word": "proud",
+    "current": "(形) 驕傲的"
+  },
+  {
+    "word": "minute",
+    "current": "(名) 分"
+  },
+  {
+    "word": "computer",
+    "current": "(名) 電腦"
+  },
+  {
+    "word": "room",
+    "current": "(名) 房間"
+  },
+  {
+    "word": "gym",
+    "current": "(名) 體育館"
+  },
+  {
+    "word": "toy",
+    "current": "(名) 玩具"
+  },
+  {
+    "word": "chart",
+    "current": "(名) 圖表"
+  },
+  {
+    "word": "bakery",
+    "current": "(名) 麵包店"
+  },
+  {
+    "word": "couple",
+    "current": "(名) 一對"
+  },
+  {
+    "word": "fresh",
+    "current": "(形) 新鮮的"
+  },
+  {
+    "word": "while",
+    "current": "(連) 當…時候"
+  },
+  {
+    "word": "angry",
+    "current": "(形) 生氣的"
+  },
+  {
+    "word": "table",
+    "current": "(名) 桌子"
+  },
+  {
+    "word": "drive",
+    "current": "(動) 開車"
+  },
+  {
+    "word": "sunday",
+    "current": "(名) 星期天"
+  },
+  {
+    "word": "delicious",
+    "current": "(形) 美味的"
+  },
+  {
+    "word": "win",
+    "current": "(動) 獲勝"
+  },
+  {
+    "word": "star",
+    "current": "(名) 星星"
+  },
+  {
+    "word": "through",
+    "current": "(副) 自始至終"
+  },
+  {
+    "word": "bench",
+    "current": "(名) 長凳"
+  },
+  {
+    "word": "beside",
+    "current": "(介) 在…旁邊"
+  },
+  {
+    "word": "wet",
+    "current": "(形) 溼的"
+  },
+  {
+    "word": "check",
+    "current": "(動) 檢查"
+  },
+  {
+    "word": "light",
+    "current": "(名) 燈"
+  },
+  {
+    "word": "side",
+    "current": "(名) 面"
+  },
+  {
+    "word": "eye",
+    "current": "(名) 眼睛"
+  },
+  {
+    "word": "machine",
+    "current": "(名) 機器"
+  },
+  {
+    "word": "poor",
+    "current": "(形) 貧窮的"
+  },
+  {
+    "word": "pot",
+    "current": "(名) 鍋"
+  },
+  {
+    "word": "teach",
+    "current": "(動) 教導"
+  },
+  {
+    "word": "Taiwan",
+    "current": "(名) 臺灣"
+  },
+  {
+    "word": "owner",
+    "current": "(名) 物主"
+  },
+  {
+    "word": "queen",
+    "current": "(名) 女王"
+  },
+  {
+    "word": "dessert",
+    "current": "(名) 甜點"
+  },
+  {
+    "word": "village",
+    "current": "(名) 村莊"
+  },
+  {
+    "word": "meal",
+    "current": "(名) 餐"
+  },
+  {
+    "word": "cut",
+    "current": "(動) 切割"
+  },
+  {
+    "word": "public",
+    "current": "(形) 公共的"
+  },
+  {
+    "word": "waste",
+    "current": "(動) 浪費"
+  },
+  {
+    "word": "bite",
+    "current": "(動) 咬"
+  },
+  {
+    "word": "road",
+    "current": "(名) 道路"
+  },
+  {
+    "word": "real",
+    "current": "(形) 真的"
+  },
+  {
+    "word": "hair",
+    "current": "(名) 頭髮"
+  },
+  {
+    "word": "burn",
+    "current": "(動) 燒"
+  },
+  {
+    "word": "baseball",
+    "current": "(名) 棒球"
+  },
+  {
+    "word": "basketball",
+    "current": "(名) 籃球"
+  },
+  {
+    "word": "borrow",
+    "current": "(動) 借"
+  },
+  {
+    "word": "poem",
+    "current": "(名) 詩"
+  },
+  {
+    "word": "somewhere",
+    "current": "(副) 在某處"
+  },
+  {
+    "word": "afraid",
+    "current": "(形) 害怕的"
+  },
+  {
+    "word": "interesting",
+    "current": "(形) 有趣的"
+  },
+  {
+    "word": "fish",
+    "current": "(名) 魚"
+  },
+  {
+    "word": "state",
+    "current": "(動) 敘述"
+  },
+  {
+    "word": "june",
+    "current": "(名) 六月"
+  },
+  {
+    "word": "daughter",
+    "current": "(名) 女兒"
+  },
+  {
+    "word": "hand",
+    "current": "(名) 手"
+  },
+  {
+    "word": "excuse",
+    "current": "(動) 原諒"
+  },
+  {
+    "word": "sometime",
+    "current": "(副) 在某個時候"
+  },
+  {
+    "word": "busy",
+    "current": "(形) 忙碌的"
+  },
+  {
+    "word": "shout",
+    "current": "(動) 大聲喊叫"
+  },
+  {
+    "word": "sad",
+    "current": "(形) 悲傷的"
+  },
+  {
+    "word": "hotel",
+    "current": "(名) 旅館"
+  },
+  {
+    "word": "arrive",
+    "current": "(動) 到達"
+  },
+  {
+    "word": "service",
+    "current": "(名) 服務"
+  },
+  {
+    "word": "across",
+    "current": "(介) 在…對面"
+  },
+  {
+    "word": "terrible",
+    "current": "(形) 可怕的"
+  },
+  {
+    "word": "diary",
+    "current": "(名) 日記"
+  },
+  {
+    "word": "player",
+    "current": "(名) 運動員"
+  },
+  {
+    "word": "useful",
+    "current": "(形) 有用的"
+  },
+  {
+    "word": "national",
+    "current": "(形) 國家的"
+  },
+  {
+    "word": "smell",
+    "current": "(動) 聞"
+  },
+  {
+    "word": "tiger",
+    "current": "(名) 老虎"
+  },
+  {
+    "word": "guess",
+    "current": "(動) 猜測"
+  },
+  {
+    "word": "soccer",
+    "current": "(名) 足球"
+  },
+  {
+    "word": "level",
+    "current": "(名) 水準"
+  },
+  {
+    "word": "hold",
+    "current": "(動) 抓住"
+  },
+  {
+    "word": "tea",
+    "current": "(名) 茶"
+  },
+  {
+    "word": "company",
+    "current": "(名) 公司"
+  },
+  {
+    "word": "host",
+    "current": "(名) 主人"
+  },
+  {
+    "word": "visitor",
+    "current": "(名) 訪客"
+  },
+  {
+    "word": "decision",
+    "current": "(名) 決定"
+  },
+  {
+    "word": "cake",
+    "current": "(名) 蛋糕"
+  },
+  {
+    "word": "language",
+    "current": "(名) 語言"
+  },
+  {
+    "word": "sandwich",
+    "current": "(名) 三明治"
+  },
+  {
+    "word": "death",
+    "current": "(名) 死亡"
+  },
+  {
+    "word": "boy",
+    "current": "(名) 男孩"
+  },
+  {
+    "word": "sound",
+    "current": "(動) 聽起來"
+  },
+  {
+    "word": "supermarket",
+    "current": "(名) 超市"
+  },
+  {
+    "word": "bright",
+    "current": "(形) 明亮的"
+  },
+  {
+    "word": "brush",
+    "current": "(名) 刷子"
+  },
+  {
+    "word": "fan",
+    "current": "(名) 電扇"
+  },
+  {
+    "word": "beach",
+    "current": "(名) 沙灘"
+  },
+  {
+    "word": "sea",
+    "current": "(名) 海"
+  },
+  {
+    "word": "third",
+    "current": "(形) 第三的"
+  },
+  {
+    "word": "tired",
+    "current": "(形) 疲倦的"
+  },
+  {
+    "word": "monday",
+    "current": "(名) 星期一"
+  },
+  {
+    "word": "wish",
+    "current": "(動) 希望"
+  },
+  {
+    "word": "kick",
+    "current": "(動) 踢"
+  },
+  {
+    "word": "pull",
+    "current": "(動) 拉"
+  },
+  {
+    "word": "comic",
+    "current": "(形) 喜劇的"
+  },
+  {
+    "word": "hey",
+    "current": "嗨；嘿"
+  },
+  {
+    "word": "north",
+    "current": "(名) 北方"
+  },
+  {
+    "word": "stranger",
+    "current": "(名) 陌生人"
+  },
+  {
+    "word": "interview",
+    "current": "(名) 訪問"
+  },
+  {
+    "word": "unhappy",
+    "current": "(形) 不快樂的"
+  },
+  {
+    "word": "hate",
+    "current": "(動) 憎恨"
+  },
+  {
+    "word": "simple",
+    "current": "(形) 簡單的"
+  },
+  {
+    "word": "favorite",
+    "current": "(形) 最喜歡的"
+  },
+  {
+    "word": "pack",
+    "current": "(動) 打包"
+  },
+  {
+    "word": "note",
+    "current": "(名) 便條"
+  },
+  {
+    "word": "dirty",
+    "current": "(形) 骯髒的"
+  },
+  {
+    "word": "yesterday",
+    "current": "(名) 昨天"
+  },
+  {
+    "word": "rest",
+    "current": "(名) 休息"
+  },
+  {
+    "word": "driver",
+    "current": "(名) 駕駛人"
+  },
+  {
+    "word": "strange",
+    "current": "(形) 奇怪的"
+  },
+  {
+    "word": "dish",
+    "current": "(名) 盤子"
+  },
+  {
+    "word": "grape",
+    "current": "(名) 葡萄"
+  },
+  {
+    "word": "foreign",
+    "current": "(形) 外國的"
+  },
+  {
+    "word": "ready",
+    "current": "(形) 準備好的"
+  },
+  {
+    "word": "snake",
+    "current": "(名) 蛇"
+  },
+  {
+    "word": "seat",
+    "current": "(名) 座位"
+  },
+  {
+    "word": "traffic",
+    "current": "(名) 交通"
+  },
+  {
+    "word": "expensive",
+    "current": "(形) 昂貴的"
+  },
+  {
+    "word": "quick",
+    "current": "(形) 迅速的"
+  },
+  {
+    "word": "common",
+    "current": "(形) 共同的"
+  },
+  {
+    "word": "perhaps",
+    "current": "(副) 也許"
+  },
+  {
+    "word": "candle",
+    "current": "(名) 蠟燭"
+  },
+  {
+    "word": "blue",
+    "current": "(形) 藍的"
+  },
+  {
+    "word": "push",
+    "current": "(動) 推"
+  },
+  {
+    "word": "homework",
+    "current": "(名) 作業"
+  },
+  {
+    "word": "mountain",
+    "current": "(名) 山"
+  },
+  {
+    "word": "information",
+    "current": "(名) 資訊"
+  },
+  {
+    "word": "trick",
+    "current": "(名) 惡作劇"
+  },
+  {
+    "word": "noon",
+    "current": "(名) 中午"
+  },
+  {
+    "word": "chicken",
+    "current": "(名) 雞"
+  },
+  {
+    "word": "bookstore",
+    "current": "(名) 書店"
+  },
+  {
+    "word": "once",
+    "current": "(副) 一次"
+  },
+  {
+    "word": "practice",
+    "current": "(名) 練習"
+  },
+  {
+    "word": "bomb",
+    "current": "(名) 炸彈"
+  },
+  {
+    "word": "castle",
+    "current": "(名) 城堡"
+  },
+  {
+    "word": "reporter",
+    "current": "(名) 記者"
+  },
+  {
+    "word": "furniture",
+    "current": "(名) 傢俱"
+  },
+  {
+    "word": "cross",
+    "current": "(動) 穿過"
+  },
+  {
+    "word": "either",
+    "current": "prop. (兩者中)任何一個"
+  },
+  {
+    "word": "gray",
+    "current": "(形) 灰色的"
+  },
+  {
+    "word": "course",
+    "current": "(名) 課程"
+  },
+  {
+    "word": "tennis",
+    "current": "(名) 網球"
+  },
+  {
+    "word": "draw",
+    "current": "(動) 拉"
+  },
+  {
+    "word": "blow",
+    "current": "(動) 吹"
+  },
+  {
+    "word": "window",
+    "current": "(名) 窗戶"
+  },
+  {
+    "word": "butterfly",
+    "current": "(名) 蝴蝶"
+  },
+  {
+    "word": "fine",
+    "current": "(形) 精巧的"
+  },
+  {
+    "word": "case",
+    "current": "(名) 例子"
+  },
+  {
+    "word": "attack",
+    "current": "(名) 攻擊"
+  },
+  {
+    "word": "east",
+    "current": "(名) 東方"
+  },
+  {
+    "word": "area",
+    "current": "(名) 地區"
+  },
+  {
+    "word": "lucky",
+    "current": "(形) 幸運的"
+  },
+  {
+    "word": "tonight",
+    "current": "(名) 今晚"
+  },
+  {
+    "word": "wife",
+    "current": "(名) 妻子"
+  },
+  {
+    "word": "modern",
+    "current": "(形) 現代的"
+  },
+  {
+    "word": "boring",
+    "current": "(形) 無聊的，無趣的"
+  },
+  {
+    "word": "foot",
+    "current": "(名) 腳"
+  },
+  {
+    "word": "page",
+    "current": "(名) 頁"
+  },
+  {
+    "word": "knife",
+    "current": "(名) 刀"
+  },
+  {
+    "word": "hurry",
+    "current": "(動) 匆忙"
+  },
+  {
+    "word": "front",
+    "current": "(形) 前面的"
+  },
+  {
+    "word": "stupid",
+    "current": "(形) 笨的"
+  },
+  {
+    "word": "such",
+    "current": "det. 如此的"
+  },
+  {
+    "word": "square",
+    "current": "(名) 廣場"
+  },
+  {
+    "word": "taste",
+    "current": "(名) 味道"
+  },
+  {
+    "word": "seldom",
+    "current": "(副) 不常"
+  },
+  {
+    "word": "lemon",
+    "current": "(名) 檸檬"
+  },
+  {
+    "word": "papaya",
+    "current": "(名) 木瓜"
+  },
+  {
+    "word": "theater",
+    "current": "(名) 電影院"
+  },
+  {
+    "word": "abroad",
+    "current": "(副) 在國外"
+  },
+  {
+    "word": "cookie",
+    "current": "(名) 點心"
+  },
+  {
+    "word": "heat",
+    "current": "(名) 熱"
+  },
+  {
+    "word": "snow",
+    "current": "(名) 雪"
+  },
+  {
+    "word": "factory",
+    "current": "(名) 工廠"
+  },
+  {
+    "word": "river",
+    "current": "(名) 河流"
+  },
+  {
+    "word": "pet",
+    "current": "(名) 寵物"
+  },
+  {
+    "word": "red",
+    "current": "(形) 紅色的"
+  },
+  {
+    "word": "choice",
+    "current": "(名) 選擇"
+  },
+  {
+    "word": "clear",
+    "current": "(形) 清楚的"
+  },
+  {
+    "word": "habit",
+    "current": "(名) 習慣"
+  },
+  {
+    "word": "hunt",
+    "current": "(動) 狩獵"
+  },
+  {
+    "word": "land",
+    "current": "(名) 土地"
+  },
+  {
+    "word": "oil",
+    "current": "(名) 石油"
+  },
+  {
+    "word": "treat",
+    "current": "(動) 對待"
+  },
+  {
+    "word": "duck",
+    "current": "(名) 鴨子"
+  },
+  {
+    "word": "club",
+    "current": "(名) 俱樂部"
+  },
+  {
+    "word": "full",
+    "current": "(形) 滿的"
+  },
+  {
+    "word": "male",
+    "current": "(名) 男性"
+  },
+  {
+    "word": "feed",
+    "current": "(動) 餵養"
+  },
+  {
+    "word": "outside",
+    "current": "(副) 在外面"
+  },
+  {
+    "word": "music",
+    "current": "(名) 音樂"
+  },
+  {
+    "word": "fail",
+    "current": "(動) 失敗"
+  },
+  {
+    "word": "mix",
+    "current": "(動) 混合"
+  },
+  {
+    "word": "helpful",
+    "current": "(形) 有助益的"
+  },
+  {
+    "word": "teenager",
+    "current": "(名) 青少年"
+  },
+  {
+    "word": "question",
+    "current": "(名) 問題"
+  },
+  {
+    "word": "sorry",
+    "current": "(形) 感到抱歉的"
+  },
+  {
+    "word": "allow",
+    "current": "(動) 允許"
+  },
+  {
+    "word": "sentence",
+    "current": "(名) 句子"
+  },
+  {
+    "word": "actually",
+    "current": "(副) 確實"
+  },
+  {
+    "word": "explain",
+    "current": "(動) 說明"
+  },
+  {
+    "word": "alone",
+    "current": "(副) 獨自地"
+  },
+  {
+    "word": "science",
+    "current": "(名) 科學"
+  },
+  {
+    "word": "metro",
+    "current": "(名) 地鐵"
+  },
+  {
+    "word": "honest",
+    "current": "(形) 誠實的"
+  },
+  {
+    "word": "mail",
+    "current": "(名) 郵件"
+  },
+  {
+    "word": "hobby",
+    "current": "(名) 嗜好"
+  },
+  {
+    "word": "ahead",
+    "current": "(副) 向前"
+  },
+  {
+    "word": "wonderful",
+    "current": "(形) 極好的"
+  },
+  {
+    "word": "wednesday",
+    "current": "(名) 星期三"
+  },
+  {
+    "word": "balcony",
+    "current": "(名) 陽臺"
+  },
+  {
+    "word": "black",
+    "current": "(形) 黑的"
+  },
+  {
+    "word": "die",
+    "current": "(動) 死"
+  },
+  {
+    "word": "seafood",
+    "current": "(名) 海鮮"
+  },
+  {
+    "word": "milk",
+    "current": "(名) 牛奶"
+  },
+  {
+    "word": "million",
+    "current": "(名) 百萬"
+  },
+  {
+    "word": "above",
+    "current": "(副) 在上方"
+  },
+  {
+    "word": "boss",
+    "current": "(名) 老闆"
+  },
+  {
+    "word": "lead",
+    "current": "(動) 領導"
+  },
+  {
+    "word": "count",
+    "current": "(動) 計數"
+  },
+  {
+    "word": "pray",
+    "current": "(動) 禱告"
+  },
+  {
+    "word": "cloth",
+    "current": "(名) 布"
+  },
+  {
+    "word": "floor",
+    "current": "(名) 地板"
+  },
+  {
+    "word": "dictionary",
+    "current": "(名) 字典"
+  },
+  {
+    "word": "calendar",
+    "current": "(名) 日曆"
+  },
+  {
+    "word": "carry",
+    "current": "(動) 拿，運送"
+  },
+  {
+    "word": "far",
+    "current": "(形) 遠方的"
+  },
+  {
+    "word": "whole",
+    "current": "(形) 全體的"
+  },
+  {
+    "word": "mistake",
+    "current": "(名) 錯誤"
+  },
+  {
+    "word": "fruit",
+    "current": "(名) 水果"
+  },
+  {
+    "word": "peach",
+    "current": "(名) 桃子"
+  },
+  {
+    "word": "plate",
+    "current": "(名) 盤子"
+  },
+  {
+    "word": "cream",
+    "current": "(名) 乳液"
+  },
+  {
+    "word": "race",
+    "current": "(名) 賽跑"
+  },
+  {
+    "word": "horse",
+    "current": "(名) 馬"
+  },
+  {
+    "word": "bed",
+    "current": "(名) 床"
+  },
+  {
+    "word": "tomorrow",
+    "current": "(名) 明天"
+  },
+  {
+    "word": "noise",
+    "current": "(名) 噪音"
+  },
+  {
+    "word": "bedroom",
+    "current": "(名) 臥室"
+  },
+  {
+    "word": "earth",
+    "current": "(名) 地球"
+  },
+  {
+    "word": "fox",
+    "current": "(名) 狐狸"
+  },
+  {
+    "word": "cheer",
+    "current": "(動) 歡呼"
+  },
+  {
+    "word": "act",
+    "current": "(名) 行為"
+  },
+  {
+    "word": "lamp",
+    "current": "(名) 燈"
+  },
+  {
+    "word": "forty",
+    "current": "(名) 四十"
+  },
+  {
+    "word": "twenty",
+    "current": "(名) 二十"
+  },
+  {
+    "word": "garbage",
+    "current": "(名) 垃圾"
+  },
+  {
+    "word": "april",
+    "current": "(名) 四月"
+  },
+  {
+    "word": "seventeen",
+    "current": "(名) 十七"
+  },
+  {
+    "word": "nature",
+    "current": "(名) 自然"
+  },
+  {
+    "word": "hungry",
+    "current": "(形) 飢餓的"
+  },
+  {
+    "word": "large",
+    "current": "(形) 大的"
+  },
+  {
+    "word": "meeting",
+    "current": "(名) 會議"
+  },
+  {
+    "word": "kid",
+    "current": "(名) 小孩"
+  },
+  {
+    "word": "lend",
+    "current": "(動) 借"
+  },
+  {
+    "word": "pond",
+    "current": "(名) 池塘"
+  },
+  {
+    "word": "leaf",
+    "current": "(名) 葉子"
+  },
+  {
+    "word": "low",
+    "current": "(形) 低的"
+  },
+  {
+    "word": "bath",
+    "current": "(名) 沐浴"
+  },
+  {
+    "word": "Chinese",
+    "current": "(形) 中國的 (名) 中文，中國人"
+  },
+  {
+    "word": "song",
+    "current": "(名) 歌"
+  },
+  {
+    "word": "sheep",
+    "current": "(名) 羊"
+  },
+  {
+    "word": "seem",
+    "current": "(動) 似乎"
+  },
+  {
+    "word": "quite",
+    "current": "(副) 相當地"
+  },
+  {
+    "word": "typhoon",
+    "current": "(名) 颱風"
+  },
+  {
+    "word": "smoke",
+    "current": "(名) 煙"
+  },
+  {
+    "word": "sand",
+    "current": "(名) 沙"
+  },
+  {
+    "word": "hill",
+    "current": "(名) 小山丘"
+  },
+  {
+    "word": "zoo",
+    "current": "(名) 動物園"
+  },
+  {
+    "word": "clock",
+    "current": "(名) 時鐘"
+  },
+  {
+    "word": "rock",
+    "current": "(名) 石塊"
+  },
+  {
+    "word": "age",
+    "current": "(名) 年齡"
+  },
+  {
+    "word": "reason",
+    "current": "(名) 理由"
+  },
+  {
+    "word": "main",
+    "current": "(形) 主要的"
+  },
+  {
+    "word": "robot",
+    "current": "(名) 機器人"
+  },
+  {
+    "word": "probably",
+    "current": "(副) 或許"
+  },
+  {
+    "word": "doll",
+    "current": "(名) 洋娃娃"
+  },
+  {
+    "word": "newspaper",
+    "current": "(名) 報紙"
+  },
+  {
+    "word": "middle",
+    "current": "(形) 中間的"
+  },
+  {
+    "word": "sneaker",
+    "current": "(名) 運動鞋 sneakers"
+  },
+  {
+    "word": "plant",
+    "current": "(名) 植物"
+  },
+  {
+    "word": "stomach",
+    "current": "(名) 胃"
+  },
+  {
+    "word": "topic",
+    "current": "(名) 主題"
+  },
+  {
+    "word": "Easter",
+    "current": "(名) 復活節"
+  },
+  {
+    "word": "dress",
+    "current": "(名) 洋裝"
+  },
+  {
+    "word": "purple",
+    "current": "(形) 紫色的"
+  },
+  {
+    "word": "grade",
+    "current": "(名) 分數"
+  },
+  {
+    "word": "joy",
+    "current": "(名) 喜悅"
+  },
+  {
+    "word": "comb",
+    "current": "(名) 梳子"
+  },
+  {
+    "word": "asleep",
+    "current": "(形) 睡著的"
+  },
+  {
+    "word": "boat",
+    "current": "(名) 船"
+  },
+  {
+    "word": "sail",
+    "current": "(動) 航行"
+  },
+  {
+    "word": "mud",
+    "current": "(名) 泥濘"
+  },
+  {
+    "word": "leader",
+    "current": "(名) 領袖"
+  },
+  {
+    "word": "ball",
+    "current": "(名) 球"
+  },
+  {
+    "word": "tuesday",
+    "current": "(名) 星期二"
+  },
+  {
+    "word": "sweet",
+    "current": "(形) 甜的"
+  },
+  {
+    "word": "glass",
+    "current": "(名) 玻璃"
+  },
+  {
+    "word": "lonely",
+    "current": "(形) 寂寞的"
+  },
+  {
+    "word": "ghost",
+    "current": "(名) 鬼"
+  },
+  {
+    "word": "candy",
+    "current": "(名) 糖果"
+  },
+  {
+    "word": "key",
+    "current": "(名) 鑰匙"
+  },
+  {
+    "word": "gate",
+    "current": "(名) 大門"
+  },
+  {
+    "word": "thirty",
+    "current": "(名) 三十"
+  },
+  {
+    "word": "everywhere",
+    "current": "(副) 各處"
+  },
+  {
+    "word": "temple",
+    "current": "(名) 廟宇"
+  },
+  {
+    "word": "glove",
+    "current": "(名) 手套"
+  },
+  {
+    "word": "fill",
+    "current": "(動) 裝滿"
+  },
+  {
+    "word": "medicine",
+    "current": "(名) 藥"
+  },
+  {
+    "word": "ring",
+    "current": "(名) 戒指"
+  },
+  {
+    "word": "football",
+    "current": "(名) 足球"
+  },
+  {
+    "word": "lovely",
+    "current": "(形) 可愛的"
+  },
+  {
+    "word": "funny",
+    "current": "(形) 好笑的"
+  },
+  {
+    "word": "straight",
+    "current": "(形) 直的"
+  },
+  {
+    "word": "trash",
+    "current": "(名) 垃圾"
+  },
+  {
+    "word": "charge",
+    "current": "(動) 收費"
+  },
+  {
+    "word": "mango",
+    "current": "(名) 芒果"
+  },
+  {
+    "word": "influence",
+    "current": "(名) 影響"
+  },
+  {
+    "word": "clerk",
+    "current": "(名) 店員"
+  },
+  {
+    "word": "shopkeeper",
+    "current": "(名) 店主,老闆"
+  },
+  {
+    "word": "january",
+    "current": "(名) 一月"
+  },
+  {
+    "word": "air",
+    "current": "(名) 空氣"
+  },
+  {
+    "word": "friendly",
+    "current": "(形) 友好的"
+  },
+  {
+    "word": "convenient",
+    "current": "(形) 方便的"
+  },
+  {
+    "word": "tooth",
+    "current": "(名) 牙齒"
+  },
+  {
+    "word": "sky",
+    "current": "(名) 天空"
+  },
+  {
+    "word": "tail",
+    "current": "(名) 尾巴"
+  },
+  {
+    "word": "skin",
+    "current": "(名) 皮膚"
+  },
+  {
+    "word": "rich",
+    "current": "(形) 有錢的"
+  },
+  {
+    "word": "winner",
+    "current": "(名) 優勝者"
+  },
+  {
+    "word": "moon",
+    "current": "(名) 月亮"
+  },
+  {
+    "word": "copy",
+    "current": "(動) 複製"
+  },
+  {
+    "word": "desk",
+    "current": "(名) 書桌"
+  },
+  {
+    "word": "radio",
+    "current": "(名) 收音機"
+  },
+  {
+    "word": "neighbor",
+    "current": "(名) 鄰居"
+  },
+  {
+    "word": "sight",
+    "current": "(名) 視力"
+  },
+  {
+    "word": "september",
+    "current": "(名) 九月"
+  },
+  {
+    "word": "central",
+    "current": "(形) 中央的"
+  },
+  {
+    "word": "sign",
+    "current": "(動) 示意"
+  },
+  {
+    "word": "list",
+    "current": "(動) 把…列表"
+  },
+  {
+    "word": "energy",
+    "current": "(名) 精力"
+  },
+  {
+    "word": "title",
+    "current": "(名) 標題"
+  },
+  {
+    "word": "offer",
+    "current": "(動) 提出"
+  },
+  {
+    "word": "actor",
+    "current": "(名) 男演員"
+  },
+  {
+    "word": "wake",
+    "current": "(動) 醒"
+  },
+  {
+    "word": "midnight",
+    "current": "(名) 午夜"
+  },
+  {
+    "word": "suggest",
+    "current": "(動) 建議"
+  },
+  {
+    "word": "actress",
+    "current": "(名) 女演員"
+  },
+  {
+    "word": "shy",
+    "current": "(形) 害羞的"
+  },
+  {
+    "word": "bowl",
+    "current": "(名) 碗"
+  },
+  {
+    "word": "raise",
+    "current": "(動) 增加"
+  },
+  {
+    "word": "guy",
+    "current": "(名) 小伙子"
+  },
+  {
+    "word": "jean",
+    "current": "(名) 牛仔褲 jeans"
+  },
+  {
+    "word": "brown",
+    "current": "(形) 棕色的"
+  },
+  {
+    "word": "rainbow",
+    "current": "(名) 彩虹"
+  },
+  {
+    "word": "fry",
+    "current": "(動) 油炸"
+  },
+  {
+    "word": "rice",
+    "current": "(名) 米"
+  },
+  {
+    "word": "block",
+    "current": "(名) 街區"
+  },
+  {
+    "word": "thick",
+    "current": "(形) 厚的"
+  },
+  {
+    "word": "hundred",
+    "current": "(名) 一百"
+  },
+  {
+    "word": "test",
+    "current": "(名) 測驗"
+  },
+  {
+    "word": "neck",
+    "current": "(名) 脖子"
+  },
+  {
+    "word": "planet",
+    "current": "(名) 行星"
+  },
+  {
+    "word": "breakfast",
+    "current": "(名) 早餐"
+  },
+  {
+    "word": "tool",
+    "current": "(名) 工具"
+  },
+  {
+    "word": "painter",
+    "current": "(名) 畫家"
+  },
+  {
+    "word": "yellow",
+    "current": "(形) 黃色的"
+  },
+  {
+    "word": "top",
+    "current": "(名) 上面"
+  },
+  {
+    "word": "corner",
+    "current": "(名) 角落"
+  },
+  {
+    "word": "railway",
+    "current": "(名) 鐵路"
+  },
+  {
+    "word": "strawberry",
+    "current": "(名) 草莓"
+  },
+  {
+    "word": "housework",
+    "current": "(名) 家事"
+  },
+  {
+    "word": "lazy",
+    "current": "(形) 懶惰的"
+  },
+  {
+    "word": "aunt",
+    "current": "(名) 姑媽"
+  },
+  {
+    "word": "airport",
+    "current": "(名) 機場"
+  },
+  {
+    "word": "postcard",
+    "current": "(名) 明信片,風景明信片"
+  },
+  {
+    "word": "address",
+    "current": "(名) 地址"
+  },
+  {
+    "word": "knee",
+    "current": "(名) 膝蓋"
+  },
+  {
+    "word": "headache",
+    "current": "(名) 頭痛"
+  },
+  {
+    "word": "along",
+    "current": "(介) 沿著"
+  },
+  {
+    "word": "spell",
+    "current": "(動) 拼寫"
+  },
+  {
+    "word": "expect",
+    "current": "(動) 期望"
+  },
+  {
+    "word": "thousand",
+    "current": "(名) 千"
+  },
+  {
+    "word": "reach",
+    "current": "(動) 到達"
+  },
+  {
+    "word": "America",
+    "current": "(名) 美國"
+  },
+  {
+    "word": "Asia",
+    "current": "(名) 亞洲"
+  },
+  {
+    "word": "insect",
+    "current": "(名) 昆蟲"
+  },
+  {
+    "word": "quiz",
+    "current": "(名) 小考"
+  },
+  {
+    "word": "koala",
+    "current": "(名) 無尾熊"
+  },
+  {
+    "word": "magic",
+    "current": "(名) 魔術"
+  },
+  {
+    "word": "healthy",
+    "current": "(形) 健康的"
+  },
+  {
+    "word": "activity",
+    "current": "(名) 活動"
+  },
+  {
+    "word": "steal",
+    "current": "(動) 偷竊"
+  },
+  {
+    "word": "thunder",
+    "current": "(名) 雷"
+  },
+  {
+    "word": "brave",
+    "current": "(形) 勇敢的"
+  },
+  {
+    "word": "sidewalk",
+    "current": "(名) 人行道"
+  },
+  {
+    "word": "polite",
+    "current": "(形) 有禮貌的"
+  },
+  {
+    "word": "wall",
+    "current": "(名) 牆壁"
+  },
+  {
+    "word": "pleasure",
+    "current": "(名) 愉快；樂趣"
+  },
+  {
+    "word": "playground",
+    "current": "(名) 操場"
+  },
+  {
+    "word": "mad",
+    "current": "(形) 生氣的"
+  },
+  {
+    "word": "thursday",
+    "current": "(名) 星期四"
+  },
+  {
+    "word": "halloween",
+    "current": "(名) 萬聖節"
+  },
+  {
+    "word": "photo",
+    "current": "(名) 照片"
+  },
+  {
+    "word": "waitress",
+    "current": "(名) 女服務生"
+  },
+  {
+    "word": "husband",
+    "current": "(名) 丈夫"
+  },
+  {
+    "word": "glad",
+    "current": "(形) 高興的"
+  },
+  {
+    "word": "belt",
+    "current": "(名) 皮帶"
+  },
+  {
+    "word": "uniform",
+    "current": "(名) 制服"
+  },
+  {
+    "word": "touch",
+    "current": "(動) 感動"
+  },
+  {
+    "word": "workbook",
+    "current": "(名) 練習簿，作業本"
+  },
+  {
+    "word": "grass",
+    "current": "(名) 草"
+  },
+  {
+    "word": "rope",
+    "current": "(名) 繩子"
+  },
+  {
+    "word": "bat",
+    "current": "(名) 蝙蝠"
+  },
+  {
+    "word": "lion",
+    "current": "(名) 獅子"
+  },
+  {
+    "word": "shark",
+    "current": "(名) 鯊魚"
+  },
+  {
+    "word": "nurse",
+    "current": "(名) 護士"
+  },
+  {
+    "word": "pumpkin",
+    "current": "(名) 南瓜"
+  },
+  {
+    "word": "nose",
+    "current": "(名) 鼻子"
+  },
+  {
+    "word": "pretty",
+    "current": "(形) 漂亮的"
+  },
+  {
+    "word": "guava",
+    "current": "(名) 番石榴"
+  },
+  {
+    "word": "banana",
+    "current": "(名) 香蕉"
+  },
+  {
+    "word": "bean",
+    "current": "(名) 豆子"
+  },
+  {
+    "word": "businessman",
+    "current": "(名) 商人"
+  },
+  {
+    "word": "ship",
+    "current": "(名) 船"
+  },
+  {
+    "word": "wallet",
+    "current": "(名) 皮夾"
+  },
+  {
+    "word": "singer",
+    "current": "(名) 歌手"
+  },
+  {
+    "word": "cheap",
+    "current": "(形) 便宜的"
+  },
+  {
+    "word": "sixteen",
+    "current": "(名) 十六"
+  },
+  {
+    "word": "towel",
+    "current": "(名) 毛巾"
+  },
+  {
+    "word": "rat",
+    "current": "(名) 老鼠"
+  },
+  {
+    "word": "bear",
+    "current": "(名) 熊"
+  },
+  {
+    "word": "correct",
+    "current": "(形) 正確的"
+  },
+  {
+    "word": "forward",
+    "current": "(副) 向前地"
+  },
+  {
+    "word": "blackboard",
+    "current": "(名) 黑板"
+  },
+  {
+    "word": "meat",
+    "current": "(名) 肉類"
+  },
+  {
+    "word": "twice",
+    "current": "(副) 兩次"
+  },
+  {
+    "word": "cellphone",
+    "current": "(名) 手機"
+  },
+  {
+    "word": "weak",
+    "current": "(形) 虛弱的"
+  },
+  {
+    "word": "pie",
+    "current": "(名) 派"
+  },
+  {
+    "word": "chess",
+    "current": "(名) 西洋棋"
+  },
+  {
+    "word": "bill",
+    "current": "(名) 帳單；鈔票"
+  },
+  {
+    "word": "program",
+    "current": "(名) 節目"
+  },
+  {
+    "word": "waiter",
+    "current": "(名) 服務生"
+  },
+  {
+    "word": "beef",
+    "current": "(名) 牛肉"
+  },
+  {
+    "word": "boil",
+    "current": "(動) 燒開"
+  },
+  {
+    "word": "soup",
+    "current": "(名) 湯"
+  },
+  {
+    "word": "october",
+    "current": "(名) 十月"
+  },
+  {
+    "word": "bridge",
+    "current": "(名) 橋"
+  },
+  {
+    "word": "egg",
+    "current": "(名) 蛋"
+  },
+  {
+    "word": "slim",
+    "current": "(形) 苗條的"
+  },
+  {
+    "word": "uncle",
+    "current": "(名) 叔伯"
+  },
+  {
+    "word": "prince",
+    "current": "(名) 王子"
+  },
+  {
+    "word": "spoon",
+    "current": "(名) 湯匙"
+  },
+  {
+    "word": "jacket",
+    "current": "(名) 外套"
+  },
+  {
+    "word": "sock",
+    "current": "(名) 襪子"
+  },
+  {
+    "word": "sofa",
+    "current": "(名) 沙發"
+  },
+  {
+    "word": "barbecue",
+    "current": "(動) 火烤"
+  },
+  {
+    "word": "coat",
+    "current": "(名) 大衣"
+  },
+  {
+    "word": "hop",
+    "current": "(名) 跳躍"
+  },
+  {
+    "word": "menu",
+    "current": "(名) 菜單"
+  },
+  {
+    "word": "pork",
+    "current": "(名) 豬肉"
+  },
+  {
+    "word": "dumpling",
+    "current": "(名) 餃子"
+  },
+  {
+    "word": "Korea",
+    "current": "(名) 韓國"
+  },
+  {
+    "word": "shine",
+    "current": "(動) 照耀"
+  },
+  {
+    "word": "bow",
+    "current": "(名) 弓"
+  },
+  {
+    "word": "laugh",
+    "current": "(名) 笑聲"
+  },
+  {
+    "word": "engineer",
+    "current": "(名) 工程師"
+  },
+  {
+    "word": "knowledge",
+    "current": "(名) 知識"
+  },
+  {
+    "word": "snack",
+    "current": "(名) 點心"
+  },
+  {
+    "word": "drawer",
+    "current": "(名) 抽屜"
+  },
+  {
+    "word": "vest",
+    "current": "(名) 背心"
+  },
+  {
+    "word": "bottom",
+    "current": "(名) 底部"
+  },
+  {
+    "word": "artist",
+    "current": "(名) 藝術家"
+  },
+  {
+    "word": "respect",
+    "current": "(名) 尊重"
+  },
+  {
+    "word": "subject",
+    "current": "(名) 科目"
+  },
+  {
+    "word": "secret",
+    "current": "(名) 祕密"
+  },
+  {
+    "word": "fork",
+    "current": "(名) 叉子"
+  },
+  {
+    "word": "deep",
+    "current": "(形) 深的"
+  },
+  {
+    "word": "sixty",
+    "current": "(名) 六十"
+  },
+  {
+    "word": "wise",
+    "current": "(形) 明智的"
+  },
+  {
+    "word": "taxi",
+    "current": "(名) 計程車"
+  },
+  {
+    "word": "screen",
+    "current": "(名) 螢幕"
+  },
+  {
+    "word": "meaning",
+    "current": "(名) 意思"
+  },
+  {
+    "word": "juice",
+    "current": "(名) 果汁"
+  },
+  {
+    "word": "repeat",
+    "current": "(動) 重複"
+  },
+  {
+    "word": "leg",
+    "current": "(名) 腿"
+  },
+  {
+    "word": "belong",
+    "current": "(動) 屬於"
+  },
+  {
+    "word": "event",
+    "current": "(名) 事件"
+  },
+  {
+    "word": "careful",
+    "current": "(形) 小心的"
+  },
+  {
+    "word": "type",
+    "current": "(動) 打字"
+  },
+  {
+    "word": "steak",
+    "current": "(名) 牛排"
+  },
+  {
+    "word": "basket",
+    "current": "(名) 籃子"
+  },
+  {
+    "word": "pair",
+    "current": "(名) 一對"
+  },
+  {
+    "word": "earthquake",
+    "current": "(名) 地震"
+  },
+  {
+    "word": "Japanese",
+    "current": "(形) 日本的 (名) 日本人，日文"
+  },
+  {
+    "word": "item",
+    "current": "(名) 項目"
+  },
+  {
+    "word": "frank",
+    "current": "(形) 直率的"
+  },
+  {
+    "word": "university",
+    "current": "(名) 大學"
+  },
+  {
+    "word": "february",
+    "current": "(名) 二月"
+  },
+  {
+    "word": "difference",
+    "current": "(名) 差異"
+  },
+  {
+    "word": "envelope",
+    "current": "(名) 信封"
+  },
+  {
+    "word": "umbrella",
+    "current": "(名) 雨傘"
+  },
+  {
+    "word": "arm",
+    "current": "(名) 手臂"
+  },
+  {
+    "word": "snowy",
+    "current": "(形) 下雪多的"
+  },
+  {
+    "word": "loud",
+    "current": "(形) 大聲的"
+  },
+  {
+    "word": "height",
+    "current": "(名) 高度"
+  },
+  {
+    "word": "foreigner",
+    "current": "(名) 外國人"
+  },
+  {
+    "word": "dentist",
+    "current": "(名) 牙醫"
+  },
+  {
+    "word": "member",
+    "current": "(名) 會員"
+  },
+  {
+    "word": "goat",
+    "current": "(名) 山羊"
+  },
+  {
+    "word": "turtle",
+    "current": "(名) 烏龜"
+  },
+  {
+    "word": "puppy",
+    "current": "(名) 小狗"
+  },
+  {
+    "word": "finger",
+    "current": "(名) 指頭"
+  },
+  {
+    "word": "yummy",
+    "current": "(形) 好吃的"
+  },
+  {
+    "word": "dollar",
+    "current": "(名) 元"
+  },
+  {
+    "word": "flu",
+    "current": "(名) 流行性感冒"
+  },
+  {
+    "word": "kite",
+    "current": "(名) 風箏"
+  },
+  {
+    "word": "medium",
+    "current": "(形) 中等的"
+  },
+  {
+    "word": "fool",
+    "current": "(名) 傻子"
+  },
+  {
+    "word": "christmas",
+    "current": "(名) 耶誕節"
+  },
+  {
+    "word": "classmate",
+    "current": "(名) 同學"
+  },
+  {
+    "word": "thirsty",
+    "current": "(形) 口渴的"
+  },
+  {
+    "word": "feeling",
+    "current": "(名) 感覺"
+  },
+  {
+    "word": "cent",
+    "current": "(名) 分"
+  },
+  {
+    "word": "blanket",
+    "current": "(名) 毯子"
+  },
+  {
+    "word": "video",
+    "current": "(名) 錄影帶"
+  },
+  {
+    "word": "god",
+    "current": "(名) 上帝"
+  }
+]

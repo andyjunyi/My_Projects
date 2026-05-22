@@ -1,0 +1,631 @@
+{
+    keyword: "reading_collocations",
+    collocations: [
+      {
+        phrase: "endangered species",
+        type: "過去分詞 + 名詞",
+        chinese: "瀕危物種",
+        keywords: ["endangered", "species"],
+        example: {
+          english: "Strict laws have been passed to protect endangered species from illegal hunting.",
+          chinese: "已經通過了嚴格的法律來保護瀕危物種免受非法狩獵的危害。",
+          grammar_point: "species 單複數同形；endangered（瀕臨絕種的）常考字首 en- (使成為) 的用法。"
+        },
+        vocabulary: [
+          { word: "strict", pos: "adj.", chinese: "嚴格的" },
+          { word: "illegal", pos: "adj.", chinese: "非法的" },
+          { word: "hunting", pos: "n.", chinese: "狩獵" }
+        ],
+        sentence_pattern: { pattern: "S + take action to protect endangered species", example: "The giant panda is an endangered species." }
+      },
+      {
+        phrase: "preventive measures",
+        type: "形容詞 + 名詞",
+        chinese: "預防措施",
+        keywords: ["preventive", "measures"],
+        example: {
+          english: "The government has taken strict preventive measures to stop the virus from spreading.",
+          chinese: "政府已經採取嚴格的預防措施以阻止病毒傳播。",
+          grammar_point: "take preventive measures（採取預防措施，measures 恆用複數）"
+        },
+        vocabulary: [
+          { word: "strict", pos: "adj.", chinese: "嚴格的" },
+          { word: "virus", pos: "n.", chinese: "病毒" },
+          { word: "spread", pos: "v.", chinese: "傳播、蔓延" }
+        ],
+        sentence_pattern: { pattern: "S + take preventive measures to + V", example: "We must take preventive measures against fire." }
+      },
+      {
+        phrase: "time-consuming process",
+        type: "複合形容詞 + 名詞",
+        chinese: "耗時的過程",
+        keywords: ["time-consuming", "process"],
+        example: {
+          english: "Writing a novel is a highly time-consuming process that requires a lot of patience.",
+          chinese: "寫小說是一個極度耗時的過程，需要大量的耐心。",
+          grammar_point: "time-consuming（耗時的，名詞 + V-ing 構成的必考複合形容詞）"
+        },
+        vocabulary: [
+          { word: "novel", pos: "n.", chinese: "小說" },
+          { word: "require", pos: "v.", chinese: "需要" },
+          { word: "patience", pos: "n.", chinese: "耐心" }
+        ],
+        sentence_pattern: { pattern: "N/V-ing is a time-consuming process", example: "Learning a language is a time-consuming process." }
+      },
+      {
+        phrase: "devastating fire",
+        type: "現在分詞 + 名詞",
+        chinese: "毀滅性的大火",
+        keywords: ["devastating", "fire"],
+        example: {
+          english: "The historical museum was completely destroyed by a devastating fire last night.",
+          chinese: "這座歷史博物館昨晚被一場毀滅性的大火完全摧毀了。",
+          grammar_point: "devastating (adj.) 極具破壞力的，常修飾 fire, earthquake, flood 等災難。"
+        },
+        vocabulary: [
+          { word: "historical", pos: "adj.", chinese: "歷史的" },
+          { word: "completely", pos: "adv.", chinese: "完全地" },
+          { word: "destroy", pos: "v.", chinese: "摧毀" }
+        ],
+        sentence_pattern: { pattern: "S + be destroyed by a devastating fire", example: "A devastating fire swept through the forest." }
+      },
+      {
+        phrase: "budget-conscious travelers",
+        type: "複合形容詞 + 名詞",
+        chinese: "精打細算的旅客、有預算考量的旅客",
+        keywords: ["budget-conscious", "travelers"],
+        example: {
+          english: "Capsule hotels have become a popular choice for budget-conscious travelers in Japan.",
+          chinese: "膠囊旅館已經成為日本精打細算的旅客的熱門選擇。",
+          grammar_point: "budget-conscious（名詞 + 形容詞：對預算很在意的）"
+        },
+        vocabulary: [
+          { word: "capsule hotel", pos: "n.", chinese: "膠囊旅館" },
+          { word: "popular", pos: "adj.", chinese: "受歡迎的" }
+        ],
+        sentence_pattern: { pattern: "N + is a good choice for budget-conscious travelers", example: "Hostels are suitable for budget-conscious travelers." }
+      },
+      {
+        phrase: "self-driving cars",
+        type: "複合形容詞 + 名詞",
+        chinese: "自動駕駛汽車",
+        keywords: ["self-driving", "cars"],
+        example: {
+          english: "Many tech companies believe that self-driving cars will reduce traffic accidents in the future.",
+          chinese: "許多科技公司相信，自動駕駛汽車未來將減少交通事故。",
+          grammar_point: "self-driving（自動駕駛的，代名詞 + V-ing）"
+        },
+        vocabulary: [
+          { word: "reduce", pos: "v.", chinese: "減少" },
+          { word: "traffic accident", pos: "n.", chinese: "交通事故" }
+        ],
+        sentence_pattern: { pattern: "Self-driving cars will + V", example: "Self-driving cars are becoming more common." }
+      },
+      {
+        phrase: "conflicting information",
+        type: "現在分詞 + 名詞",
+        chinese: "相互矛盾的資訊",
+        keywords: ["conflicting", "information"],
+        example: {
+          english: "The public was confused by the conflicting information released by different news channels.",
+          chinese: "大眾被不同新聞頻道發布的相互矛盾的資訊搞糊塗了。",
+          grammar_point: "information 是不可數名詞，不可加 s！"
+        },
+        vocabulary: [
+          { word: "confused", pos: "adj.", chinese: "困惑的" },
+          { word: "release", pos: "v.", chinese: "發布、釋放" },
+          { word: "channel", pos: "n.", chinese: "頻道" }
+        ],
+        sentence_pattern: { pattern: "S + receive conflicting information about + N", example: "There is conflicting information about the new policy." }
+      },
+      {
+        phrase: "seasonal produce",
+        type: "形容詞 + 名詞",
+        chinese: "當季農產品",
+        keywords: ["seasonal", "produce"],
+        example: {
+          english: "Buying seasonal produce from local farmers is usually cheaper and healthier.",
+          chinese: "向當地農民購買當季農產品通常更便宜也更健康。",
+          grammar_point: "【陷阱】produce 作名詞時指「農產品」，且為不可數名詞，重音在第一音節。"
+        },
+        vocabulary: [
+          { word: "local", pos: "adj.", chinese: "當地的" },
+          { word: "farmer", pos: "n.", chinese: "農夫" }
+        ],
+        sentence_pattern: { pattern: "S + prefer to buy seasonal produce", example: "The supermarket sells fresh seasonal produce." }
+      },
+      {
+        phrase: "collective effort",
+        type: "形容詞 + 名詞",
+        chinese: "共同努力、集體努力",
+        keywords: ["collective", "effort"],
+        example: {
+          english: "Solving the global climate crisis will require a collective effort from all nations.",
+          chinese: "解決全球氣候危機需要所有國家的共同努力。",
+          grammar_point: "require a collective effort（需要集體的努力）"
+        },
+        vocabulary: [
+          { word: "crisis", pos: "n.", chinese: "危機" },
+          { word: "require", pos: "v.", chinese: "需要" },
+          { word: "nation", pos: "n.", chinese: "國家" }
+        ],
+        sentence_pattern: { pattern: "It requires a collective effort to + V", example: "The project's success was a result of collective effort." }
+      },
+      {
+        phrase: "graphic violence",
+        type: "形容詞 + 名詞",
+        chinese: "血腥暴力(畫面)",
+        keywords: ["graphic", "violence"],
+        example: {
+          english: "The video game was banned in several countries due to its graphic violence.",
+          chinese: "這款電子遊戲因其血腥暴力畫面而在幾個國家被禁。",
+          grammar_point: "graphic (adj.) 指「(描寫) 生動逼真的、露骨的」"
+        },
+        vocabulary: [
+          { word: "ban", pos: "v.", chinese: "禁止" },
+          { word: "several", pos: "adj.", chinese: "幾個的" },
+          { word: "due to", pos: "prep.", chinese: "由於" }
+        ],
+        sentence_pattern: { pattern: "The movie contains graphic violence.", example: "Parents should protect children from graphic violence." }
+      },
+      {
+        phrase: "leaking faucet",
+        type: "現在分詞 + 名詞",
+        chinese: "漏水的水龍頭",
+        keywords: ["leaking", "faucet"],
+        example: {
+          english: "A leaking faucet can waste a surprising amount of water over a month.",
+          chinese: "一個漏水的水龍頭在一個月內可以浪費掉驚人數量的水。",
+          grammar_point: "leaking 作形容詞，修飾 faucet (水龍頭)"
+        },
+        vocabulary: [
+          { word: "waste", pos: "v.", chinese: "浪費" },
+          { word: "surprising", pos: "adj.", chinese: "令人驚訝的" },
+          { word: "amount", pos: "n.", chinese: "數量" }
+        ],
+        sentence_pattern: { pattern: "S + fix the leaking faucet", example: "The sound of the leaking faucet kept me awake." }
+      },
+      {
+        phrase: "childhood memories",
+        type: "名詞 + 名詞",
+        chinese: "童年回憶",
+        keywords: ["childhood", "memories"],
+        example: {
+          english: "Hearing that old song always brings back happy childhood memories for me.",
+          chinese: "聽到那首老歌總能喚起我快樂的童年回憶。",
+          grammar_point: "bring back memories（喚起回憶）"
+        },
+        vocabulary: [
+          { word: "bring back", pos: "phr. v.", chinese: "帶回、喚起" }
+        ],
+        sentence_pattern: { pattern: "N + brings back childhood memories", example: "The smell of baking bread triggered her childhood memories." }
+      },
+      {
+        phrase: "racist remarks",
+        type: "形容詞 + 名詞",
+        chinese: "種族歧視言論",
+        keywords: ["racist", "remarks"],
+        example: {
+          english: "The politician was forced to apologize after making racist remarks on social media.",
+          chinese: "這位政治人物在社群媒體上發表種族歧視言論後被迫道歉。",
+          grammar_point: "make racist remarks（發表種族歧視的言論）"
+        },
+        vocabulary: [
+          { word: "politician", pos: "n.", chinese: "政治人物" },
+          { word: "apologize", pos: "v.", chinese: "道歉" }
+        ],
+        sentence_pattern: { pattern: "S + make racist remarks", example: "He was fired for his racist remarks." }
+      },
+      {
+        phrase: "first draft",
+        type: "形容詞 + 名詞",
+        chinese: "初稿",
+        keywords: ["first", "draft"],
+        example: {
+          english: "Don't worry about making it perfect; just get your ideas down in the first draft.",
+          chinese: "不要擔心把它寫得完美；只要在初稿中把你的想法寫下來就好。",
+          grammar_point: "write the first draft（寫初稿）"
+        },
+        vocabulary: [
+          { word: "perfect", pos: "adj.", chinese: "完美的" },
+          { word: "get down", pos: "phr. v.", chinese: "寫下、記下" }
+        ],
+        sentence_pattern: { pattern: "S + finish the first draft of + N", example: "I have just completed the first draft of my essay." }
+      },
+      {
+        phrase: "deserted house",
+        type: "過去分詞 + 名詞",
+        chinese: "廢棄的房子、空無一人的房子",
+        keywords: ["deserted", "house"],
+        example: {
+          english: "The children were told to stay away from the deserted house at the end of the street.",
+          chinese: "孩子們被告知要遠離街道盡頭那棟廢棄的房子。",
+          grammar_point: "deserted = abandoned（被遺棄的）"
+        },
+        vocabulary: [
+          { word: "stay away from", pos: "phr.", chinese: "遠離" },
+          { word: "street", pos: "n.", chinese: "街道" }
+        ],
+        sentence_pattern: { pattern: "S + explore the deserted house", example: "The deserted house looked spooky at night." }
+      },
+      {
+        phrase: "thick coating",
+        type: "形容詞 + 名詞",
+        chinese: "厚厚的塗層 / 覆蓋物",
+        keywords: ["thick", "coating"],
+        example: {
+          english: "The cake is covered with a thick coating of delicious chocolate icing.",
+          chinese: "蛋糕上覆蓋著一層厚厚的美味巧克力糖霜。",
+          grammar_point: "a coating of + N（一層...的覆蓋物）"
+        },
+        vocabulary: [
+          { word: "cover", pos: "v.", chinese: "覆蓋" },
+          { word: "delicious", pos: "adj.", chinese: "美味的" },
+          { word: "icing", pos: "n.", chinese: "糖霜" }
+        ],
+        sentence_pattern: { pattern: "N + is covered with a thick coating of + N", example: "There was a thick coating of dust on the old books." }
+      },
+      {
+        phrase: "enormous courage",
+        type: "形容詞 + 名詞",
+        chinese: "巨大的勇氣",
+        keywords: ["enormous", "courage"],
+        example: {
+          english: "It takes enormous courage to stand up and speak the truth against the crowd.",
+          chinese: "站出來反對群眾並說出真相需要巨大的勇氣。",
+          grammar_point: "It takes enormous courage to + V（做...需要極大的勇氣）"
+        },
+        vocabulary: [
+          { word: "enormous", pos: "adj.", chinese: "巨大的" },
+          { word: "stand up", pos: "phr. v.", chinese: "挺身而出" },
+          { word: "crowd", pos: "n.", chinese: "群眾" }
+        ],
+        sentence_pattern: { pattern: "S + show enormous courage in + V-ing", example: "He showed enormous courage during the battle." }
+      },
+      {
+        phrase: "tough economic times",
+        type: "形容詞 + 名詞",
+        chinese: "艱困的經濟時期",
+        keywords: ["economic", "times"],
+        example: {
+          english: "During tough economic times, many people lose their jobs and struggle to survive.",
+          chinese: "在艱困的經濟時期，許多人會失去工作並為生存而掙扎。",
+          grammar_point: "economic times 常搭配 tough/hard 修飾"
+        },
+        vocabulary: [
+          { word: "struggle", pos: "v.", chinese: "掙扎" },
+          { word: "survive", pos: "v.", chinese: "生存" }
+        ],
+        sentence_pattern: { pattern: "In tough economic times, S + V", example: "Businesses often close during tough economic times." }
+      },
+      {
+        phrase: "busy schedule",
+        type: "形容詞 + 名詞",
+        chinese: "繁忙的行程",
+        keywords: ["busy", "schedule"],
+        example: {
+          english: "Despite his busy schedule, the CEO always makes time for his family on weekends.",
+          chinese: "儘管行程繁忙，執行長週末總是會騰出時間陪家人。",
+          grammar_point: "have a busy schedule（行程滿檔）"
+        },
+        vocabulary: [
+          { word: "despite", pos: "prep.", chinese: "儘管" },
+          { word: "make time", pos: "phr.", chinese: "騰出時間" }
+        ],
+        sentence_pattern: { pattern: "S + have a very busy schedule", example: "I cannot join you due to my busy schedule." }
+      },
+      {
+        phrase: "graduation ceremony",
+        type: "名詞 + 名詞",
+        chinese: "畢業典禮",
+        keywords: ["graduation", "ceremony"],
+        example: {
+          english: "The principal delivered an inspiring speech at the high school graduation ceremony.",
+          chinese: "校長在高中畢業典禮上發表了鼓舞人心的演講。",
+          grammar_point: "at the graduation ceremony（在畢業典禮上）"
+        },
+        vocabulary: [
+          { word: "principal", pos: "n.", chinese: "校長" },
+          { word: "deliver", pos: "v.", chinese: "發表(演說)" },
+          { word: "inspiring", pos: "adj.", chinese: "鼓舞人心的" }
+        ],
+        sentence_pattern: { pattern: "S + attend the graduation ceremony", example: "My parents wept at my graduation ceremony." }
+      },
+      {
+        phrase: "heartwarming speech",
+        type: "現在分詞 + 名詞",
+        chinese: "感人的演講、暖心的演講",
+        keywords: ["heartwarming", "speech"],
+        example: {
+          english: "The best man gave a heartwarming speech that brought tears to the bride's eyes.",
+          chinese: "伴郎發表了一段感人的演講，讓新娘熱淚盈眶。",
+          grammar_point: "give/deliver a heartwarming speech（發表暖心演講）"
+        },
+        vocabulary: [
+          { word: "best man", pos: "n.", chinese: "伴郎" },
+          { word: "bride", pos: "n.", chinese: "新娘" },
+          { word: "tears", pos: "n.", chinese: "眼淚" }
+        ],
+        sentence_pattern: { pattern: "S + gave a heartwarming speech", example: "Her heartwarming speech touched everyone." }
+      },
+      {
+        phrase: "social innovation",
+        type: "形容詞 + 名詞",
+        chinese: "社會創新",
+        keywords: ["social", "innovation"],
+        example: {
+          english: "Social innovation is necessary to solve long-standing problems like poverty and inequality.",
+          chinese: "為了解決像貧窮和不平等等長期存在的問題，社會創新是必要的。",
+          grammar_point: "innovation 泛指制度或科技上的創新"
+        },
+        vocabulary: [
+          { word: "necessary", pos: "adj.", chinese: "必要的" },
+          { word: "poverty", pos: "n.", chinese: "貧窮" },
+          { word: "inequality", pos: "n.", chinese: "不平等" }
+        ],
+        sentence_pattern: { pattern: "N + is an example of social innovation", example: "The charity relies on social innovation." }
+      },
+      {
+        phrase: "beautiful garden",
+        type: "形容詞 + 名詞",
+        chinese: "美麗的花園",
+        keywords: ["beautiful", "garden"],
+        example: {
+          english: "Behind the old mansion, there is a beautiful garden filled with colorful roses.",
+          chinese: "在古老豪宅的後面，有一個開滿五顏六色玫瑰的美麗花園。",
+          grammar_point: "be filled with + N（充滿著...）"
+        },
+        vocabulary: [
+          { word: "mansion", pos: "n.", chinese: "大宅、豪宅" },
+          { word: "colorful", pos: "adj.", chinese: "色彩鮮豔的" }
+        ],
+        sentence_pattern: { pattern: "S + plant a beautiful garden", example: "She spends her weekends maintaining her beautiful garden." }
+      },
+      {
+        phrase: "motion sickness",
+        type: "名詞 + 名詞",
+        chinese: "暈車 / 暈船 / 動暈症",
+        keywords: ["motion", "sickness"],
+        example: {
+          english: "If you suffer from motion sickness, you should take some medicine before getting on the boat.",
+          chinese: "如果你會暈船，你應該在上船前吃點藥。",
+          grammar_point: "suffer from motion sickness（患有暈車症狀）"
+        },
+        vocabulary: [
+          { word: "suffer from", pos: "phr.", chinese: "受...所苦" },
+          { word: "medicine", pos: "n.", chinese: "藥物" }
+        ],
+        sentence_pattern: { pattern: "S + suffer from motion sickness", example: "Reading in a moving car gives me motion sickness." }
+      },
+      {
+        phrase: "cold sweat",
+        type: "形容詞 + 名詞",
+        chinese: "冷汗",
+        keywords: ["cold", "sweat"],
+        example: {
+          english: "I woke up in a cold sweat after having a terrifying nightmare about falling.",
+          chinese: "做了一個關於墜落的可怕惡夢後，我嚇出一身冷汗醒來。",
+          grammar_point: "break out in a cold sweat / wake up in a cold sweat（嚇出一身冷汗）"
+        },
+        vocabulary: [
+          { word: "terrifying", pos: "adj.", chinese: "令人恐懼的" },
+          { word: "nightmare", pos: "n.", chinese: "惡夢" }
+        ],
+        sentence_pattern: { pattern: "S + broke out in a cold sweat", example: "The horror movie left him in a cold sweat." }
+      },
+      {
+        phrase: "significant advantages",
+        type: "形容詞 + 名詞",
+        chinese: "顯著的優勢",
+        keywords: ["significant", "advantages"],
+        example: {
+          english: "Working from home has significant advantages, such as saving commuting time.",
+          chinese: "在家工作有顯著的優勢，例如節省通勤時間。",
+          grammar_point: "have significant advantages over...（比...有顯著優勢）"
+        },
+        vocabulary: [
+          { word: "commuting", pos: "n.", chinese: "通勤" }
+        ],
+        sentence_pattern: { pattern: "There are significant advantages to + V-ing", example: "This method offers significant advantages." }
+      },
+      {
+        phrase: "intricate architecture",
+        type: "形容詞 + 名詞",
+        chinese: "錯綜複雜的建築(設計)",
+        keywords: ["intricate", "architecture"],
+        example: {
+          english: "The European cathedral is famous for its intricate architecture and stunning glass windows.",
+          chinese: "這座歐洲大教堂以其錯綜複雜的建築設計和令人驚嘆的玻璃窗而聞名。",
+          grammar_point: "intricate (adj.) 指「複雜精細的」，為高級單字。"
+        },
+        vocabulary: [
+          { word: "cathedral", pos: "n.", chinese: "大教堂" },
+          { word: "stunning", pos: "adj.", chinese: "令人驚嘆的" }
+        ],
+        sentence_pattern: { pattern: "The building features intricate architecture.", example: "We admired the intricate architecture of the palace." }
+      },
+      {
+        phrase: "acoustic quality",
+        type: "形容詞 + 名詞",
+        chinese: "音響品質、音效",
+        keywords: ["acoustic", "quality"],
+        example: {
+          english: "The concert hall was specially designed to provide the best acoustic quality for the audience.",
+          chinese: "這座音樂廳經過特別設計，以提供觀眾最佳的音響品質。",
+          grammar_point: "acoustic (adj.) 與聲音、聽覺有關的"
+        },
+        vocabulary: [
+          { word: "concert hall", pos: "n.", chinese: "音樂廳" },
+          { word: "specially", pos: "adv.", chinese: "特別地" },
+          { word: "audience", pos: "n.", chinese: "觀眾" }
+        ],
+        sentence_pattern: { pattern: "N + has excellent acoustic quality", example: "The studio needs to improve its acoustic quality." }
+      },
+      {
+        phrase: "emergency situations",
+        type: "名詞 + 名詞",
+        chinese: "緊急情況",
+        keywords: ["emergency", "situations"],
+        example: {
+          english: "All employees must be trained on how to react properly in emergency situations.",
+          chinese: "所有員工都必須接受培訓，了解在緊急情況下如何正確反應。",
+          grammar_point: "in emergency situations（在緊急狀況下）"
+        },
+        vocabulary: [
+          { word: "employee", pos: "n.", chinese: "員工" },
+          { word: "react", pos: "v.", chinese: "反應" },
+          { word: "properly", pos: "adv.", chinese: "適當地、正確地" }
+        ],
+        sentence_pattern: { pattern: "S + must know what to do in emergency situations", example: "Keep this kit for emergency situations." }
+      },
+      {
+        phrase: "public hazard",
+        type: "形容詞 + 名詞",
+        chinese: "公共危險、對大眾有危害的人事物",
+        keywords: ["public", "hazard"],
+        example: {
+          english: "Drunk driving is not only illegal but also a serious public hazard.",
+          chinese: "酒駕不僅違法，而且是嚴重的公共危害。",
+          grammar_point: "hazard = danger/risk（危害）"
+        },
+        vocabulary: [
+          { word: "drunk driving", pos: "n.", chinese: "酒駕" },
+          { word: "illegal", pos: "adj.", chinese: "非法的" },
+          { word: "serious", pos: "adj.", chinese: "嚴重的" }
+        ],
+        sentence_pattern: { pattern: "N + is a public hazard", example: "The abandoned factory became a public hazard." }
+      },
+      {
+        phrase: "safe distance",
+        type: "形容詞 + 名詞",
+        chinese: "安全距離",
+        keywords: ["safe", "distance"],
+        example: {
+          english: "Drivers are advised to keep a safe distance from the vehicle in front of them.",
+          chinese: "建議駕駛人與前方的車輛保持安全距離。",
+          grammar_point: "keep a safe distance from + N（與...保持安全距離）"
+        },
+        vocabulary: [
+          { word: "advise", pos: "v.", chinese: "建議、勸告" },
+          { word: "vehicle", pos: "n.", chinese: "車輛" }
+        ],
+        sentence_pattern: { pattern: "S + keep a safe distance from + N", example: "Please stand at a safe distance." }
+      },
+      {
+        phrase: "horror movies / scary movies",
+        type: "名詞/形容詞 + 名詞",
+        chinese: "恐怖電影",
+        keywords: ["horror", "movies", "scary"],
+        example: {
+          english: "I usually avoid watching horror movies alone at night because they give me nightmares.",
+          chinese: "我通常避免晚上一個人看恐怖電影，因為它們會讓我做惡夢。",
+          grammar_point: "avoid + V-ing（避免做某事）"
+        },
+        vocabulary: [
+          { word: "avoid", pos: "v.", chinese: "避免" },
+          { word: "nightmare", pos: "n.", chinese: "惡夢" }
+        ],
+        sentence_pattern: { pattern: "S + love/hate watching horror movies", example: "Horror movies are very popular during Halloween." }
+      },
+      {
+        phrase: "controlled environment",
+        type: "過去分詞 + 名詞",
+        chinese: "受控環境",
+        keywords: ["controlled", "environment"],
+        example: {
+          english: "Scientific experiments must be conducted in a highly controlled environment to ensure accurate results.",
+          chinese: "科學實驗必須在高度受控的環境中進行，以確保結果準確。",
+          grammar_point: "in a controlled environment（在控制變因的環境下）"
+        },
+        vocabulary: [
+          { word: "experiment", pos: "n.", chinese: "實驗" },
+          { word: "conduct", pos: "v.", chinese: "執行、進行" },
+          { word: "accurate", pos: "adj.", chinese: "準確的" }
+        ],
+        sentence_pattern: { pattern: "S + be kept in a controlled environment", example: "The plants are grown in a controlled environment." }
+      },
+      {
+        phrase: "residual fear",
+        type: "形容詞 + 名詞",
+        chinese: "殘留的恐懼",
+        keywords: ["residual", "fear"],
+        example: {
+          english: "Even years after the accident, she still felt a residual fear whenever she drove a car.",
+          chinese: "即使在事故發生多年後，每當她開車時，她仍然感到一絲殘留的恐懼。",
+          grammar_point: "residual (adj.) 殘留的、剩餘的"
+        },
+        vocabulary: [
+          { word: "accident", pos: "n.", chinese: "意外" },
+          { word: "whenever", pos: "conj.", chinese: "每當" }
+        ],
+        sentence_pattern: { pattern: "S + experience residual fear after + N", example: "The trauma left him with residual fear." }
+      },
+      {
+        phrase: "alcohol-dependent",
+        type: "複合形容詞",
+        chinese: "依賴酒精的",
+        keywords: ["alcohol-dependent", "country"],
+        example: {
+          english: "Russia is sometimes considered an alcohol-dependent country due to its high consumption of vodka.",
+          chinese: "由於伏特加的高消耗量，俄羅斯有時被認為是一個依賴酒精的國家。",
+          grammar_point: "名詞 + dependent（依賴...的），如 computer-dependent。"
+        },
+        vocabulary: [
+          { word: "consider", pos: "v.", chinese: "認為" },
+          { word: "consumption", pos: "n.", chinese: "消耗、消費" },
+          { word: "vodka", pos: "n.", chinese: "伏特加" }
+        ],
+        sentence_pattern: { pattern: "N + is an alcohol-dependent culture", example: "He sought help for being alcohol-dependent." }
+      },
+      {
+        phrase: "national drink",
+        type: "形容詞 + 名詞",
+        chinese: "國民飲料",
+        keywords: ["national", "drink"],
+        example: {
+          english: "Bubble tea has undoubtedly become the national drink of Taiwan.",
+          chinese: "珍珠奶茶毫無疑問地已經成為台灣的國民飲料。",
+          grammar_point: "national 此處譯為「全國代表性的、國民的」"
+        },
+        vocabulary: [
+          { word: "bubble tea", pos: "n.", chinese: "珍珠奶茶" },
+          { word: "undoubtedly", pos: "adv.", chinese: "毫無疑問地" }
+        ],
+        sentence_pattern: { pattern: "N + is considered the national drink of + 國家", example: "Beer is often seen as Germany's national drink." }
+      },
+      {
+        phrase: "illegal production",
+        type: "形容詞 + 名詞",
+        chinese: "非法生產/製造",
+        keywords: ["illegal", "production"],
+        example: {
+          english: "The police cracked down on the illegal production of counterfeit designer bags.",
+          chinese: "警方取締了仿冒名牌包的非法生產。",
+          grammar_point: "crack down on + N（強力取締/鎮壓...）"
+        },
+        vocabulary: [
+          { word: "crack down", pos: "phr. v.", chinese: "取締、鎮壓" },
+          { word: "counterfeit", pos: "adj.", chinese: "偽造的、仿冒的" },
+          { word: "designer bag", pos: "n.", chinese: "名牌包" }
+        ],
+        sentence_pattern: { pattern: "S + stop the illegal production of + N", example: "The illegal production of drugs is a serious crime." }
+      },
+      {
+        phrase: "stained glass windows",
+        type: "名詞 + 名詞",
+        chinese: "彩繪玻璃窗",
+        keywords: ["stained", "glass", "windows"],
+        example: {
+          english: "The sunlight shining through the stained glass windows created a beautiful pattern on the church floor.",
+          chinese: "陽光穿過彩繪玻璃窗，在教堂地板上形成了美麗的圖案。",
+          grammar_point: "stained glass (彩繪玻璃)，stain 原意為弄髒/染色。"
+        },
+        vocabulary: [
+          { word: "sunlight", pos: "n.", chinese: "陽光" },
+          { word: "pattern", pos: "n.", chinese: "圖案" },
+          { word: "church", pos: "n.", chinese: "教堂" }
+        ],
+        sentence_pattern: { pattern: "The church features beautiful stained glass windows.", example: "He admired the stained glass windows." }
+      }
+    ]
+  }

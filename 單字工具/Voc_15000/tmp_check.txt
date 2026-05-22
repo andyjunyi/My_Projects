@@ -1,0 +1,54 @@
+kk_phonetics issues: 326
+  id=120 word=acquaint | kk=ə'kweɪnt
+  id=121 word=acquaintance | kk=ə'kweɪntəns
+  id=122 word=acquainted | kk=ə'kweɪntɪd
+  id=246 word=aerate | kk='ɛreɪt
+  id=251 word=aerospace | kk='ɛrəspeɪs
+  id=303 word=aging | kk='eɪdʒɪŋ
+  id=328 word=ailment | kk='eɪlmənt
+  id=339 word=airmail | kk='ɛrmeɪl
+  id=340 word=airplane | kk='ɛrpleɪn
+  id=440 word=amazing | kk=ə'meɪzɪŋ
+  id=559 word=antiquated | kk=æn'tɪkweɪtɪd
+  id=622 word=appraisal | kk=ə'preɪzəl
+  id=696 word=arrange | kk=ə'reɪndʒ
+  id=841 word=attainment | kk=ə'teɪnmənt
+  id=866 word=audacious | kk=ɔ'deɪʃəs
+  id=898 word=automate | kk='ɔtəˌmeɪt
+  id=913 word=available | kk=ə'veɪləbəl
+  id=980 word=bait | kk='beɪt
+  id=998 word=band-aid | kk='bænd eɪd
+  id=1054 word=basically | kk='beɪsɪkli
+  id=1056 word=basin | kk='beɪsən
+  id=1183 word=bebasedon | kk=bi''beɪsd ɑn
+  id=1259 word=beret | kk=bə'reɪ
+  id=1304 word=biodegradable | kk=.baɪo dɪ'ɡreɪdəbəl
+  id=1548 word=brain | kk=breɪn
+  id=1563 word=brave | kk='breɪv
+  id=1567 word=brazen | kk='breɪzən
+  id=1623 word=bridesmaid | kk='braɪdzmeɪd
+  id=1848 word=cage | kk='keɪdʒ
+  id=1850 word=caladium | kk=kə'leɪdiəm
+  id=1932 word=captivate | kk=kæp'tɪveɪt
+  id=2118 word=chaebol | kk='tʃeɪbɔl
+  id=2133 word=chamber | kk='tʃeɪmbɚ
+  id=2135 word=champagne | kk='ʃæmpeɪn
+  id=2147 word=changeable | kk='tʃeɪndʒəbəl
+  id=2478 word=coating | kk='koeɪtɪŋ
+  id=2481 word=cocaine | kk=ko'keɪn
+  id=2488 word=cocktail | kk='kɑkteɪl
+  id=2910 word=consternate | kk=kən'stɝneɪt
+  id=2940 word=contagious | kk=kən'teɪdʒəs
+  id=3033 word=cooperate | kk=koʊ'ɑpəreɪt
+  id=3198 word=crazy | kk='kreɪzi
+  id=3393 word=daily | kk='deɪli
+  id=3414 word=dangerous | kk='deɪndʒɚəs
+  id=3426 word=database | kk='deɪtəbɛs
+  id=3439 word=daylight | kk='deɪˌlaɪt
+  id=3462 word=debasement | kk=dɪ'beɪsmənt
+  id=3463 word=debatable | kk=dɪ'beɪtəbəl
+  id=3464 word=debate | kk=dɪ'beɪt
+  id=3471 word=decade | kk='dɛkeɪd
+definition_zh issues: 2
+  id=7655 word=lay in on | def=(動) 鋪設；放置　(動片) leɪ ɪn ɑn 猛烈攻擊；痛罵
+  id=14552 word=update | def=(動) [ʌp'deɪt] 更新；使現代化　(名) ['ʌp.deɪt] 更新；最新消息

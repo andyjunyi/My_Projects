@@ -1,0 +1,471 @@
+
+【A 疑似錯字 / 異常字元】 — 7 組
+------------------------------------------------------------
+  chick(LNone), chick>(LNone)
+    (名) 小雞；年輕女性
+  come(L1), come|(LNone)
+    (動) 來；到達　(動) 發生；出現
+  motivate(L4), motivate|(LNone)
+    (動) 激勵；鼓舞　(動) 促使；驅使
+  PE(LNone), pea(L3)
+    (名) 豌豆
+  regardless(L5), regardless|(LNone)
+    (副) 無論；不管
+  strengthen(L4), strengthen>(LNone)
+    (動) 加強；增強
+  television(L1), TV(L1)
+    (名) 電視；電視機
+
+【B 連寫 vs 分開寫】 — 8 組
+------------------------------------------------------------
+  pay check(LNone), paycheck(LNone)
+    (名) 薪水；薪資支票
+  peanut(L3), peanut(L3)
+    (名) 花生
+  pump(L3), pump(L3)
+    (名) 泵；打氣筒　(動) 抽水；打氣
+  quantity(L2), quantity(L2)
+    (名) 數量；大量
+  rule out(LNone), ruleout(LNone)
+    (片) 排除；拒絕考慮
+  significant(L3), significant(L3)
+    (形) 重要的；意義重大的
+  tooth paste(LNone), toothpaste(LNone)
+    (名) 牙膏
+  work force(LNone), workforce(L6)
+    (名) 勞動力；工作人員
+
+【C 拼字變體（英式/美式、連字號）】 — 9 組
+------------------------------------------------------------
+  left wing(LNone), left-wing(LNone)
+    (名) 左翼；左派　(形) 左翼的；左派的
+  make-up(LNone), makeup(L4)
+    (名) 化妝品；彩妝　(動) 補考；彌補
+  mythic(LNone), mythical(LNone)
+    (形) 神話的；傳說的　(形) 虛構的；想像的
+  passer-by(LNone), passerby(LNone)
+    (名) 路人；過路人
+  problematic(LNone), problematical(LNone)
+    (形) 有問題的；可疑的
+  synthetic(L6), synthetical(LNone)
+    (形) 合成的；人造的
+  time-out(LNone), timeout(LNone)
+    (名) 暫停；休息時間
+  tongue twister(LNone), tongue-twister(LNone)
+    (名) 繞口令
+  tyrannic(LNone), tyrannical(LNone)
+    (形) 暴虐的；專制的
+
+【D 詞形變化（單複數、派生詞）】 — 15 組
+------------------------------------------------------------
+  afterward(LNone), afterwards(LNone)
+    (副) 之後；後來　(連) 隨後；然後
+  chopstick(L2), chopsticks(L2)
+    (名) 筷子；夾取食物的工具
+  let(L1), lets(L1)
+    (動) 讓；允許　(動) 出租；租出
+  misunderstand(L4), misunderstanding(LNone)
+    (動) 誤解；理解錯誤　(名) 誤會；誤解
+  our(LNone), ours(LNone)
+    (代) 我們的
+  parent(L1), parents(L1)
+    (名) 父母；家長
+  resign(L4), resigned(LNone)
+    (動) 辭職；放棄
+  shenanigan(LNone), shenanigans(LNone)
+    (名) 惡作劇；詭計
+  sneaker(L6), sneakers(L6)
+    (名) 運動鞋
+  sock(L2), socks(L2)
+    (名) 襪子
+  suffer(L3), suffering(LNone)
+    (動) [ˈsʌfɚ] 遭受；忍受　(名) [ˈsʌfərɪŋ] 痛苦；苦難
+  suspend(L5), suspended(LNone)
+    (動) 暫停；懸掛
+  tactic(L5), tactics(L5)
+    (名) 策略；戰術
+  teen(LNone), teens(L2)
+    (名) 青少年（13-19歲）
+  tell(L1), telling(LNone)
+    (動) 告訴；講述
+
+【E 同義詞（可考慮簡化）】 — 189 組
+------------------------------------------------------------
+  abandon(L4), throw over(LNone)
+    (動) 放棄；拋棄
+  abduction(LNone), kidnapping(LNone)
+    (名) 綁架；誘拐
+  abstruse(LNone), recondite(LNone)
+    (形) 深奧的；難解的
+  absurd(L5), preposterous(LNone), ridiculous(L5)
+    (形) 荒謬的；可笑的
+  abundance(L6), profusion(LNone)
+    (名) 豐富；大量
+  accumulative(LNone), cumulative(L6)
+    (形) 累積的；逐漸增加的
+  acne(L6), pimple(L6), zit(LNone)
+    (名) 青春痘；粉刺
+  afternoon(L1), pm(L1)
+    (名) 下午；午後
+  aircraft(L2), airplane(L1)
+    (名) 飛機；航空器
+  all manner of(LNone), allsortsof(LNone)
+    (片) 各種各樣的；形形色色的
+  apparel(LNone), garb(LNone)
+    (名) 衣服；服裝　(動) 穿著；打扮
+  at times(LNone), sometimes(L1)
+    (副) 有時；偶爾
+  autocracy(LNone), dictatorship(L6)
+    (名) 獨裁統治；獨裁政體
+  bacteria(L3), bacterium(LNone)
+    (名) 細菌；菌類
+  be filled with(LNone), be full of(LNone)
+    (動) 充滿；裝滿
+  because of(LNone), owing(LNone)
+    (介) 因為；由於
+  bountiful(LNone), generous(L2)
+    (形) 豐富的；充足的　(形) 慷慨的；大方的
+  bra(L6), brassiere(L6)
+    (名) 胸罩；內衣
+  brevity(LNone), conciseness(LNone)
+    (名) 簡潔；言簡意賅
+  burger(L2), hamburger(L2)
+    (名) 漢堡；漢堡包
+  cemetery(L5), graveyard(LNone)
+    (名) 墓地；公墓
+  cilantro(LNone), coriander(LNone)
+    (名) 香菜；芫荽
+  come to an end(LNone), terminate(LNone)
+    (動) 結束；終止
+  concise(L6), succinct(LNone)
+    (形) 簡潔的；簡明的
+  concisely(L6), succinctly(LNone)
+    (副) 簡潔地；簡明地
+  congressional(LNone), parliamentary(LNone)
+    (形) 國會的；議會的
+  convincing(LNone), persuasive(L4)
+    (形) 令人信服的；有說服力的
+  countless(LNone), innumerable(L6)
+    (形) 無數的；數不清的　(形) 極多的；眾多的
+  criticize(L4), criticized(LNone)
+    (動) 批評；指責　(動) 評論；評估
+  deceit(LNone), deceive(L5)
+    (名) 欺騙；詐騙　(動) 欺騙；迷惑
+  déjà vu(LNone), deja vu(LNone)
+    (名) 似曾相識；既視感
+  demonize(LNone), demonzie(LNone)
+    (動) 妖魔化；將...描繪成邪惡的
+  denim(LNone), jeans(L1)
+    (名) 牛仔布；牛仔褲
+  denounce(LNone), denunciate(LNone)
+    (動) 公開指責；譴責　(動) 舉報；告發
+  disinfect(LNone), sterilize(LNone), sterilizing(LNone)
+    (動) 消毒；殺菌
+  distil(LNone), distill(LNone)
+    (動) 蒸餾；提取　(動) 濃縮；精煉
+  doggedly(LNone), tenaciously(LNone)
+    (副) 頑強地；堅持不懈地
+  drop by(LNone), drop in on(LNone)
+    (動) 順便拜訪；臨時造訪
+  earring(L2), earrings(L2)
+    (名) 耳環；耳飾
+  eerie(LNone), eery(LNone)
+    (形) 詭異的；令人毛骨悚然的
+  famished(LNone), starving(LNone)
+    (形) 極餓的；飢餓的
+  fess up to(LNone), fess up(LNone)
+    (動) 坦白承認；招認
+  freeway(L6), motorway(LNone)
+    (名) 高速公路；快速道路
+  glutinous(LNone), viscous(LNone)
+    (形) 黏性的；黏稠的
+  grouchy(LNone), grumpy(LNone)
+    (形) 易怒的；脾氣壞的　(形) 不滿的；抱怨的
+  guess(L1), surmise(LNone)
+    (動) 猜測；推測　(名) 猜測；推測
+  gym(L2), gymnasium(L2)
+    (名) 健身房；體育館
+  have(L1), own(L1)
+    (動) 有；擁有　(動) 吃；喝
+  hesitate(L3), hesitation(L4)
+    (動) 猶豫；遲疑　(名) 猶豫；遲疑
+  hippopotamus(L2), hippo(L2)
+    (名) 河馬
+  illegal(LNone), unlawful(LNone)
+    (形) 非法的；違法的
+  imminent(L6), impending(LNone)
+    (形) 即將發生的；迫在眉睫的
+  in private(LNone), privately(L2)
+    (副) 私下地；秘密地
+  increasingly(LNone), progressively(L5)
+    (副) 越來越；逐漸地
+  inherent(L5), innate(LNone)
+    (形) 內在的；固有的　(形) 天生的；與生俱來的
+  kingdom(L3), realm(L5)
+    (名) 王國；領域
+  lengthen(L4), prolong(L5)
+    (動) 延長；拉長
+  likelihood(L5), probability(LNone)
+    (名) 可能性；機率
+  log in(LNone), log into(LNone), log on(LNone)
+    (動) 登入；登錄
+  lorry(LNone), truck(L1)
+    (名) 貨車；卡車
+  mailman(LNone), postman(LNone)
+    (名) 郵差；郵遞員
+  miniscule(LNone), tiny(L2)
+    (形) 極小的；微小的
+  Name(L1), name(L1)
+    (名) 名字；名稱　(動) 命名；取名
+  nap(L3), snooze(LNone)
+    (名) 小睡；打盹　(動) 打盹；小睡
+  opt in(LNone), opt into(LNone)
+    (動) 選擇參加；同意加入
+  outdo(LNone), surpass(L6), transcend(LNone)
+    (動) 超越；勝過
+  over and over(LNone), recurringly(LNone)
+    (副) 一再地；反覆地
+  overturn(L5), subvert(LNone)
+    (動) 推翻；顛覆
+  pacify(LNone), placate(LNone)
+    (動) 安撫；平息
+  paediatric(LNone), pediatric(LNone)
+    (形) 小兒科的
+  palatable(LNone), scrumptious(LNone), tasty(L3)
+    (形) 美味的；可口的
+  pants(L1), trousers(LNone)
+    (名) 褲子
+  partake in(LNone), participate in(LNone), take part in(LNone)
+    (片) 參加；參與
+  pass around(LNone), pass round(LNone)
+    (片) 傳遞；傳閱
+  pasta(L4), spaghetti(L3)
+    (名) 義大利麵
+  pay back(LNone), repay(L5)
+    (動) 償還；回報
+  peacefulness(LNone), serenity(LNone), tranquility(LNone)
+    (名) 寧靜；平靜
+  peel away(LNone), peel off(LNone)
+    (片) 剝落；脫落
+  penalize(LNone), punish(L2)
+    (動) 處罰；懲罰
+  perhaps(L1), possibly(LNone)
+    (副) 也許；可能
+  perseverance(LNone), persistence(L6)
+    (名) 毅力；堅持
+  pertinent(LNone), relevant(L4)
+    (形) 相關的；切題的
+  peter out(LNone), tail off(LNone)
+    (片) 逐漸減弱；逐漸消失
+  phenomena(LNone), phenomenon(L4)
+    (名) 現象
+  pick out(LNone), single out(LNone)
+    (片) 挑出；選出
+  pile in(LNone), pile into(LNone)
+    (片) 湧入；擠進
+  pile on(LNone), pile up(LNone)
+    (片) 堆積；累積
+  play up to(LNone), suck up to(LNone)
+    (片) 討好；奉承
+  plough on(LNone), stick at(LNone)
+    (片) 堅持；繼續努力
+  plump down(LNone), plump oneself down(LNone)
+    (片) 一屁股坐下；重重地坐下
+  pocketbook(LNone), wallet(L2)
+    (名) 錢包；皮夾
+  point of view(LNone), viewpoint(L5)
+    (名) 觀點；看法
+  police(L1), policeman(L2)
+    (名) 警察
+  pop out(LNone), pop up(LNone)
+    (片) 彈出；突然出現
+  possible(L1), probable(L3)
+    (形) 可能的
+  power down(LNone), power off(LNone)
+    (片) 關機；關閉電源
+  predominantly(LNone), predominately(LNone)
+    (副) 主要地；佔優勢地
+  prick(LNone), stab(L4), sting(L3)
+    (動) 刺；戳　(名) 刺；刺痛
+  primarily(LNone), principally(L2)
+    (副) 主要地；首要地
+  proble(LNone), problem(L1)
+    (名) 問題；難題
+  prodigious(LNone), tremendous(L4)
+    (形) 驚人的；巨大的
+  proficient(LNone), versed(LNone)
+    (形) 熟練的；精通的
+  prove(L2), substantiate(LNone)
+    (動) 證明；證實
+  provisionally(L6), temporarily(LNone)
+    (副) 暫時地；臨時地
+  pull for(LNone), root for(LNone)
+    (片) 為……加油；支持
+  put out(LNone), snuff out(LNone)
+    (片) 撲滅；熄滅
+  quake(L6), shiver(L5), tremble(L4)
+    (動) 顫抖；發抖
+  quickly(L1), rapidly(L2), speedily(LNone)
+    (副) 快速地；迅速地
+  rain off(LNone), rain out(LNone)
+    (片) 因雨取消；因雨延期
+  ramp up(LNone), step up(LNone)
+    (片) 增加；加強
+  rapid(L2), speedy(LNone)
+    (形) 快速的；迅速的
+  rat on(LNone), rat out(LNone)
+    (片) 告密；出賣
+  recover(L2), recuperate(LNone)
+    (動) 恢復；康復
+  regard as(LNone), regard(L2)
+    (動) 視為；看待
+  relation(L2), relationship(L2)
+    (名) 關係；關聯
+  remainder(L6), the rest(LNone)
+    (名) 剩餘部分；其餘的人
+  reorganize(LNone), restructure(LNone)
+    (動) 重組；改組
+  resemblance(L5), similarity(L3)
+    (名) 相似；類似
+  resolve(L4), resolved(LNone)
+    (動) 決心；解決
+  resonate(LNone), resound(LNone)
+    (動) 引起共鳴；迴響
+  resopond(LNone), respond(L2)
+    (動) 回應；回答
+  revere(LNone), venerate(LNone)
+    (動) 尊敬；崇敬
+  revoke(LNone), undo(L5)
+    (動) 撤銷；取消
+  revolving(LNone), rotating(LNone)
+    (形) 旋轉的
+  roam(L6), wander(L3)
+    (動) 漫步；閒逛
+  romp through(LNone), waltz through(LNone)
+    (片) 輕鬆完成；輕易通過
+  root about(LNone), root around(LNone)
+    (片) 翻找；搜尋
+  run out of(LNone), run out(LNone), use up(LNone)
+    (片) 用完；耗盡
+  sag off(LNone), skive off(LNone)
+    (片) 翹課；逃避責任
+  salt away(LNone), save up(LNone), sock away(LNone)
+    (片) 儲蓄；存錢
+  sarcastic(LNone), satirical(LNone)
+    (形) 諷刺的；挖苦的
+  satisfaction(L4), satisfication(LNone)
+    (名) 滿足；滿意
+  scared(L2), terrified(LNone)
+    (形) 害怕的；恐懼的
+  sceptical(LNone), skeptical(L6)
+    (形) 懷疑的；不相信的
+  schooler(LNone), student(L1)
+    (名) 學生
+  screw up(LNone), stuff up(LNone)
+    (片) 搞砸；弄糟
+  seagull(L6), gull(L6)
+    (名) 海鷗
+  seashore(LNone), seaside(LNone)
+    (名) 海濱；海邊
+  seduce(L6), tempt(L5)
+    (動) 引誘；誘惑
+  shareholder(L5), stockholder(LNone)
+    (名) 股東
+  shovel(L3), spade(L4)
+    (名) 鏟子；鍬
+  sizeable(LNone), substantial(L5)
+    (形) 大量的；相當大的
+  slip off to(LNone), slope off(LNone)
+    (片) 溜走；悄悄離開
+  slough off(LNone), throw off(LNone)
+    (片) 擺脫；拋棄
+  somebody(LNone), someone(LNone)
+    (代) 某人；有人
+  sort out(LNone), sortout(LNone), straighten out(LNone)
+    (片) 整理；解決
+  spark off(LNone), touch off(LNone)
+    (片) 引發；觸發
+  sponge off(LNone), sponge on(LNone)
+    (片) 依賴他人生活；白吃白喝
+  staircase(LNone), stairs(L1), stairway(LNone), stair(L1)
+    (名) 樓梯；階梯
+  stay away from(LNone), stay away(LNone)
+    (片) 遠離；避開
+  stern(LNone), strict(L2), stringent(LNone)
+    (形) 嚴厲的；嚴格的
+  stocking(L4), stockings(L4)
+    (名) 長襪；襪子
+  stop by(LNone), stop in(LNone)
+    (片) 順道拜訪；短暫停留
+  storm(L2), tempest(LNone)
+    (名) 暴風雨；風暴
+  strictly(L2), stringently(LNone)
+    (副) 嚴格地；嚴厲地
+  submerge(LNone), submerged(LNone)
+    (動) 淹沒；浸沒
+  such as’(LNone), such as(LNone)
+    (片) 例如；諸如
+  sulfur(LNone), sulphur(LNone)
+    (名) 硫；硫磺
+  switch off(LNone), turn off(LNone)
+    (片) 關掉；關閉
+  tack on(LNone), tag on(LNone)
+    (片) 附加；添加
+  talk back to(LNone), talk back(LNone)
+    (片) 頂嘴；回嘴
+  taxi(L1), taxicab(L1), cab(L1)
+    (名) 計程車
+  teeth(LNone), tooth(L1)
+    (名) 牙齒
+  terrain(LNone), topography(LNone)
+    (名) 地形；地勢
+  terroism(LNone), terrorism(L2)
+    (名) 恐怖主義
+  terrorize(LNone), threaten(L3)
+    (動) 恐嚇；威脅
+  them(LNone), they(LNone)
+    (代) 他們；她們；它們
+  thoroughly(L4), totally(L1), utterly(L6)
+    (副) 徹底地；完全地
+  throw away(LNone), toss out(LNone)
+    (片) 扔掉；丟棄
+  tired(L1), weary(L6)
+    (形) 疲倦的；厭倦的
+  toy at(LNone), toy over(LNone)
+    (片) 玩弄；不認真對待
+  tract(LNone), zone(L3)
+    (名) 區域；地帶
+  tune in to(LNone), tune in(LNone)
+    (片) 收聽；收看
+  unambiguous(LNone), unequivocal(LNone)
+    (形) 明確的；不含糊的
+  unfair(LNone), unjust(LNone)
+    (形) 不公平的；不公正的
+  use(L1), used(L2), utilize(L5)
+    (動) 使用；利用
+  valiant(LNone), valorous(LNone)
+    (形) 英勇的；勇敢的
+  valueless(LNone), worthless(LNone)
+    (形) 無價值的；沒用的
+  vehemence(LNone), vehemency(LNone)
+    (名) 激烈；熱烈
+  wag(L6), waggle(LNone)
+    (動) 搖擺；擺動
+  wage(L3), wages(L3)
+    (名) 工資；薪資
+  war(L2), warfare(LNone)
+    (名) 戰爭；衝突
+  watch out for(LNone), watch out(LNone)
+    (片) 注意；小心
+  What is more(LNone), what’s more(LNone)
+    (片) 而且；更重要的是
+  whiskey(L6), whisky(L6)
+    (名) 威士忌
+  wilt(LNone), wither(L5)
+    (動) 枯萎；凋謝
+  witchcraft(LNone), wizardry(LNone)
+    (名) 巫術；魔法
+  worthwhile(L5), worthy(L5)
+    (形) 值得的；有價值的
+  a(L1), an(L1)
+    (冠) 一個；一種

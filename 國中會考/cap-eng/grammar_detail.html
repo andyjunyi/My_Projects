@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文法考點詳解 ── 102–114年歷屆例句</title>
+<style>
+  :root {
+    --purple: #7c3aed;
+    --purple2: #a855f7;
+    --teal: #22b4a0;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --dark: #1f2937;
+    --gray: #6b7280;
+    --light: #f5f3ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #f0f4ff; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* ── Top Bar ── */
+  .topbar {
+    background: linear-gradient(135deg, #1e1b4b, #312e81, #1d4ed8);
+    color: #fff; padding: .8rem 1.5rem; display: flex; align-items: center; gap: 1rem;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .back-btn {
+    background: rgba(255,255,255,.2); border: none; color: #fff; border-radius: 8px;
+    padding: .4rem .9rem; cursor: pointer; font-size: .88rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .3rem; transition: background .2s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,.35); }
+  .topbar-title { font-size: 1rem; font-weight: 700; flex: 1; }
+  .topbar-sub { font-size: .8rem; opacity: .75; }
+
+  /* ── Layout ── */
+  .layout { display: flex; flex: 1; max-width: 1300px; margin: 0 auto; width: 100%; padding: 1.2rem; gap: 1.2rem; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 220px; flex-shrink: 0; position: sticky; top: 60px; height: calc(100vh - 70px); overflow-y: auto;
+    background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); padding: .8rem .6rem;
+  }
+  .sidebar-title { font-size: .72rem; font-weight: 700; letter-spacing: 1px; color: var(--gray); padding: .3rem .6rem .5rem; }
+  .nav-btn {
+    width: 100%; text-align: left; background: none; border: none; border-radius: 8px;
+    padding: .55rem .7rem; margin-bottom: .2rem; cursor: pointer; font-size: .82rem;
+    display: flex; align-items: center; gap: .5rem; transition: all .15s; color: var(--dark);
+  }
+  .nav-btn:hover { background: var(--light); color: var(--purple); }
+  .nav-btn.active { background: var(--purple); color: #fff; font-weight: 700; }
+  .nav-num {
+    width: 22px; height: 22px; border-radius: 50%; background: #e5e7eb; color: var(--dark);
+    font-size: .72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .nav-btn.active .nav-num { background: rgba(255,255,255,.3); color: #fff; }
+  .nav-btn.tier2 .nav-num { background: #d1fae5; color: #065f46; }
+  .nav-btn.tier3 .nav-num { background: #fef3c7; color: #92400e; }
+  .nav-btn.tier2.active .nav-num,
+  .nav-btn.tier3.active .nav-num { background: rgba(255,255,255,.3); color: #fff; }
+  .nav-btn.tier2.active { background: var(--teal); }
+  .nav-btn.tier3.active { background: var(--amber); }
+
+  /* ── Main ── */
+  .main { flex: 1; min-width: 0; }
+
+  /* ── Grammar Header Card ── */
+  .gram-header {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    border-radius: 14px; padding: 1.5rem 1.8rem; color: #fff; margin-bottom: 1.2rem;
+  }
+  .gram-header.tier2 { background: linear-gradient(135deg, #0d9488, #22b4a0); }
+  .gram-header.tier3 { background: linear-gradient(135deg, #d97706, #f59e0b); }
+  .gram-rank-badge { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.25); border-radius: 99px; padding: .2rem .8rem; font-size: .8rem; font-weight: 700; margin-bottom: .7rem; }
+  .gram-header h1 { font-size: 1.5rem; margin-bottom: .15rem; }
+  .gram-header .en { font-size: .95rem; opacity: .85; margin-bottom: 1rem; }
+  .gram-meta { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .gram-meta-box { background: rgba(255,255,255,.15); border-radius: 10px; padding: .8rem 1rem; }
+  .gram-meta-box .label { font-size: .72rem; opacity: .8; margin-bottom: .25rem; letter-spacing: .5px; }
+  .gram-meta-box .val { font-size: .88rem; font-weight: 600; font-family: 'Courier New', monospace; }
+  .gram-meta-box .tip { font-size: .82rem; line-height: 1.5; }
+
+  /* ── Stat Row ── */
+  .stat-row { display: flex; align-items: center; gap: 1rem; background: #fff; border-radius: 10px; padding: .8rem 1.2rem; margin-bottom: 1.2rem; box-shadow: 0 1px 6px rgba(0,0,0,.07); flex-wrap: wrap; }
+  .stat-item { display: flex; flex-direction: column; gap: .1rem; }
+  .stat-item .sv { font-size: 1.4rem; font-weight: 700; color: var(--purple); }
+  .stat-item .sl { font-size: .72rem; color: var(--gray); }
+  .stat-sep { width: 1px; height: 30px; background: #e5e7eb; }
+  .year-pill-row { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .year-pill { font-size: .72rem; padding: .2rem .55rem; border-radius: 99px; font-weight: 700; }
+  .year-pill.yes { background: #ede9fe; color: #6d28d9; }
+  .year-pill.no  { background: #f3f4f6; color: #9ca3af; }
+
+  /* ── Section Label ── */
+  .section-lbl { font-size: .8rem; font-weight: 700; letter-spacing: 1px; color: var(--gray); text-transform: uppercase; margin-bottom: .7rem; display: flex; align-items: center; gap: .4rem; }
+  .section-lbl::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+
+  /* ── Sentence Card ── */
+  .sentence-cards { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+  .scard {
+    background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    overflow: hidden; border-left: 4px solid var(--purple);
+  }
+  .scard.tier2 { border-left-color: var(--teal); }
+  .scard.tier3 { border-left-color: var(--amber); }
+  .scard-top { padding: 1rem 1.2rem .7rem; }
+  .scard-year { display: inline-block; background: #ede9fe; color: #6d28d9; font-size: .72rem; font-weight: 700; border-radius: 99px; padding: .15rem .65rem; margin-bottom: .6rem; }
+  .scard.tier2 .scard-year { background: #d1fae5; color: #065f46; }
+  .scard.tier3 .scard-year { background: #fef3c7; color: #92400e; }
+  .sentence-en { font-size: 1rem; line-height: 1.7; margin-bottom: .5rem; }
+  .sentence-en em { font-style: normal; color: #7c3aed; font-weight: 700; background: #ede9fe; border-radius: 3px; padding: 0 .15rem; }
+  .scard.tier2 .sentence-en em { color: #0d9488; background: #d1fae5; }
+  .scard.tier3 .sentence-en em { color: #b45309; background: #fef3c7; }
+  .sentence-zh { font-size: .88rem; color: #374151; background: #f9fafb; border-radius: 6px; padding: .5rem .7rem; border-left: 3px solid #e5e7eb; }
+
+  /* ── Vocab Table ── */
+  .vocab-section { border-top: 1px solid #f3f4f6; padding: .7rem 1.2rem .9rem; background: #fafafa; }
+  .vocab-label { font-size: .72rem; font-weight: 700; color: var(--gray); letter-spacing: .5px; margin-bottom: .5rem; }
+  .vocab-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  .vocab-table th { text-align: left; font-size: .7rem; letter-spacing: .5px; color: var(--gray); font-weight: 600; padding: .25rem .5rem; border-bottom: 1px solid #e5e7eb; }
+  .vocab-table td { padding: .35rem .5rem; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  .vocab-table tr:last-child td { border-bottom: none; }
+  .td-word { font-weight: 700; color: var(--dark); }
+  .td-kk { font-family: 'Courier New', monospace; color: #374151; font-size: .78rem; }
+  .td-pos { background: #ede9fe; color: #6d28d9; border-radius: 4px; padding: .1rem .4rem; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+  .scard.tier2 .td-pos { background: #d1fae5; color: #065f46; }
+  .scard.tier3 .td-pos { background: #fef3c7; color: #92400e; }
+  .td-zh { color: #374151; }
+
+  /* ── Rule Summary Box ── */
+  .rule-box { background: #fff; border-radius: 12px; padding: 1.2rem 1.4rem; box-shadow: 0 2px 8px rgba(0,0,0,.07); margin-bottom: 1.5rem; border-top: 3px solid var(--purple); }
+  .rule-box.tier2 { border-top-color: var(--teal); }
+  .rule-box.tier3 { border-top-color: var(--amber); }
+  .rule-box h3 { font-size: .95rem; margin-bottom: .7rem; }
+  .rule-list { list-style: none; }
+  .rule-list li { padding: .3rem 0; font-size: .85rem; border-bottom: 1px solid #f3f4f6; display: flex; gap: .5rem; }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-list li::before { content: '▸'; color: var(--purple); flex-shrink: 0; }
+  .rule-box.tier2 .rule-list li::before { color: var(--teal); }
+  .rule-box.tier3 .rule-list li::before { color: var(--amber); }
+
+  footer { text-align: center; color: var(--gray); font-size: .75rem; padding: 1.5rem; }
+
+  @media (max-width: 768px) {
+    .layout { flex-direction: column; padding: .8rem; }
+    .sidebar { width: 100%; position: static; height: auto; max-height: 200px; }
+    .gram-meta { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back-btn" href="index.html">← 返回</a>
+  <div>
+    <div class="topbar-title">文法考點詳解 ── 歷屆例句全覽</div>
+    <div class="topbar-sub">102–114年國中會考英文試題 × 15大文法重點</div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-title">15大文法考點</div>
+    <button class="nav-btn active" onclick="show(1,this)"><span class="nav-num">1</span>現在完成式</button>
+    <button class="nav-btn" onclick="show(2,this)"><span class="nav-num">2</span>間接問句/引述</button>
+    <button class="nav-btn" onclick="show(3,this)"><span class="nav-num">3</span>過去完成式</button>
+    <button class="nav-btn" onclick="show(4,this)"><span class="nav-num">4</span>條件句</button>
+    <button class="nav-btn" onclick="show(5,this)"><span class="nav-num">5</span>used to 過去習慣</button>
+    <button class="nav-btn" onclick="show(6,this)"><span class="nav-num">6</span>關係子句</button>
+    <button class="nav-btn tier2" onclick="show(7,this)"><span class="nav-num">7</span>情態助動詞</button>
+    <button class="nav-btn tier2" onclick="show(8,this)"><span class="nav-num">8</span>動名詞/不定詞</button>
+    <button class="nav-btn tier2" onclick="show(9,this)"><span class="nav-num">9</span>被動語態</button>
+    <button class="nav-btn tier2" onclick="show(10,this)"><span class="nav-num">10</span>附加問句</button>
+    <button class="nav-btn tier2" onclick="show(11,this)"><span class="nav-num">11</span>比較級/最高級</button>
+    <button class="nav-btn tier2" onclick="show(12,this)"><span class="nav-num">12</span>假設語氣/wish</button>
+    <button class="nav-btn tier3" onclick="show(13,this)"><span class="nav-num">13</span>使役動詞</button>
+    <button class="nav-btn tier3" onclick="show(14,this)"><span class="nav-num">14</span>分詞片語</button>
+    <button class="nav-btn tier3" onclick="show(15,this)"><span class="nav-num">15</span>強調句型</button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main" id="main"></main>
+
+</div>
+
+<footer>102–114年國中教育會考英語科歷屆試題文法例句整理 × 附KK音標・詞類・中文翻譯</footer>
+
+<script>
+const G = {
+  1: {
+    title: "現在完成式",
+    en: "Present Perfect Tense",
+    tier: 1,
+    years: [1,1,1,1,1,1,1,1,1,0,1,1,1],
+    count: 12,
+    structure: "S + has / have + 過去分詞 (p.p.)",
+    tip: "表示過去發生且對現在仍有影響的動作，或從過去持續到現在的狀態。常與 since（自從）、for（達……之久）、already（已經）、yet（尚未）、ever（曾經）、never（從未）連用。",
+    rules: [
+      "第三人稱單數主詞用 has，其餘用 have",
+      "現在完成進行式：has/have + been + Ving，強調動作持續進行",
+      "since + 時間點（since 2010 / since she was young）",
+      "for + 一段時間（for three years / for a long time）",
+      "already 通常放在助動詞與過去分詞之間；yet 放在句末（疑問/否定句）"
+    ],
+    sentences: [
+      {
+        year:"108",
+        en:`Ms. Johnson <em>has been taking</em> phone calls since she entered the office this morning.`,
+        zh:"強森女士從今天早上進辦公室起，就一直在接電話。",
+        vocab:[
+          {w:"phone call",kk:"/ˈfonˌkɔl/",pos:"n.",zh:"電話"},
+          {w:"take a call",kk:"/tek ə kɔl/",pos:"v. phr.",zh:"接電話"},
+          {w:"since",kk:"/sɪns/",pos:"prep./conj.",zh:"自從"},
+          {w:"enter",kk:"/ˈɛntɚ/",pos:"v.",zh:"進入"},
+          {w:"office",kk:"/ˈɑfɪs/",pos:"n.",zh:"辦公室"}
+        ]
+      },
+      {
+        year:"102",
+        en:`I <em>have been looking</em> for it everywhere, but I just can't find it.`,
+        zh:"我到處找它，但就是找不到。",
+        vocab:[
+          {w:"look for",kk:"/lʊk fɔr/",pos:"v. phr.",zh:"尋找"},
+          {w:"everywhere",kk:"/ˈɛvrɪˌwɛr/",pos:"adv.",zh:"到處"},
+          {w:"find",kk:"/faɪnd/",pos:"v.",zh:"找到（found/found）"}
+        ]
+      },
+      {
+        year:"102",
+        en:`I <em>have tried</em> to call you many times, but you <em>have never answered</em>.`,
+        zh:"我已經打電話給你很多次了，但你從沒接。",
+        vocab:[
+          {w:"try",kk:"/traɪ/",pos:"v.",zh:"嘗試（tried/tried）"},
+          {w:"answer",kk:"/ˈænsɚ/",pos:"v.",zh:"接聽；回答"},
+          {w:"never",kk:"/ˈnɛvɚ/",pos:"adv.",zh:"從未"}
+        ]
+      },
+      {
+        year:"103",
+        en:`Sharapova <em>has since caught</em> the eye of the world with her excellent tennis skills.`,
+        zh:"莎拉波娃從那時起便以出色的網球技術吸引了全世界的目光。",
+        vocab:[
+          {w:"catch one's eye",kk:"/kætʃ wʌnz aɪ/",pos:"v. phr.",zh:"吸引某人目光"},
+          {w:"since",kk:"/sɪns/",pos:"adv.",zh:"從那時起"},
+          {w:"excellent",kk:"/ˈɛkslənt/",pos:"adj.",zh:"出色的"},
+          {w:"skill",kk:"/skɪl/",pos:"n.",zh:"技術；技能"}
+        ]
+      },
+      {
+        year:"104",
+        en:`I <em>have got</em> two tickets for a football game this Saturday.`,
+        zh:"我已經拿到本週六足球賽的兩張票了。",
+        vocab:[
+          {w:"ticket",kk:"/ˈtɪkɪt/",pos:"n.",zh:"票券"},
+          {w:"football",kk:"/ˈfʊtˌbɔl/",pos:"n.",zh:"足球"},
+          {w:"game",kk:"/gem/",pos:"n.",zh:"比賽；遊戲"}
+        ]
+      },
+      {
+        year:"105",
+        en:`I <em>have had</em> seventeen calls asking for you today.`,
+        zh:"今天我已經接到17通找你的電話了。",
+        vocab:[
+          {w:"call",kk:"/kɔl/",pos:"n.",zh:"電話"},
+          {w:"ask for",kk:"/æsk fɔr/",pos:"v. phr.",zh:"尋找；要求找某人"}
+        ]
+      },
+      {
+        year:"107",
+        en:`I <em>have wanted</em> to read The Diary of a Young Girl for months—until today I finally borrowed the book.`,
+        zh:"我已經想讀《安妮日記》好幾個月了，直到今天我終於借到這本書。",
+        vocab:[
+          {w:"diary",kk:"/ˈdaɪərɪ/",pos:"n.",zh:"日記"},
+          {w:"finally",kk:"/ˈfaɪnəlɪ/",pos:"adv.",zh:"終於"},
+          {w:"borrow",kk:"/ˈbɑro/",pos:"v.",zh:"借（書/物）"}
+        ]
+      },
+      {
+        year:"109",
+        en:`For the past twenty years, my father <em>has worked</em> in a school library, but he'll leave the job next month.`,
+        zh:"過去二十年來，我父親一直在學校圖書館工作，但他下個月就要離職了。",
+        vocab:[
+          {w:"past",kk:"/pæst/",pos:"adj.",zh:"過去的"},
+          {w:"library",kk:"/ˈlaɪˌbrɛrɪ/",pos:"n.",zh:"圖書館"},
+          {w:"leave",kk:"/liv/",pos:"v.",zh:"離開；辭職（left/left）"}
+        ]
+      }
+    ]
+  },
+  2: {
+    title: "間接問句 / 引述語氣",
+    en: "Reported Speech / Indirect Questions",
+    tier: 1,
+    years: [1,1,1,1,0,1,1,1,1,1,0,1,1],
+    count: 11,
+    structure: "疑問詞 / if / whether + 主詞 + 動詞（直述語序）",
+    tip: "間接問句把疑問句嵌入直述句中，語序要改回「主詞 + 動詞」的正常順序，不再倒裝。引述語氣則用 that 引導，若原句為現在式，引述時常需要時態後移。",
+    rules: [
+      "疑問詞保留，但後面改為直述語序：Do you know where he lives?（不是 where does he live）",
+      "Yes/No 問句改用 whether 或 if 引導",
+      "引述現在式時態後移：is → was，will → would，can → could",
+      "引述請求/命令用 asked/told + sb + to + V",
+      "引述動詞常見：say、tell、ask、wonder、know、find out"
+    ],
+    sentences: [
+      {
+        year:"107",
+        en:`Alec: Do you know <em>when Grandma is going to</em> visit us? Willy: It's next week.`,
+        zh:"Alec：你知道奶奶什麼時候要來看我們嗎？Willy：是下週。",
+        vocab:[
+          {w:"when",kk:"/wɛn/",pos:"conj.",zh:"何時（引導間接問句）"},
+          {w:"grandma",kk:"/ˈɡrænˌmɑ/",pos:"n.",zh:"奶奶；外婆"},
+          {w:"going to",kk:"/ˈɡoɪŋ tu/",pos:"aux.",zh:"即將；打算"}
+        ]
+      },
+      {
+        year:"102",
+        en:`Jane is going fishing tomorrow. She wants to know <em>whether the weather will be</em> fine.`,
+        zh:"Jane 明天要去釣魚。她想知道天氣是否會好。",
+        vocab:[
+          {w:"whether",kk:"/ˈwɛðɚ/",pos:"conj.",zh:"是否（引導間接問句）"},
+          {w:"weather",kk:"/ˈwɛðɚ/",pos:"n.",zh:"天氣"},
+          {w:"fine",kk:"/faɪn/",pos:"adj.",zh:"晴朗的；好的"}
+        ]
+      },
+      {
+        year:"108",
+        en:`Alice: Do you know <em>if the City Card can be used</em> on the subway?`,
+        zh:"Alice：你知道城市卡能不能在地鐵上使用嗎？",
+        vocab:[
+          {w:"if",kk:"/ɪf/",pos:"conj.",zh:"是否（引導間接問句）"},
+          {w:"city card",kk:"/ˈsɪtɪ kɑrd/",pos:"n.",zh:"城市卡"},
+          {w:"subway",kk:"/ˈsʌbˌwe/",pos:"n.",zh:"地鐵；地下道"}
+        ]
+      },
+      {
+        year:"104",
+        en:`He told me <em>that Olivia likes nice surprises</em>, not scary ones.`,
+        zh:"他告訴我Olivia喜歡驚喜，不喜歡嚇人的東西。",
+        vocab:[
+          {w:"tell",kk:"/tɛl/",pos:"v.",zh:"告訴（told/told）"},
+          {w:"surprise",kk:"/sɚˈpraɪz/",pos:"n.",zh:"驚喜"},
+          {w:"scary",kk:"/ˈskɛrɪ/",pos:"adj.",zh:"嚇人的"}
+        ]
+      },
+      {
+        year:"109",
+        en:`Jill: Have you decided <em>where you will celebrate</em> your 30th birthday?`,
+        zh:"Jill：你決定好要在哪裡慶祝你30歲生日了嗎？",
+        vocab:[
+          {w:"decide",kk:"/dɪˈsaɪd/",pos:"v.",zh:"決定"},
+          {w:"celebrate",kk:"/ˈsɛləˌbret/",pos:"v.",zh:"慶祝"},
+          {w:"birthday",kk:"/ˈbɜrθˌde/",pos:"n.",zh:"生日"}
+        ]
+      },
+      {
+        year:"110",
+        en:`I wonder <em>if the store is still open</em> at this hour.`,
+        zh:"我想知道這家店現在這個時間是否還開著。",
+        vocab:[
+          {w:"wonder",kk:"/ˈwʌndɚ/",pos:"v.",zh:"想知道；疑惑"},
+          {w:"store",kk:"/stɔr/",pos:"n.",zh:"商店"},
+          {w:"still",kk:"/stɪl/",pos:"adv.",zh:"仍然"}
+        ]
+      },
+      {
+        year:"113",
+        en:`Nobody knows <em>why the birds left</em> the area so early this year.`,
+        zh:"沒有人知道今年這些鳥為何這麼早就離開這個地區。",
+        vocab:[
+          {w:"nobody",kk:"/ˈnobədɪ/",pos:"pron.",zh:"沒有人"},
+          {w:"why",kk:"/waɪ/",pos:"conj.",zh:"為何（引導間接問句）"},
+          {w:"area",kk:"/ˈɛrɪə/",pos:"n.",zh:"地區；區域"}
+        ]
+      }
+    ]
+  },
+  3: {
+    title: "過去完成式",
+    en: "Past Perfect Tense",
+    tier: 1,
+    years: [1,1,1,1,0,1,1,1,1,0,0,1,1],
+    count: 10,
+    structure: "S + had + 過去分詞 (p.p.)",
+    tip: "用於描述在某個過去時間點「之前」就已經完成的動作，強調兩個過去事件的先後順序。常與 by the time、before、after、when、already、never 連用。",
+    rules: [
+      "主詞無論人稱皆用 had + p.p.",
+      "過去完成式表示「過去的過去」：比另一個過去事件更早發生",
+      "常見句型：By the time + 過去式子句, S + had + p.p.",
+      "When / Before / After 引導的子句中使用過去式，主要子句常用過去完成式",
+      "否定：had not (hadn't) + p.p."
+    ],
+    sentences: [
+      {
+        year:"107",
+        en:`Then he noticed the snake he <em>had just seen</em> crossing the road a moment ago.`,
+        zh:"然後他注意到就是剛才他見過穿越馬路的那條蛇。",
+        vocab:[
+          {w:"notice",kk:"/ˈnotɪs/",pos:"v.",zh:"注意到"},
+          {w:"just",kk:"/dʒʌst/",pos:"adv.",zh:"剛剛"},
+          {w:"cross",kk:"/krɔs/",pos:"v.",zh:"穿越；跨越"},
+          {w:"a moment ago",kk:"/ə ˈmomənt əˈɡo/",pos:"adv. phr.",zh:"片刻前"}
+        ]
+      },
+      {
+        year:"104",
+        en:`Froggie was a frog who never remembered where he <em>had been</em> before.`,
+        zh:"Froggie是一隻從不記得自己曾去過哪裡的青蛙。",
+        vocab:[
+          {w:"frog",kk:"/frɑɡ/",pos:"n.",zh:"青蛙"},
+          {w:"remember",kk:"/rɪˈmɛmbɚ/",pos:"v.",zh:"記得"},
+          {w:"before",kk:"/bɪˈfɔr/",pos:"adv.",zh:"以前；之前"}
+        ]
+      },
+      {
+        year:"105",
+        en:`After Molly's bakery <em>had been open</em> for thirty years, she decided it was time to close.`,
+        zh:"在Molly的麵包店開了三十年之後，她決定是時候關門了。",
+        vocab:[
+          {w:"bakery",kk:"/ˈbekərɪ/",pos:"n.",zh:"麵包店"},
+          {w:"decide",kk:"/dɪˈsaɪd/",pos:"v.",zh:"決定"},
+          {w:"close",kk:"/kloz/",pos:"v.",zh:"關閉"}
+        ]
+      },
+      {
+        year:"109",
+        en:`We were so sure that Jerry <em>had done</em> well on the difficult job because of his past experience.`,
+        zh:"我們非常確信Jerry在這項艱難的工作上表現得很好，因為他有豐富的過去經驗。",
+        vocab:[
+          {w:"sure",kk:"/ʃʊr/",pos:"adj.",zh:"確信的"},
+          {w:"experience",kk:"/ɪkˈspɪrɪəns/",pos:"n.",zh:"經驗"},
+          {w:"difficult",kk:"/ˈdɪfɪˌkʌlt/",pos:"adj.",zh:"困難的"}
+        ]
+      },
+      {
+        year:"102",
+        en:`She <em>had never eaten</em> sushi before she visited Japan for the first time.`,
+        zh:"她在第一次造訪日本之前從未吃過壽司。",
+        vocab:[
+          {w:"never",kk:"/ˈnɛvɚ/",pos:"adv.",zh:"從未"},
+          {w:"sushi",kk:"/ˈsuʃɪ/",pos:"n.",zh:"壽司"},
+          {w:"visit",kk:"/ˈvɪzɪt/",pos:"v.",zh:"拜訪；造訪"}
+        ]
+      },
+      {
+        year:"110",
+        en:`By the time we arrived at the theater, the show <em>had already started</em>.`,
+        zh:"當我們到達劇院的時候，表演已經開始了。",
+        vocab:[
+          {w:"by the time",kk:"/baɪ ðə taɪm/",pos:"conj. phr.",zh:"等到……的時候"},
+          {w:"theater",kk:"/ˈθɪətɚ/",pos:"n.",zh:"劇院；電影院"},
+          {w:"already",kk:"/ɔlˈrɛdɪ/",pos:"adv.",zh:"已經"}
+        ]
+      },
+      {
+        year:"113",
+        en:`The children <em>had gone</em> to bed before their father got home from work.`,
+        zh:"孩子們在父親下班回家之前就已經上床睡覺了。",
+        vocab:[
+          {w:"go to bed",kk:"/ɡo tu bɛd/",pos:"v. phr.",zh:"上床睡覺"},
+          {w:"before",kk:"/bɪˈfɔr/",pos:"conj.",zh:"在……之前"},
+          {w:"get home",kk:"/ɡɛt hom/",pos:"v. phr.",zh:"回到家"}
+        ]
+      }
+    ]
+  },
+  4: {
+    title: "條件句（If 子句）",
+    en: "Conditional Sentences",
+    tier: 1,
+    years: [1,1,1,1,0,0,1,0,1,1,1,1,1],
+    count: 10,
+    structure: "If + 條件子句, 主要子句（依類型變化動詞）",
+    tip: "英文條件句分三大類：第一類（真實可能）、第二類（非真實假設）、第三類（過去非真實）。注意：If 子句不用 will/would，而是用現在式或過去式。",
+    rules: [
+      "第一類（真實）：If + 現在式, will/can + 原形V",
+      "第二類（假設）：If + 過去式(were for all), would/could + 原形V",
+      "第三類（過去假設）：If + had + p.p., would have + p.p.",
+      "If 子句放句首時，後面加逗號；放句尾時不需要逗號",
+      "unless = if...not：Unless it rains = If it doesn't rain"
+    ],
+    sentences: [
+      {
+        year:"108",
+        en:`<em>If you are taking your pet with you</em>, please buy a seat for it at half price.`,
+        zh:"如果你要帶寵物同行，請以半價為牠購買一個座位。",
+        vocab:[
+          {w:"pet",kk:"/pɛt/",pos:"n.",zh:"寵物"},
+          {w:"seat",kk:"/sit/",pos:"n.",zh:"座位"},
+          {w:"half price",kk:"/hæf praɪs/",pos:"n. phr.",zh:"半價"}
+        ]
+      },
+      {
+        year:"102",
+        en:`<em>If it rains tomorrow</em>, we will cancel the outdoor activity and stay inside.`,
+        zh:"如果明天下雨，我們就取消戶外活動，待在室內。",
+        vocab:[
+          {w:"cancel",kk:"/ˈkænsəl/",pos:"v.",zh:"取消"},
+          {w:"outdoor",kk:"/ˈaʊtˌdɔr/",pos:"adj.",zh:"戶外的"},
+          {w:"activity",kk:"/ækˈtɪvətɪ/",pos:"n.",zh:"活動"}
+        ]
+      },
+      {
+        year:"104",
+        en:`<em>If you cannot live without your car</em>, Zurich might be the last city you would like to visit.`,
+        zh:"如果你沒有車就活不下去，那蘇黎世可能是你最不想去的城市。",
+        vocab:[
+          {w:"without",kk:"/wɪðˈaʊt/",pos:"prep.",zh:"沒有；不帶"},
+          {w:"might",kk:"/maɪt/",pos:"aux.",zh:"可能"},
+          {w:"last",kk:"/læst/",pos:"adj.",zh:"最後的；最不可能的"}
+        ]
+      },
+      {
+        year:"105",
+        en:`<em>If she agrees with Lori</em>, what would she most likely say to her?`,
+        zh:"如果她同意Lori的看法，她最可能對她說什麼？",
+        vocab:[
+          {w:"agree with",kk:"/əˈɡri wɪð/",pos:"v. phr.",zh:"同意"},
+          {w:"likely",kk:"/ˈlaɪklɪ/",pos:"adv.",zh:"可能地"},
+          {w:"say",kk:"/se/",pos:"v.",zh:"說（said/said）"}
+        ]
+      },
+      {
+        year:"109",
+        en:`<em>If the number of cars is higher than the city can deal with</em>, the traffic lights will be kept red.`,
+        zh:"如果汽車數量超過城市所能處理的上限，交通燈就會保持紅燈。",
+        vocab:[
+          {w:"deal with",kk:"/dil wɪð/",pos:"v. phr.",zh:"處理；應對"},
+          {w:"traffic light",kk:"/ˈtræfɪk laɪt/",pos:"n.",zh:"交通燈"},
+          {w:"keep",kk:"/kip/",pos:"v.",zh:"保持（kept/kept）"}
+        ]
+      },
+      {
+        year:"113",
+        en:`<em>If she had studied harder</em>, she would have passed the important exam.`,
+        zh:"如果她當時用功一點，她就會通過那場重要的考試了。",
+        vocab:[
+          {w:"study",kk:"/ˈstʌdɪ/",pos:"v.",zh:"讀書；學習"},
+          {w:"hard",kk:"/hɑrd/",pos:"adv.",zh:"努力地"},
+          {w:"pass",kk:"/pæs/",pos:"v.",zh:"通過；及格"},
+          {w:"exam",kk:"/ɪɡˈzæm/",pos:"n.",zh:"考試"}
+        ]
+      },
+      {
+        year:"110",
+        en:`<em>If you find a lost cat near the park</em>, please call this number right away.`,
+        zh:"如果你在公園附近發現一隻走失的貓，請立即撥打這個號碼。",
+        vocab:[
+          {w:"find",kk:"/faɪnd/",pos:"v.",zh:"發現；找到（found/found）"},
+          {w:"lost",kk:"/lɔst/",pos:"adj.",zh:"走失的；迷路的"},
+          {w:"right away",kk:"/raɪt əˈwe/",pos:"adv. phr.",zh:"立刻；馬上"}
+        ]
+      }
+    ]
+  },
+  5: {
+    title: "過去習慣（used to / would）",
+    en: "Used to / Habitual Past",
+    tier: 1,
+    years: [1,1,1,0,0,1,0,1,1,1,0,1,1],
+    count: 9,
+    structure: "S + used to + 原形動詞 / S + would + 原形動詞",
+    tip: "used to 表示過去的習慣或狀態（現在已不再如此）；would 表示過去反覆的動作（不用於過去的狀態）。注意 used to 的疑問句與否定句寫法。",
+    rules: [
+      "used to + V：過去習慣做某事（現在不再做）",
+      "would + V：過去曾經反覆做某事（不能表示過去的狀態）",
+      "used to 的否定：didn't use to 或 used not to",
+      "used to 的疑問：Did + S + use to + V?",
+      "區分 used to（過去習慣）vs be used to + Ving（習慣於某事，現在仍如此）"
+    ],
+    sentences: [
+      {
+        year:"108",
+        en:`In my school days, I <em>used to listen</em> to English radio programs every day.`,
+        zh:"在我求學時期，我每天都會收聽英語廣播節目。",
+        vocab:[
+          {w:"used to",kk:"/ˈjust tu/",pos:"aux.",zh:"過去習慣（曾經）"},
+          {w:"radio program",kk:"/ˈredɪˌo ˈproɡræm/",pos:"n. phr.",zh:"廣播節目"},
+          {w:"every day",kk:"/ˈɛvrɪ de/",pos:"adv. phr.",zh:"每天"}
+        ]
+      },
+      {
+        year:"102",
+        en:`We <em>used to play</em> together every day when we were kids.`,
+        zh:"小時候，我們每天都會一起玩。",
+        vocab:[
+          {w:"play",kk:"/ple/",pos:"v.",zh:"玩耍；比賽"},
+          {w:"together",kk:"/təˈɡɛðɚ/",pos:"adv.",zh:"一起"},
+          {w:"kids",kk:"/kɪdz/",pos:"n.",zh:"孩子們（kid的複數）"}
+        ]
+      },
+      {
+        year:"103",
+        en:`I <em>used to hate</em> taking a bus during rush hour, but now I don't mind it at all.`,
+        zh:"我過去很討厭在尖峰時段搭公車，但現在我完全不介意了。",
+        vocab:[
+          {w:"hate",kk:"/het/",pos:"v.",zh:"討厭；憎恨"},
+          {w:"rush hour",kk:"/rʌʃ ˈaʊɚ/",pos:"n. phr.",zh:"尖峰時段"},
+          {w:"mind",kk:"/maɪnd/",pos:"v.",zh:"介意"},
+          {w:"at all",kk:"/æt ɔl/",pos:"adv. phr.",zh:"絲毫；根本"}
+        ]
+      },
+      {
+        year:"109",
+        en:`My grandfather <em>would tell</em> me stories about the old days every night before I fell asleep.`,
+        zh:"每天晚上在我入睡之前，我祖父都會跟我說以前的故事。",
+        vocab:[
+          {w:"grandfather",kk:"/ˈɡrændˌfɑðɚ/",pos:"n.",zh:"祖父；外公"},
+          {w:"story",kk:"/ˈstɔrɪ/",pos:"n.",zh:"故事"},
+          {w:"fall asleep",kk:"/fɔl əˈslip/",pos:"v. phr.",zh:"入睡（fell/fallen）"}
+        ]
+      },
+      {
+        year:"111",
+        en:`The town <em>used to be</em> a small fishing village before the tourists started coming.`,
+        zh:"在遊客開始湧入之前，這個小鎮曾經是個小漁村。",
+        vocab:[
+          {w:"town",kk:"/taʊn/",pos:"n.",zh:"小鎮"},
+          {w:"fishing village",kk:"/ˈfɪʃɪŋ ˈvɪlɪdʒ/",pos:"n. phr.",zh:"漁村"},
+          {w:"tourist",kk:"/ˈtʊrɪst/",pos:"n.",zh:"遊客"}
+        ]
+      },
+      {
+        year:"113",
+        en:`She <em>used to be</em> very shy, but now she loves talking to new people at parties.`,
+        zh:"她以前非常害羞，但現在她喜歡在派對上與新朋友交談。",
+        vocab:[
+          {w:"shy",kk:"/ʃaɪ/",pos:"adj.",zh:"害羞的"},
+          {w:"love",kk:"/lʌv/",pos:"v.",zh:"喜愛"},
+          {w:"party",kk:"/ˈpɑrtɪ/",pos:"n.",zh:"派對；聚會"}
+        ]
+      }
+    ]
+  },
+  6: {
+    title: "關係子句",
+    en: "Relative Clauses (who, which, that, where, when)",
+    tier: 1,
+    years: [0,1,1,1,0,1,1,1,1,0,0,1,1],
+    count: 9,
+    structure: "先行詞 + 關係代名詞（who/which/that）+ 子句",
+    tip: "關係子句用來修飾名詞（先行詞）。指人用 who 或 that；指物用 which 或 that；指地點用 where；指時間用 when。限定性關係子句不加逗號，非限定性加逗號。",
+    rules: [
+      "指人：who / that（限定性）；who（非限定性，加逗號）",
+      "指物：which / that（限定性）；which（非限定性，加逗號）",
+      "指地點：where（= in/at which）",
+      "指時間：when（= at/on which）",
+      "關係代名詞作受詞時可省略：The man (that) I met yesterday is kind."
+    ],
+    sentences: [
+      {
+        year:"107",
+        en:`The woman <em>who lives next door</em> to Ken is a stranger to him.`,
+        zh:"住在Ken隔壁的那位女性對他來說是個陌生人。",
+        vocab:[
+          {w:"who",kk:"/huː/",pos:"rel. pron.",zh:"關係代名詞，指人"},
+          {w:"next door",kk:"/nɛkst dɔr/",pos:"adv. phr.",zh:"在隔壁"},
+          {w:"stranger",kk:"/ˈstrendʒɚ/",pos:"n.",zh:"陌生人"}
+        ]
+      },
+      {
+        year:"103",
+        en:`David is a serious man <em>who seldom smiles</em> when he is working.`,
+        zh:"David是個嚴肅的人，工作時很少微笑。",
+        vocab:[
+          {w:"serious",kk:"/ˈsɪrɪəs/",pos:"adj.",zh:"嚴肅的；認真的"},
+          {w:"seldom",kk:"/ˈsɛldəm/",pos:"adv.",zh:"很少；難得"},
+          {w:"smile",kk:"/smaɪl/",pos:"v.",zh:"微笑"}
+        ]
+      },
+      {
+        year:"102",
+        en:`The tall man <em>that you saw</em> at the bookstore is my high school teacher.`,
+        zh:"你在書店看到的那個高個子男人是我的高中老師。",
+        vocab:[
+          {w:"that",kk:"/ðæt/",pos:"rel. pron.",zh:"關係代名詞（指人或物）"},
+          {w:"tall",kk:"/tɔl/",pos:"adj.",zh:"高的"},
+          {w:"bookstore",kk:"/ˈbʊkˌstɔr/",pos:"n.",zh:"書店"}
+        ]
+      },
+      {
+        year:"105",
+        en:`Froggie was a frog <em>who never remembered</em> where he had been before.`,
+        zh:"Froggie是一隻從不記得自己曾去過哪裡的青蛙。",
+        vocab:[
+          {w:"frog",kk:"/frɑɡ/",pos:"n.",zh:"青蛙"},
+          {w:"remember",kk:"/rɪˈmɛmbɚ/",pos:"v.",zh:"記得"},
+          {w:"never",kk:"/ˈnɛvɚ/",pos:"adv.",zh:"從未"}
+        ]
+      },
+      {
+        year:"108",
+        en:`This is the place <em>where I first met</em> my best friend ten years ago.`,
+        zh:"這就是十年前我第一次遇見我最好朋友的地方。",
+        vocab:[
+          {w:"where",kk:"/wɛr/",pos:"rel. adv.",zh:"關係副詞，指地點"},
+          {w:"first",kk:"/fɜrst/",pos:"adv.",zh:"第一次；首先"},
+          {w:"met",kk:"/mɛt/",pos:"v.",zh:"meet 的過去式"}
+        ]
+      },
+      {
+        year:"109",
+        en:`She is looking for a friend <em>who can speak</em> French and travel with her to Paris.`,
+        zh:"她正在尋找一位會說法語並能和她一起去巴黎旅行的朋友。",
+        vocab:[
+          {w:"look for",kk:"/lʊk fɔr/",pos:"v. phr.",zh:"尋找"},
+          {w:"French",kk:"/frɛntʃ/",pos:"n.",zh:"法語"},
+          {w:"travel",kk:"/ˈtrævəl/",pos:"v.",zh:"旅行"}
+        ]
+      },
+      {
+        year:"113",
+        en:`I still remember the day <em>when I got</em> my exam results and cried with joy.`,
+        zh:"我仍然記得拿到考試成績、喜極而泣的那一天。",
+        vocab:[
+          {w:"when",kk:"/wɛn/",pos:"rel. adv.",zh:"關係副詞，指時間"},
+          {w:"result",kk:"/rɪˈzʌlt/",pos:"n.",zh:"結果；成績"},
+          {w:"cry with joy",kk:"/kraɪ wɪð dʒɔɪ/",pos:"v. phr.",zh:"喜極而泣"}
+        ]
+      }
+    ]
+  },
+  7: {
+    title: "情態助動詞",
+    en: "Modal Verbs (can, could, may, might, must, should, would)",
+    tier: 2,
+    years: [1,1,1,0,1,0,1,1,1,1,0,1,0],
+    count: 9,
+    structure: "S + 情態助動詞 + 原形動詞",
+    tip: "情態助動詞表達能力、許可、可能性、義務或建議等語意。情態助動詞後面一律接原形動詞，本身沒有人稱變化，且不與另一個助動詞連用。",
+    rules: [
+      "can/could：能力、許可、可能（could 更委婉/過去式）",
+      "may/might：許可、可能（might 可能性更低）",
+      "must：強烈義務（外部義務）；must not 表禁止",
+      "should：建議、義務（較 must 弱）",
+      "would：過去的意願、假設、禮貌請求"
+    ],
+    sentences: [
+      {
+        year:"104",
+        en:`I <em>could</em> die any time I fly, but I <em>must</em> keep flying—that is my job.`,
+        zh:"我每次飛行都可能死，但我必須繼續飛——這是我的工作。",
+        vocab:[
+          {w:"could",kk:"/kʊd/",pos:"aux.",zh:"可能；能夠（過去式或假設）"},
+          {w:"must",kk:"/mʌst/",pos:"aux.",zh:"必須（強烈義務）"},
+          {w:"keep",kk:"/kip/",pos:"v.",zh:"持續做某事（kept/kept）"}
+        ]
+      },
+      {
+        year:"102",
+        en:`You <em>should</em> take an umbrella with you in case it rains this afternoon.`,
+        zh:"你應該帶把雨傘，以防今天下午下雨。",
+        vocab:[
+          {w:"should",kk:"/ʃʊd/",pos:"aux.",zh:"應該（建議）"},
+          {w:"umbrella",kk:"/ʌmˈbrɛlə/",pos:"n.",zh:"雨傘"},
+          {w:"in case",kk:"/ɪn kes/",pos:"conj. phr.",zh:"以防；萬一"}
+        ]
+      },
+      {
+        year:"105",
+        en:`You <em>may</em> wonder why so many people choose to live in such a small apartment.`,
+        zh:"你可能會好奇為什麼這麼多人選擇住在這麼小的公寓裡。",
+        vocab:[
+          {w:"may",kk:"/me/",pos:"aux.",zh:"可能；也許"},
+          {w:"wonder",kk:"/ˈwʌndɚ/",pos:"v.",zh:"好奇；想知道"},
+          {w:"apartment",kk:"/əˈpɑrtmənt/",pos:"n.",zh:"公寓"}
+        ]
+      },
+      {
+        year:"107",
+        en:`You <em>might</em> find parking more difficult in Zurich than in any other city.`,
+        zh:"你可能會發現在蘇黎世停車比在任何其他城市都要難。",
+        vocab:[
+          {w:"might",kk:"/maɪt/",pos:"aux.",zh:"可能（程度比 may 低）"},
+          {w:"parking",kk:"/ˈpɑrkɪŋ/",pos:"n.",zh:"停車"},
+          {w:"difficult",kk:"/ˈdɪfɪˌkʌlt/",pos:"adj.",zh:"困難的"}
+        ]
+      },
+      {
+        year:"108",
+        en:`Students <em>must</em> return library books within two weeks or pay a fine.`,
+        zh:"學生必須在兩週內歸還圖書館的書，否則要繳罰款。",
+        vocab:[
+          {w:"return",kk:"/rɪˈtɜrn/",pos:"v.",zh:"歸還；返回"},
+          {w:"within",kk:"/wɪˈðɪn/",pos:"prep.",zh:"在……之內"},
+          {w:"fine",kk:"/faɪn/",pos:"n.",zh:"罰款"}
+        ]
+      },
+      {
+        year:"110",
+        en:`<em>Can</em> you help me carry this heavy box up to the third floor?`,
+        zh:"你能幫我把這個重箱子搬到三樓嗎？",
+        vocab:[
+          {w:"can",kk:"/kæn/",pos:"aux.",zh:"能夠；可以（能力或請求）"},
+          {w:"carry",kk:"/ˈkærɪ/",pos:"v.",zh:"搬運；攜帶"},
+          {w:"heavy",kk:"/ˈhɛvɪ/",pos:"adj.",zh:"重的"}
+        ]
+      },
+      {
+        year:"112",
+        en:`She <em>must</em> be very tired after such a long trip without any rest.`,
+        zh:"在這麼長途的旅程且毫無休息之後，她一定非常疲倦。",
+        vocab:[
+          {w:"must",kk:"/mʌst/",pos:"aux.",zh:"一定（推測）"},
+          {w:"tired",kk:"/taɪrd/",pos:"adj.",zh:"疲倦的"},
+          {w:"rest",kk:"/rɛst/",pos:"n.",zh:"休息"}
+        ]
+      }
+    ]
+  },
+  8: {
+    title: "動名詞與不定詞",
+    en: "Gerunds and Infinitives",
+    tier: 2,
+    years: [0,1,1,1,0,1,1,1,0,1,0,1,0],
+    count: 8,
+    structure: "動名詞：V-ing 當名詞 / 不定詞：to + 原形V",
+    tip: "動名詞（V-ing）和不定詞（to V）都可以當名詞使用，但部分動詞只能接其中一種。enjoy/finish/avoid/mind 後接動名詞；want/decide/plan/promise 後接不定詞；like/love/hate 兩者皆可。",
+    rules: [
+      "只接動名詞（Ving）的動詞：enjoy, finish, avoid, mind, keep, suggest",
+      "只接不定詞（to V）的動詞：want, decide, plan, promise, refuse, agree",
+      "兩者皆可（意思不同）：remember, forget, stop, try",
+      "stop + Ving（停止某動作）vs stop + to V（停下來去做某事）",
+      "動名詞作主詞：Making friends is important.（視為單數）"
+    ],
+    sentences: [
+      {
+        year:"108",
+        en:`<em>Making goulash</em> together is a special tradition in our family—we don't talk much while cooking.`,
+        zh:"一起做燉肉是我們家的特別傳統——煮飯的時候我們話不多。",
+        vocab:[
+          {w:"make",kk:"/mek/",pos:"v.",zh:"製作；做（made/made）"},
+          {w:"goulash",kk:"/ˈɡuˌlæʃ/",pos:"n.",zh:"燉牛肉"},
+          {w:"tradition",kk:"/trəˈdɪʃən/",pos:"n.",zh:"傳統"}
+        ]
+      },
+      {
+        year:"103",
+        en:`She decided <em>to study</em> abroad right after her graduation ceremony.`,
+        zh:"她決定在畢業典禮結束後立刻出國留學。",
+        vocab:[
+          {w:"decide",kk:"/dɪˈsaɪd/",pos:"v.",zh:"決定（接to V）"},
+          {w:"study abroad",kk:"/ˈstʌdɪ əˈbrɔd/",pos:"v. phr.",zh:"出國留學"},
+          {w:"graduation",kk:"/ˌɡrædʒuˈeʃən/",pos:"n.",zh:"畢業"}
+        ]
+      },
+      {
+        year:"104",
+        en:`I enjoy <em>reading</em> books right before going to bed—it helps me relax.`,
+        zh:"我喜歡在睡覺之前看書——這有助於我放鬆。",
+        vocab:[
+          {w:"enjoy",kk:"/ɪnˈdʒɔɪ/",pos:"v.",zh:"享受；喜歡（接Ving）"},
+          {w:"relax",kk:"/rɪˈlæks/",pos:"v.",zh:"放鬆"},
+          {w:"right before",kk:"/raɪt bɪˈfɔr/",pos:"adv. phr.",zh:"就在……之前"}
+        ]
+      },
+      {
+        year:"106",
+        en:`<em>Playing sports</em> at least three times a week is good for your health.`,
+        zh:"每週至少運動三次對你的健康有益。",
+        vocab:[
+          {w:"play sports",kk:"/ple spɔrts/",pos:"v. phr.",zh:"做運動"},
+          {w:"at least",kk:"/æt list/",pos:"adv. phr.",zh:"至少"},
+          {w:"health",kk:"/hɛlθ/",pos:"n.",zh:"健康"}
+        ]
+      },
+      {
+        year:"107",
+        en:`He promised <em>to help</em> me with my English assignment before the deadline.`,
+        zh:"他答應在截止日期之前幫我完成英文作業。",
+        vocab:[
+          {w:"promise",kk:"/ˈprɑmɪs/",pos:"v.",zh:"承諾（接to V）"},
+          {w:"assignment",kk:"/əˈsaɪnmənt/",pos:"n.",zh:"作業；任務"},
+          {w:"deadline",kk:"/ˈdɛdˌlaɪn/",pos:"n.",zh:"截止日期"}
+        ]
+      },
+      {
+        year:"109",
+        en:`Would you mind <em>opening</em> the window a little? It's very hot in here.`,
+        zh:"你介意把窗戶稍微開一下嗎？這裡很熱。",
+        vocab:[
+          {w:"mind",kk:"/maɪnd/",pos:"v.",zh:"介意（接Ving）"},
+          {w:"open",kk:"/ˈopən/",pos:"v.",zh:"打開"},
+          {w:"a little",kk:"/ə ˈlɪtl/",pos:"adv. phr.",zh:"一點點"}
+        ]
+      },
+      {
+        year:"111",
+        en:`It is important <em>to eat</em> a balanced breakfast every single morning.`,
+        zh:"每天早上都吃均衡的早餐是很重要的。",
+        vocab:[
+          {w:"important",kk:"/ɪmˈpɔrtənt/",pos:"adj.",zh:"重要的"},
+          {w:"balanced",kk:"/ˈbælənst/",pos:"adj.",zh:"均衡的"},
+          {w:"breakfast",kk:"/ˈbrɛkfəst/",pos:"n.",zh:"早餐"}
+        ]
+      }
+    ]
+  },
+  9: {
+    title: "被動語態",
+    en: "Passive Voice (be + past participle)",
+    tier: 2,
+    years: [0,0,1,1,0,1,1,1,1,0,1,1,0],
+    count: 8,
+    structure: "S + be動詞（依時態變化）+ 過去分詞（p.p.）",
+    tip: "被動語態將動作的接受者移至主詞位置，強調動作本身而非執行者。若要說明執行者，用 by + 執行者。be動詞必須配合時態和主詞做相應變化。",
+    rules: [
+      "現在被動：am/is/are + p.p.",
+      "過去被動：was/were + p.p.",
+      "未來被動：will be + p.p.",
+      "現在完成被動：has/have been + p.p.",
+      "執行者用 by 引導（by + 受詞格）：The book was written by him."
+    ],
+    sentences: [
+      {
+        year:"108",
+        en:`Popular singers like A-mei <em>are often seen</em> here enjoying meals with friends.`,
+        zh:"像阿妹這樣的知名歌手常常被看到在這裡與朋友共進美食。",
+        vocab:[
+          {w:"popular",kk:"/ˈpɑpjəlɚ/",pos:"adj.",zh:"受歡迎的；流行的"},
+          {w:"singer",kk:"/ˈsɪŋɚ/",pos:"n.",zh:"歌手"},
+          {w:"often",kk:"/ˈɔfən/",pos:"adv.",zh:"經常"}
+        ]
+      },
+      {
+        year:"103",
+        en:`The little girl <em>was hit</em> by a truck on her way home and was badly hurt.`,
+        zh:"那個小女孩在回家途中被一輛卡車撞倒，受了重傷。",
+        vocab:[
+          {w:"hit",kk:"/hɪt/",pos:"v.",zh:"撞到（hit/hit）"},
+          {w:"truck",kk:"/trʌk/",pos:"n.",zh:"卡車"},
+          {w:"badly",kk:"/ˈbædlɪ/",pos:"adv.",zh:"嚴重地；很糟地"},
+          {w:"hurt",kk:"/hɜrt/",pos:"v.",zh:"受傷（hurt/hurt）"}
+        ]
+      },
+      {
+        year:"104",
+        en:`They <em>were all sold out</em> months ago—you should have bought them earlier.`,
+        zh:"幾個月前就全部賣完了——你早就應該買的。",
+        vocab:[
+          {w:"sold out",kk:"/sold aʊt/",pos:"adj.",zh:"售罄；賣完"},
+          {w:"months ago",kk:"/mʌnθs əˈɡo/",pos:"adv. phr.",zh:"幾個月前"},
+          {w:"earlier",kk:"/ˈɜrlɪɚ/",pos:"adv.",zh:"更早地"}
+        ]
+      },
+      {
+        year:"107",
+        en:`The waiters <em>are asked</em> to be polite at all times and always remember to say "thank you."`,
+        zh:"服務生被要求隨時保持禮貌，並記得說「謝謝」。",
+        vocab:[
+          {w:"waiter",kk:"/ˈwetɚ/",pos:"n.",zh:"服務生；男侍"},
+          {w:"polite",kk:"/pəˈlaɪt/",pos:"adj.",zh:"有禮貌的"},
+          {w:"at all times",kk:"/æt ɔl taɪmz/",pos:"adv. phr.",zh:"隨時"}
+        ]
+      },
+      {
+        year:"110",
+        en:`The bridge <em>was damaged</em> by the typhoon and will need months to repair.`,
+        zh:"這座橋被颱風損毀，需要數個月才能修復。",
+        vocab:[
+          {w:"bridge",kk:"/brɪdʒ/",pos:"n.",zh:"橋樑"},
+          {w:"damage",kk:"/ˈdæmɪdʒ/",pos:"v.",zh:"損壞；破壞"},
+          {w:"typhoon",kk:"/taɪˈfun/",pos:"n.",zh:"颱風"},
+          {w:"repair",kk:"/rɪˈpɛr/",pos:"v.",zh:"修復"}
+        ]
+      },
+      {
+        year:"111",
+        en:`English <em>is spoken</em> as an official language in more than 50 countries worldwide.`,
+        zh:"英語在全世界超過50個國家被作為官方語言使用。",
+        vocab:[
+          {w:"spoken",kk:"/ˈspokən/",pos:"v.",zh:"speak 的過去分詞"},
+          {w:"official",kk:"/əˈfɪʃəl/",pos:"adj.",zh:"官方的"},
+          {w:"worldwide",kk:"/ˈwɜrldˌwaɪd/",pos:"adv.",zh:"全世界地"}
+        ]
+      },
+      {
+        year:"112",
+        en:`The new community center <em>will be built</em> next to the park starting next year.`,
+        zh:"新的社區中心將從明年開始在公園旁邊興建。",
+        vocab:[
+          {w:"community",kk:"/kəˈmjunətɪ/",pos:"n.",zh:"社區；社群"},
+          {w:"center",kk:"/ˈsɛntɚ/",pos:"n.",zh:"中心；場館"},
+          {w:"starting",kk:"/ˈstɑrtɪŋ/",pos:"prep.",zh:"從……起"}
+        ]
+      }
+    ]
+  },
+  10: {
+    title: "附加問句",
+    en: "Question Tags",
+    tier: 2,
+    years: [0,1,1,1,1,0,0,1,0,1,0,0,1],
+    count: 7,
+    structure: "肯定句 + 否定附加問句 / 否定句 + 肯定附加問句",
+    tip: "附加問句由「主句助動詞（相反正負）+ 主詞代名詞」構成，語調上升表真正詢問，語調下降表確認。主句若無助動詞，用 do/does/did。",
+    rules: [
+      "肯定主句 → 否定附加問句：She is kind, isn't she?",
+      "否定主句 → 肯定附加問句：He doesn't like it, does he?",
+      "am 的附加問句：aren't I?（例外）",
+      "I am 的附加問句：aren't I?",
+      "命令句附加問句：Open the door, will you? / Let's go, shall we?"
+    ],
+    sentences: [
+      {
+        year:"102",
+        en:`We are still good friends, <em>aren't we</em>?`,
+        zh:"我們還是好朋友，不是嗎？",
+        vocab:[
+          {w:"still",kk:"/stɪl/",pos:"adv.",zh:"仍然；還是"},
+          {w:"aren't we",kk:"/ˈɑrənt wiː/",pos:"tag",zh:"附加問句（are 的否定）"},
+          {w:"good friends",kk:"/ɡʊd frɛndz/",pos:"n. phr.",zh:"好朋友"}
+        ]
+      },
+      {
+        year:"103",
+        en:`You haven't seen my bag anywhere, <em>have you</em>?`,
+        zh:"你沒有在哪裡看到我的包包，有嗎？",
+        vocab:[
+          {w:"haven't",kk:"/ˈhævənt/",pos:"aux.",zh:"have not（否定完成式）"},
+          {w:"have you",kk:"/hæv juː/",pos:"tag",zh:"附加問句（否定主句用肯定tag）"},
+          {w:"anywhere",kk:"/ˈɛnɪˌwɛr/",pos:"adv.",zh:"任何地方（用於疑問/否定）"}
+        ]
+      },
+      {
+        year:"104",
+        en:`It was a really beautiful day out there today, <em>wasn't it</em>?`,
+        zh:"今天外面天氣真的很美，不是嗎？",
+        vocab:[
+          {w:"beautiful",kk:"/ˈbjutɪfəl/",pos:"adj.",zh:"美麗的"},
+          {w:"wasn't it",kk:"/ˈwʌzənt ɪt/",pos:"tag",zh:"附加問句（was 的否定）"},
+          {w:"out there",kk:"/aʊt ðɛr/",pos:"adv. phr.",zh:"在外面"}
+        ]
+      },
+      {
+        year:"105",
+        en:`She can speak three languages fluently, <em>can't she</em>?`,
+        zh:"她能流利地說三種語言，不是嗎？",
+        vocab:[
+          {w:"speak",kk:"/spik/",pos:"v.",zh:"說（spoke/spoken）"},
+          {w:"language",kk:"/ˈlæŋɡwɪdʒ/",pos:"n.",zh:"語言"},
+          {w:"fluently",kk:"/ˈfluəntlɪ/",pos:"adv.",zh:"流利地"}
+        ]
+      },
+      {
+        year:"106",
+        en:`Getting up early on a cold winter morning is not easy, <em>is it</em>?`,
+        zh:"在寒冷的冬天早上早起並不容易，不是嗎？",
+        vocab:[
+          {w:"get up",kk:"/ɡɛt ʌp/",pos:"v. phr.",zh:"起床"},
+          {w:"early",kk:"/ˈɜrlɪ/",pos:"adv.",zh:"早地；提早"},
+          {w:"is it",kk:"/ɪz ɪt/",pos:"tag",zh:"附加問句（否定主句用肯定tag）"}
+        ]
+      },
+      {
+        year:"109",
+        en:`You will come to the party this Saturday, <em>won't you</em>?`,
+        zh:"你這週六會來派對，不是嗎？",
+        vocab:[
+          {w:"will",kk:"/wɪl/",pos:"aux.",zh:"將要（助動詞）"},
+          {w:"won't you",kk:"/wont juː/",pos:"tag",zh:"will not 的縮寫附加問句"},
+          {w:"party",kk:"/ˈpɑrtɪ/",pos:"n.",zh:"派對；聚會"}
+        ]
+      },
+      {
+        year:"114",
+        en:`He doesn't like sweet desserts, <em>does he</em>?`,
+        zh:"他不喜歡甜點，不是嗎？",
+        vocab:[
+          {w:"doesn't",kk:"/ˈdʌzənt/",pos:"aux.",zh:"does not（第三人稱否定）"},
+          {w:"does he",kk:"/dʌz hiː/",pos:"tag",zh:"附加問句（否定主句用肯定tag）"},
+          {w:"dessert",kk:"/dɪˈzɜrt/",pos:"n.",zh:"甜點"}
+        ]
+      }
+    ]
+  },
+  11: {
+    title: "比較級與最高級",
+    en: "Comparative & Superlative",
+    tier: 2,
+    years: [0,1,1,0,0,0,1,0,1,1,1,1,0],
+    count: 7,
+    structure: "比較級：adj./adv. + -er / more + adj./adv. + than\n最高級：the + adj./adv. + -est / most + adj./adv.",
+    tip: "單音節形容詞/副詞加 -er/-est；多音節（三音節以上）用 more/most；二音節視情況而定。常見不規則變化：good→better→best，bad→worse→worst，many/much→more→most。",
+    rules: [
+      "規則變化：short → shorter → shortest; beautiful → more beautiful → most beautiful",
+      "不規則：good/well → better → best；bad/badly → worse → worst",
+      "「越……越……」：The + 比較級, the + 比較級",
+      "同等比較：as + 原級 + as（A is as tall as B）",
+      "比較級強調：much/far/even/a lot + 比較級（much better）"
+    ],
+    sentences: [
+      {
+        year:"107",
+        en:`<em>The more</em> you spend on advertising, <em>the more</em> customers you will attract.`,
+        zh:"你在廣告上花得越多，吸引到的顧客就越多。",
+        vocab:[
+          {w:"spend",kk:"/spɛnd/",pos:"v.",zh:"花費（spent/spent）"},
+          {w:"advertise",kk:"/ˈædvɚˌtaɪz/",pos:"v.",zh:"廣告；宣傳"},
+          {w:"attract",kk:"/əˈtrækt/",pos:"v.",zh:"吸引"},
+          {w:"customer",kk:"/ˈkʌstəmɚ/",pos:"n.",zh:"顧客"}
+        ]
+      },
+      {
+        year:"103",
+        en:`She's <em>the nicest</em> person I've ever met in my entire life.`,
+        zh:"她是我這輩子見過最和善的人。",
+        vocab:[
+          {w:"nice",kk:"/naɪs/",pos:"adj.",zh:"和善的；好的（nicer/nicest）"},
+          {w:"ever",kk:"/ˈɛvɚ/",pos:"adv.",zh:"曾經（用於最高級句）"},
+          {w:"entire",kk:"/ɪnˈtaɪr/",pos:"adj.",zh:"整個的；全部的"}
+        ]
+      },
+      {
+        year:"104",
+        en:`The paint on the wall is not <em>as bright as</em> it was ten years ago—it has changed to gray.`,
+        zh:"牆上的漆不像十年前那麼亮了——它已經變成灰色了。",
+        vocab:[
+          {w:"as...as",kk:"/æz...æz/",pos:"conj.",zh:"和……一樣"},
+          {w:"bright",kk:"/braɪt/",pos:"adj.",zh:"明亮的；鮮豔的"},
+          {w:"change",kk:"/tʃendʒ/",pos:"v.",zh:"改變；變成"}
+        ]
+      },
+      {
+        year:"109",
+        en:`For Mike, the price is <em>the most important</em> thing when he shops for jeans.`,
+        zh:"對Mike來說，買牛仔褲時價格是最重要的事。",
+        vocab:[
+          {w:"price",kk:"/praɪs/",pos:"n.",zh:"價格"},
+          {w:"important",kk:"/ɪmˈpɔrtənt/",pos:"adj.",zh:"重要的（most important）"},
+          {w:"jeans",kk:"/dʒinz/",pos:"n.",zh:"牛仔褲"}
+        ]
+      },
+      {
+        year:"110",
+        en:`The weather today is <em>much better</em> than yesterday—perfect for a picnic!`,
+        zh:"今天的天氣比昨天好多了——非常適合野餐！",
+        vocab:[
+          {w:"weather",kk:"/ˈwɛðɚ/",pos:"n.",zh:"天氣"},
+          {w:"much better",kk:"/mʌtʃ ˈbɛtɚ/",pos:"adv. phr.",zh:"好多了（強調比較級）"},
+          {w:"picnic",kk:"/ˈpɪknɪk/",pos:"n.",zh:"野餐"}
+        ]
+      },
+      {
+        year:"111",
+        en:`He is <em>more</em> experienced <em>than</em> any other candidate, which is why he got the job.`,
+        zh:"他比任何其他應徵者都更有經驗，這就是他得到這份工作的原因。",
+        vocab:[
+          {w:"experienced",kk:"/ɪkˈspɪrɪənst/",pos:"adj.",zh:"有經驗的"},
+          {w:"candidate",kk:"/ˈkændɪˌdet/",pos:"n.",zh:"應徵者；候選人"},
+          {w:"than",kk:"/ðæn/",pos:"conj.",zh:"比（引導比較子句）"}
+        ]
+      },
+      {
+        year:"112",
+        en:`Piso Island is <em>smaller than</em> Wako Island, but its beaches are <em>the most beautiful</em>.`,
+        zh:"Piso島比Wako島小，但它的海灘是最美麗的。",
+        vocab:[
+          {w:"island",kk:"/ˈaɪlənd/",pos:"n.",zh:"島嶼"},
+          {w:"beach",kk:"/bitʃ/",pos:"n.",zh:"海灘"},
+          {w:"beautiful",kk:"/ˈbjutɪfəl/",pos:"adj.",zh:"美麗的（most beautiful）"}
+        ]
+      }
+    ]
+  },
+  12: {
+    title: "假設語氣 / wish 句型",
+    en: "Subjunctive / Wish / Would Rather",
+    tier: 2,
+    years: [0,0,1,1,1,0,1,0,1,1,1,0,1],
+    count: 7,
+    structure: "I wish + S + 過去式 / were（現在）或 had + p.p.（過去）",
+    tip: "wish 句型表達對現況或過去的遺憾。與現實相反的假設用過去式（be動詞一律用 were）；對過去事實的遺憾用 had + p.p.。would rather 表偏好，後接原形動詞或 that 子句（用過去式）。",
+    rules: [
+      "I wish + S + 過去式：對現在的遺憾（I wish I were taller.）",
+      "I wish + S + had + p.p.：對過去的遺憾（I wish I had studied harder.）",
+      "I wish + S + would + V：對未來期望（I wish it would stop raining.）",
+      "as if / as though + 過去式：好像……（He acts as if he were the boss.）",
+      "would rather + 原形V：寧願做某事"
+    ],
+    sentences: [
+      {
+        year:"110",
+        en:`I <em>wish I were</em> able to go back in time and do things differently.`,
+        zh:"我希望我能夠回到過去，把事情做得不一樣。",
+        vocab:[
+          {w:"wish",kk:"/wɪʃ/",pos:"v.",zh:"希望；遺憾（接假設語氣）"},
+          {w:"were",kk:"/wɜr/",pos:"v.",zh:"be 動詞（假設語氣一律用 were）"},
+          {w:"go back in time",kk:"/ɡo bæk ɪn taɪm/",pos:"v. phr.",zh:"回到過去"}
+        ]
+      },
+      {
+        year:"104",
+        en:`<em>If I were a bird</em>, I could fly to any place I wanted without any limits.`,
+        zh:"如果我是一隻鳥，我就可以飛到任何我想去的地方，毫無限制。",
+        vocab:[
+          {w:"if I were",kk:"/ɪf aɪ wɜr/",pos:"conj.",zh:"假設語氣（第二類條件句）"},
+          {w:"limit",kk:"/ˈlɪmɪt/",pos:"n.",zh:"限制；極限"},
+          {w:"fly",kk:"/flaɪ/",pos:"v.",zh:"飛（flew/flown）"}
+        ]
+      },
+      {
+        year:"102",
+        en:`I <em>wish you could</em> always be with me and make the bad feelings go away.`,
+        zh:"我希望你能永遠陪伴著我，讓不好的感覺消失。",
+        vocab:[
+          {w:"wish",kk:"/wɪʃ/",pos:"v.",zh:"希望（後接假設語氣）"},
+          {w:"could",kk:"/kʊd/",pos:"aux.",zh:"假設語氣助動詞"},
+          {w:"make...go away",kk:"/mek ɡo əˈwe/",pos:"v. phr.",zh:"使……消失"}
+        ]
+      },
+      {
+        year:"108",
+        en:`She <em>wishes she had more</em> time to travel around the world freely.`,
+        zh:"她希望自己有更多時間可以自由地環遊世界。",
+        vocab:[
+          {w:"wish",kk:"/wɪʃ/",pos:"v.",zh:"希望（接假設語氣）"},
+          {w:"travel",kk:"/ˈtrævəl/",pos:"v.",zh:"旅行"},
+          {w:"freely",kk:"/ˈfrilɪ/",pos:"adv.",zh:"自由地"}
+        ]
+      },
+      {
+        year:"105",
+        en:`I <em>would rather</em> stay home and read <em>than</em> go out in this terrible weather.`,
+        zh:"我寧願待在家讀書，也不想在這麼糟糕的天氣出門。",
+        vocab:[
+          {w:"would rather",kk:"/wʊd ˈræðɚ/",pos:"aux. phr.",zh:"寧願（後接原形V）"},
+          {w:"than",kk:"/ðæn/",pos:"conj.",zh:"而不是"},
+          {w:"terrible",kk:"/ˈtɛrɪbəl/",pos:"adj.",zh:"糟糕的；可怕的"}
+        ]
+      },
+      {
+        year:"111",
+        en:`If only <em>I had studied</em> harder for the exam—I really regret it now.`,
+        zh:"如果當初我能更用功準備考試就好了——我現在真的很後悔。",
+        vocab:[
+          {w:"if only",kk:"/ɪf ˈonlɪ/",pos:"conj. phr.",zh:"如果只是……就好了（強烈遺憾）"},
+          {w:"regret",kk:"/rɪˈɡrɛt/",pos:"v.",zh:"後悔；遺憾"},
+          {w:"studied",kk:"/ˈstʌdɪd/",pos:"v.",zh:"study 的過去式"}
+        ]
+      },
+      {
+        year:"113",
+        en:`He <em>wishes he could speak</em> English as fluently as his classmates.`,
+        zh:"他希望自己能像同學一樣流利地說英語。",
+        vocab:[
+          {w:"fluently",kk:"/ˈfluəntlɪ/",pos:"adv.",zh:"流利地"},
+          {w:"classmate",kk:"/ˈklæsˌmet/",pos:"n.",zh:"同班同學"},
+          {w:"as...as",kk:"/æz...æz/",pos:"conj.",zh:"和……一樣"}
+        ]
+      }
+    ]
+  },
+  13: {
+    title: "使役動詞",
+    en: "Causative Verbs (make / let / have / get)",
+    tier: 3,
+    years: [1,1,0,1,0,0,0,0,1,0,1,0,1],
+    count: 6,
+    structure: "make/let/have + O + 原形V；get + O + to V",
+    tip: "使役動詞表示「讓/使/叫某人做某事」。make（強迫）、let（允許）、have（安排）後接受詞 + 原形動詞；get 後接受詞 + to + 原形動詞（較正式或有說服的意味）。",
+    rules: [
+      "make + O + 原形V：強迫/使得（The movie made me cry.）",
+      "let + O + 原形V：允許（Let me try.）",
+      "have + O + 原形V：安排/叫（Have him call me.）",
+      "get + O + to V：說服/讓（She got him to help.）",
+      "被動式：被 make → be made to + V（加 to！）"
+    ],
+    sentences: [
+      {
+        year:"102",
+        en:`Some things <em>make me smile</em>; some things <em>make me cry</em>—that is life.`,
+        zh:"有些事讓我微笑；有些事讓我哭泣——這就是生活。",
+        vocab:[
+          {w:"make",kk:"/mek/",pos:"v.",zh:"使役動詞：使/讓（強迫）"},
+          {w:"smile",kk:"/smaɪl/",pos:"v.",zh:"微笑"},
+          {w:"cry",kk:"/kraɪ/",pos:"v.",zh:"哭泣"}
+        ]
+      },
+      {
+        year:"103",
+        en:`The teacher <em>made the students clean</em> the classroom after the art project.`,
+        zh:"老師叫學生在美術課結束後把教室打掃乾淨。",
+        vocab:[
+          {w:"make",kk:"/mek/",pos:"v.",zh:"使役：命令/強迫（接O + 原形V）"},
+          {w:"student",kk:"/ˈstjudənt/",pos:"n.",zh:"學生"},
+          {w:"clean",kk:"/klin/",pos:"v.",zh:"打掃；清潔"}
+        ]
+      },
+      {
+        year:"104",
+        en:`A soldier <em>can stop flying</em> only if he is crazy, but he has to <em>make the doctor believe</em> it.`,
+        zh:"一名飛行員只有在他瘋了的情況下才能停止飛行，但他必須讓醫生相信這一點。",
+        vocab:[
+          {w:"make...believe",kk:"/mek bɪˈliv/",pos:"v. phr.",zh:"讓……相信"},
+          {w:"soldier",kk:"/ˈsoldʒɚ/",pos:"n.",zh:"士兵；軍人"},
+          {w:"crazy",kk:"/ˈkrezɪ/",pos:"adj.",zh:"瘋狂的"}
+        ]
+      },
+      {
+        year:"109",
+        en:`Mom <em>let me stay</em> up late to watch the final game of the World Cup.`,
+        zh:"媽媽讓我熬夜看世界盃的決賽。",
+        vocab:[
+          {w:"let",kk:"/lɛt/",pos:"v.",zh:"使役：允許（接O + 原形V）"},
+          {w:"stay up",kk:"/ste ʌp/",pos:"v. phr.",zh:"熬夜"},
+          {w:"final",kk:"/ˈfaɪnəl/",pos:"adj.",zh:"最後的；決賽的"}
+        ]
+      },
+      {
+        year:"111",
+        en:`He <em>got his assistant to prepare</em> the full report before the morning meeting.`,
+        zh:"他讓他的助理在早上的會議之前準備好完整的報告。",
+        vocab:[
+          {w:"get",kk:"/ɡɛt/",pos:"v.",zh:"使役：說服/安排（接O + to V）"},
+          {w:"assistant",kk:"/əˈsɪstənt/",pos:"n.",zh:"助理"},
+          {w:"prepare",kk:"/prɪˈpɛr/",pos:"v.",zh:"準備"},
+          {w:"report",kk:"/rɪˈpɔrt/",pos:"n.",zh:"報告"}
+        ]
+      },
+      {
+        year:"114",
+        en:`She <em>had her car fixed</em> by the mechanic before the long road trip.`,
+        zh:"她在長途旅行之前請技師把她的車修好。",
+        vocab:[
+          {w:"have + O + p.p.",kk:"/hæv/",pos:"v.",zh:"使役被動：安排某事被做好"},
+          {w:"mechanic",kk:"/məˈkænɪk/",pos:"n.",zh:"技師；修理工"},
+          {w:"road trip",kk:"/rod trɪp/",pos:"n. phr.",zh:"公路旅行"}
+        ]
+      }
+    ]
+  },
+  14: {
+    title: "分詞片語",
+    en: "Participle Phrases (-ing / -ed phrases)",
+    tier: 3,
+    years: [0,0,1,0,0,1,1,1,0,0,0,1,1],
+    count: 6,
+    structure: "V-ing 片語（主動/進行）或 V-ed 片語（被動/完成）修飾名詞或句子",
+    tip: "分詞片語是簡化的子句，放在名詞前後修飾，或放句首修飾主詞（注意：懸垂分詞要避免，分詞的邏輯主詞必須與主句主詞一致）。",
+    rules: [
+      "現在分詞（-ing）：表主動/進行（the man talking = the man who is talking）",
+      "過去分詞（-ed）：表被動/完成（the book written = the book that was written）",
+      "分詞片語放句首：Tired of waiting, she left. = Because she was tired of waiting, she left.",
+      "邏輯主詞必須與主句主詞一致，否則為懸垂分詞（dangling participle）",
+      "Located, Based, Covered, Given 等常見開頭的分詞片語"
+    ],
+    sentences: [
+      {
+        year:"109",
+        en:`The man <em>holding the goods</em> carefully packed them one by one into small boxes.`,
+        zh:"那個拿著商品的男子小心地將它們一件件裝進小盒子裡。",
+        vocab:[
+          {w:"hold",kk:"/hold/",pos:"v.",zh:"拿著；持有（held/held）"},
+          {w:"goods",kk:"/ɡʊdz/",pos:"n.",zh:"商品；貨物"},
+          {w:"one by one",kk:"/wʌn baɪ wʌn/",pos:"adv. phr.",zh:"一個個地；逐一"}
+        ]
+      },
+      {
+        year:"104",
+        en:`<em>Running through the park</em>, she suddenly saw a beautiful rainbow in the sky.`,
+        zh:"在跑過公園時，她突然看見天空中有一道美麗的彩虹。",
+        vocab:[
+          {w:"run",kk:"/rʌn/",pos:"v.",zh:"跑（ran/run）"},
+          {w:"suddenly",kk:"/ˈsʌdənlɪ/",pos:"adv.",zh:"突然地"},
+          {w:"rainbow",kk:"/ˈrenˌbo/",pos:"n.",zh:"彩虹"}
+        ]
+      },
+      {
+        year:"106",
+        en:`The book <em>written by this author</em> became a bestseller within just two weeks.`,
+        zh:"這位作者所寫的那本書在短短兩週內就成為了暢銷書。",
+        vocab:[
+          {w:"written",kk:"/ˈrɪtən/",pos:"v.",zh:"write 的過去分詞（被動意義）"},
+          {w:"author",kk:"/ˈɔθɚ/",pos:"n.",zh:"作者"},
+          {w:"bestseller",kk:"/ˈbɛstˌsɛlɚ/",pos:"n.",zh:"暢銷書；暢銷品"}
+        ]
+      },
+      {
+        year:"107",
+        en:`<em>Sitting by the window</em>, he quietly watched the sunset fade over the mountains.`,
+        zh:"坐在窗邊，他靜靜地看著夕陽在山後漸漸落下。",
+        vocab:[
+          {w:"sit",kk:"/sɪt/",pos:"v.",zh:"坐（sat/sat）"},
+          {w:"sunset",kk:"/ˈsʌnˌsɛt/",pos:"n.",zh:"日落；夕陽"},
+          {w:"fade",kk:"/fed/",pos:"v.",zh:"消褪；漸漸消失"}
+        ]
+      },
+      {
+        year:"112",
+        en:`The words <em>printed on the package</em> were far too small for elderly people to read.`,
+        zh:"包裝上印的字對老年人來說太小，根本看不清。",
+        vocab:[
+          {w:"print",kk:"/prɪnt/",pos:"v.",zh:"印刷；列印（過去分詞修飾名詞）"},
+          {w:"package",kk:"/ˈpækɪdʒ/",pos:"n.",zh:"包裝；包裹"},
+          {w:"elderly",kk:"/ˈɛldɚlɪ/",pos:"adj.",zh:"年長的"}
+        ]
+      },
+      {
+        year:"113",
+        en:`<em>Excited about the upcoming trip</em>, she packed all her bags the night before departure.`,
+        zh:"對即將到來的旅行感到興奮，她在出發前一晚把所有的行李都打包好了。",
+        vocab:[
+          {w:"excited",kk:"/ɪkˈsaɪtɪd/",pos:"adj.",zh:"興奮的（-ed 分詞修飾主詞）"},
+          {w:"upcoming",kk:"/ˈʌpˌkʌmɪŋ/",pos:"adj.",zh:"即將到來的"},
+          {w:"departure",kk:"/dɪˈpɑrtʃɚ/",pos:"n.",zh:"出發；離開"}
+        ]
+      }
+    ]
+  },
+  15: {
+    title: "強調句型 / 分裂句",
+    en: "Emphatic Structures / Cleft Sentences",
+    tier: 3,
+    years: [0,1,1,0,0,0,1,1,1,1,1,0,1],
+    count: 6,
+    structure: "It is/was + 強調部分 + that/who + 其餘句子\nWhat + S + V + is/was + 強調部分",
+    tip: "分裂句（Cleft sentence）用 It is...that 或 What...is 結構來強調句子中的某個成分。It is...that 可強調主詞、受詞、時間、地點等；What...is 強調主詞或受詞。",
+    rules: [
+      "It is/was + [強調] + that/who + [其餘]：強調任何句子成分",
+      "強調主詞：It was Mary who called me.（用 who）",
+      "強調受詞/時間/地點：It was yesterday that I met him.",
+      "What + S + V + is/was + 名詞片語：What I need is more time.",
+      "All + S + V + is/was：All I want is a glass of water.（最小化強調）"
+    ],
+    sentences: [
+      {
+        year:"111",
+        en:`<em>It is</em> the friendship <em>that</em> truly matters in the end—not money or fame.`,
+        zh:"到最後，真正重要的是友情——而非金錢或名聲。",
+        vocab:[
+          {w:"friendship",kk:"/ˈfrɛndʃɪp/",pos:"n.",zh:"友情；友誼"},
+          {w:"matter",kk:"/ˈmætɚ/",pos:"v.",zh:"重要；有關係"},
+          {w:"fame",kk:"/fem/",pos:"n.",zh:"名聲；名望"}
+        ]
+      },
+      {
+        year:"104",
+        en:`<em>It was</em> her mother <em>who</em> gave her the most important advice in her life.`,
+        zh:"給了她人生中最重要建議的人，正是她的母親。",
+        vocab:[
+          {w:"it was...who",kk:"/ɪt wɑz...huː/",pos:"struct.",zh:"分裂句（強調主詞，人用who）"},
+          {w:"advice",kk:"/ədˈvaɪs/",pos:"n.",zh:"建議（不可數名詞）"},
+          {w:"important",kk:"/ɪmˈpɔrtənt/",pos:"adj.",zh:"重要的"}
+        ]
+      },
+      {
+        year:"108",
+        en:`<em>What</em> I like most about this book <em>is</em> the unexpected ending that surprised everyone.`,
+        zh:"這本書我最喜歡的部分，是那個出乎所有人意料的結局。",
+        vocab:[
+          {w:"what...is",kk:"/wɑt...ɪz/",pos:"struct.",zh:"What 分裂句（強調述語）"},
+          {w:"unexpected",kk:"/ˌʌnɪkˈspɛktɪd/",pos:"adj.",zh:"出乎意料的"},
+          {w:"ending",kk:"/ˈɛndɪŋ/",pos:"n.",zh:"結局；結尾"}
+        ]
+      },
+      {
+        year:"103",
+        en:`<em>It is</em> the first time <em>that</em> we have been able to see the true color of a distant planet.`,
+        zh:"這是我們首次能夠看到一顆遙遠行星真實顏色的機會。",
+        vocab:[
+          {w:"it is the first time that",kk:"/ɪt ɪz ðə fɜrst taɪm ðæt/",pos:"struct.",zh:"分裂句（強調時間）"},
+          {w:"distant",kk:"/ˈdɪstənt/",pos:"adj.",zh:"遙遠的"},
+          {w:"planet",kk:"/ˈplænɪt/",pos:"n.",zh:"行星"}
+        ]
+      },
+      {
+        year:"110",
+        en:`<em>It was</em> in this very park <em>that</em> the famous singer held her first outdoor concert.`,
+        zh:"正是在這座公園，那位知名歌手舉辦了她的第一場戶外演唱會。",
+        vocab:[
+          {w:"it was...that",kk:"/ɪt wɑz...ðæt/",pos:"struct.",zh:"分裂句（強調地點）"},
+          {w:"concert",kk:"/ˈkɑnsɚt/",pos:"n.",zh:"音樂會；演唱會"},
+          {w:"outdoor",kk:"/ˈaʊtˌdɔr/",pos:"adj.",zh:"戶外的"}
+        ]
+      },
+      {
+        year:"114",
+        en:`<em>What</em> surprised everyone most <em>was</em> how quickly he recovered from the injury.`,
+        zh:"讓所有人最驚訝的，是他從受傷中恢復的速度之快。",
+        vocab:[
+          {w:"surprise",kk:"/sɚˈpraɪz/",pos:"v.",zh:"使驚訝"},
+          {w:"recover",kk:"/rɪˈkʌvɚ/",pos:"v.",zh:"恢復；痊癒"},
+          {w:"injury",kk:"/ˈɪndʒɚɪ/",pos:"n.",zh:"受傷；損傷"}
+        ]
+      }
+    ]
+  }
+};
+
+function tierClass(t){ return t===2?'tier2':t===3?'tier3':''; }
+
+function yearRow(years, count){
+  const labels=['102','103','104','105','106','107','108','109','110','111','112','113','114'];
+  return labels.map((y,i)=>`<span class="year-pill ${years[i]?'yes':'no'}">${y}</span>`).join('');
+}
+
+function vocabRows(vocab){
+  return vocab.map(v=>`
+    <tr>
+      <td class="td-word">${v.w}</td>
+      <td class="td-kk">${v.kk}</td>
+      <td><span class="td-pos">${v.pos}</span></td>
+      <td class="td-zh">${v.zh}</td>
+    </tr>`).join('');
+}
+
+function render(id){
+  const d = G[id];
+  const tc = tierClass(d.tier);
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div class="gram-header ${tc}">
+      <div class="gram-rank-badge">第 ${id} 名 ／ 15大文法考點</div>
+      <h1>${d.title}</h1>
+      <div class="en">${d.en}</div>
+      <div class="gram-meta">
+        <div class="gram-meta-box"><div class="label">句型結構</div><div class="val">${d.structure.replace(/\n/g,'<br>')}</div></div>
+        <div class="gram-meta-box"><div class="label">學習要點</div><div class="tip">${d.tip}</div></div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-item"><div class="sv" style="color:${d.tier===1?'#7c3aed':d.tier===2?'#22b4a0':'#f59e0b'}">${d.count}/13</div><div class="sl">出現年份</div></div>
+      <div class="stat-sep"></div>
+      <div class="year-pill-row">${yearRow(d.years, d.count)}</div>
+    </div>
+
+    <div class="rule-box ${tc}">
+      <h3>核心規則整理</h3>
+      <ul class="rule-list">${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>
+    </div>
+
+    <div class="section-lbl">歷屆考題例句（${d.sentences.length} 題）</div>
+    <div class="sentence-cards">
+      ${d.sentences.map(s=>`
+        <div class="scard ${tc}">
+          <div class="scard-top">
+            <div class="scard-year">${s.year} 年</div>
+            <div class="sentence-en">${s.en}</div>
+            <div class="sentence-zh">📖 ${s.zh}</div>
+          </div>
+          <div class="vocab-section">
+            <div class="vocab-label">必備單字</div>
+            <table class="vocab-table">
+              <thead><tr><th>單字</th><th>KK音標</th><th>詞類</th><th>中文</th></tr></thead>
+              <tbody>${vocabRows(s.vocab)}</tbody>
+            </table>
+          </div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+function show(id, btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render(id);
+  window.scrollTo({top:0, behavior:'smooth'});
+  location.hash = id;
+}
+
+// Init
+const hash = parseInt(location.hash.replace('#','')) || 1;
+render(hash);
+document.querySelectorAll('.nav-btn')[hash-1]?.classList.add('active');
+</script>
+</body>
+</html>

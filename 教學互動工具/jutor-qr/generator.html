@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎓 學生 QR Code 產生器｜老師專用</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --primary: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-dark: #3730a3;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --text: #1e1b4b;
+    --text-muted: #6b7280;
+    --border: #e0e7ff;
+    --shadow: 0 4px 24px rgba(79,70,229,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 32px 16px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeDown 0.6s ease both;
+  }
+  .header .icon { font-size: 48px; display: block; margin-bottom: 8px; }
+  .header h1 { font-size: 26px; font-weight: 900; color: var(--primary-dark); letter-spacing: -0.5px; }
+  .header p { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    animation: fadeUp 0.6s ease both;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Step 1 — Setup */
+  .setup-note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #92400e;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .setup-note strong { color: #b45309; }
+  .setup-note a { color: var(--primary); }
+
+  .url-input-wrap { display: flex; gap: 8px; }
+  .url-input-wrap input {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 13px;
+    font-family: monospace;
+    color: var(--text);
+    outline: none;
+    transition: border 0.2s;
+  }
+  .url-input-wrap input:focus { border-color: var(--primary-light); }
+  .btn-save {
+    padding: 10px 18px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-save:hover { background: var(--primary-dark); }
+
+  /* Step 2 — Form */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 15px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.15);
+  }
+
+  .btn-generate {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(79,70,229,0.3);
+    letter-spacing: 0.5px;
+  }
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79,70,229,0.4);
+  }
+  .btn-generate:active { transform: scale(0.98); }
+
+  /* Step 3 — QR Result */
+  #result-card { display: none; }
+  .qr-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .qr-box {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 2px solid var(--border);
+  }
+  .student-label {
+    text-align: center;
+  }
+  .student-label .s-name {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--primary-dark);
+  }
+  .student-label .s-info {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .btn-row { display: flex; gap: 10px; width: 100%; }
+  .btn-download {
+    flex: 1;
+    padding: 13px;
+    background: var(--success);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-download:hover { background: #059669; }
+  .btn-another {
+    flex: 1;
+    padding: 13px;
+    background: var(--border);
+    color: var(--primary);
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-another:hover { background: #c7d2fe; }
+
+  /* Step info */
+  .steps {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -4px;
+    top: 10px;
+    color: var(--primary-light);
+    font-size: 16px;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 6px;
+  }
+  .step-text { font-size: 11px; color: var(--text-muted); line-height: 1.4; font-weight: 500; }
+
+  /* History */
+  #history-card { display: none; }
+  .history-list { display: flex; flex-direction: column; gap: 8px; }
+  .history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .history-item .hi-name { font-weight: 700; color: var(--text); }
+  .history-item .hi-info { color: var(--text-muted); font-size: 12px; }
+  .btn-redownload {
+    padding: 5px 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="icon">🎓</span>
+  <h1>學生 QR Code 產生器</h1>
+  <p>老師專用｜每位同學掃描即可直接進入練習，不需輸入資料</p>
+</div>
+
+<div class="container">
+
+  <!-- Flow steps -->
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">設定<br>學生頁網址</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">輸入<br>學生資料</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">產生<br>QR Code</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">下載<br>列印貼用</div>
+    </div>
+  </div>
+
+  <!-- Step 1: GitHub Pages URL -->
+  <div class="card" style="animation-delay:0.1s">
+    <div class="card-title">⚙️ 步驟一：設定學生頁網址</div>
+    <div class="setup-note">
+      請先確認 <strong>student.html</strong> 已上傳到 GitHub Pages，並將網址填入下方。<br>
+      例如：<strong>https://andyjunyi.github.io/jutor-qr/student.html</strong>
+    </div>
+    <div class="url-input-wrap">
+      <input type="text" id="baseUrl" placeholder="https://你的帳號.github.io/jutor-qr/student.html" />
+      <button class="btn-save" onclick="saveUrl()">儲存</button>
+    </div>
+    <div id="url-status" style="font-size:12px;color:var(--success);margin-top:8px;"></div>
+  </div>
+
+  <!-- Step 2: Student info form -->
+  <div class="card" style="animation-delay:0.2s">
+    <div class="card-title">✏️ 步驟二：輸入學生資料</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>班級</label>
+        <input type="text" id="classInput" placeholder="例：5年甲班" />
+      </div>
+      <div class="form-group">
+        <label>座號</label>
+        <input type="text" id="numInput" placeholder="例：10" />
+      </div>
+      <div class="form-group">
+        <label>姓名</label>
+        <input type="text" id="nameInput" placeholder="例：王小明" />
+      </div>
+    </div>
+    <button class="btn-generate" onclick="generateQR()">🚀 產生 QR Code</button>
+  </div>
+
+  <!-- Step 3: QR Result -->
+  <div class="card" id="result-card" style="animation-delay:0.1s">
+    <div class="card-title">✅ 步驟三：下載 QR Code</div>
+    <div class="qr-wrap">
+      <div class="student-label">
+        <div class="s-name" id="preview-name"></div>
+        <div class="s-info" id="preview-info"></div>
+      </div>
+      <div class="qr-box">
+        <div id="qrcode"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-download" onclick="downloadQR()">⬇️ 下載圖片</button>
+        <button class="btn-another" onclick="makeAnother()">➕ 繼續下一位</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="card" id="history-card" style="animation-delay:0.15s">
+    <div class="card-title">📋 已產生的學生（本次）</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+</div>
+
+<script>
+  let savedUrl = localStorage.getItem('studentPageUrl') || '';
+  let history = [];
+  let currentData = null;
+
+  // Init
+  if (savedUrl) {
+    document.getElementById('baseUrl').value = savedUrl;
+    document.getElementById('url-status').textContent = '✅ 已儲存：' + savedUrl;
+  }
+
+  function saveUrl() {
+    const val = document.getElementById('baseUrl').value.trim();
+    if (!val) return alert('請填入學生頁網址！');
+    savedUrl = val;
+    localStorage.setItem('studentPageUrl', val);
+    document.getElementById('url-status').textContent = '✅ 已儲存：' + val;
+  }
+
+  function generateQR() {
+    const cls  = document.getElementById('classInput').value.trim();
+    const num  = document.getElementById('numInput').value.trim();
+    const name = document.getElementById('nameInput').value.trim();
+
+    if (!savedUrl) return alert('請先設定並儲存學生頁網址！');
+    if (!cls || !num || !name) return alert('請填寫班級、座號、姓名！');
+
+    const url = `${savedUrl}?class=${encodeURIComponent(cls)}&num=${encodeURIComponent(num)}&name=${encodeURIComponent(name)}`;
+    currentData = { cls, num, name, url };
+
+    // Update preview
+    document.getElementById('preview-name').textContent = name;
+    document.getElementById('preview-info').textContent = `${cls}　${num}號`;
+
+    // Clear & render QR
+    const container = document.getElementById('qrcode');
+    container.innerHTML = '';
+    new QRCode(container, {
+      text: url,
+      width: 200,
+      height: 200,
+      colorDark: '#3730a3',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Show result
+    const rc = document.getElementById('result-card');
+    rc.style.display = 'block';
+    rc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function downloadQR() {
+    if (!currentData) return;
+    setTimeout(() => {
+      const canvas = document.querySelector('#qrcode canvas');
+      if (!canvas) return alert('請稍後再試');
+
+      // Build a labeled canvas
+      const pad = 20;
+      const labelH = 70;
+      const w = canvas.width + pad * 2;
+      const h = canvas.height + pad * 2 + labelH;
+
+      const out = document.createElement('canvas');
+      out.width = w; out.height = h;
+      const ctx = out.getContext('2d');
+
+      // BG
+      ctx.fillStyle = '#f0f4ff';
+      ctx.roundRect(0, 0, w, h, 16);
+      ctx.fill();
+
+      // White QR area
+      ctx.fillStyle = '#ffffff';
+      ctx.roundRect(pad - 8, pad - 8, canvas.width + 16, canvas.height + 16, 10);
+      ctx.fill();
+      ctx.drawImage(canvas, pad, pad);
+
+      // Name
+      ctx.fillStyle = '#3730a3';
+      ctx.font = `bold 22px "Noto Sans TC", sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(currentData.name, w / 2, canvas.height + pad * 2 + 22);
+
+      // Info
+      ctx.fillStyle = '#6b7280';
+      ctx.font = `16px "Noto Sans TC", sans-serif`;
+      ctx.fillText(`${currentData.cls}　${currentData.num}號`, w / 2, canvas.height + pad * 2 + 48);
+
+      const link = document.createElement('a');
+      link.download = `QR_${currentData.cls}_${currentData.num}號_${currentData.name}.png`;
+      link.href = out.toDataURL('image/png');
+      link.click();
+
+      // Add to history
+      addHistory(currentData);
+    }, 100);
+  }
+
+  function addHistory(data) {
+    history.unshift(data);
+    const hc = document.getElementById('history-card');
+    const hl = document.getElementById('history-list');
+    hc.style.display = 'block';
+
+    hl.innerHTML = history.map((d, i) => `
+      <div class="history-item">
+        <div>
+          <div class="hi-name">${d.name}</div>
+          <div class="hi-info">${d.cls}　${d.num}號</div>
+        </div>
+        <button class="btn-redownload" onclick="reDownload(${i})">再次下載</button>
+      </div>
+    `).join('');
+  }
+
+  function reDownload(i) {
+    const d = history[i];
+    currentData = d;
+    document.getElementById('classInput').value = d.cls;
+    document.getElementById('numInput').value = d.num;
+    document.getElementById('nameInput').value = d.name;
+    generateQR();
+    setTimeout(downloadQR, 300);
+  }
+
+  function makeAnother() {
+    document.getElementById('numInput').value = '';
+    document.getElementById('nameInput').value = '';
+    document.getElementById('numInput').focus();
+    document.getElementById('result-card').style.display = 'none';
+    window.scrollTo({ top: document.querySelector('.card:nth-child(3)').offsetTop - 20, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

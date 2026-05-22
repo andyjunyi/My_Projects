@@ -1,0 +1,4 @@
+.env
+user_words.json
+__pycache__/
+*.pyc

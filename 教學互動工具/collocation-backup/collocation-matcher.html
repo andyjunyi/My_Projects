@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搭配詞比對工具 - 未收錄資料檢測器</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #5f2c82 0%, #49a09d 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #495057;
+        }
+        .stat-value span {
+            font-size: 0.5em;
+            font-weight: normal;
+            color: #6c757d;
+        }
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+        .input-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        .result-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        textarea {
+            width: 100%;
+            height: 400px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #49a09d;
+            box-shadow: 0 0 0 3px rgba(73,160,157,0.2);
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #49a09d 0%, #5f2c82 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(73,160,157,0.4);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-warning {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #c82333;
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .result-count {
+            background: #e9ecef;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #495057;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid #e0e0e0;
+        }
+        .result-item {
+            background: white;
+            border-left: 4px solid #dc3545;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result-item-matched {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+        .result-phrase {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #dc3545;
+        }
+        .result-phrase-matched {
+            color: #28a745;
+        }
+        .result-context {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+            word-break: break-word;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #49a09d, #5f2c82);
+            transition: width 0.3s ease;
+        }
+        .keyword-tag {
+            display: inline-block;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #49a09d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🔍 搭配詞比對工具</h1>
+        <p>複製貼上您的文字，自動找出尚未收錄的搭配詞、片語、片語動詞</p>
+    </div>
+
+    <div class="stats" id="stats">
+        <!-- 將由 JavaScript 動態填充 -->
+    </div>
+
+    <div class="main-content">
+        <!-- 左側輸入區 -->
+        <div class="input-section">
+            <h3>📝 輸入文字：</h3>
+            <textarea id="inputText" placeholder="請貼上要分析的英文文字...">The company decided to make a decision about the new project. They need to consider carefully all options before they take action. It's important to achieve a goal and make progress every day. However, some people just waste time and don't manage their time properly.</textarea>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="analyzeText()">🔍 開始比對</button>
+                <button class="btn btn-secondary" onclick="clearAll()">🗑️ 全部清除</button>
+                <button class="btn btn-warning" onclick="loadSample()">📋 載入範例</button>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <h4>📊 比對狀態：</h4>
+                <div id="status">尚未開始比對</div>
+            </div>
+        </div>
+
+        <!-- 右側結果區 -->
+        <div class="result-section">
+            <div class="result-header">
+                <h3>📋 比對結果：</h3>
+                <div class="result-count" id="resultCount">0 個未收錄</div>
+            </div>
+            <div class="result-box" id="resultBox">
+                <p style="color: #6c757d; text-align: center;">點擊「開始比對」查看未收錄的搭配詞</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        ⚡ 基於 collocationData.js 資料庫進行比對 | 收錄超過 2500 個搭配詞
+    </div>
+</div>
+
+<script>
+// ==================== 資料載入區 ====================
+// 注意：這裡假設 collocationData 已經定義在 collocationData.js 中
+// 如果 collocationData.js 尚未載入，請在 HTML 中先載入它
+// <script src="collocationData.js"></script>
+
+// 如果 collocationData 尚未定義，先定義一個空陣列避免錯誤
+if (typeof collocationData === 'undefined') {
+    var collocationData = [];
+    console.warn('警告：collocationData.js 尚未載入！');
+}
+
+// ==================== 資料預處理 ====================
+// 建立用於快速比對的資料結構
+const phraseDatabase = new Map();        // phrase -> collocation object
+const keywordDatabase = new Map();       // keyword -> array of collocations
+const typeDatabase = new Map();          // type -> array of collocations
+
+// 初始化函數
+function initializeDatabase() {
+    console.log('初始化資料庫，總條數：', collocationData.length);
+    
+    // 清空所有資料
+    phraseDatabase.clear();
+    keywordDatabase.clear();
+    typeDatabase.clear();
+    
+    // 遍歷所有搭配詞條目
+    collocationData.forEach((item, index) => {
+        const phrase = item.phrase;
+        const type = item.type || '未分類';
+        const chinese = item.chinese || '';
+        const keywords = item.keywords || [];
+        
+        // 儲存到 phraseDatabase
+        phraseDatabase.set(phrase, {
+            phrase,
+            type,
+            chinese,
+            keywords,
+            original: item
+        });
+        
+        // 按類型分組
+        if (!typeDatabase.has(type)) {
+            typeDatabase.set(type, []);
+        }
+        typeDatabase.get(type).push(phrase);
+        
+        // 按關鍵詞分組
+        keywords.forEach(keyword => {
+            if (!keywordDatabase.has(keyword)) {
+                keywordDatabase.set(keyword, new Set());
+            }
+            keywordDatabase.get(keyword).add(phrase);
+        });
+    });
+    
+    // 更新統計資訊
+    updateStats();
+}
+
+// 更新統計資訊
+function updateStats() {
+    const statsHtml = `
+        <div class="stat-item">
+            <div class="stat-label">📚 總收錄數</div>
+            <div class="stat-value">${collocationData.length.toLocaleString()}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">🏷️ 獨特片語</div>
+            <div class="stat-value">${phraseDatabase.size.toLocaleString()}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">🔑 關鍵詞總數</div>
+            <div class="stat-value">${keywordDatabase.size.toLocaleString()}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">📌 分類數量</div>
+            <div class="stat-value">${typeDatabase.size.toLocaleString()}</div>
+        </div>
+    `;
+    document.getElementById('stats').innerHTML = statsHtml;
+}
+
+// ==================== 文字分析函數 ====================
+// 將文字分割成可能的片語
+function extractPhrases(text) {
+    const phrases = new Set();
+    
+    // 1. 先處理標點符號，將句子分割
+    const sentences = text.split(/[.!?;，。！？；]/);
+    
+    sentences.forEach(sentence => {
+        const words = sentence.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+        
+        // 嘗試提取不同長度的片語（1-5個詞）
+        for (let len = 1; len <= 5; len++) {
+            for (let i = 0; i <= words.length - len; i++) {
+                const phrase = words.slice(i, i + len).join(' ');
+                phrases.add(phrase);
+                
+                // 特別處理動詞變化（基本時態）
+                // 這裡只是一個簡單的範例，實際應用可能需要更複雜的詞形還原
+                const variations = generateVariations(phrase);
+                variations.forEach(v => phrases.add(v));
+            }
+        }
+    });
+    
+    return Array.from(phrases);
+}
+
+// 簡單的詞形變化生成（僅供示範）
+function generateVariations(phrase) {
+    const variations = [];
+    const words = phrase.split(' ');
+    
+    // 處理常見的動詞變化
+    const verbVariations = {
+        'make': ['makes', 'made', 'making'],
+        'take': ['takes', 'took', 'taking', 'taken'],
+        'get': ['gets', 'got', 'getting', 'gotten'],
+        'do': ['does', 'did', 'doing', 'done'],
+        'have': ['has', 'had', 'having'],
+        'go': ['goes', 'went', 'going', 'gone'],
+        'see': ['sees', 'saw', 'seeing', 'seen'],
+        'come': ['comes', 'came', 'coming'],
+        'give': ['gives', 'gave', 'giving', 'given'],
+        'find': ['finds', 'found', 'finding'],
+        'keep': ['keeps', 'kept', 'keeping'],
+        'hold': ['holds', 'held', 'holding'],
+        'pay': ['pays', 'paid', 'paying']
+    };
+    
+    if (words.length === 1) {
+        const base = words[0];
+        if (verbVariations[base]) {
+            verbVariations[base].forEach(v => variations.push(v));
+        }
+    } else if (words.length > 1) {
+        const firstWord = words[0];
+        const rest = words.slice(1).join(' ');
+        
+        if (verbVariations[firstWord]) {
+            verbVariations[firstWord].forEach(v => {
+                variations.push(`${v} ${rest}`);
+            });
+        }
+    }
+    
+    return variations;
+}
+
+// 檢查片語是否已收錄（支援部分匹配）
+function isPhraseMatched(phrase) {
+    // 1. 完全匹配
+    if (phraseDatabase.has(phrase)) {
+        return true;
+    }
+    
+    // 2. 檢查是否為某個已收錄片語的開頭（例如：檢查 "make" 是否為 "make a decision" 的一部分）
+    for (const [storedPhrase] of phraseDatabase) {
+        if (storedPhrase.includes(phrase) || phrase.includes(storedPhrase)) {
+            return true;
+        }
+    }
+    
+    // 3. 關鍵詞匹配（更寬鬆的比對）
+    const words = phrase.split(' ');
+    if (words.length === 1) {
+        // 單詞直接檢查關鍵詞
+        return keywordDatabase.has(phrase);
+    } else {
+        // 多詞片語：檢查是否所有詞都在關鍵詞庫中
+        let matchedCount = 0;
+        words.forEach(word => {
+            if (keywordDatabase.has(word)) matchedCount++;
+        });
+        return matchedCount === words.length; // 所有詞都是關鍵詞
+    }
+}
+
+// 找出未收錄的片語
+function findUnmatchedPhrases(text) {
+    const allPhrases = extractPhrases(text);
+    const unmatched = [];
+    const matched = [];
+    
+    allPhrases.forEach(phrase => {
+        if (isPhraseMatched(phrase)) {
+            matched.push(phrase);
+        } else {
+            unmatched.push(phrase);
+        }
+    });
+    
+    return { unmatched, matched, total: allPhrases.length };
+}
+
+// ==================== UI 更新函數 ====================
+// 顯示結果
+function displayResults(results) {
+    const resultBox = document.getElementById('resultBox');
+    const resultCount = document.getElementById('resultCount');
+    
+    resultCount.textContent = `${results.unmatched.length} 個未收錄`;
+    
+    if (results.unmatched.length === 0) {
+        resultBox.innerHTML = '<p style="color: #28a745; text-align: center;">✅ 恭喜！所有片語都已被收錄！</p>';
+        return;
+    }
+    
+    let html = '';
+    results.unmatched.forEach(phrase => {
+        html += `
+            <div class="result-item">
+                <div class="result-phrase">⚠️ ${phrase}</div>
+                <div class="result-context">
+                    <span class="keyword-tag">建議新增</span>
+                    <span class="keyword-tag">${phrase.split(' ').length} 個詞</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    // 如果也想顯示已收錄的
+    if (results.matched.length > 0) {
+        html += '<hr style="margin: 15px 0;">';
+        html += '<p style="color: #6c757d; margin: 10px 0;">✅ 已收錄的部分：</p>';
+        results.matched.slice(0, 10).forEach(phrase => {
+            html += `
+                <div class="result-item result-item-matched">
+                    <div class="result-phrase result-phrase-matched">✅ ${phrase}</div>
+                </div>
+            `;
+        });
+        if (results.matched.length > 10) {
+            html += `<p style="color: #6c757d; font-size: 0.9em;">... 還有 ${results.matched.length - 10} 個已收錄片語未顯示</p>`;
+        }
+    }
+    
+    resultBox.innerHTML = html;
+    
+    // 更新進度條
+    const progress = (results.matched.length / results.total) * 100;
+    document.getElementById('progressBar').style.width = `${progress}%`;
+    document.getElementById('status').innerHTML = `
+        總共分析出 ${results.total} 個可能片語<br>
+        ✅ 已收錄：${results.matched.length} 個<br>
+        ⚠️ 未收錄：${results.unmatched.length} 個<br>
+        📊 覆蓋率：${(results.matched.length / results.total * 100).toFixed(2)}%
+    `;
+}
+
+// ==================== 事件處理函數 ====================
+function analyzeText() {
+    const text = document.getElementById('inputText').value.trim();
+    if (!text) {
+        alert('請輸入要分析的文字！');
+        return;
+    }
+    
+    // 顯示載入中
+    document.getElementById('status').innerHTML = '分析中... <span class="loading"></span>';
+    
+    // 使用 setTimeout 避免 UI 卡住
+    setTimeout(() => {
+        const results = findUnmatchedPhrases(text);
+        displayResults(results);
+    }, 100);
+}
+
+function clearAll() {
+    document.getElementById('inputText').value = '';
+    document.getElementById('resultBox').innerHTML = '<p style="color: #6c757d; text-align: center;">點擊「開始比對」查看未收錄的搭配詞</p>';
+    document.getElementById('resultCount').textContent = '0 個未收錄';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('status').innerHTML = '尚未開始比對';
+}
+
+function loadSample() {
+    const sample = `The company decided to make a decision about the new project. They need to consider carefully all options before they take action. It's important to achieve a goal and make progress every day. However, some people just waste time and don't manage their time properly. 
+
+Students who study hard every day will make progress in their English. We should make an effort to reduce plastic waste in our daily lives. With hard work and determination, anyone can achieve a goal they set. Listening to music is an effective way to relieve stress.`;
+    
+    document.getElementById('inputText').value = sample;
+    analyzeText();
+}
+
+// ==================== 初始化 ====================
+// 等待 DOM 載入完成後初始化
+document.addEventListener('DOMContentLoaded', () => {
+    initializeDatabase();
+    loadSample(); // 載入範例並自動分析
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會考單字特訓 - 時間篇 (Time)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* 主題色：晨曦紫金漸層 (象徵時間的流動與日夜) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #312e81;
+            --accent-color: #5b21b6;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        body::-webkit-scrollbar { display: none; }
+        body { font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; flex-direction: column; align-items: center; }
+        
+        header { width: 100%; background: var(--primary-gradient); color: white; padding: 1.2rem 0; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        
+        .stats-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 0.5rem; padding: 0 10px; }
+        .stat-box { background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px); }
+        
+        .container { width: 92%; max-width: 900px; padding: 1.5rem 0 4rem 0; }
+        
+        /* 選單區域 */
+        #menu-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; animation: fadeIn 0.5s; margin-top: 2rem; }
+        .menu-card {
+            background: white; padding: 2rem; border-radius: 15px; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 5px solid var(--accent-color);
+        }
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .menu-icon { font-size: 3.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .menu-title { font-size: 1.4rem; font-weight: bold; color: var(--text-main); margin-bottom: 0.5rem; }
+        .menu-desc { font-size: 0.95rem; color: #64748b; line-height: 1.5; }
+
+        /* 複習列表 */
+        #review-section { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+        .card { background: var(--card-bg); padding: 1rem; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid var(--accent-color); display: flex; flex-direction: column; }
+        .word-en { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); margin-bottom: 2px; }
+        .word-kk { font-size: 0.85rem; color: #64748b; font-family: 'Arial', sans-serif; margin-bottom: 4px; }
+        .word-zh { font-size: 1rem; color: var(--text-main); line-height: 1.3; }
+
+        /* 測驗區域 */
+        #quiz-section { display: none; background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; animation: slideUp 0.4s; }
+        .question-text { font-size: 1.25rem; line-height: 1.6; margin-bottom: 1.5rem; background: #f3f4f6; padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent-color); color: #1f2937; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .option-btn { 
+            padding: 15px 18px; border: 1.5px solid #cbd5e1; border-radius: 12px; 
+            background: white; cursor: pointer; font-size: 1.1rem; text-align: left; transition: all 0.2s; color: #334155;
+        }
+        .option-btn:hover { background-color: #ede9fe; border-color: var(--accent-color); }
+        .correct { background-color: #d1fae5 !important; border-color: var(--success-color) !important; color: #065f46; font-weight: bold; }
+        .wrong { background-color: #fee2e2 !important; border-color: var(--error-color) !important; color: #991b1b; }
+        
+        #feedback { margin-top: 1.5rem; padding: 1.2rem; border-radius: 10px; background: #fafafa; border: 1px solid #e2e8f0; display: none; font-size: 1rem; line-height: 1.6; }
+        .analysis-title { color: var(--accent-color); font-weight: bold; margin-bottom: 8px; font-size: 1.1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .feedback-item { margin-bottom: 8px; }
+        .feedback-label { font-weight: bold; color: #334155; margin-right: 5px; }
+        .vocab-compact-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .vocab-tag { background: white; padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.9rem; color: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        
+        .btn-next { background: var(--primary-gradient); color: white; margin-top: 1.5rem; width: 100%; padding: 14px; border-radius: 25px; font-weight: bold; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-home { background: #64748b; margin-top: 1rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 600px) { 
+            #menu-section { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; } 
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="margin:0; font-size: 1.4rem;"><i class="fas fa-clock"></i> 時間篇 (Time) - 進階長句</h1>
+    <div class="stats-container">
+        <div class="stat-box"><i class="fas fa-layer-group"></i> 題庫：<span id="current-topic-name">請選擇</span></div>
+        <div class="stat-box"><i class="fas fa-history"></i> 狀態：準備中</div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- 主選單 -->
+    <div id="menu-section">
+        <div class="menu-card" onclick="selectRound('part1')">
+            <div class="menu-icon"><i class="fas fa-calendar-alt"></i></div>
+            <div class="menu-title">Part 1: 週期與曆法</div>
+            <div class="menu-desc">時段、星期、月份、季節<br>(共 35 題)</div>
+        </div>
+        <div class="menu-card" onclick="selectRound('part2')">
+            <div class="menu-icon"><i class="fas fa-hourglass-half"></i></div>
+            <div class="menu-title">Part 2: 計時與時態</div>
+            <div class="menu-desc">時鐘、時刻、時間副詞<br>(共 35 題)</div>
+        </div>
+    </div>
+
+    <!-- 複習與測驗區 -->
+    <div id="review-wrapper" style="display:none;">
+        <h2 style="color:var(--text-main); margin-bottom:1rem; text-align:center;">單字預習</h2>
+        <div id="review-section"></div>
+        <button class="btn-next" onclick="startFullQuiz()">開始挑戰</button>
+        <button class="btn-next btn-home" onclick="goHome()">回首頁</button>
+    </div>
+
+    <div id="quiz-section">
+        <div id="quiz-content">
+            <div id="progress" style="font-size:0.9rem; color:#64748b; margin-bottom:8px;">題號：1 / 20</div>
+            <div class="question-text" id="q-text"></div>
+            <div class="options-grid" id="q-options"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="btn-next" style="display:none;" onclick="nextQuestion()">下一題</button>
+        </div>
+        <div id="quiz-result" style="display:none; text-align:center; padding: 2rem 1rem;">
+            <i class="fas fa-trophy" style="font-size:4rem; color:#f59e0b; margin-bottom:1.5rem;"></i>
+            <h2 id="final-score-text" style="font-size: 1.8rem; color: var(--text-main);">測驗完成！</h2>
+            <button id="retry-btn" class="btn-next" style="background:#ef4444; display:none;" onclick="startRetryQuiz()">挑戰錯題</button>
+            <button class="btn-next" onclick="showReviewPage()">回到單字清單</button>
+            <button class="btn-next btn-home" onclick="goHome()">回首頁</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// 資料庫：分為兩組，題目長度嚴格控制在 12-22 字
+const db = {
+    part1: {
+        title: "Part 1: 週期與曆法",
+        vocab: [
+            {en: "dawn", kk: "/dɔn/", zh: "(n.) 黎明"}, {en: "morning", kk: "/ˈmɔrnɪŋ/", zh: "(n.) 早晨"},
+            {en: "noon", kk: "/nun/", zh: "(n.) 中午"}, {en: "afternoon", kk: "/ˌæftɚˈnun/", zh: "(n.) 下午"},
+            {en: "evening", kk: "/ˈivnɪŋ/", zh: "(n.) 傍晚"}, {en: "night", kk: "/naɪt/", zh: "(n.) 夜晚"},
+            {en: "midnight", kk: "/ˈmɪdˌnaɪt/", zh: "(n.) 午夜"}, {en: "Monday", kk: "/ˈmʌnde/", zh: "(n.) 星期一"},
+            {en: "Tuesday", kk: "/ˈtjuzde/", zh: "(n.) 星期二"}, {en: "Wednesday", kk: "/ˈwɛnzde/", zh: "(n.) 星期三"},
+            {en: "Thursday", kk: "/ˈθɝzde/", zh: "(n.) 星期四"}, {en: "Friday", kk: "/ˈfraɪde/", zh: "(n.) 星期五"},
+            {en: "Saturday", kk: "/ˈsætɚde/", zh: "(n.) 星期六"}, {en: "Sunday", kk: "/ˈsʌnde/", zh: "(n.) 星期日"},
+            {en: "week", kk: "/wik/", zh: "(n.) 週"}, {en: "weekday", kk: "/ˈwikˌde/", zh: "(n.) 平日"},
+            {en: "weekend", kk: "/ˈwikˌɛnd/", zh: "(n.) 週末"}, {en: "season", kk: "/ˈsizn/", zh: "(n.) 季節"},
+            {en: "spring", kk: "/sprɪŋ/", zh: "(n.) 春天"}, {en: "summer", kk: "/ˈsʌmɚ/", zh: "(n.) 夏天"},
+            {en: "autumn", kk: "/ˈɔtəm/", zh: "(n.) 秋天"}, {en: "winter", kk: "/ˈwɪntɚ/", zh: "(n.) 冬天"},
+            {en: "January", kk: "/ˈdʒænjʊˌɛri/", zh: "(n.) 一月"}, {en: "February", kk: "/ˈfɛbrʊˌɛri/", zh: "(n.) 二月"},
+            {en: "March", kk: "/mɑrtʃ/", zh: "(n.) 三月"}, {en: "April", kk: "/ˈeprəl/", zh: "(n.) 四月"},
+            {en: "May", kk: "/me/", zh: "(n.) 五月"}, {en: "June", kk: "/dʒun/", zh: "(n.) 六月"},
+            {en: "July", kk: "/dʒuˈlaɪ/", zh: "(n.) 七月"}, {en: "August", kk: "/ˈɔɡəst/", zh: "(n.) 八月"},
+            {en: "September", kk: "/sɛpˈtɛmbɚ/", zh: "(n.) 九月"}, {en: "October", kk: "/ɑkˈtobɚ/", zh: "(n.) 十月"},
+            {en: "November", kk: "/noˈvɛmbɚ/", zh: "(n.) 十一月"}, {en: "December", kk: "/dɪˈsɛmbɚ/", zh: "(n.) 十二月"}
+        ],
+        questions: [
+            { q: "The farmers wake up at ________ to start their work in the fields before the sun gets too hot.", a: "dawn", options: ["dawn", "noon", "night", "midnight"], trans: "農夫在黎明起床，在太陽變太熱之前開始田裡的工作。", grammar: "wake up at dawn (黎明起床) 為了避開熱。", vocab: [{w:"dawn", k:"/dɔn/", p:"n.", z:"黎明"}] },
+            { q: "I usually drink a cup of hot coffee in the ________ to help me wake up and feel energetic.", a: "morning", options: ["morning", "afternoon", "evening", "night"], trans: "我通常在早上喝一杯熱咖啡來幫助我醒腦並感到精力充沛。", grammar: "help me wake up (幫助醒來) 暗示 morning。", vocab: [{w:"morning", k:"/ˈmɔrnɪŋ/", p:"n.", z:"早晨"}] },
+            { q: "We often have a quick lunch at ________ because we have to go back to work immediately after eating.", a: "noon", options: ["noon", "dawn", "evening", "midnight"], trans: "我們常在中午吃速食午餐，因為吃完得馬上回去工作。", grammar: "lunch at noon (中午吃午餐)。", vocab: [{w:"noon", k:"/nun/", p:"n.", z:"中午"}] },
+            { q: "It is often very hot in the ________, so we stay inside the house to keep cool and comfortable.", a: "afternoon", options: ["afternoon", "morning", "noon", "midnight"], trans: "下午通常很熱，所以我們待在屋內以保持涼爽舒適。", grammar: "very hot (很熱) 的時段通常是 afternoon。", vocab: [{w:"afternoon", k:"/ˌæftɚˈnun/", p:"n.", z:"下午"}] },
+            { q: "My family enjoys watching television together in the ________ after we have finished our dinner and washed the dishes.", a: "evening", options: ["evening", "morning", "noon", "afternoon"], trans: "我們家喜歡在晚餐和洗碗後，在晚上一起看電視。", grammar: "after dinner (晚餐後) 是 evening。", vocab: [{w:"evening", k:"/ˈivnɪŋ/", p:"n.", z:"傍晚"}] },
+            { q: "The stars shine brightly in the sky at ________, creating a beautiful and peaceful scene for everyone to see.", a: "night", options: ["night", "noon", "afternoon", "morning"], trans: "夜晚星星在天空中閃耀，創造出美麗寧靜的景象。", grammar: "stars shine (星星閃耀) 發生在 night。", vocab: [{w:"night", k:"/naɪt/", p:"n.", z:"夜晚"}] },
+            { q: "Cinderella had to leave the ball before ________, or her carriage would turn back into a large orange pumpkin.", a: "midnight", options: ["midnight", "noon", "dawn", "morning"], trans: "灰姑娘必須在午夜前離開舞會，否則馬車會變回大南瓜。", grammar: "童話故事：12點變南瓜 (midnight)。", vocab: [{w:"midnight", k:"/ˈmɪdˌnaɪt/", p:"n.", z:"午夜"}] },
+            { q: "Many people feel tired on ________ because it is the first day of the work week after the weekend.", a: "Monday", options: ["Monday", "Friday", "Sunday", "Tuesday"], trans: "許多人在星期一感到疲累，因為這是週末後工作週的第一天。", grammar: "first day of work week (工作週第一天)。", vocab: [{w:"Monday", k:"/ˈmʌnde/", p:"n.", z:"星期一"}] },
+            { q: "We have a math test on ________, so I need to study hard tonight to get a good grade.", a: "Tuesday", options: ["Tuesday", "Wednesday", "Thursday", "Friday"], trans: "我們星期二有數學考試，所以我今晚要努力讀書以取得好成績。", grammar: "特定的考試日期。", vocab: [{w:"Tuesday", k:"/ˈtjuzde/", p:"n.", z:"星期二"}] },
+            { q: "________ is often called hump day because it is in the middle of the work week for most people.", a: "Wednesday", options: ["Wednesday", "Monday", "Friday", "Sunday"], trans: "星期三常被稱為駝峰日，因為它在大多數人工作週的中間。", grammar: "hump day (駝峰日) 指 Wednesday。", vocab: [{w:"Wednesday", k:"/ˈwɛnzde/", p:"n.", z:"星期三"}] },
+            { q: "I am going to the dentist on ________ afternoon to have my teeth cleaned and checked by the doctor.", a: "Thursday", options: ["Thursday", "Sunday", "Saturday", "Monday"], trans: "我星期四下午要去看牙醫，讓醫生清潔和檢查牙齒。", grammar: "特定預約時間。", vocab: [{w:"Thursday", k:"/ˈθɝzde/", p:"n.", z:"星期四"}] },
+            { q: "Everyone is happy on ________ because the weekend is coming and they can relax and have fun with friends.", a: "Friday", options: ["Friday", "Monday", "Tuesday", "Sunday"], trans: "大家星期五都很開心，因為週末快到了，可以放鬆和朋友玩。", grammar: "weekend is coming (週末快到了)。", vocab: [{w:"Friday", k:"/ˈfraɪde/", p:"n.", z:"星期五"}] },
+            { q: "I usually clean my room on ________ morning before going out to play soccer with my friends in the park.", a: "Saturday", options: ["Saturday", "Monday", "Tuesday", "Wednesday"], trans: "我通常在星期六早上打掃房間，然後去公園和朋友踢足球。", grammar: "週末早晨的活動。", vocab: [{w:"Saturday", k:"/ˈsætɚde/", p:"n.", z:"星期六"}] },
+            { q: "We go to church on ________ morning and then have a big family lunch at my grandmother's house.", a: "Sunday", options: ["Sunday", "Monday", "Friday", "Saturday"], trans: "我們星期日早上上教堂，然後在祖母家吃豐盛的家庭午餐。", grammar: "go to church (上教堂) 通常在 Sunday。", vocab: [{w:"Sunday", k:"/ˈsʌnde/", p:"n.", z:"星期日"}] },
+            { q: "There are seven days in a ________, and I go to school for five of them to learn new things.", a: "week", options: ["week", "month", "year", "season"], trans: "一週有七天，我有五天要去學校學習新事物。", grammar: "seven days (七天) 構成 a week。", vocab: [{w:"week", k:"/wik/", p:"n.", z:"週"}] },
+            { q: "The traffic is very heavy on a ________ because everyone is driving to work or school at the same time.", a: "weekday", options: ["weekday", "weekend", "holiday", "season"], trans: "平日交通很繁忙，因為大家都在同一時間開車上班或上學。", grammar: "driving to work (開車上班) 發生在 weekday。", vocab: [{w:"weekday", k:"/ˈwikˌde/", p:"n.", z:"平日"}] },
+            { q: "I love to sleep late on the ________ because I do not have to wake up early for school.", a: "weekend", options: ["weekend", "weekday", "monday", "morning"], trans: "我喜歡在週末睡晚一點，因為不用早起上學。", grammar: "not wake up early (不用早起) 是 weekend。", vocab: [{w:"weekend", k:"/ˈwikˌɛnd/", p:"n.", z:"週末"}] },
+            { q: "February is the shortest ________ of the year, usually having only twenty-eight days unless it is a leap year.", a: "month", options: ["month", "week", "day", "season"], trans: "二月是一年中最短的月份，除非是閏年，否則通常只有28天。", grammar: "shortest month (最短的月份)。", vocab: [{w:"month", k:"/mʌnθ/", p:"n.", z:"月"}] },
+            { q: "The weather is usually very cold in ________, so we wear heavy coats and hats to keep ourselves warm.", a: "January", options: ["January", "July", "August", "June"], trans: "一月天氣通常很冷，所以我們穿厚外套和戴帽子保暖。", grammar: "cold/heavy coats (冷/厚外套) 對應一月。", vocab: [{w:"January", k:"/ˈdʒænjʊˌɛri/", p:"n.", z:"一月"}] },
+            { q: "Valentine's Day is in ________, and people give chocolates and flowers to the ones they love and care about.", a: "February", options: ["February", "March", "April", "May"], trans: "情人節在二月，人們會送巧克力和花給他們愛和在乎的人。", grammar: "Valentine's Day (情人節) 在二月。", vocab: [{w:"February", k:"/ˈfɛbrʊˌɛri/", p:"n.", z:"二月"}] },
+            { q: "The flowers start to bloom in ________, marking the beginning of the beautiful spring season after the cold winter.", a: "March", options: ["March", "December", "January", "November"], trans: "花朵在三月開始綻放，標誌著寒冬過後美麗春季的開始。", grammar: "bloom/beginning of spring (開花/春始) 在三月。", vocab: [{w:"March", k:"/mɑrtʃ/", p:"n.", z:"三月"}] },
+            { q: "In Taiwan, there is a long vacation in ________ for Children's Day and the Tomb Sweeping Festival for families.", a: "April", options: ["April", "June", "July", "August"], trans: "在台灣，四月有兒童節和清明節的長假供家庭聚會。", grammar: "Children's Day (兒童節) 在四月。", vocab: [{w:"April", k:"/ˈeprəl/", p:"n.", z:"四月"}] },
+            { q: "We celebrate Mother's Day in ________ to thank our mothers for their love and all the things they do.", a: "May", options: ["May", "March", "April", "June"], trans: "我們在五月慶祝母親節，感謝母親的愛和她們所做的一切。", grammar: "Mother's Day (母親節) 在五月。", vocab: [{w:"May", k:"/me/", p:"n.", z:"五月"}] },
+            { q: "The weather starts to get very hot in ________, and many students are preparing for their final exams at school.", a: "June", options: ["June", "January", "February", "December"], trans: "六月天氣開始變得很熱，許多學生正準備學校的期末考。", grammar: "hot/final exams (熱/期末考) 在六月。", vocab: [{w:"June", k:"/dʒun/", p:"n.", z:"六月"}] },
+            { q: "Summer vacation usually begins in ________, and many families travel to the beach to swim and enjoy the sun.", a: "July", options: ["July", "March", "April", "May"], trans: "暑假通常在七月開始，許多家庭去海邊游泳享受陽光。", grammar: "Summer vacation begins (暑假開始) 在七月。", vocab: [{w:"July", k:"/dʒuˈlaɪ/", p:"n.", z:"七月"}] },
+            { q: "Father's Day in Taiwan is celebrated in ________ because the date sounds like 'Papa' in the Chinese language.", a: "August", options: ["August", "May", "June", "July"], trans: "台灣的父親節在八月慶祝，因為日期聽起來像中文的「爸爸」。", grammar: "Father's Day (八八節) 在八月。", vocab: [{w:"August", k:"/ˈɔɡəst/", p:"n.", z:"八月"}] },
+            { q: "Students go back to school in ________ after a long summer break to start a new academic year.", a: "September", options: ["September", "June", "July", "August"], trans: "學生在長暑假後的九月回到學校，開始新的學年。", grammar: "back to school (返校) 在九月。", vocab: [{w:"September", k:"/sɛpˈtɛmbɚ/", p:"n.", z:"九月"}] },
+            { q: "Halloween is celebrated in ________, and children dress up in costumes to go trick-or-treating in the neighborhood at night.", a: "October", options: ["October", "January", "March", "April"], trans: "萬聖節在十月慶祝，孩子們晚上會穿上戲服在社區玩不給糖就搗蛋。", grammar: "Halloween (萬聖節) 在十月。", vocab: [{w:"October", k:"/ɑkˈtobɚ/", p:"n.", z:"十月"}] },
+            { q: "Thanksgiving is a major holiday in ________ in America where families gather to eat a large turkey dinner together.", a: "November", options: ["November", "May", "June", "July"], trans: "感恩節是美國十一月的重要節日，家人會聚在一起吃豐盛的火雞大餐。", grammar: "Thanksgiving (感恩節) 在十一月。", vocab: [{w:"November", k:"/noˈvɛmbɚ/", p:"n.", z:"十一月"}] },
+            { q: "Christmas is celebrated in ________, and people exchange gifts and spend time with their families during the holiday season.", a: "December", options: ["December", "August", "September", "October"], trans: "聖誕節在十二月慶祝，人們在節日期間交換禮物並與家人共度時光。", grammar: "Christmas (聖誕節) 在十二月。", vocab: [{w:"December", k:"/dɪˈsɛmbɚ/", p:"n.", z:"十二月"}] },
+            { q: "There are four distinct ________s in a year, and each one brings different weather and beautiful scenery to nature.", a: "season", options: ["season", "month", "week", "day"], trans: "一年有四個明顯的季節，每一個都為大自然帶來不同的天氣和美景。", grammar: "four distinct... (四個明顯的...) 指季節。", vocab: [{w:"season", k:"/ˈsizn/", p:"n.", z:"季節"}] },
+            { q: "The trees turn green and flowers bloom in ________, making the world look colorful and full of new life.", a: "spring", options: ["spring", "summer", "autumn", "winter"], trans: "春天樹木變綠，花朵盛開，讓世界看起來色彩繽紛，充滿生機。", grammar: "bloom/new life (開花/新生命) 是春季。", vocab: [{w:"spring", k:"/sprɪŋ/", p:"n.", z:"春天"}] },
+            { q: "It is very hot in ________, so we like to eat ice cream and go swimming in the pool.", a: "summer", options: ["summer", "winter", "spring", "autumn"], trans: "夏天很熱，所以我們喜歡吃冰淇淋和去游泳池游泳。", grammar: "hot/ice cream (熱/冰淇淋) 是夏季。", vocab: [{w:"summer", k:"/ˈsʌmɚ/", p:"n.", z:"夏天"}] },
+            { q: "The leaves on the trees turn red and yellow in ________ before falling to the ground in the wind.", a: "autumn", options: ["autumn", "spring", "summer", "winter"], trans: "秋天樹上的葉子變紅變黃，然後在風中飄落到地上。", grammar: "leaves turn red (葉變紅) 是秋季。", vocab: [{w:"autumn", k:"/ˈɔtəm/", p:"n.", z:"秋天"}] },
+            { q: "It snows in many countries during ________, and children love to build snowmen and have fun snowball fights outside.", a: "winter", options: ["winter", "summer", "spring", "autumn"], trans: "許多國家在冬天會下雪，孩子們喜歡堆雪人和在戶外打雪仗。", grammar: "snow/snowmen (雪/雪人) 是冬季。", vocab: [{w:"winter", k:"/ˈwɪntɚ/", p:"n.", z:"冬天"}] }
+        ]
+    },
+    part2: {
+        title: "Part 2: 計時與時態",
+        vocab: [
+            {en: "alarm clock", kk: "/əˈlɑrm klɑk/", zh: "(n.) 鬧鐘"}, {en: "calendar", kk: "/ˈkæləndɚ/", zh: "(n.) 日曆"},
+            {en: "clock", kk: "/klɑk/", zh: "(n.) 時鐘"}, {en: "watch", kk: "/wɑtʃ/", zh: "(n.) 手錶"},
+            {en: "stop watch", kk: "/stɑp wɑtʃ/", zh: "(n.) 碼錶"}, {en: "a.m.", kk: "/ˌeˈɛm/", zh: "(adv.) 上午"},
+            {en: "p.m.", kk: "/ˌpiˈɛm/", zh: "(adv.) 下午"}, {en: "half", kk: "/hæf/", zh: "(n.) 一半"},
+            {en: "hour", kk: "/aʊr/", zh: "(n.) 小時"}, {en: "minute", kk: "/ˈmɪnɪt/", zh: "(n.) 分鐘"},
+            {en: "moment", kk: "/ˈmomənt/", zh: "(n.) 片刻"}, {en: "o'clock", kk: "/əˈklɑk/", zh: "(adv.) 點鐘"},
+            {en: "past", kk: "/pæst/", zh: "(prep.) 經過"}, {en: "quarter", kk: "/ˈkwɔrtɚ/", zh: "(n.) 一刻鐘"},
+            {en: "second", kk: "/ˈsɛkənd/", zh: "(n.) 秒"}, {en: "time", kk: "/taɪm/", zh: "(n.) 時間"},
+            {en: "ago", kk: "/əˈɡo/", zh: "(adv.) 以前"}, {en: "already", kk: "/ɔlˈrɛdi/", zh: "(adv.) 已經"},
+            {en: "current", kk: "/ˈkɝənt/", zh: "(adj.) 目前的"}, {en: "early", kk: "/ˈɝli/", zh: "(adv.) 早"},
+            {en: "last", kk: "/læst/", zh: "(adj.) 上一個"}, {en: "late", kk: "/let/", zh: "(adj.) 遲的"},
+            {en: "later", kk: "/ˈletɚ/", zh: "(adv.) 稍後"}, {en: "next", kk: "/nɛkst/", zh: "(adj.) 下一個"},
+            {en: "now", kk: "/naʊ/", zh: "(adv.) 現在"}, {en: "once", kk: "/wʌns/", zh: "(adv.) 曾經"},
+            {en: "future", kk: "/ˈfjutʃɚ/", zh: "(n.) 未來"}, {en: "soon", kk: "/sun/", zh: "(adv.) 很快"},
+            {en: "today", kk: "/təˈde/", zh: "(n.) 今天"}, {en: "tonight", kk: "/təˈnaɪt/", zh: "(n.) 今晚"},
+            {en: "tomorrow", kk: "/təˈmɔro/", zh: "(n.) 明天"}, {en: "year", kk: "/jɪr/", zh: "(n.) 年"},
+            {en: "yesterday", kk: "/ˈjɛstɚde/", zh: "(n.) 昨天"}, {en: "day", kk: "/de/", zh: "(n.) 日"},
+            {en: "daily", kk: "/ˈdeli/", zh: "(adj.) 每日的"}
+        ],
+        questions: [
+            { q: "I set my ________ for six o'clock because I did not want to be late for school today.", a: "alarm clock", options: ["alarm clock", "calendar", "watch", "stop watch"], trans: "我把鬧鐘設在六點，因為我今天不想上學遲到。", grammar: "set for six o'clock (設在六點) 指鬧鐘。", vocab: [{w:"alarm clock", k:"/əˈlɑrm klɑk/", p:"n.", z:"鬧鐘"}] },
+            { q: "I marked the important date on the ________ so that I would not forget my mother's birthday next week.", a: "calendar", options: ["calendar", "clock", "watch", "time"], trans: "我在日曆上標記了重要日期，以免忘記下週媽媽的生日。", grammar: "mark date (標記日期) 用 calendar。", vocab: [{w:"calendar", k:"/ˈkæləndɚ/", p:"n.", z:"日曆"}] },
+            { q: "There is a large round ________ on the wall of the classroom that tells us when the class ends.", a: "clock", options: ["clock", "watch", "second", "moment"], trans: "教室牆上有一個大圓鐘，告訴我們何時下課。", grammar: "on the wall (在牆上) 是 clock。", vocab: [{w:"clock", k:"/klɑk/", p:"n.", z:"時鐘"}] },
+            { q: "He looked at his wrist ________ to check the time because he was waiting for the bus to arrive.", a: "watch", options: ["watch", "clock", "calendar", "quarter"], trans: "他看了一下手錶確認時間，因為他在等公車。", grammar: "wrist (手腕) 戴的是 watch。", vocab: [{w:"watch", k:"/wɑtʃ/", p:"n.", z:"手錶"}] },
+            { q: "The coach used a ________ to measure exactly how fast the runners could finish the one hundred meter race.", a: "stop watch", options: ["stop watch", "alarm clock", "calendar", "hour"], trans: "教練用碼錶精確測量跑者跑完一百公尺的速度。", grammar: "measure fast (測量快慢) 用 stop watch。", vocab: [{w:"stop watch", k:"/stɑp wɑtʃ/", p:"n.", z:"碼錶"}] },
+            { q: "I usually wake up at seven ________ to brush my teeth and eat breakfast before the school bus arrives.", a: "a.m.", options: ["a.m.", "p.m.", "past", "late"], trans: "我通常在上午七點起床刷牙吃早餐，趕在校車來之前。", grammar: "wake up (起床) 是 a.m.", vocab: [{w:"a.m.", k:"/ˌeˈɛm/", p:"adv.", z:"上午"}] },
+            { q: "The sun sets around six ________ in the winter, making the sky turn dark very early in the evening.", a: "p.m.", options: ["p.m.", "a.m.", "early", "soon"], trans: "冬天太陽大約在下午六點下山，傍晚天色很快就變暗。", grammar: "sun sets (日落) 是 p.m.", vocab: [{w:"p.m.", k:"/ˌpiˈɛm/", p:"adv.", z:"下午"}] },
+            { q: "It is ________ past three, which means we have thirty minutes left before the library closes for the day.", a: "half", options: ["half", "quarter", "hour", "minute"], trans: "現在是三點半，意味著在圖書館關門前我們還有三十分鐘。", grammar: "thirty minutes left (剩30分) 即 half past。", vocab: [{w:"half", k:"/hæf/", p:"n.", z:"一半"}] },
+            { q: "The movie lasted for two ________s, but it was so interesting that time seemed to pass very quickly.", a: "hours", options: ["hours", "seconds", "days", "weeks"], trans: "電影持續了兩小時，但因為太有趣，時間似乎過得很快。", grammar: "movie lasted (電影持續) 通常以 hour 計算。", vocab: [{w:"hour", k:"/aʊr/", p:"n.", z:"小時"}] },
+            { q: "Please wait for a ________ while I finish tying my shoes, and then we can go to the park.", a: "minute", options: ["minute", "hour", "day", "year"], trans: "請等一分鐘讓我綁好鞋帶，然後我們就可以去公園了。", grammar: "wait for a minute (等一下)。", vocab: [{w:"minute", k:"/ˈmɪnɪt/", p:"n.", z:"分鐘"}] },
+            { q: "Can you wait for a ________? I need to answer this important phone call before we start our meeting.", a: "moment", options: ["moment", "hour", "clock", "watch"], trans: "你能等一下嗎？在會議開始前我需要接這個重要電話。", grammar: "wait for a moment (稍等片刻)。", vocab: [{w:"moment", k:"/ˈmomənt/", p:"n.", z:"片刻"}] },
+            { q: "The train is scheduled to leave the station at nine ________ sharp, so please do not be late today.", a: "o'clock", options: ["o'clock", "time", "hour", "watch"], trans: "火車預定在九點整離開車站，所以請今天不要遲到。", grammar: "nine o'clock (九點整)。", vocab: [{w:"o'clock", k:"/əˈklɑk/", p:"adv.", z:"點鐘"}] },
+            { q: "It is twenty minutes ________ ten, so you are already late for your appointment with the dentist this morning.", a: "past", options: ["past", "to", "late", "early"], trans: "現在是十點二十分，你今天早上的牙醫預約已經遲到了。", grammar: "twenty minutes past ten (10:20)。", vocab: [{w:"past", k:"/pæst/", p:"prep.", z:"經過"}] },
+            { q: "It is a ________ to five, which means we have fifteen minutes to get ready for the party tonight.", a: "quarter", options: ["quarter", "half", "minute", "second"], trans: "現在差一刻五點，意味著我們還有十五分鐘準備今晚的派對。", grammar: "fifteen minutes (15分) 即 quarter。", vocab: [{w:"quarter", k:"/ˈkwɔrtɚ/", p:"n.", z:"一刻鐘"}] },
+            { q: "In a race, every ________ counts, so the runners must run as fast as they can to win.", a: "second", options: ["second", "hour", "day", "week"], trans: "在比賽中，分秒必爭，所以跑者必須盡全力跑以獲勝。", grammar: "fast pace (快節奏) 計量單位是 second。", vocab: [{w:"second", k:"/ˈsɛkənd/", p:"n.", z:"秒"}] },
+            { q: "What ________ is it now? I need to know if I have enough time to catch the next train.", a: "time", options: ["time", "clock", "watch", "hour"], trans: "現在幾點了？我需要知道我是否有足夠時間趕上下班火車。", grammar: "What time is it (幾點了)。", vocab: [{w:"time", k:"/taɪm/", p:"n.", z:"時間"}] },
+            { q: "I visited that beautiful museum two years ________ with my family during our summer vacation to the United States.", a: "ago", options: ["ago", "later", "next", "soon"], trans: "兩年前暑假去美國時，我和家人參觀了那座美麗的博物館。", grammar: "two years ago (兩年前)。", vocab: [{w:"ago", k:"/əˈɡo/", p:"adv.", z:"以前"}] },
+            { q: "I have ________ finished my homework, so now I can watch TV and play video games with my brother.", a: "already", options: ["already", "yet", "soon", "later"], trans: "我已經做完功課，所以現在可以看電視和跟弟弟打電動。", grammar: "have already finished (已經完成)。", vocab: [{w:"already", k:"/ɔlˈrɛdi/", p:"adv.", z:"已經"}] },
+            { q: "The ________ situation is very difficult, but we must work together to find a solution to the problem.", a: "current", options: ["current", "late", "next", "early"], trans: "目前的情況很困難，但我們必須合作找出問題的解決方案。", grammar: "current situation (現況)。", vocab: [{w:"current", k:"/ˈkɝənt/", p:"adj.", z:"目前的"}] },
+            { q: "The ________ bird catches the worm, which means that people who arrive first have the best chance of success.", a: "early", options: ["early", "late", "last", "next"], trans: "早起的鳥兒有蟲吃，意味著最先到達的人有最好的成功機會。", grammar: "early bird (早鳥) 諺語。", vocab: [{w:"early", k:"/ˈɝli/", p:"adv.", z:"早"}] },
+            { q: "I went to the zoo ________ weekend and saw many interesting animals like lions, tigers, and elephants with friends.", a: "last", options: ["last", "next", "tomorrow", "soon"], trans: "我上週末去動物園，和朋友看到了獅子、老虎和大象等有趣的動物。", grammar: "went (過去式) 搭配 last weekend。", vocab: [{w:"last", k:"/læst/", p:"adj.", z:"上一個"}] },
+            { q: "He was ________ for school because he missed the bus and had to walk all the way from home.", a: "late", options: ["late", "early", "current", "future"], trans: "他上學遲到了，因為他錯過公車，必須一路從家裡走過來。", grammar: "missed bus (錯過公車) 導致 late。", vocab: [{w:"late", k:"/let/", p:"adj.", z:"遲的"}] },
+            { q: "I will call you ________ when I finish my work and have some free time to talk to you.", a: "later", options: ["later", "ago", "last", "yesterday"], trans: "我工作做完有空時會再打給你。", grammar: "call you later (稍後打給你)。", vocab: [{w:"later", k:"/ˈletɚ/", p:"adv.", z:"稍後"}] },
+            { q: "We are planning to go to the beach ________ Sunday if the weather is sunny and warm enough.", a: "next", options: ["next", "last", "yesterday", "ago"], trans: "如果天氣夠晴朗溫暖，我們計畫下週日去海邊。", grammar: "planning (計畫) 搭配 next Sunday。", vocab: [{w:"next", k:"/nɛkst/", p:"adj.", z:"下一個"}] },
+            { q: "I am very busy right ________, so I cannot help you with your homework at this specific moment.", a: "now", options: ["now", "then", "soon", "later"], trans: "我現在非常忙，所以此刻無法幫你做功課。", grammar: "right now (就是現在)。", vocab: [{w:"now", k:"/naʊ/", p:"adv.", z:"現在"}] },
+            { q: "I met him ________ at a party a long time ago, but I do not remember his name clearly.", a: "once", options: ["once", "now", "soon", "tomorrow"], trans: "我很久以前在派對上見過他一次，但我不記得他的名字了。", grammar: "met him once (見過一次)。", vocab: [{w:"once", k:"/wʌns/", p:"adv.", z:"曾經/一次"}] },
+            { q: "In the ________, people might travel to Mars and live there for a long time to explore space.", a: "future", options: ["future", "past", "yesterday", "today"], trans: "在未來，人們可能會去火星旅行並長期居住以探索太空。", grammar: "In the future (在未來)。", vocab: [{w:"future", k:"/ˈfjutʃɚ/", p:"n.", z:"未來"}] },
+            { q: "The movie is starting ________, so please hurry up and buy the popcorn before we go into the theater.", a: "soon", options: ["soon", "ago", "last", "yesterday"], trans: "電影快開始了，請在進場前快點買爆米花。", grammar: "starting soon (快開始了)。", vocab: [{w:"soon", k:"/sun/", p:"adv.", z:"很快"}] },
+            { q: "________ is a very special day because it is my birthday and we are going to have a party.", a: "Today", options: ["Today", "Yesterday", "Ago", "Last"], trans: "今天是個特別的日子，因為是我生日，我們要舉辦派對。", grammar: "is (現在式) 搭配 Today。", vocab: [{w:"today", k:"/təˈde/", p:"n.", z:"今天"}] },
+            { q: "We are going to watch a movie ________ after we finish eating dinner at our favorite Italian restaurant.", a: "tonight", options: ["tonight", "yesterday", "last night", "ago"], trans: "今晚在最愛的義大利餐廳吃完晚餐後，我們要去看電影。", grammar: "going to (未來) 搭配 tonight。", vocab: [{w:"tonight", k:"/təˈnaɪt/", p:"n.", z:"今晚"}] },
+            { q: "I have a big math test ________ morning, so I need to study very hard in the library today.", a: "tomorrow", options: ["tomorrow", "yesterday", "last", "ago"], trans: "我明天早上有數學大考，所以我今天要在圖書館努力讀書。", grammar: "tomorrow morning (明天早上)。", vocab: [{w:"tomorrow", k:"/təˈmɔro/", p:"n.", z:"明天"}] },
+            { q: "There are twelve months in a ________, and each month brings different weather and holidays for us to enjoy.", a: "year", options: ["year", "month", "week", "day"], trans: "一年有十二個月，每個月都帶來不同的天氣和節日。", grammar: "twelve months (12個月) 構成 a year。", vocab: [{w:"year", k:"/jɪr/", p:"n.", z:"年"}] },
+            { q: "I went to the park ________ afternoon and played soccer with my friends until the sun went down.", a: "yesterday", options: ["yesterday", "tomorrow", "now", "soon"], trans: "我昨天下午去公園和朋友踢足球，直到太陽下山。", grammar: "went (過去式) 搭配 yesterday。", vocab: [{w:"yesterday", k:"/ˈjɛstɚde/", p:"n.", z:"昨天"}] },
+            { q: "There are twenty-four hours in a ________, and we should use them wisely to learn and help others.", a: "day", options: ["day", "year", "week", "hour"], trans: "一天有二十四小時，我們應該明智地利用時間學習並幫助他人。", grammar: "twenty-four hours (24小時) 構成 a day。", vocab: [{w:"day", k:"/de/", p:"n.", z:"日"}] },
+            { q: "Brushing your teeth is a ________ habit that keeps your teeth healthy and your smile bright and beautiful.", a: "daily", options: ["daily", "day", "today", "now"], trans: "刷牙是個每日習慣，能保持牙齒健康和笑容燦爛。", grammar: "daily habit (每日習慣)。", vocab: [{w:"daily", k:"/ˈdeli/", p:"adj.", z:"每日的"}] }
+        ]
+    }
+};
+
+let currentTopic = "";
+let quizPool = [];
+let currentQIndex = 0;
+let score = 0;
+let wrongQuestions = [];
+
+function selectRound(part) {
+    currentTopic = db[part].code;
+    const roundData = db[part];
+    
+    document.getElementById('current-topic-name').innerText = roundData.title;
+    
+    const container = document.getElementById('review-section');
+    container.innerHTML = roundData.vocab.map(item => `
+        <div class="card">
+            <div class="word-en">${item.en}</div>
+            <div class="word-kk">${item.kk || ''}</div>
+            <div class="word-zh">${item.zh}</div>
+        </div>
+    `).join('');
+
+    document.getElementById('menu-section').style.display = 'none';
+    document.getElementById('review-wrapper').style.display = 'block';
+    
+    quizPool = [...roundData.questions]; 
+    
+    // 簡單防呆，無需真實連線
+    document.getElementById('last-global-time').innerText = "練習模式";
+}
+
+function goHome() {
+    document.getElementById('review-wrapper').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('menu-section').style.display = 'grid';
+    document.getElementById('current-topic-name').innerText = "請選擇";
+}
+
+function startFullQuiz() {
+    quizPool.sort(() => Math.random() - 0.5);
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startRetryQuiz() {
+    quizPool = [...wrongQuestions];
+    wrongQuestions = [];
+    startQuizUI();
+}
+
+function startQuizUI() {
+    document.getElementById('review-wrapper').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    document.getElementById('quiz-content').style.display = 'block';
+    document.getElementById('quiz-result').style.display = 'none';
+    currentQIndex = 0; score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    if(currentQIndex >= quizPool.length) return finishQuiz();
+    const q = quizPool[currentQIndex];
+    document.getElementById('progress').innerText = `題號：${currentQIndex + 1} / ${quizPool.length}`;
+    document.getElementById('q-text').innerText = q.q;
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+    
+    const shuffledOptions = q.options.sort(() => Math.random() - 0.5);
+    const optionsHtml = shuffledOptions.map(opt => 
+        `<button class="option-btn" onclick="checkAnswer(\`${opt}\`, this)">${opt}</button>`
+    ).join('');
+    document.getElementById('q-options').innerHTML = optionsHtml;
+}
+
+function checkAnswer(ans, btn) {
+    const q = quizPool[currentQIndex];
+    const allBtns = document.querySelectorAll('.option-btn');
+    allBtns.forEach(b => b.disabled = true);
+    
+    if(ans === q.a) { 
+        btn.classList.add('correct'); 
+        score++; 
+    } else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
+        if (!wrongQuestions.find(item => item.q === q.q)) wrongQuestions.push(q);
+    }
+    
+    const vocabTags = q.vocab.map(v => `<div class="vocab-tag"><b>${v.w}</b> ${v.k} [${v.p}] ${v.z}</div>`).join('');
+    
+    document.getElementById('feedback').innerHTML = `
+        <div class="analysis-title"><i class="fas fa-search-plus"></i> 專家解析</div>
+        <div class="feedback-item"><span class="feedback-label">[翻譯]</span>${q.trans}</div>
+        <div class="feedback-item"><span class="feedback-label">[文法重點]</span>${q.grammar}</div>
+        <div class="feedback-item"><span class="feedback-label">[必備單字]</span></div>
+        <div class="vocab-compact-list">${vocabTags}</div>
+    `;
+    document.getElementById('feedback').style.display = 'block';
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() { currentQIndex++; showQuestion(); }
+
+function finishQuiz() {
+    const finalScore = Math.round((score/quizPool.length)*100);
+    document.getElementById('quiz-content').style.display = 'none';
+    document.getElementById('quiz-result').style.display = 'block';
+    document.getElementById('final-score-text').innerText = `測驗得分：${finalScore}`;
+    
+    const retryBtn = document.getElementById('retry-btn');
+    if (wrongQuestions.length > 0) {
+        retryBtn.style.display = 'inline-block';
+        retryBtn.innerText = `複習錯題 (${wrongQuestions.length})`;
+    } else { retryBtn.style.display = 'none'; }
+}
+</script>
+</body>
+</html>

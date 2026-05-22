@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>111 年國中會考英文科試題（原題互動版）</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei",Arial,sans-serif;background:#eef2f7;color:#333;line-height:1.7}
+
+/* ── Header ── */
+header{background:linear-gradient(135deg,#1a3a5c,#2d6a9f);color:#fff;padding:22px 30px;text-align:center}
+header h1{font-size:1.5em;letter-spacing:1px}
+header p{font-size:.9em;opacity:.8;margin-top:4px}
+
+/* ── Exam wrapper ── */
+#exam-wrapper{max-width:820px;margin:30px auto;padding:0 16px 60px}
+
+/* ── Progress bar ── */
+#progress-bar-wrap{background:#dde3ec;border-radius:8px;height:10px;margin-bottom:24px}
+#progress-bar{background:#2d6a9f;height:10px;border-radius:8px;transition:width .4s;width:0%}
+#progress-label{text-align:right;font-size:.82em;color:#666;margin-top:4px}
+
+/* ── Question card ── */
+.q-card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+        padding:24px 28px;margin-bottom:20px;border-left:5px solid #2d6a9f;transition:border-color .3s}
+.q-card.correct{border-left-color:#27ae60}
+.q-card.wrong  {border-left-color:#e74c3c}
+.q-num{font-size:.8em;color:#7f8c8d;margin-bottom:6px;font-weight:bold;text-transform:uppercase;letter-spacing:.5px}
+.q-text{font-size:1.05em;margin-bottom:14px}
+.blank{display:inline;border-bottom:2px solid #2d6a9f;padding:0 44px;color:#2d6a9f;font-weight:bold;white-space:nowrap}
+
+/* ── Options ── */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt-label{display:flex;align-items:center;gap:10px;padding:10px 14px;border:2px solid #dde3ec;
+           border-radius:8px;cursor:pointer;transition:all .2s;font-size:.95em}
+.opt-label:hover{border-color:#2d6a9f;background:#f0f5fb}
+.opt-label input{accent-color:#2d6a9f;width:16px;height:16px;flex-shrink:0}
+.opt-label.selected{border-color:#2d6a9f;background:#e8f0fb}
+.opt-label.correct-ans{border-color:#27ae60;background:#eafaf1;font-weight:bold}
+.opt-label.wrong-ans  {border-color:#e74c3c;background:#fdedec}
+
+/* ── Explanation box ── */
+.explanation{display:none;margin-top:18px;background:#f8f9fa;border-radius:8px;padding:18px 20px;
+             border:1px solid #dde3ec;font-size:.92em}
+.explanation h4{color:#1a3a5c;font-size:1em;margin-bottom:10px;border-bottom:1px solid #dde3ec;padding-bottom:6px}
+.explanation .full-sent{background:#fffde7;border-left:4px solid #f0b429;padding:10px 14px;
+                        border-radius:0 6px 6px 0;margin-bottom:10px;line-height:1.8}
+.exp-section{margin-top:10px}
+.exp-section strong{color:#2c3e50}
+.tag{display:inline-block;background:#2d6a9f;color:#fff;border-radius:4px;
+     padding:1px 7px;font-size:.78em;margin-right:4px;vertical-align:middle}
+.tag.green{background:#27ae60}
+.tag.orange{background:#e67e22}
+.tag.red{background:#e74c3c}
+
+/* ── Submit button ── */
+#btn-submit{display:block;width:100%;max-width:340px;margin:10px auto 30px;
+            padding:14px;background:#2d6a9f;color:#fff;border:none;border-radius:10px;
+            font-size:1.1em;font-family:inherit;cursor:pointer;letter-spacing:1px;
+            transition:background .2s;box-shadow:0 3px 10px rgba(45,106,159,.35)}
+#btn-submit:hover{background:#1a3a5c}
+#btn-submit:disabled{background:#aaa;cursor:default;box-shadow:none}
+
+/* ── Report card ── */
+#report{display:none;background:#fff;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1);
+        padding:30px;margin-bottom:40px}
+#report h2{text-align:center;color:#1a3a5c;margin-bottom:20px;font-size:1.4em}
+.score-box{text-align:center;padding:24px;background:linear-gradient(135deg,#1a3a5c,#2d6a9f);
+           color:#fff;border-radius:10px;margin-bottom:24px}
+.score-box .big-score{font-size:3.5em;font-weight:bold;line-height:1}
+.score-box .score-sub{font-size:1em;opacity:.85;margin-top:6px}
+.grade-badge{display:inline-block;padding:4px 16px;border-radius:20px;font-weight:bold;
+             font-size:1.1em;margin-top:10px}
+.grade-a{background:#27ae60;color:#fff}
+.grade-b{background:#2d6a9f;color:#fff}
+.grade-c{background:#e67e22;color:#fff}
+.grade-d{background:#e74c3c;color:#fff}
+
+.summary-row{display:flex;justify-content:space-around;margin-bottom:20px}
+.summary-item{text-align:center}
+.summary-item .num{font-size:2em;font-weight:bold}
+.summary-item .lbl{font-size:.82em;color:#777}
+.num.green{color:#27ae60}
+.num.red{color:#e74c3c}
+
+.wrong-list{background:#fdedec;border-radius:8px;padding:16px 20px;margin-bottom:10px}
+.wrong-list h3{color:#c0392b;margin-bottom:8px;font-size:.95em}
+.wrong-list ul{padding-left:18px;font-size:.9em;line-height:2}
+
+/* ── Responsive ── */
+@media(max-width:560px){
+  .options{grid-template-columns:1fr}
+  #exam-wrapper{padding:0 10px 40px}
+  .q-card{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>111 年國中會考英文科試題（原題互動版）</h1>
+  <p>第一部分：單題｜共 20 題｜原始正式考題</p>
+</header>
+
+<div id="exam-wrapper">
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+  <div id="progress-label">已作答：<span id="answered-count">0</span> / <span id="total-count">20</span> 題</div>
+
+  <form id="exam-form">
+
+  <!-- Q1 -->
+  <div class="q-card" id="qcard-1">
+    <div class="q-num">第 1 題</div>
+    <p class="q-text">Look at the picture. The woman is putting <span class="blank">&nbsp;</span> on the cake.</p>
+    <div style="background:#fffde7;border-left:4px solid #f0b429;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0;font-size:.9em">
+      🖼️ <strong>圖片說明：</strong>一名女子正在蛋糕上插蠟燭，桌上還有盤子與叉子。
+    </div>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q1" value="A"> (A) candles</label>
+      <label class="opt-label"><input type="radio" name="q1" value="B"> (B) forks</label>
+      <label class="opt-label"><input type="radio" name="q1" value="C"> (C) plates</label>
+      <label class="opt-label"><input type="radio" name="q1" value="D"> (D) strawberries</label>
+    </div>
+    <div class="explanation" id="exp-1">
+      <h4>📝 第 1 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Look at the picture. The woman is putting <u>candles</u> on the cake.<br>
+        <strong>中文翻譯：</strong>看圖。這位女子正在蛋糕上插<u>蠟燭</u>。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(A) candles</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span> 現在進行式 <strong>be + V-ing</strong>：描述「此刻正在進行的動作」。<br>
+        圖片題重點在於觀察動作對象：插在蛋糕上的是「蠟燭（candles）」，而非叉子、盤子或草莓。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>candle</strong>（蠟燭）• <strong>fork</strong>（叉子）• <strong>plate</strong>（盤子）• <strong>strawberry</strong>（草莓）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        put candles on a cake（在蛋糕上插蠟燭）• blow out candles（吹蠟燭）• birthday cake（生日蛋糕）</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="qcard-2">
+    <div class="q-num">第 2 題</div>
+    <p class="q-text">The movie starts at two o'clock, <span class="blank">&nbsp;</span> let's meet at the theater at one forty-five.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q2" value="A"> (A) so</label>
+      <label class="opt-label"><input type="radio" name="q2" value="B"> (B) or</label>
+      <label class="opt-label"><input type="radio" name="q2" value="C"> (C) if</label>
+      <label class="opt-label"><input type="radio" name="q2" value="D"> (D) because</label>
+    </div>
+    <div class="explanation" id="exp-2">
+      <h4>📝 第 2 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>The movie starts at two o'clock, <u>so</u> let's meet at the theater at one forty-five.<br>
+        <strong>中文翻譯：</strong>電影兩點開始，<u>所以</u>我們一點四十五分在電影院碰面吧。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(A) so</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>so</strong>（所以）：連接因果關係，前因後果。電影兩點開始（原因）→ 提早十五分鐘碰面（結果）。<br>
+        <strong>or</strong>（否則；或者）• <strong>if</strong>（如果）• <strong>because</strong>（因為）— 均不符語意邏輯。</div>
+      <div class="exp-section"><span class="tag orange">連接詞比較</span>
+        <strong>so</strong>（所以，表結果）• <strong>because</strong>（因為，表原因）<br>
+        <strong>or</strong>（或者；否則）• <strong>if</strong>（如果，表條件）</div>
+      <div class="exp-section"><span class="tag">重要單字</span>
+        <strong>theater</strong>（電影院；劇院）• <strong>meet</strong>（碰面；見面）• <strong>o'clock</strong>（…點鐘）</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="qcard-3">
+    <div class="q-num">第 3 題</div>
+    <p class="q-text">Peter is afraid of the dark. He even leaves the <span class="blank">&nbsp;</span> on when sleeping.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q3" value="A"> (A) computer</label>
+      <label class="opt-label"><input type="radio" name="q3" value="B"> (B) fans</label>
+      <label class="opt-label"><input type="radio" name="q3" value="C"> (C) lights</label>
+      <label class="opt-label"><input type="radio" name="q3" value="D"> (D) music</label>
+    </div>
+    <div class="explanation" id="exp-3">
+      <h4>📝 第 3 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Peter is afraid of the dark. He even leaves the <u>lights</u> on when sleeping.<br>
+        <strong>中文翻譯：</strong>Peter 怕黑。他睡覺時甚至把<u>燈</u>留著開著。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(C) lights</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>leave + 受詞 + on</strong>（讓…保持開著）：leave the lights on = 讓燈繼續開著。<br>
+        語意線索：「afraid of the dark（怕黑）」→ 睡覺時開著「燈（lights）」最合邏輯。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>lights</strong>（燈；電燈）• <strong>computer</strong>（電腦）• <strong>fans</strong>（風扇；粉絲）• <strong>music</strong>（音樂）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        leave the lights on（把燈留著）• turn on the lights（開燈）• be afraid of the dark（怕黑）</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="qcard-4">
+    <div class="q-num">第 4 題</div>
+    <p class="q-text">Pam is a <span class="blank">&nbsp;</span> baseball player; she has more fans than any other player on her team.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q4" value="A"> (A) boring</label>
+      <label class="opt-label"><input type="radio" name="q4" value="B"> (B) heavy</label>
+      <label class="opt-label"><input type="radio" name="q4" value="C"> (C) popular</label>
+      <label class="opt-label"><input type="radio" name="q4" value="D"> (D) rich</label>
+    </div>
+    <div class="explanation" id="exp-4">
+      <h4>📝 第 4 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Pam is a <u>popular</u> baseball player; she has more fans than any other player on her team.<br>
+        <strong>中文翻譯：</strong>Pam 是一位<u>受歡迎的</u>棒球員；她擁有的粉絲比隊上其他任何球員都多。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(C) popular</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        語意線索：「has more fans than any other player（比其他球員有更多粉絲）」→ 可推斷她是「受歡迎的（popular）」球員。<br>
+        <strong>more…than any other</strong>（比其他任何…都更…）：最高級含義的比較級結構。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>popular</strong>（受歡迎的；流行的）• <strong>boring</strong>（無聊的）• <strong>heavy</strong>（重的）• <strong>rich</strong>（富有的）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        popular player（受歡迎的球員）• be popular with（受…歡迎）• baseball player（棒球員）</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="qcard-5">
+    <div class="q-num">第 5 題</div>
+    <p class="q-text">I did not do my homework, so my teacher said I <span class="blank">&nbsp;</span> stay after school to finish it.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q5" value="A"> (A) failed to</label>
+      <label class="opt-label"><input type="radio" name="q5" value="B"> (B) had to</label>
+      <label class="opt-label"><input type="radio" name="q5" value="C"> (C) hoped to</label>
+      <label class="opt-label"><input type="radio" name="q5" value="D"> (D) used to</label>
+    </div>
+    <div class="explanation" id="exp-5">
+      <h4>📝 第 5 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>I did not do my homework, so my teacher said I <u>had to</u> stay after school to finish it.<br>
+        <strong>中文翻譯：</strong>我沒有做作業，所以老師說我<u>必須</u>放學後留下來把它完成。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) had to</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>had to</strong>（必須；不得不）：是 <em>have to</em> 的過去式，表示「被要求做某事，有義務」。<br>
+        整句為間接引語（報告句），主句用過去式 said，因此從句中 must → <strong>had to</strong>。</div>
+      <div class="exp-section"><span class="tag orange">片語比較</span>
+        <strong>had to</strong>（必須，have to 的過去式）• <strong>failed to</strong>（未能；沒能）<br>
+        <strong>hoped to</strong>（希望能夠）• <strong>used to</strong>（過去曾經）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        had to + V（不得不做…）• stay after school（放學後留校）• finish one's homework（完成作業）</div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="qcard-6">
+    <div class="q-num">第 6 題</div>
+    <p class="q-text">Kevin has only enough money for the bag or the shoes. That is a hard <span class="blank">&nbsp;</span> to make because he likes them both.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q6" value="A"> (A) choice</label>
+      <label class="opt-label"><input type="radio" name="q6" value="B"> (B) gift</label>
+      <label class="opt-label"><input type="radio" name="q6" value="C"> (C) rule</label>
+      <label class="opt-label"><input type="radio" name="q6" value="D"> (D) trick</label>
+    </div>
+    <div class="explanation" id="exp-6">
+      <h4>📝 第 6 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Kevin has only enough money for the bag or the shoes. That is a hard <u>choice</u> to make because he likes them both.<br>
+        <strong>中文翻譯：</strong>Kevin 只有足夠的錢買包包或鞋子其中一樣。因為他兩樣都喜歡，這是個很難做的<u>選擇</u>。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(A) choice</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>make a choice</strong>（做選擇）：固定搭配，choice 為名詞。<br>
+        語意線索：Kevin 只能二選一，兩樣都喜歡 → 很難做的「選擇（choice）」。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>choice</strong>（選擇）• <strong>gift</strong>（禮物；天賦）• <strong>rule</strong>（規則）• <strong>trick</strong>（把戲；技巧）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        make a choice（做選擇）• a hard choice（困難的選擇）• have enough money for（有足夠的錢買…）</div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="qcard-7">
+    <div class="q-num">第 7 題</div>
+    <p class="q-text">It was <span class="blank">&nbsp;</span> for us to answer the math question because we've done the same kind of questions many times.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q7" value="A"> (A) common</label>
+      <label class="opt-label"><input type="radio" name="q7" value="B"> (B) easy</label>
+      <label class="opt-label"><input type="radio" name="q7" value="C"> (C) safe</label>
+      <label class="opt-label"><input type="radio" name="q7" value="D"> (D) special</label>
+    </div>
+    <div class="explanation" id="exp-7">
+      <h4>📝 第 7 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>It was <u>easy</u> for us to answer the math question because we've done the same kind of questions many times.<br>
+        <strong>中文翻譯：</strong>回答那道數學題對我們來說很<u>容易</u>，因為我們已經做過很多次同類型的題目了。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) easy</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>It is + adj. + for sb. + to V</strong>（對某人來說做…很…）：形式主詞句型。<br>
+        語意線索：「已經做過很多次（done many times）」→ 熟悉了所以「容易（easy）」。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>easy</strong>（容易的）• <strong>common</strong>（常見的；普通的）• <strong>safe</strong>（安全的）• <strong>special</strong>（特別的）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        It is easy for sb. to V（某人做某事很容易）• answer a question（回答問題）• the same kind of（同類型的）</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="qcard-8">
+    <div class="q-num">第 8 題</div>
+    <p class="q-text">Although it took me lots of time <span class="blank">&nbsp;</span> a big meal for ten people, I was happy that everyone enjoyed it.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q8" value="A"> (A) prepare</label>
+      <label class="opt-label"><input type="radio" name="q8" value="B"> (B) to prepare</label>
+      <label class="opt-label"><input type="radio" name="q8" value="C"> (C) preparing</label>
+      <label class="opt-label"><input type="radio" name="q8" value="D"> (D) prepared</label>
+    </div>
+    <div class="explanation" id="exp-8">
+      <h4>📝 第 8 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Although it took me lots of time <u>to prepare</u> a big meal for ten people, I was happy that everyone enjoyed it.<br>
+        <strong>中文翻譯：</strong>雖然花了我很多時間<u>準備</u>十人份的大餐，但看到大家都很喜歡，我感到很開心。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) to prepare</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>It takes sb. time to V</strong>（某人花時間做某事）：固定句型，to V 為不定詞，說明「花時間做什麼」。<br>
+        ✓ It took me lots of time <em>to prepare</em>…（花了很多時間去準備）</div>
+      <div class="exp-section"><span class="tag orange">常見錯誤</span>
+        ✗ <em>It took me time preparing</em>（固定句型要接 to V）<br>
+        ✓ <strong>It takes/took + 人 + 時間 + to V</strong></div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        prepare a meal（準備餐點）• take time to V（花時間做…）• enjoy a meal（享用餐點）</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="qcard-9">
+    <div class="q-num">第 9 題</div>
+    <p class="q-text">Don't let the children swim in the river. We don't know how <span class="blank">&nbsp;</span> it is. It could be dangerous.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q9" value="A"> (A) deep</label>
+      <label class="opt-label"><input type="radio" name="q9" value="B"> (B) far</label>
+      <label class="opt-label"><input type="radio" name="q9" value="C"> (C) long</label>
+      <label class="opt-label"><input type="radio" name="q9" value="D"> (D) thick</label>
+    </div>
+    <div class="explanation" id="exp-9">
+      <h4>📝 第 9 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Don't let the children swim in the river. We don't know how <u>deep</u> it is. It could be dangerous.<br>
+        <strong>中文翻譯：</strong>別讓孩子們在河裡游泳。我們不知道河有多<u>深</u>。這可能很危險。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(A) deep</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>how + adj. + S + V</strong>（間接問句）：how deep it is = 河有多深。<br>
+        語意線索：游泳的危險性在於不知道水有多「深（deep）」，而非遠近或長短。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>deep</strong>（深的）• <strong>far</strong>（遠的）• <strong>long</strong>（長的）• <strong>thick</strong>（厚的；濃的）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        how deep（多深）• dangerous（危險的）• let sb. V（讓某人做某事）• swim in the river（在河裡游泳）</div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qcard-10">
+    <div class="q-num">第 10 題</div>
+    <p class="q-text">Bob is <span class="blank">&nbsp;</span> of the boys in the family. He never does any housework. His brothers at least take out the garbage sometimes.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q10" value="A"> (A) lazier</label>
+      <label class="opt-label"><input type="radio" name="q10" value="B"> (B) the lazy</label>
+      <label class="opt-label"><input type="radio" name="q10" value="C"> (C) the lazier</label>
+      <label class="opt-label"><input type="radio" name="q10" value="D"> (D) the laziest</label>
+    </div>
+    <div class="explanation" id="exp-10">
+      <h4>📝 第 10 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Bob is <u>the laziest</u> of the boys in the family. He never does any housework. His brothers at least take out the garbage sometimes.<br>
+        <strong>中文翻譯：</strong>Bob 是家裡男孩中<u>最懶的</u>。他從不做任何家務，他的兄弟們至少偶爾還會倒垃圾。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(D) the laziest</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（最高級）</span>
+        <strong>the + 最高級 + of + 複數名詞</strong>（在…之中最…）：<br>
+        <em>the laziest of the boys</em>（男孩中最懶的）。<br>
+        語意線索：Bob「從不（never）」做家務，兄弟們「至少有時（at least sometimes）」做 → Bob 最懶。<br>
+        <strong>lazy → lazier → laziest</strong>（字尾 y 改 i 再加 -er/-est）</div>
+      <div class="exp-section"><span class="tag orange">形容詞三級</span>
+        lazy → lazier → <strong>the laziest</strong>（懶 → 更懶 → 最懶）<br>
+        ✗ <em>lazier</em>（比較級需有比較對象 than）• ✗ <em>the lazier</em>（無此用法）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        take out the garbage（倒垃圾）• do housework（做家務）• at least（至少）</div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="qcard-11">
+    <div class="q-num">第 11 題</div>
+    <p class="q-text">Aunt Gina has lived in this town for more than sixty years, so she <span class="blank">&nbsp;</span> it very well.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q11" value="A"> (A) will know</label>
+      <label class="opt-label"><input type="radio" name="q11" value="B"> (B) knew</label>
+      <label class="opt-label"><input type="radio" name="q11" value="C"> (C) knows</label>
+      <label class="opt-label"><input type="radio" name="q11" value="D"> (D) was going to know</label>
+    </div>
+    <div class="explanation" id="exp-11">
+      <h4>📝 第 11 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Aunt Gina has lived in this town for more than sixty years, so she <u>knows</u> it very well.<br>
+        <strong>中文翻譯：</strong>Gina 阿姨在這個小鎮住了超過六十年，所以她對這裡非常<u>熟悉</u>（了解）。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(C) knows</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        前句用現在完成式 <em>has lived</em>（一直住著），表示從過去到現在的持續。<br>
+        推論的結果是「現在」的狀態：她<strong>現在</strong>很了解這個地方 → 用現在簡單式 <strong>knows</strong>。<br>
+        ✗ <em>knew</em>（過去式，暗示她現在已不了解）• ✗ <em>will know</em>（未來式，尚未了解）</div>
+      <div class="exp-section"><span class="tag orange">時態比較</span>
+        <strong>knows</strong>（現在了解）• <strong>knew</strong>（過去了解，現在不一定）<br>
+        <strong>will know</strong>（未來才會知道）• <strong>was going to know</strong>（過去打算知道）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        live in（住在…）• for more than（超過…）• know sth. well（對…很了解）</div>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="qcard-12">
+    <div class="q-num">第 12 題</div>
+    <p class="q-text">We won't see the sun even after the typhoon leaves, because the news said that heavier rain will soon <span class="blank">&nbsp;</span>.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q12" value="A"> (A) catch</label>
+      <label class="opt-label"><input type="radio" name="q12" value="B"> (B) follow</label>
+      <label class="opt-label"><input type="radio" name="q12" value="C"> (C) move</label>
+      <label class="opt-label"><input type="radio" name="q12" value="D"> (D) stop</label>
+    </div>
+    <div class="explanation" id="exp-12">
+      <h4>📝 第 12 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>We won't see the sun even after the typhoon leaves, because the news said that heavier rain will soon <u>follow</u>.<br>
+        <strong>中文翻譯：</strong>颱風離開後我們也看不到太陽，因為新聞說更大的雨很快就會<u>接著來</u>。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) follow</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>follow</strong> 在此有「接著發生；緊隨其後」的含義（非指跟隨某人）。<br>
+        語意線索：颱風走了還看不到太陽 → 因為「更大的雨將接踵而至（follow）」。</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>follow</strong>（跟隨；接著發生）• <strong>catch</strong>（抓住）• <strong>move</strong>（移動）• <strong>stop</strong>（停止）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        heavier rain will follow（更大的雨將接踵而來）• typhoon（颱風）• even after（即使在…之後）</div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="qcard-13">
+    <div class="q-num">第 13 題</div>
+    <p class="q-text">Yesterday when I got home from work, my brother <span class="blank">&nbsp;</span> for dinner, so he invited me to join him.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q13" value="A"> (A) goes out</label>
+      <label class="opt-label"><input type="radio" name="q13" value="B"> (B) went out</label>
+      <label class="opt-label"><input type="radio" name="q13" value="C"> (C) has gone out</label>
+      <label class="opt-label"><input type="radio" name="q13" value="D"> (D) was going out</label>
+    </div>
+    <div class="explanation" id="exp-13">
+      <h4>📝 第 13 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Yesterday when I got home from work, my brother <u>was going out</u> for dinner, so he invited me to join him.<br>
+        <strong>中文翻譯：</strong>昨天我下班回到家時，我弟弟<u>正準備出門</u>去吃晚飯，所以他邀請我一起去。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(D) was going out</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（過去進行式）</span>
+        <strong>過去進行式（was/were + V-ing）</strong>：表示「過去某時間點正在進行中的動作」。<br>
+        時間線：我回家（got home）→ 當時弟弟正要出門（was going out）→ 邀請我（invited）<br>
+        ✗ <em>went out</em>（簡單過去式，表示已完成，不強調「正在」的狀態）</div>
+      <div class="exp-section"><span class="tag orange">時態比較</span>
+        <strong>was going out</strong>（正要出門，過去進行式）<br>
+        <strong>went out</strong>（出門了，過去簡單式）<br>
+        <strong>has gone out</strong>（已出門，現在完成式—不用於過去時間點）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        go out for dinner（出去吃晚餐）• invite sb. to join（邀請某人加入）• got home（回到家）</div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="qcard-14">
+    <div class="q-num">第 14 題</div>
+    <p class="q-text">You were <span class="blank">&nbsp;</span> not to lend Amy money. She never gives back what she borrows.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q14" value="A"> (A) crazy</label>
+      <label class="opt-label"><input type="radio" name="q14" value="B"> (B) helpful</label>
+      <label class="opt-label"><input type="radio" name="q14" value="C"> (C) wise</label>
+      <label class="opt-label"><input type="radio" name="q14" value="D"> (D) wrong</label>
+    </div>
+    <div class="explanation" id="exp-14">
+      <h4>📝 第 14 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>You were <u>wise</u> not to lend Amy money. She never gives back what she borrows.<br>
+        <strong>中文翻譯：</strong>你沒有借錢給 Amy 真是<u>明智</u>的。她從來不還她借去的東西。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(C) wise</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <strong>wise not to V</strong>（沒有做某事是明智的）：wise 在此是褒義，肯定不借錢的決定。<br>
+        語意線索：Amy 從不還錢 → 不借給她是「明智（wise）」的決定。<br>
+        <strong>give back</strong>（歸還）• <strong>what she borrows</strong>（她借去的東西，what 引導名詞子句）</div>
+      <div class="exp-section"><span class="tag orange">重要單字</span>
+        <strong>wise</strong>（明智的；有智慧的）• <strong>crazy</strong>（瘋狂的）• <strong>helpful</strong>（有幫助的）• <strong>wrong</strong>（錯誤的）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        lend sb. money（借錢給某人）• give back（歸還）• borrow（借入）• wise decision（明智的決定）</div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="qcard-15">
+    <div class="q-num">第 15 題</div>
+    <p class="q-text">Have you found a summer job yet? Mr. Firth <span class="blank">&nbsp;</span> someone to take care of his kids during the vacation. Maybe you can talk to him.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q15" value="A"> (A) has looked for</label>
+      <label class="opt-label"><input type="radio" name="q15" value="B"> (B) is looking for</label>
+      <label class="opt-label"><input type="radio" name="q15" value="C"> (C) looks for</label>
+      <label class="opt-label"><input type="radio" name="q15" value="D"> (D) was looking for</label>
+    </div>
+    <div class="explanation" id="exp-15">
+      <h4>📝 第 15 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Have you found a summer job yet? Mr. Firth <u>is looking for</u> someone to take care of his kids during the vacation. Maybe you can talk to him.<br>
+        <strong>中文翻譯：</strong>你找到暑期工作了嗎？Firth 先生<u>正在找</u>人在假期期間照顧他的孩子。也許你可以去和他談談。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) is looking for</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（現在進行式）</span>
+        <strong>is looking for</strong>（正在尋找）：現在進行式，強調「此刻正在進行、尚未完成」的動作。<br>
+        語意線索：說話者建議「Maybe you can talk to him（也許你去找他談）」→ 他現在還在找人，尚未找到。<br>
+        ✗ <em>has looked for</em>（不強調還在找）• ✗ <em>was looking for</em>（過去進行，已是過去的事）</div>
+      <div class="exp-section"><span class="tag orange">時態比較</span>
+        <strong>is looking for</strong>（現在正在找）• <strong>has looked for</strong>（曾經找過）<br>
+        <strong>looks for</strong>（習慣上找）• <strong>was looking for</strong>（過去某時正在找）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        look for（尋找）• take care of（照顧）• during the vacation（假期期間）</div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="qcard-16">
+    <div class="q-num">第 16 題</div>
+    <p class="q-text">David looked out of the balcony window and saw a woman get in his car <span class="blank">&nbsp;</span> away.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q16" value="A"> (A) drive</label>
+      <label class="opt-label"><input type="radio" name="q16" value="B"> (B) drove</label>
+      <label class="opt-label"><input type="radio" name="q16" value="C"> (C) and drive</label>
+      <label class="opt-label"><input type="radio" name="q16" value="D"> (D) and drove</label>
+    </div>
+    <div class="explanation" id="exp-16">
+      <h4>📝 第 16 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>David looked out of the balcony window and saw a woman get in his car <u>and drive</u> away.<br>
+        <strong>中文翻譯：</strong>David 從陽台窗戶往外看，看見一個女人進入他的車子，<u>然後將車開走</u>。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(C) and drive</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點</span>
+        <em>saw</em> 是感官動詞，後接「受詞 + 原形動詞」結構：<em>saw a woman get in his car and drive away</em>。<br>
+        <strong>get in</strong> 和 <strong>drive away</strong> 都是受詞（a woman）之後的原形動詞，由 and 並列。<br>
+        感官動詞（see / hear / watch 等）+ 受詞 + 原形（不帶 to）：<em>saw her get in and drive away</em></div>
+      <div class="exp-section"><span class="tag orange">常見錯誤</span>
+        ✗ <em>drive</em>（少了 and，無法與前面的 get in 並列連接）<br>
+        ✗ <em>drove</em>（缺少 and；且感官動詞後受詞補語應用原形，不用過去式）<br>
+        ✗ <em>and drove</em>（感官動詞結構中受詞補語須用原形，不用過去式）<br>
+        ✓ <strong>and drive</strong>（and 並列兩個原形：get in … and drive away）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        look out of（往…外面看）• balcony（陽台）• drive away（將車開走）• get in（進入；上車）</div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="qcard-17">
+    <div class="q-num">第 17 題</div>
+    <p class="q-text">The police haven't found the little girl who <span class="blank">&nbsp;</span> at a supermarket. They'll keep doing all they can to find her.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q17" value="A"> (A) took away</label>
+      <label class="opt-label"><input type="radio" name="q17" value="B"> (B) taken away</label>
+      <label class="opt-label"><input type="radio" name="q17" value="C"> (C) has taken away</label>
+      <label class="opt-label"><input type="radio" name="q17" value="D"> (D) was taken away</label>
+    </div>
+    <div class="explanation" id="exp-17">
+      <h4>📝 第 17 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>The police haven't found the little girl who <u>was taken away</u> at a supermarket. They'll keep doing all they can to find her.<br>
+        <strong>中文翻譯：</strong>警方還沒找到那個在超市<u>被帶走</u>的小女孩。他們將繼續盡一切努力尋找她。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(D) was taken away</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（被動語態）</span>
+        <strong>was taken away</strong>：過去被動式 <em>be + p.p.</em>（被…帶走）。<br>
+        小女孩是「被帶走的」受詞，非主動施為者 → 需用被動語態。<br>
+        時態為過去式（警方尚未找到她，是已發生的事）。<br>
+        <strong>take → took → taken</strong>（三態）</div>
+      <div class="exp-section"><span class="tag orange">被動語態結構</span>
+        <strong>was taken away</strong>（被動，過去式）<br>
+        ✗ <em>took away</em>（主動，小女孩不是主動施為者）<br>
+        ✗ <em>taken away</em>（缺少助動詞 was）<br>
+        ✗ <em>has taken away</em>（主動，現在完成式，主詞不對）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        take away（帶走）• keep doing（持續做）• do all one can（盡一切所能）• supermarket（超市）</div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="qcard-18">
+    <div class="q-num">第 18 題</div>
+    <p class="q-text">Buses to the airport only come once every hour, and we just missed <span class="blank">&nbsp;</span>. Why don't we take a taxi?</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q18" value="A"> (A) another</label>
+      <label class="opt-label"><input type="radio" name="q18" value="B"> (B) it</label>
+      <label class="opt-label"><input type="radio" name="q18" value="C"> (C) one</label>
+      <label class="opt-label"><input type="radio" name="q18" value="D"> (D) them</label>
+    </div>
+    <div class="explanation" id="exp-18">
+      <h4>📝 第 18 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Buses to the airport only come once every hour, and we just missed <u>it</u>. Why don't we take a taxi?<br>
+        <strong>中文翻譯：</strong>往機場的巴士每小時只有一班，我們剛剛錯過<u>了它</u>。我們何不搭計程車？
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(B) it</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（代名詞用法）</span>
+        <strong>it</strong>：指代「那班特定的巴士」（剛剛錯過的那一班），是確定的特指。<br>
+        ✗ <em>one</em>（泛指某一班，語意不符—明明錯過的是同一班）<br>
+        ✗ <em>another</em>（另一個，泛指，不強調錯過的是這特定一班）<br>
+        ✗ <em>them</em>（複數，但我們錯過的是「一班」巴士）</div>
+      <div class="exp-section"><span class="tag orange">代名詞比較</span>
+        <strong>it</strong>（指特定已知的那個）• <strong>one</strong>（泛指某一個）<br>
+        <strong>another</strong>（另一個，不特定）• <strong>them</strong>（它們，複數）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        miss the bus（錯過公車）• once every hour（每小時一次）• take a taxi（搭計程車）</div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="qcard-19">
+    <div class="q-num">第 19 題</div>
+    <p class="q-text">Ariel <span class="blank">&nbsp;</span> every night for a week before her Chinese test and got a very good grade.</p>
+    <div class="options">
+      <label class="opt-label"><input type="radio" name="q19" value="A"> (A) studied</label>
+      <label class="opt-label"><input type="radio" name="q19" value="B"> (B) studies</label>
+      <label class="opt-label"><input type="radio" name="q19" value="C"> (C) has studied</label>
+      <label class="opt-label"><input type="radio" name="q19" value="D"> (D) was going to study</label>
+    </div>
+    <div class="explanation" id="exp-19">
+      <h4>📝 第 19 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>Ariel <u>studied</u> every night for a week before her Chinese test and got a very good grade.<br>
+        <strong>中文翻譯：</strong>Ariel 在國文考試前每晚<u>用功讀書</u>讀了一個星期，並且得到了很好的成績。
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(A) studied</strong></div>
+      <div class="exp-section"><span class="tag green">文法重點（過去簡單式）</span>
+        句中有明確的過去時間訊號：<em>before her Chinese test</em>（考試之前，已過去的事）。<br>
+        並列動作 <em>and got a very good grade</em>（得到好成績）也用過去式 → 兩個動作都是過去完成的事，用<strong>過去簡單式</strong>。<br>
+        ✗ <em>studies</em>（現在式，時態錯誤）<br>
+        ✗ <em>has studied</em>（現在完成式，不與明確過去時間詞搭配）</div>
+      <div class="exp-section"><span class="tag orange">時態比較</span>
+        <strong>studied</strong>（過去讀書，已完成）• <strong>studies</strong>（現在習慣性讀書）<br>
+        <strong>has studied</strong>（現在完成，不能搭配明確過去時間）</div>
+      <div class="exp-section"><span class="tag">搭配詞</span>
+        study for a test（為考試讀書）• every night（每晚）• for a week（讀了一個星期）• get a good grade（得到好成績）</div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="qcard-20">
+    <div class="q-num">第 20 題</div>
+    <p class="q-text">While reading this story, Brad saw the word "trolling" and didn't know what it meant. Which one should Brad choose?</p>
+    <p class="q-text" style="margin-top:8px;font-size:.93em;color:#555;font-style:italic">（情境：Josh 問為什麼大家對他這樣 "trolling"，因為他被要求分享想法後卻受到傷害性的回應。）</p>
+    <div class="options" style="grid-template-columns:1fr">
+      <label class="opt-label"><input type="radio" name="q20" value="A"> (A) To celebrate in song.</label>
+      <label class="opt-label"><input type="radio" name="q20" value="B"> (B) To make someone or something move around.</label>
+      <label class="opt-label"><input type="radio" name="q20" value="C"> (C) To pull a fishing line through the water, often from a boat.</label>
+      <label class="opt-label"><input type="radio" name="q20" value="D"> (D) To write something on the Internet to hurt someone or make them angry.</label>
+    </div>
+    <div class="explanation" id="exp-20">
+      <h4>📝 第 20 題解析</h4>
+      <div class="full-sent">
+        <strong>完整句子：</strong>While reading this story, Brad saw the word "trolling" and didn't know what it meant. Which one should Brad choose?<br>
+        <strong>中文翻譯：</strong>Brad 閱讀這個故事時，看到了「trolling」這個字，不知道它的意思。Brad 應該選哪一個解釋？
+      </div>
+      <div class="exp-section"><span class="tag">答案</span> <strong>(D) To write something on the Internet to hurt someone or make them angry.</strong></div>
+      <div class="exp-section"><span class="tag green">字彙解析</span>
+        <strong>trolling</strong>（網路霸凌式挑釁）：在網路上發表具傷害性、激怒他人的內容。<br>
+        情境線索：Josh 分享想法後受到傷害性回應，因此 trolling 在此指「在網路上寫東西傷害或激怒某人」。<br>
+        (A) 在歌聲中慶祝 ✗　(B) 讓某人或某物四處移動 ✗　(C) 在水中拖釣（原義）✗</div>
+      <div class="exp-section"><span class="tag orange">延伸知識</span>
+        <strong>troll</strong>（動詞）在網路用語中指蓄意挑釁、散播傷害性言論的行為。<br>
+        <strong>原義</strong>：trolling 源自釣魚術語，意指「拖曳釣線」，後引申為網路釣語（引誘他人上鉤反應）。</div>
+      <div class="exp-section"><span class="tag">重要單字</span>
+        <strong>trolling</strong>（網路霸凌挑釁）• <strong>hurt</strong>（傷害）• <strong>angry</strong>（憤怒的）• <strong>Internet</strong>（網際網路）</div>
+    </div>
+  </div>
+
+  <button type="button" id="btn-submit" onclick="submitExam()">交卷</button>
+  </form>
+
+  <!-- ── Report Card ── -->
+  <div id="report">
+    <h2>📋 學生成績單</h2>
+    <div class="score-box">
+      <div class="big-score" id="score-display">--</div>
+      <div class="score-sub" id="score-sub"></div>
+      <div id="grade-badge-wrap"></div>
+    </div>
+    <div class="summary-row">
+      <div class="summary-item"><div class="num green" id="correct-count">0</div><div class="lbl">答對題數</div></div>
+      <div class="summary-item"><div class="num red"   id="wrong-count">0</div><div class="lbl">答錯題數</div></div>
+      <div class="summary-item"><div class="num"       id="skip-count">0</div><div class="lbl">未作答</div></div>
+    </div>
+    <div id="wrong-list-box" class="wrong-list" style="display:none">
+      <h3>❌ 答錯題目</h3>
+      <ul id="wrong-list-ul"></ul>
+    </div>
+    <p style="text-align:center;color:#555;font-size:.9em;margin-top:10px">↓ 請向下捲動查看每題詳細解析 ↓</p>
+  </div>
+</div>
+
+<script>
+// ── Answer key ──────────────────────────────────────────────────────────────
+const ANSWERS = {
+  q1:'A', q2:'A', q3:'C', q4:'C', q5:'B',
+  q6:'A', q7:'B', q8:'B', q9:'A', q10:'D',
+  q11:'C',q12:'B',q13:'D',q14:'C',q15:'B',
+  q16:'C',q17:'D',q18:'B',q19:'A',q20:'D'
+};
+
+const QUESTION_TEXT = {
+  q1:'Look at the picture. The woman is putting __ on the cake.',
+  q2:'The movie starts at two o\'clock, __ let\'s meet at the theater at one forty-five.',
+  q3:'Peter is afraid of the dark. He even leaves the __ on when sleeping.',
+  q4:'Pam is a __ baseball player; she has more fans than any other player on her team.',
+  q5:'I did not do my homework, so my teacher said I __ stay after school to finish it.',
+  q6:'Kevin has only enough money for the bag or the shoes. That is a hard __ to make because he likes them both.',
+  q7:'It was __ for us to answer the math question because we\'ve done the same kind of questions many times.',
+  q8:'Although it took me lots of time __ a big meal for ten people, I was happy that everyone enjoyed it.',
+  q9:'Don\'t let the children swim in the river. We don\'t know how __ it is. It could be dangerous.',
+  q10:'Bob is __ of the boys in the family. He never does any housework.',
+  q11:'Aunt Gina has lived in this town for more than sixty years, so she __ it very well.',
+  q12:'We won\'t see the sun even after the typhoon leaves, because the news said that heavier rain will soon __.',
+  q13:'Yesterday when I got home from work, my brother __ for dinner, so he invited me to join him.',
+  q14:'You were __ not to lend Amy money. She never gives back what she borrows.',
+  q15:'Have you found a summer job yet? Mr. Firth __ someone to take care of his kids during the vacation.',
+  q16:'David looked out of the balcony window and saw a woman get in his car __ away.',
+  q17:'The police haven\'t found the little girl who __ at a supermarket.',
+  q18:'Buses to the airport only come once every hour, and we just missed __.',
+  q19:'Ariel __ every night for a week before her Chinese test and got a very good grade.',
+  q20:'While reading this story, Brad saw the word "trolling" and didn\'t know what it meant. Which one should Brad choose?'
+};
+
+// ── Fisher-Yates shuffle ─────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── Randomize exam on page load ──────────────────────────────────────────────
+(function randomizeExam() {
+  const LABELS = ['A','B','C','D'];
+
+  // Step 1: mark correct options with data-correct="true" BEFORE shuffling
+  Object.keys(ANSWERS).forEach(qname => {
+    const radio = document.querySelector(`input[name="${qname}"][value="${ANSWERS[qname]}"]`);
+    if (radio) radio.closest('.opt-label').dataset.correct = 'true';
+  });
+
+  // Step 2: shuffle options within each question
+  document.querySelectorAll('.options').forEach(optDiv => {
+    const opts = shuffle(Array.from(optDiv.querySelectorAll('.opt-label')));
+    opts.forEach((lbl, i) => {
+      const radio = lbl.querySelector('input[type=radio]');
+      const rawText = Array.from(lbl.childNodes)
+        .filter(n => n.nodeType === 3).map(n => n.textContent).join('');
+      const optText = rawText.replace(/^\s*\([A-D]\)\s*/, '').trim();
+      radio.value = LABELS[i];
+      Array.from(lbl.childNodes).forEach(n => { if (n.nodeType === 3) lbl.removeChild(n); });
+      lbl.appendChild(document.createTextNode(` (${LABELS[i]}) ${optText}`));
+      optDiv.appendChild(lbl);
+    });
+  });
+
+  // Step 3: shuffle question card order
+  const form  = document.getElementById('exam-form');
+  const btn   = document.getElementById('btn-submit');
+  const cards = shuffle(Array.from(form.querySelectorAll('.q-card')));
+  cards.forEach(card => form.insertBefore(card, btn));
+
+  // Step 4: re-number displayed question labels
+  cards.forEach((card, i) => {
+    card.querySelector('.q-num').textContent = `第 ${i + 1} 題`;
+  });
+
+  // Update progress label total
+  const tcEl = document.getElementById('total-count');
+  if (tcEl) tcEl.textContent = cards.length;
+})();
+
+// ── Glue each blank to its preceding word (prevent line-start wrap) ──────────
+document.querySelectorAll('.blank').forEach(blank => {
+  const prev = blank.previousSibling;
+  if (prev && prev.nodeType === 3) {
+    const txt = prev.textContent;
+    const lastSpace = txt.lastIndexOf(' ');
+    if (lastSpace !== -1) {
+      prev.textContent = txt.slice(0, lastSpace + 1);
+      const glue = document.createElement('span');
+      glue.style.whiteSpace = 'nowrap';
+      glue.textContent = txt.slice(lastSpace + 1);
+      blank.parentNode.insertBefore(glue, blank);
+      glue.appendChild(blank);
+    }
+  }
+});
+
+// ── Track answered ───────────────────────────────────────────────────────────
+let answeredSet = new Set();
+const totalQuestions = document.querySelectorAll('.q-card').length;
+document.querySelectorAll('input[type=radio]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    answeredSet.add(radio.name);
+    document.getElementById('answered-count').textContent = answeredSet.size;
+    document.getElementById('progress-bar').style.width =
+      (answeredSet.size / totalQuestions * 100) + '%';
+    document.querySelectorAll(`input[name="${radio.name}"]`).forEach(r => {
+      r.closest('.opt-label').classList.toggle('selected', r.checked);
+    });
+  });
+});
+
+// ── Submit ───────────────────────────────────────────────────────────────────
+function submitExam() {
+  let correct = 0, wrong = 0, skipped = 0;
+  const wrongItems = [];
+  const cards = document.querySelectorAll('.q-card');
+
+  cards.forEach((card, idx) => {
+    const radios = card.querySelectorAll('input[type=radio]');
+    if (!radios.length) return;
+    const qname  = radios[0].name;
+    const qnum   = idx + 1;
+    let chosen = null, correctVal = null, correctLabel = '';
+
+    radios.forEach(r => {
+      const lbl = r.closest('.opt-label');
+      if (r.checked)                      { chosen     = r.value; }
+      if (lbl.dataset.correct === 'true') { correctVal = r.value; correctLabel = lbl.textContent.trim(); }
+    });
+
+    if (!chosen) {
+      skipped++;
+      card.style.borderLeftColor = '#aaa';
+    } else if (chosen === correctVal) {
+      correct++;
+      card.classList.add('correct');
+    } else {
+      wrong++;
+      card.classList.add('wrong');
+      wrongItems.push({ qnum, chosen, correctVal, correctLabel });
+    }
+
+    radios.forEach(r => {
+      const lbl = r.closest('.opt-label');
+      lbl.style.pointerEvents = 'none';
+      if (lbl.dataset.correct === 'true')              lbl.classList.add('correct-ans');
+      if (r.checked && lbl.dataset.correct !== 'true') lbl.classList.add('wrong-ans');
+    });
+
+    const expBox = document.getElementById('exp-' + qname.replace('q',''));
+    if (expBox) expBox.style.display = 'block';
+  });
+
+  const total = cards.length;
+  const pct   = Math.round((correct / total) * 100);
+  document.getElementById('score-display').textContent = correct + ' / ' + total;
+  document.getElementById('score-sub').textContent     = '答對率 ' + pct + '%';
+  document.getElementById('correct-count').textContent = correct;
+  document.getElementById('wrong-count').textContent   = wrong;
+  document.getElementById('skip-count').textContent    = skipped;
+
+  let grade, cls;
+  if      (pct >= 90) { grade = 'A　優秀';   cls = 'grade-a'; }
+  else if (pct >= 75) { grade = 'B　良好';   cls = 'grade-b'; }
+  else if (pct >= 60) { grade = 'C　及格';   cls = 'grade-c'; }
+  else                { grade = 'D　待加強'; cls = 'grade-d'; }
+  document.getElementById('grade-badge-wrap').innerHTML =
+    `<span class="grade-badge ${cls}">${grade}</span>`;
+
+  if (wrongItems.length > 0) {
+    const ul = document.getElementById('wrong-list-ul');
+    ul.innerHTML = wrongItems.map(it => {
+      const corrText = it.correctLabel.replace(/^\s*\([A-D]\)\s*/, '').trim();
+      return `<li><strong>第 ${it.qnum} 題</strong>：你選了 (${it.chosen})，正確答案為 <strong>(${it.correctVal}) ${corrText}</strong></li>`;
+    }).join('');
+    document.getElementById('wrong-list-box').style.display = 'block';
+  }
+
+  const reportEl = document.getElementById('report');
+  reportEl.style.display = 'block';
+  document.getElementById('btn-submit').disabled = true;
+  const formEl = document.getElementById('exam-form');
+  formEl.parentNode.insertBefore(reportEl, formEl);
+  reportEl.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

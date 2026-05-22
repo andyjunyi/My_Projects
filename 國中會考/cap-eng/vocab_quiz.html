@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國中會考英文 30天單字小測驗</title>
+<style>
+  /* ── Reset & Variables ── */
+  :root {
+    --w1: #4f6ef7; --w1-light: #eef1fe; --w1-mid: #c7d2fd;
+    --w2: #10b981; --w2-light: #d1fae5; --w2-mid: #6ee7b7;
+    --w3: #f59e0b; --w3-light: #fef3c7; --w3-mid: #fcd34d;
+    --w4: #ef4444; --w4-light: #fee2e2; --w4-mid: #fca5a5;
+    --gray: #6b7280; --gray-light: #f3f4f6; --dark: #1f2937;
+    --radius: 12px; --shadow: 0 2px 12px rgba(0,0,0,.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: #f0f4ff; color: var(--dark); line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #3b5bdb 0%, #1971c2 100%);
+    color: #fff; padding: 2rem 1.5rem 1.5rem; text-align: center;
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: 1px; margin-bottom: .35rem; }
+  header p  { font-size: .9rem; opacity: .85; }
+  .badges   { display: flex; justify-content: center; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+  .badge    { background: rgba(255,255,255,.2); border-radius: 999px; padding: .25rem .85rem; font-size: .8rem; }
+
+  /* ── Layout ── */
+  .container { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  /* ── Day Selector ── */
+  .selector-wrap { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem 1.4rem; margin-bottom: 1.5rem; }
+  .selector-wrap h2 { font-size: 1rem; color: var(--gray); margin-bottom: .75rem; }
+  .week-group { margin-bottom: .8rem; }
+  .week-label { font-size: .78rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--gray); margin-bottom: .4rem; }
+  .day-btns   { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .day-btn {
+    border: 2px solid #e5e7eb; background: #fff; border-radius: 8px;
+    padding: .3rem .7rem; font-size: .82rem; font-weight: 600;
+    cursor: pointer; transition: all .15s; color: var(--dark);
+  }
+  .day-btn:hover { border-color: var(--w1); color: var(--w1); background: var(--w1-light); }
+  .day-btn.active { background: var(--w1); border-color: var(--w1); color: #fff; }
+  .day-btn.w2.active { background: var(--w2); border-color: var(--w2); }
+  .day-btn.w3.active { background: var(--w3); border-color: var(--w3); }
+  .day-btn.w4.active { background: var(--w4); border-color: var(--w4); }
+  .day-btn.review { font-style: italic; }
+
+  /* ── Quiz Panel ── */
+  #quiz-panel { display: none; }
+  .quiz-header {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 1rem 1.4rem; margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .quiz-title { font-size: 1.1rem; font-weight: 700; }
+  .quiz-meta  { font-size: .83rem; color: var(--gray); }
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 999px; height: 8px; flex: 1 1 120px; min-width: 100px; }
+  .progress-bar { height: 8px; border-radius: 999px; background: var(--w1); transition: width .3s; }
+
+  /* ── Score Summary ── */
+  .score-bar {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: .8rem 1.4rem; margin-bottom: 1rem;
+    display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;
+  }
+  .score-stat { text-align: center; }
+  .score-stat .num { font-size: 1.5rem; font-weight: 700; }
+  .score-stat .lbl { font-size: .75rem; color: var(--gray); }
+  .score-stat.correct .num { color: var(--w2); }
+  .score-stat.wrong   .num { color: var(--w4); }
+  .score-stat.total   .num { color: var(--w1); }
+
+  /* ── Question Card ── */
+  .q-card {
+    background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 1.4rem 1.5rem; margin-bottom: 1rem;
+    border-left: 5px solid #e5e7eb; transition: border-color .2s;
+    position: relative;
+  }
+  .q-card.answered-correct { border-left-color: var(--w2); }
+  .q-card.answered-wrong   { border-left-color: var(--w4); }
+
+  .q-num  { font-size: .73rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .5px; margin-bottom: .5rem; }
+  .q-stem { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; line-height: 1.7; }
+  .q-stem .blank { display: inline-block; min-width: 56px; border-bottom: 2px solid #1971c2; vertical-align: bottom; }
+
+  /* Options */
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  @media (max-width: 480px) { .options { grid-template-columns: 1fr; } }
+  .opt-btn {
+    text-align: left; border: 2px solid #e5e7eb; background: #fafafa;
+    border-radius: 8px; padding: .55rem .9rem; font-size: .9rem;
+    cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .5rem;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--w1); background: var(--w1-light); }
+  .opt-btn .opt-label {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #e5e7eb; color: var(--dark); font-size: .78rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .opt-btn.correct { border-color: var(--w2); background: var(--w2-light); }
+  .opt-btn.correct .opt-label { background: var(--w2); color: #fff; }
+  .opt-btn.wrong   { border-color: var(--w4); background: var(--w4-light); }
+  .opt-btn.wrong .opt-label   { background: var(--w4); color: #fff; }
+  .opt-btn:disabled { cursor: default; }
+
+  /* Word Tag */
+  .word-tag {
+    display: inline-flex; align-items: center; gap: .35rem;
+    background: #dbeafe; color: #1e40af; border-radius: 6px;
+    padding: .18rem .55rem; font-size: .8rem; font-weight: 700;
+    margin-bottom: .7rem;
+  }
+  .word-tag .zh { font-weight: 400; color: #1d4ed8; }
+
+  /* Explanation */
+  .explanation {
+    margin-top: .9rem; padding: .85rem 1rem;
+    background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--w1);
+    font-size: .86rem; line-height: 1.7; color: #374151;
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .explanation strong { color: var(--w1); }
+
+  /* Result badge */
+  .result-badge {
+    position: absolute; top: 1rem; right: 1.2rem;
+    font-size: .78rem; font-weight: 700; padding: .2rem .6rem;
+    border-radius: 999px; display: none;
+  }
+  .result-badge.correct { background: var(--w2-light); color: #065f46; display: inline-block; }
+  .result-badge.wrong   { background: var(--w4-light); color: #991b1b; display: inline-block; }
+
+  /* ── Navigation ── */
+  .nav-row {
+    display: flex; gap: .75rem; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin-top: 1.5rem;
+  }
+  .btn {
+    border: none; border-radius: 8px; padding: .6rem 1.4rem;
+    font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .15s;
+  }
+  .btn-primary { background: var(--w1); color: #fff; }
+  .btn-primary:hover { background: #3b5bdb; }
+  .btn-secondary { background: #fff; color: var(--dark); border: 2px solid #e5e7eb; }
+  .btn-secondary:hover { border-color: var(--w1); color: var(--w1); }
+  .btn-success  { background: var(--w2); color: #fff; }
+  .btn-success:hover { background: #059669; }
+  .btn-danger   { background: var(--w4); color: #fff; }
+  .btn-danger:hover   { background: #dc2626; }
+
+  /* ── End Screen ── */
+  #end-screen { display: none; }
+  .rpt-hero {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: #fff; border-radius: var(--radius); padding: 2rem; text-align: center; margin-bottom: 1rem;
+  }
+  .rpt-stars { font-size: 2.2rem; margin-bottom: .4rem; }
+  .rpt-score { font-size: 3.5rem; font-weight: 900; line-height: 1; }
+  .rpt-pct   { font-size: 1.1rem; opacity: .8; margin: .3rem 0; }
+  .rpt-msg   { font-size: 1rem; margin-top: .7rem; background: rgba(255,255,255,.15); border-radius: 8px; padding: .5rem 1rem; }
+  .rpt-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; margin-bottom: 1rem; }
+  .rpt-stat  { background:#fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: .9rem; text-align:center; }
+  .rpt-stat .sv { font-size: 2rem; font-weight:900; }
+  .rpt-stat .sl { font-size: .75rem; color: var(--gray); }
+  .rpt-stat.c .sv { color: var(--w2); }
+  .rpt-stat.w .sv { color: var(--w4); }
+  .rpt-stat.t .sv { color: #7c3aed; }
+  .rpt-section { background:#fff; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 1rem; overflow: hidden; }
+  .rpt-section-hd { padding: .7rem 1.2rem; font-size: .85rem; font-weight:700; }
+  .rpt-section-hd.correct { background: var(--w2-light); color: #065f46; }
+  .rpt-section-hd.wrong   { background: var(--w4-light); color: #991b1b; }
+  .rpt-q { padding: .9rem 1.2rem; border-bottom: 1px solid #f3f4f6; }
+  .rpt-q:last-child { border-bottom: none; }
+  .rpt-q-num  { font-size: .7rem; font-weight:700; color:var(--gray); letter-spacing:.5px; margin-bottom:.3rem; }
+  .rpt-q-stem { font-size: .9rem; font-weight:500; margin-bottom:.4rem; }
+  .rpt-q-stem .blank { display: inline-block; min-width: 56px; border-bottom: 2px solid #1971c2; vertical-align: bottom; }
+  .rpt-ans-row { display:flex; gap:.5rem; align-items:center; font-size:.82rem; margin-bottom:.5rem; flex-wrap:wrap; }
+  .rpt-pill { border-radius:99px; padding:.15rem .65rem; font-size:.78rem; font-weight:700; }
+  .rpt-pill.c { background: var(--w2-light); color: #065f46; }
+  .rpt-pill.w { background: var(--w4-light); color: #991b1b; }
+  .rpt-exp { background:#f8fafc; border-radius:6px; padding:.6rem .85rem; font-size:.82rem; line-height:1.65; color:#374151; border-left:3px solid #c4b5fd; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.3rem; }
+    .q-stem   { font-size: .93rem; }
+    .opt-btn  { font-size: .85rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="max-width:820px; margin:0 auto; position:relative;">
+    <a href="index.html" style="position:absolute; left:0; top:0; background:rgba(255,255,255,.2); color:#fff; border-radius:8px; padding:.3rem .8rem; font-size:.82rem; text-decoration:none; display:inline-flex; align-items:center; gap:.3rem;">← 返回</a>
+    <h1>國中會考英文 30天單字小測驗</h1>
+    <p>每日填空練習 ── 會考命題風格・隨機出題・即時詳解</p>
+    <div class="badges">
+      <span class="badge">30 天課程</span>
+      <span class="badge">206 題精選</span>
+      <span class="badge">中文詳解</span>
+      <span class="badge">隨機排序</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ── Day Selector ── -->
+  <div class="selector-wrap">
+    <h2>選擇今天要練習的天數</h2>
+    <div id="day-selector"></div>
+  </div>
+
+  <!-- ── Quiz Panel ── -->
+  <div id="quiz-panel">
+    <div class="quiz-header">
+      <div>
+        <div class="quiz-title" id="quiz-title">Day 1</div>
+        <div class="quiz-meta" id="quiz-meta"></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:.75rem; flex: 1 1 180px;">
+        <div class="progress-bar-wrap" style="flex:1;">
+          <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+        </div>
+        <span id="progress-text" style="font-size:.82rem; white-space:nowrap; color:var(--gray);"></span>
+      </div>
+    </div>
+
+    <div class="score-bar">
+      <div class="score-stat correct"><div class="num" id="sc-correct">0</div><div class="lbl">答對</div></div>
+      <div class="score-stat wrong">  <div class="num" id="sc-wrong">0</div>  <div class="lbl">答錯</div></div>
+      <div class="score-stat total">  <div class="num" id="sc-total">0</div>  <div class="lbl">已答</div></div>
+      <div style="flex:1; text-align:right;">
+        <button class="btn btn-secondary" onclick="showExplanations()">顯示所有解析</button>
+      </div>
+    </div>
+
+    <!-- Questions injected here -->
+    <div id="questions-container"></div>
+
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="backToSelector()">換題目</button>
+      <button class="btn btn-danger"    onclick="resetQuiz()">重新作答</button>
+      <button class="btn btn-success"   id="finish-btn" onclick="showEndScreen()" style="display:none;">查看成績</button>
+    </div>
+  </div>
+
+  <!-- ── End Screen ── -->
+  <div id="end-screen">
+    <!-- Hero score -->
+    <div class="rpt-hero">
+      <div class="rpt-stars" id="rpt-stars"></div>
+      <div class="rpt-score" id="rpt-score"></div>
+      <div class="rpt-pct"   id="rpt-pct"></div>
+      <div class="rpt-msg"   id="rpt-msg"></div>
+    </div>
+    <!-- Stats -->
+    <div class="rpt-stats">
+      <div class="rpt-stat c"><div class="sv" id="rpt-c">0</div><div class="sl">答對題數</div></div>
+      <div class="rpt-stat w"><div class="sv" id="rpt-w">0</div><div class="sl">答錯題數</div></div>
+      <div class="rpt-stat t"><div class="sv" id="rpt-t">0</div><div class="sl">總題數</div></div>
+    </div>
+    <!-- Per-question report -->
+    <div id="rpt-detail"></div>
+    <!-- Actions -->
+    <div class="nav-row" style="margin-top:1.2rem;">
+      <button class="btn btn-primary"   onclick="resetQuiz()">隨機重練一次</button>
+      <button class="btn btn-secondary" onclick="backToSelector()">選其他天</button>
+      <a class="btn btn-secondary" href="index.html">回學習計畫</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Include question bank -->
+<script src="quiz_data.js"></script>
+<script>
+// ── State ──────────────────────────────────────────
+let currentDay   = null;
+let answers      = {};   // { qIndex: chosenOptionIndex }
+let correctCount = 0;
+let wrongCount   = 0;
+
+// ── Build Day Selector ─────────────────────────────
+function buildSelector() {
+  const container = document.getElementById('day-selector');
+  const weekMap = {};
+  QUIZ_DAYS.forEach(d => {
+    if (!weekMap[d.week]) weekMap[d.week] = [];
+    weekMap[d.week].push(d);
+  });
+  const weekNames = { 1:'第一週（Day 1–7）', 2:'第二週（Day 8–14）', 3:'第三週（Day 15–21）', 4:'第四週（Day 22–30）' };
+  const weekColors = { 1:'w1', 2:'w2', 3:'w3', 4:'w4' };
+  Object.keys(weekMap).forEach(w => {
+    const wg = document.createElement('div');
+    wg.className = 'week-group';
+    wg.innerHTML = `<div class="week-label">${weekNames[w]}</div><div class="day-btns" id="week${w}-btns"></div>`;
+    container.appendChild(wg);
+    weekMap[w].forEach(d => {
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${weekColors[w]}${d.title.includes('複習') || d.title.includes('綜合') ? ' review' : ''}`;
+      btn.textContent = `Day ${d.day}`;
+      btn.title = d.title;
+      btn.onclick = () => startQuiz(d.day);
+      document.getElementById(`week${w}-btns`).appendChild(btn);
+    });
+  });
+}
+
+// ── Start Quiz ─────────────────────────────────────
+function startQuiz(dayNum) {
+  const raw   = QUIZ_DAYS.find(d => d.day === dayNum);
+  // Deep-clone with shuffled questions
+  currentDay  = { ...raw, questions: shuffle(raw.questions) };
+  answers     = {};
+  correctCount = 0;
+  wrongCount   = 0;
+
+  // Update active button
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  const btns = document.querySelectorAll('.day-btn');
+  btns.forEach(b => { if (b.title === currentDay.title) b.classList.add('active'); });
+
+  document.getElementById('quiz-title').textContent = currentDay.title;
+  document.getElementById('quiz-meta').textContent  = `${currentDay.questions.length} 題`;
+  document.getElementById('sc-correct').textContent = '0';
+  document.getElementById('sc-wrong').textContent   = '0';
+  document.getElementById('sc-total').textContent   = '0';
+  document.getElementById('finish-btn').style.display = 'none';
+
+  renderQuestions();
+  updateProgress();
+
+  document.getElementById('quiz-panel').style.display  = 'block';
+  document.getElementById('end-screen').style.display  = 'none';
+  document.querySelector('.selector-wrap').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Render Questions ───────────────────────────────
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  const labels = ['A','B','C','D'];
+
+  currentDay.questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `q-card-${qi}`;
+
+    // Format stem: replace _____ with styled blank
+    const stemHTML = q.stem.replace(/_+/g, '<span class="blank"></span>');
+
+    let optsHTML = '';
+    q.options.forEach((opt, oi) => {
+      optsHTML += `
+        <button class="opt-btn" id="opt-${qi}-${oi}" onclick="selectAnswer(${qi}, ${oi})">
+          <span class="opt-label">${labels[oi]}</span> ${opt}
+        </button>`;
+    });
+
+    card.innerHTML = `
+      <span class="result-badge" id="badge-${qi}"></span>
+      <div class="q-num">第 ${qi + 1} 題</div>
+      <div class="word-tag"><span class="en">${q.word}</span> <span class="zh">${q.wordZh}</span></div>
+      <div class="q-stem">${stemHTML}</div>
+      <div class="options">${optsHTML}</div>
+      <div class="explanation" id="exp-${qi}">${q.explanation}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ── Handle Answer ──────────────────────────────────
+function selectAnswer(qi, chosen) {
+  if (answers[qi] !== undefined) return; // already answered
+
+  const q       = currentDay.questions[qi];
+  const correct = q.answer;
+  answers[qi]   = chosen;
+
+  // Style buttons
+  const allOpts = document.querySelectorAll(`[id^="opt-${qi}-"]`);
+  allOpts.forEach(btn => btn.disabled = true);
+
+  const chosenBtn  = document.getElementById(`opt-${qi}-${chosen}`);
+  const correctBtn = document.getElementById(`opt-${qi}-${correct}`);
+
+  if (chosen === correct) {
+    chosenBtn.classList.add('correct');
+    correctCount++;
+    showBadge(qi, true);
+    document.getElementById(`q-card-${qi}`).classList.add('answered-correct');
+  } else {
+    chosenBtn.classList.add('wrong');
+    correctBtn.classList.add('correct');
+    wrongCount++;
+    showBadge(qi, false);
+    document.getElementById(`q-card-${qi}`).classList.add('answered-wrong');
+  }
+
+  // Show explanation
+  document.getElementById(`exp-${qi}`).classList.add('show');
+
+  // Update score display
+  document.getElementById('sc-correct').textContent = correctCount;
+  document.getElementById('sc-wrong').textContent   = wrongCount;
+  document.getElementById('sc-total').textContent   = Object.keys(answers).length;
+  updateProgress();
+
+  // Show finish button when all answered
+  if (Object.keys(answers).length === currentDay.questions.length) {
+    document.getElementById('finish-btn').style.display = 'inline-block';
+    setTimeout(() => document.getElementById('finish-btn').scrollIntoView({ behavior:'smooth', block:'center' }), 300);
+  }
+}
+
+function showBadge(qi, isCorrect) {
+  const badge = document.getElementById(`badge-${qi}`);
+  badge.textContent = isCorrect ? '正確' : '錯誤';
+  badge.className   = `result-badge ${isCorrect ? 'correct' : 'wrong'}`;
+}
+
+// ── Progress ───────────────────────────────────────
+function updateProgress() {
+  const total    = currentDay.questions.length;
+  const answered = Object.keys(answers).length;
+  const pct      = total ? Math.round(answered / total * 100) : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${answered}/${total}`;
+}
+
+// ── Show all explanations ──────────────────────────
+function showExplanations() {
+  document.querySelectorAll('.explanation').forEach(e => e.classList.add('show'));
+}
+
+// ── End Screen ─────────────────────────────────────
+function showEndScreen() {
+  const qs    = currentDay.questions;
+  const total = qs.length;
+  const pct   = Math.round(correctCount / total * 100);
+  const starCount = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 50 ? 1 : 0;
+  const stars = ['☆☆☆','★☆☆','★★☆','★★★'][starCount];
+  const msgs  = [
+    '需要多加努力！建議逐題閱讀解析，再重練一次。',
+    '已有基礎！複習答錯的單字後，再練一次鞏固記憶。',
+    '表現不錯！把答錯的題目多看幾遍，就能更上一層樓。',
+    '完美！所有單字都掌握了，繼續保持！'
+  ][starCount];
+
+  document.getElementById('rpt-stars').textContent = stars;
+  document.getElementById('rpt-score').textContent = `${correctCount} / ${total}`;
+  document.getElementById('rpt-pct').textContent   = `正確率 ${pct}%`;
+  document.getElementById('rpt-msg').textContent   = msgs;
+  document.getElementById('rpt-c').textContent     = correctCount;
+  document.getElementById('rpt-w').textContent     = wrongCount;
+  document.getElementById('rpt-t').textContent     = total;
+
+  // Per-question detail report
+  const labels = ['A','B','C','D'];
+  const wrongQs = [], rightQs = [];
+  qs.forEach((q, i) => {
+    (answers[i] === q.answer ? rightQs : wrongQs).push({ q, i });
+  });
+
+  let detailHTML = '';
+
+  if (wrongQs.length) {
+    detailHTML += `<div class="rpt-section">
+      <div class="rpt-section-hd wrong">答錯的題目（${wrongQs.length} 題）── 請仔細閱讀解析</div>`;
+    wrongQs.forEach(({ q, i }) => {
+      const chosen  = answers[i];
+      const stemFmt = q.stem.replace(/_+/g, '<span class="blank"></span>');
+      detailHTML += `<div class="rpt-q">
+        <div class="rpt-q-num">第 ${i+1} 題 ── ${q.word}（${q.wordZh}）</div>
+        <div class="rpt-q-stem">${stemFmt}</div>
+        <div class="rpt-ans-row">
+          <span class="rpt-pill w">你選了 (${labels[chosen]}) ${q.options[chosen]}</span>
+          <span style="color:var(--gray)">→</span>
+          <span class="rpt-pill c">正確答案 (${labels[q.answer]}) ${q.options[q.answer]}</span>
+        </div>
+        <div class="rpt-exp">${q.explanation}</div>
+      </div>`;
+    });
+    detailHTML += '</div>';
+  }
+
+  if (rightQs.length) {
+    detailHTML += `<div class="rpt-section">
+      <div class="rpt-section-hd correct">答對的題目（${rightQs.length} 題）</div>`;
+    rightQs.forEach(({ q, i }) => {
+      const stemFmt = q.stem.replace(/_+/g, '<span class="blank"></span>');
+      detailHTML += `<div class="rpt-q">
+        <div class="rpt-q-num">第 ${i+1} 題 ── ${q.word}（${q.wordZh}）</div>
+        <div class="rpt-q-stem">${stemFmt}</div>
+        <div class="rpt-ans-row">
+          <span class="rpt-pill c">正確 (${labels[q.answer]}) ${q.options[q.answer]}</span>
+        </div>
+        <div class="rpt-exp">${q.explanation}</div>
+      </div>`;
+    });
+    detailHTML += '</div>';
+  }
+
+  document.getElementById('rpt-detail').innerHTML = detailHTML;
+  document.getElementById('quiz-panel').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Reset / Back ───────────────────────────────────
+function resetQuiz() {
+  if (currentDay) startQuiz(currentDay.day);
+}
+
+function backToSelector() {
+  document.getElementById('quiz-panel').style.display  = 'none';
+  document.getElementById('end-screen').style.display  = 'none';
+  document.querySelector('.selector-wrap').style.display = 'block';
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Shuffle (Fisher-Yates) ─────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── Init + URL param ───────────────────────────────
+buildSelector();
+const _params = new URLSearchParams(location.search);
+const _dayParam = parseInt(_params.get('day'));
+if (_dayParam && QUIZ_DAYS.find(d => d.day === _dayParam)) {
+  startQuiz(_dayParam);
+}
+</script>
+</body>
+</html>
