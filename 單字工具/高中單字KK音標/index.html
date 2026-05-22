@@ -367,7 +367,7 @@ function doSearch() {
     filteredData = allData.filter(item => {
       if (q) {
         const w = (item.w || '').toLowerCase();
-        if (!w.includes(q)) return false;
+        if (w !== q) return false;
       }
       if (level && (item.l || '') !== level) return false;
       if (cefr && (item.c || '') !== cefr) return false;
