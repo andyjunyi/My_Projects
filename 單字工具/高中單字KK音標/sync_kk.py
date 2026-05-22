@@ -29,6 +29,10 @@ JSON_PATH = os.path.join(BASE, "word_data.json")
 VOC_15000_DIR = os.path.join(os.path.dirname(os.path.dirname(BASE)), "Voc_15000")
 EXPORT_DIR = os.path.join(VOC_15000_DIR, "export")
 
+# 同步目的地：舊版 DeepSeek 專案 + CSV
+SYNC_XLSX = r"E:\DeepSeek\Voc_15000\data\word_list.xlsx"
+SYNC_CSV = os.path.join(BASE, "word_list.csv")
+
 FIELD_MAP = {
     'k': 'kk_phonetics',
     'z': 'definition_zh',
@@ -203,6 +207,28 @@ def main():
         print(f"   ✅ word_list.json / csv 已更新")
     else:
         print(f"   ⚪ export/ 目錄不存在，跳過")
+
+    # Step 4: 同步到 DeepSeek 舊專案
+    if os.path.exists(SYNC_XLSX):
+        import shutil
+        shutil.copy2(XLSX_PATH, SYNC_XLSX)
+        print(f"   ✅ 已同步到 E:\\DeepSeek\\Voc_15000\\data\\word_list.xlsx")
+    else:
+        print(f"   ⚪ E:\\DeepSeek\\Voc_15000\\data\\word_list.xlsx 不存在，跳過")
+
+    # Step 5: 同步到 CSV
+    import csv
+    from openpyxl import load_workbook
+    wb = load_workbook(XLSX_PATH, read_only=True)
+    ws = wb.active
+    headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
+    rows = [[str(c) if c else '' for c in row] for row in ws.iter_rows(min_row=2, values_only=True)]
+    wb.close()
+    with open(SYNC_CSV, 'w', encoding='utf-8-sig', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(headers)
+        writer.writerows(rows)
+    print(f"   ✅ 已同步到 {SYNC_CSV} ({len(rows)} 筆)")
 
     print(f"\n✅ 全部完成！")
 
