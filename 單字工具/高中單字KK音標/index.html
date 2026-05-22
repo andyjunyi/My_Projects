@@ -317,10 +317,12 @@ const FIELD_COLORS = {
 function loadData() {
   if (typeof WORD_DATA !== 'undefined' && WORD_DATA && WORD_DATA.length > 0) {
     allData = WORD_DATA;
+    // 預設顯示全部
+    filteredData = allData;
     console.log('✅ 成功載入 data.js:', allData.length, '筆');
     document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆單字`;
     renderRecent();
-    doSearch();
+    render();
     return;
   }
 
@@ -364,17 +366,26 @@ function doSearch() {
   const cefr = document.getElementById('cefrFilter').value;
   const empty = document.getElementById('emptyFilter').value;
 
-  filteredData = allData.filter(item => {
-    if (q) {
-      if (!item.w.toLowerCase().includes(q) && !item.z.toLowerCase().includes(q) && !item.k.toLowerCase().includes(q) && !item.e.toLowerCase().includes(q)) return false;
-    }
-    if (level && item.l !== level) return false;
-    if (cefr && item.c !== cefr) return false;
-    if (empty === 'kk' && item.k) return false;
-    if (empty === 'zh' && item.z) return false;
-    if (empty === 'ex' && item.e) return false;
-    return true;
-  });
+  try {
+    filteredData = allData.filter(item => {
+      if (q) {
+        const w = (item.w || '').toLowerCase();
+        const z = (item.z || '').toLowerCase();
+        const k = (item.k || '').toLowerCase();
+        const e = (item.e || '').toLowerCase();
+        if (!w.includes(q) && !z.includes(q) && !k.includes(q) && !e.includes(q)) return false;
+      }
+      if (level && (item.l || '') !== level) return false;
+      if (cefr && (item.c || '') !== cefr) return false;
+      if (empty === 'kk' && item.k) return false;
+      if (empty === 'zh' && item.z) return false;
+      if (empty === 'ex' && item.e) return false;
+      return true;
+    });
+  } catch(e) {
+    console.error('搜尋錯誤:', e);
+    filteredData = [];
+  }
 
   currentPage = 1;
   render();
