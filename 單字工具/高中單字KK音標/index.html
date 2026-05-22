@@ -1,800 +1,500 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>KK 音標查詢系統 - 高中單字</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Noto Sans TC', 'Nunito', sans-serif;
-  background: #f0f4ff;
-  color: #1e293b;
-  padding: 10px;
-  padding-bottom: 80px;
-  -webkit-text-size-adjust: 100%;
-}
-
-/* ── Header ── */
-.header {
-  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
-  border-radius: 14px;
-  padding: 14px 18px;
-  color: #fff;
-  margin-bottom: 12px;
-}
-.header h1 { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
-.header .sub { font-size: 12px; opacity: 0.8; }
-.header .count { font-size: 12px; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 8px; display: inline-block; margin-top: 6px; }
-
-/* ── Search ── */
-.search-area {
-  margin-bottom: 12px;
-}
-.search-area input {
-  width: 100%;
-  padding: 12px 16px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-family: inherit;
-  outline: none;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-}
-.search-area input:focus {
-  box-shadow: 0 2px 12px rgba(59,130,246,0.2);
-}
-
-/* ── Filter toggle ── */
-.filter-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-}
-.filter-toggle-btn {
-  color: #64748b;
-  font-size: 13px;
-  padding: 4px 12px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  cursor: pointer;
-  font-family: inherit;
-}
-.filter-toggle-btn:active { background: #f1f5f9; }
-.filter-toggle .badge {
-  font-size: 12px;
-  color: #64748b;
-}
-
-/* ── Filters (collapsible) ── */
-.filters {
-  display: none;
-  margin-top: 8px;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.filters.open { display: flex; }
-.filters select {
-  flex: 1;
-  min-width: 80px;
-  padding: 10px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 13px;
-  font-family: inherit;
-  outline: none;
-  background: #fff;
-}
-.filters .sync-btn {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  background: #7c3aed;
-  color: #fff;
-  font-size: 13px;
-  font-family: inherit;
-  cursor: pointer;
-}
-.filters .sync-btn:active { background: #6d28d9; }
-
-/* ── Recent panel ── */
-.recent-panel {
-  background: #fff;
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-.recent-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-.recent-header h3 { font-size: 13px; color: #475569; }
-.recent-header button {
-  padding: 2px 10px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 11px;
-  font-family: inherit;
-  cursor: pointer;
-}
-.recent-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-.recent-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-}
-.recent-tag:active { background: #eff6ff; border-color: #3b82f6; }
-.recent-tag .word { color: #1e40af; }
-.recent-tag .field { color: #94a3b8; font-weight: 400; font-size: 10px; }
-
-/* ── Result count ── */
-.result-count {
-  font-size: 13px;
-  color: #64748b;
-  margin-bottom: 10px;
-}
-
-/* ── Word cards ── */
-.word-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  transition: box-shadow 0.15s;
-}
-.word-card:active {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.word-card.modified {
-  background: #fffbeb;
-  border-left: 4px solid #f59e0b;
-}
-.word-card .card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 6px;
-}
-.word-card .word-main {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e40af;
-}
-.word-card .word-num {
-  font-size: 11px;
-  color: #94a3b8;
-  margin-top: 4px;
-}
-.word-card .badges {
-  display: flex;
-  gap: 4px;
-  flex-shrink: 0;
-}
-.level-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 700;
-}
-.level-1 { background: #e0e7ff; color: #3730a3; }
-.level-2 { background: #dbeafe; color: #1e40af; }
-.level-3 { background: #d1fae5; color: #065f46; }
-.level-4 { background: #fef3c7; color: #92400e; }
-.level-5 { background: #fee2e2; color: #991b1b; }
-.level-6 { background: #f3e8ff; color: #6b21a8; }
-.cefr-badge {
-  display: inline-block;
-  padding: 2px 7px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 700;
-}
-.cefr-A1 { background: #e0e7ff; color: #4338ca; }
-.cefr-A2 { background: #d1fae5; color: #065f46; }
-.cefr-B1 { background: #fef3c7; color: #92400e; }
-.cefr-B2 { background: #fee2e2; color: #991b1b; }
-
-.word-card .field-row {
-  margin-top: 8px;
-  padding: 6px 0;
-  border-top: 1px solid #f1f5f9;
-}
-.word-card .field-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-.word-card .field-value {
-  font-size: 14px;
-  line-height: 1.6;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 8px;
-  display: block;
-  width: 100%;
-}
-.word-card .field-value:active {
-  background: #f8faff;
-}
-.word-card .field-value.empty {
-  color: #f59e0b;
-  font-style: italic;
-  font-size: 12px;
-}
+     1|<!DOCTYPE html>
+     2|<html lang="zh-TW">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     6|<title>KK 音標查詢系統 - 高中單字</title>
+     7|<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
+     8|<style>
+     9|* { margin: 0; padding: 0; box-sizing: border-box; }
+    10|body {
+    11|  font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+    12|  background: #f0f4ff;
+    13|  color: #1e293b;
+    14|  padding: 10px;
+    15|  padding-bottom: 80px;
+    16|  -webkit-text-size-adjust: 100%;
+    17|}
+    18|
+    19|/* ── Header ── */
+    20|.header {
+    21|  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+    22|  border-radius: 14px;
+    23|  padding: 14px 18px;
+    24|  color: #fff;
+    25|  margin-bottom: 12px;
+    26|}
+    27|.header h1 { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+    28|.header .sub { font-size: 14px; opacity: 0.8; }
+    29|.header .count { font-size: 14px; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 8px; display: inline-block; margin-top: 6px; }
+    30|
+    31|/* ── Search ── */
+    32|.search-area {
+    33|  margin-bottom: 12px;
+    34|}
+    35|.search-area input {
+    36|  width: 100%;
+    37|  padding: 12px 16px;
+    38|  border: none;
+    39|  border-radius: 12px;
+    40|  font-size: 18px;
+    41|  font-family: inherit;
+    42|  outline: none;
+    43|  background: #fff;
+    44|  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    45|}
+    46|.search-area input:focus {
+    47|  box-shadow: 0 2px 12px rgba(59,130,246,0.2);
+    48|}
+    49|
+    50|/* ── Filter toggle ── */
+    51|.filter-toggle {
+    52|  display: flex;
+    53|  justify-content: space-between;
+    54|  align-items: center;
+    55|  margin-top: 8px;
+    56|}
+    57|.filter-toggle-btn {
+    58|  color: #64748b;
+    59|  font-size: 15px;
+    60|  padding: 4px 12px;
+    61|  border-radius: 8px;
+    62|  border: 1px solid #e2e8f0;
+    63|  background: #fff;
+    64|  cursor: pointer;
+    65|  font-family: inherit;
+    66|}
+    67|.filter-toggle-btn:active { background: #f1f5f9; }
+    68|.filter-toggle .badge {
+    69|  font-size: 14px;
+    70|  color: #64748b;
+    71|}
+    72|
+    73|/* ── Filters (collapsible) ── */
+    74|.filters {
+    75|  display: none;
+    76|  margin-top: 8px;
+    77|  gap: 8px;
+    78|  flex-wrap: wrap;
+    79|}
+    80|.filters.open { display: flex; }
+    81|.filters select {
+    82|  flex: 1;
+    83|  min-width: 80px;
+    84|  padding: 10px 12px;
+    85|  border: 1px solid #e2e8f0;
+    86|  border-radius: 10px;
+    87|  font-size: 15px;
+    88|  font-family: inherit;
+    89|  outline: none;
+    90|  background: #fff;
+    91|}
+    92|.filters .sync-btn {
+    93|  padding: 10px 16px;
+    94|  border: none;
+    95|  border-radius: 10px;
+    96|  background: #7c3aed;
+    97|  color: #fff;
+    98|  font-size: 15px;
+    99|  font-family: inherit;
+   100|  cursor: pointer;
+   101|}
+   102|.filters .sync-btn:active { background: #6d28d9; }
+   103|
+   104|/* ── Recent panel ── */
+   105|.recent-panel {
+   106|  background: #fff;
+   107|  border-radius: 12px;
+   108|  padding: 10px 14px;
+   109|  margin-bottom: 12px;
+   110|  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+   111|}
+   112|.recent-header {
+   113|  display: flex;
+   114|  justify-content: space-between;
+   115|  align-items: center;
+   116|  margin-bottom: 6px;
+   117|}
+   118|.recent-header h3 { font-size: 15px; color: #475569; }
+   119|.recent-header button {
+   120|  padding: 2px 10px;
+   121|  border: 1px solid #e2e8f0;
+   122|  border-radius: 8px;
+   123|  background: #fff;
+   124|  font-size: 13px;
+   125|  font-family: inherit;
+   126|  cursor: pointer;
+   127|}
+   128|.recent-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+   129|.recent-tag {
+   130|  display: inline-block;
+   131|  padding: 3px 10px;
+   132|  border-radius: 14px;
+   133|  font-size: 14px;
+   134|  font-weight: 600;
+   135|  cursor: pointer;
+   136|  border: 1px solid #e2e8f0;
+   137|  background: #f8fafc;
+   138|}
+   139|.recent-tag:active { background: #eff6ff; border-color: #3b82f6; }
+   140|.recent-tag .word { color: #1e40af; }
+   141|.recent-tag .field { color: #94a3b8; font-weight: 400; font-size: 12px; }
+   142|
+   143|/* ── Result count ── */
+   144|.result-count {
+   145|  font-size: 15px;
+   146|  color: #64748b;
+   147|  margin-bottom: 10px;
+   148|}
+   149|
+   150|/* ── Word cards ── */
+   151|.word-card {
+   152|  background: #fff;
+   153|  border-radius: 14px;
+   154|  padding: 14px 16px;
+   155|  margin-bottom: 10px;
+   156|  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+   157|  transition: box-shadow 0.15s;
+   158|}
+   159|.word-card:active {
+   160|  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+   161|}
+   162|.word-card.modified {
+   163|  background: #fffbeb;
+   164|  border-left: 4px solid #f59e0b;
+   165|}
+   166|.word-card .card-top {
+   167|  display: flex;
+   168|  justify-content: space-between;
+   169|  align-items: flex-start;
+   170|  margin-bottom: 6px;
+   171|}
+   172|.word-card .word-main {
+   173|  font-size: 20px;
+   174|  font-weight: 700;
+   175|  color: #1e40af;
+   176|}
+   177|.word-card .word-num {
+   178|  font-size: 13px;
+   179|  color: #94a3b8;
+   180|  margin-top: 4px;
+   181|}
+   182|.word-card .badges {
+   183|  display: flex;
+   184|  gap: 4px;
+   185|  flex-shrink: 0;
+   186|}
+   187|.level-badge {
+   188|  display: inline-block;
+   189|  padding: 2px 8px;
+   190|  border-radius: 10px;
+   191|  font-size: 12px;
+   192|  font-weight: 700;
+   193|}
+   194|.level-1 { background: #e0e7ff; color: #3730a3; }
+   195|.level-2 { background: #dbeafe; color: #1e40af; }
+   196|.level-3 { background: #d1fae5; color: #065f46; }
+   197|.level-4 { background: #fef3c7; color: #92400e; }
+   198|.level-5 { background: #fee2e2; color: #991b1b; }
+   199|.level-6 { background: #f3e8ff; color: #6b21a8; }
+   200|.cefr-badge {
+   201|  display: inline-block;
+   202|  padding: 2px 7px;
+   203|  border-radius: 6px;
+   204|  font-size: 12px;
+   205|  font-weight: 700;
+   206|}
+   207|.cefr-A1 { background: #e0e7ff; color: #4338ca; }
+   208|.cefr-A2 { background: #d1fae5; color: #065f46; }
+   209|.cefr-B1 { background: #fef3c7; color: #92400e; }
+   210|.cefr-B2 { background: #fee2e2; color: #991b1b; }
+   211|
+   212|.word-card .field-row {
+   213|  margin-top: 8px;
+   214|  padding: 6px 0;
+   215|  border-top: 1px solid #f1f5f9;
+   216|}
+   217|.word-card .field-label {
+   218|  font-size: 12px;
+   219|  font-weight: 700;
+   220|  color: #94a3b8;
+   221|  text-transform: uppercase;
+   222|  letter-spacing: 0.5px;
+   223|  margin-bottom: 2px;
+   224|}
+   225|.word-card .field-value {
+   226|  font-size: 16px;
+   227|  line-height: 1.6;
+   228|  word-break: break-word;
+   229|  overflow-wrap: break-word;
+   230|  white-space: pre-wrap;
+   231|  cursor: pointer;
+   232|  padding: 6px 10px;
+   233|  border-radius: 8px;
+   234|  display: block;
+   235|  width: 100%;
+   236|}
+   237|.word-card .field-value:active {
+   238|  background: #f8faff;
+   239|}
+   240|.word-card .field-value.empty {
+   241|  color: #f59e0b;
+   242|  font-style: italic;
+   243|  font-size: 14px;
+   244|}
 .word-card .field-value.mono {
   font-family: 'DM Mono', monospace;
-  font-size: 15px;
-}
-.word-card .field-value .kk-sym {
-  color: #64748b;
-  font-weight: 400;
-}
-
-/* Edit mode inside card */
+  font-size: 17px;
+   249|.word-card .field-value .kk-sym {
+   250|  color: #64748b;
+   251|  font-weight: 400;
+   252|}
+   253|
+   254|/* Edit mode inside card */
 .word-card .edit-input {
   font-family: inherit;
-  font-size: 14px;
-  padding: 6px 10px;
-  border: 2px solid #3b82f6;
-  border-radius: 8px;
-  outline: none;
-  width: 100%;
-}
-.word-card .edit-input:focus {
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
-}
-.word-card .edit-input.mono {
-  font-family: 'DM Mono', monospace;
-}
-.word-card .edit-select {
-  font-family: inherit;
-  font-size: 13px;
-  padding: 6px 10px;
-  border: 2px solid #3b82f6;
-  border-radius: 8px;
-  outline: none;
-  background: #fff;
-  width: 100%;
-}
-
-/* ── Empty state ── */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-}
-.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
-.empty-state .title { font-size: 16px; font-weight: 600; color: #64748b; margin-bottom: 6px; }
-.empty-state .desc { font-size: 13px; }
-
-/* ── Sync panel ── */
-.sync-panel {
-  background: #fff;
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  display: none;
-}
-.sync-panel.open { display: block; }
-.sync-panel h3 { font-size: 14px; margin-bottom: 8px; color: #334155; }
-.sync-panel p { font-size: 12px; color: #64748b; margin-bottom: 8px; }
-.sync-panel textarea {
-  width: 100%;
-  min-height: 70px;
-  padding: 10px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  resize: vertical;
-  outline: none;
-}
-.sync-panel .actions {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-.sync-panel .actions button {
-  padding: 6px 14px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 12px;
-  font-family: inherit;
-  cursor: pointer;
-}
-.sync-panel .actions button:active { background: #f1f5f9; }
-.sync-panel .summary { font-size: 11px; color: #64748b; }
-
-/* ── Pagination ── */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 0 20px;
-  flex-wrap: wrap;
-}
-.pagination button {
-  padding: 8px 14px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 13px;
-  font-family: inherit;
-}
-.pagination button:active { border-color: #93c5fd; }
-.pagination button.active { background: #1e40af; color: #fff; border-color: #1e40af; }
-.pagination button:disabled { opacity: 0.3; }
-.pagination .ellipsis { color: #94a3b8; font-size: 13px; padding: 0 2px; }
-
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1e293b;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.25s;
-  z-index: 200;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.toast.show { opacity: 1; }
-.toast.success { background: #0d7a5f; }
-.toast.error { background: #dc2626; }
-</style>
-</head>
-<body>
-
-<div class="header">
-  <div style="display:flex;justify-content:space-between;align-items:center;">
-    <div>
-      <h1>🔍 高中單字</h1>
-      <div class="sub">點擊欄位即可修改</div>
-    </div>
-    <div class="count" id="statsBar">載入中...</div>
-  </div>
-</div>
-
-<div class="search-area">
-  <input type="text" id="searchInput" placeholder="🔍 輸入單字搜尋..." oninput="doSearch()" autocomplete="off">
-  <div class="filter-toggle">
-    <span class="badge" id="resultCountMini"></span>
-    <button class="filter-toggle-btn" onclick="toggleFilters()" id="filterToggleBtn">⚙️ 篩選</button>
-  </div>
-  <div class="filters" id="filterPanel">
-    <select id="levelFilter" onchange="doSearch()">
-      <option value="">全部級別</option>
-      <option value="1">Level 1</option>
-      <option value="2">Level 2</option>
-      <option value="3">Level 3</option>
-      <option value="4">Level 4</option>
-      <option value="5">Level 5</option>
-      <option value="6">Level 6</option>
-    </select>
-    <select id="cefrFilter" onchange="doSearch()">
-      <option value="">全部 CEFR</option>
-      <option value="A1">A1</option>
-      <option value="A2">A2</option>
-      <option value="B1">B1</option>
-      <option value="B2">B2</option>
-    </select>
-    <select id="emptyFilter" onchange="doSearch()">
-      <option value="">全部</option>
-      <option value="kk">KK 空值</option>
-      <option value="zh">中譯空值</option>
-      <option value="ex">例句空值</option>
-    </select>
-    <button class="sync-btn" onclick="toggleSync()">🔄 同步 <span id="changeCount">0</span></button>
-  </div>
-</div>
-
-<div class="sync-panel" id="syncPanel">
-  <h3>🔄 修改同步記錄</h3>
-  <p>將下方腳本存為 <code>changes.tsv</code>，在 WSL 執行<br><code>python3 sync_kk.py &lt; changes.tsv</code></p>
-  <textarea id="syncOutput" readonly placeholder="暫無修改記錄..."></textarea>
-  <div class="actions">
-    <button onclick="copySync()">📋 複製</button>
-    <button onclick="clearSync()">🗑️ 清空</button>
-    <span class="summary" id="changeSummary"></span>
-  </div>
-</div>
-
-<div class="result-count" id="resultCount">載入中...</div>
-<div id="cardContainer"></div>
-<div class="pagination" id="pagination"></div>
-
-<!-- Recent searches -->
-<div class="recent-panel" id="recentPanel">
-  <div class="recent-header">
-    <h3>🕐 最近查詢</h3>
-    <button onclick="clearRecent()">🗑️ 清空</button>
-  </div>
-  <div class="recent-tags" id="recentTags"></div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<!-- Data -->
-<script src="data.js?v=2"></script>
-
-<script>
-// ══════ DATA ══════
-let allData = [];
-let filteredData = [];
-let currentPage = 1;
-const PER_PAGE = 15;
-let changes = {};
-let editing = {};
-let recent = JSON.parse(localStorage.getItem('kk_recent') || '[]');
-const MAX_RECENT = 20;
-
-const FIELD_NAMES = { k:'KK音標', z:'中譯', e:'例句', ez:'例句中譯', l:'級別', c:'CEFR' };
-const FIELD_COLORS = { k:'#2563eb', z:'#0d7a5f', e:'#7c3aed', ez:'#64748b', l:'#f59e0b', c:'#0891b2' };
-
-// ══════ LOAD ══════
-function loadData() {
-  if (typeof WORD_DATA !== 'undefined' && WORD_DATA && WORD_DATA.length > 0) {
-    allData = WORD_DATA;
-    filteredData = allData;
-    document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆`;
-    renderRecent();
-    render();
-    return;
-  }
-  loadDataFetch();
-}
-
-async function loadDataFetch() {
-  const paths = [
-    'word_data.json',
-    './word_data.json',
-    'https://andyjunyi.github.io/My_Projects/單字工具/高中單字KK音標/word_data.json'
-  ];
-  for (const url of paths) {
-    try {
-      const r = await fetch(url, { cache: 'no-cache' });
-      if (!r.ok) continue;
-      allData = await r.json();
-      filteredData = allData;
-      document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆`;
-      renderRecent();
-      render();
-      return;
-    } catch(e) {}
-  }
-  showLoadError();
-}
-
-function showLoadError() {
-  document.getElementById('statsBar').textContent = '❌ 無法載入';
-  document.getElementById('cardContainer').innerHTML =
-    '<div class="empty-state"><div class="icon">📁</div><div class="title">無法載入單字資料</div><div class="desc">請確認 data.js 與此網頁在同一個資料夾</div></div>';
-}
-
-// ══════ SEARCH ══════
-function doSearch() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  const level = document.getElementById('levelFilter').value;
-  const cefr = document.getElementById('cefrFilter').value;
-  const empty = document.getElementById('emptyFilter').value;
-
-  try {
-    filteredData = allData.filter(item => {
-      if (q) {
-        if ((item.w || '').toLowerCase() !== q) return false;
-      }
-      if (level && (item.l || '') !== level) return false;
-      if (cefr && (item.c || '') !== cefr) return false;
-      if (empty === 'kk' && item.k) return false;
-      if (empty === 'zh' && item.z) return false;
-      if (empty === 'ex' && item.e) return false;
-      return true;
-    });
-  } catch(e) {
-    console.error('搜尋錯誤:', e);
-    filteredData = [];
-  }
-
-  currentPage = 1;
-  render();
-  if (q) recordSearch(q);
-}
-
-// ══════ RENDER (cards) ══════
-function render() {
-  const container = document.getElementById('cardContainer');
-  const total = filteredData.length;
-  const totalPages = Math.ceil(total / PER_PAGE) || 1;
-  let rc = total.toLocaleString() + ' 筆';
-  if (total !== allData.length) rc += ` (第 ${currentPage}/${totalPages} 頁)`;
-  document.getElementById('resultCount').textContent = `📖 ${rc}`;
-  document.getElementById('resultCountMini').textContent = total > 0 && total !== allData.length ? `📖 ${total.toLocaleString()} 筆` : '';
-
-  const start = (currentPage - 1) * PER_PAGE;
-  const end = Math.min(start + PER_PAGE, total);
-  const pageData = filteredData.slice(start, end);
-  const changeKeys = Object.keys(changes);
-
-  if (pageData.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><div class="title">沒有符合的單字 🙁</div><div class="desc">試試輸入其他關鍵字</div></div>';
-    document.getElementById('pagination').innerHTML = '';
-    document.getElementById('changeCount').textContent = changeKeys.length;
-    return;
-  }
-
-  let html = '';
-  pageData.forEach((item, idx) => {
-    const realIdx = allData.indexOf(item);
-    const hasChanges = changes[realIdx] !== undefined;
-    const rowClass = hasChanges ? ' modified' : '';
-
-    const vals = getVals(realIdx, item);
-    const kkDisp = vals.k ? esc(vals.k) : '<span class="empty">[無 KK]</span>';
-    const zhDisp = vals.z ? esc(vals.z) : '<span class="empty">[無中譯]</span>';
-    const exDisp = vals.e ? esc(vals.e) : '<span class="empty">[無例句]</span>';
-
-    const lvl = item.l ? `<span class="level-badge level-${item.l}">Lv.${item.l}</span>` : '';
-    const cefr = item.c ? `<span class="cefr-badge cefr-${item.c}">${item.c}</span>` : '';
-
-    const isEdK = editing[realIdx] === 'k';
-    const isEdZ = editing[realIdx] === 'z';
-    const isEdE = editing[realIdx] === 'e';
-
-    html += `<div class="word-card${rowClass}">`;
-
-    // Top row: word + badges
-    html += `<div class="card-top">
-      <div>
-        <div class="word-main">${esc(item.w)}</div>
-        <div class="word-num">#${start + idx + 1}</div>
-      </div>
-      <div class="badges">${lvl}${cefr}</div>
-    </div>`;
-
-    // KK
-    html += cardField('KK 音標', realIdx, 'k', vals.k, 'mono', isEdK);
-    // 中譯
-    html += cardField('中文', realIdx, 'z', vals.z, '', isEdZ);
-    // 例句
-    html += cardField('例句', realIdx, 'e', vals.e, '', isEdE);
-    // 例句中譯
-    const isEdEz = editing[realIdx] === 'ez';
-    html += cardField('例句中譯', realIdx, 'ez', vals.ez, '', isEdEz);
-
-    html += `</div>`;
-  });
-
-  container.innerHTML = html;
-  renderPagination(totalPages);
-  document.getElementById('changeCount').textContent = changeKeys.length;
-}
-
-function cardField(label, realIdx, field, val, cls, isEditing) {
-  const fieldName = FIELD_NAMES[field];
-  if (isEditing) {
-    const isSelect = field === 'l' || field === 'c';
-    if (isSelect) {
-      let opts = '<option value="">-</option>';
-      if (field === 'l') for (let i=1;i<=6;i++) opts += `<option value="${i}" ${val===String(i)?'selected':''}>Level ${i}</option>`;
-      if (field === 'c') for (const l of ['','A1','A2','B1','B2']) opts += `<option value="${l}" ${val===l?'selected':''}>${l||'-'}</option>`;
-      return `<div class="field-row">
-        <div class="field-label">${label}</div>
-        <select class="edit-select" id="inp_${realIdx}_${field}" onchange="saveField(${realIdx},'${field}')" onblur="saveField(${realIdx},'${field}')">${opts}</select>
-      </div>`;
-    }
-    return `<div class="field-row">
-      <div class="field-label">${label}</div>
-      <input class="edit-input ${cls}" id="inp_${realIdx}_${field}" value="${esc(val)}"
-        onkeydown="if(event.key==='Enter')saveField(${realIdx},'${field}')"
-        onblur="saveField(${realIdx},'${field}')">
-    </div>`;
-  }
-
-  const empty = !val;
-  const color = FIELD_COLORS[field];
-  const display = val || `[無 ${fieldName}]`;
-  return `<div class="field-row">
-    <div class="field-label">${label}</div>
-    <div class="field-value ${cls}${empty?' empty':''}"
-      onclick="startEdit(${realIdx},'${field}')"
-      style="${color?'border-left:3px solid '+color+';padding-left:8px;':''}"
-      title="點擊修改 ${fieldName}">${esc(display)}</div>
-  </div>`;
-}
-
-function getVals(realIdx, item) {
-  const c = changes[realIdx] || {};
-  return {
-    k: c.k !== undefined ? c.k : (item.k || ''),
-    z: c.z !== undefined ? c.z : (item.z || ''),
-    e: c.e !== undefined ? c.e : (item.e || ''),
-    ez: c.ez !== undefined ? c.ez : (item.ez || ''),
-    l: c.l !== undefined ? c.l : (item.l || ''),
-    cefr: c.c !== undefined ? c.c : (item.c || ''),
-  };
-}
-
-// ══════ PAGINATION ══════
-function renderPagination(tp) {
-  const p = document.getElementById('pagination');
-  let h = `<button onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>`;
-  const s = Math.max(1, currentPage-2), e = Math.min(tp, currentPage+2);
-  if (s > 1) h += `<button onclick="goPage(1)">1</button>`;
-  if (s > 2) h += `<span class="ellipsis">…</span>`;
-  for (let i = s; i <= e; i++) h += `<button onclick="goPage(${i})" ${i===currentPage?'class="active"':''}>${i}</button>`;
-  if (e < tp-1) h += `<span class="ellipsis">…</span>`;
-  if (e < tp) h += `<button onclick="goPage(${tp})">${tp}</button>`;
-  h += `<button onclick="goPage(${currentPage+1})" ${currentPage>=tp?'disabled':''}>›</button>`;
-  p.innerHTML = h;
-}
-
-function goPage(p) {
-  const tp = Math.ceil(filteredData.length / PER_PAGE) || 1;
-  if (p < 1 || p > tp) return;
-  currentPage = p;
-  render();
-}
-
-// ══════ FILTERS TOGGLE ══════
-function toggleFilters() {
-  document.getElementById('filterPanel').classList.toggle('open');
-}
-
-// ══════ RECENT SEARCHES ══════
-function recordSearch(q) {
-  const now = Date.now();
-  recent = recent.filter(r => r.q !== q);
-  recent.unshift({ q, time: now });
-  if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
-  localStorage.setItem('kk_recent', JSON.stringify(recent));
-  renderRecent();
-}
-
-function renderRecent() {
-  const c = document.getElementById('recentTags');
-  if (!c) return;
-  if (recent.length === 0) { c.innerHTML = '<span style="color:#94a3b8;font-size:12px;">尚無查詢記錄</span>'; return; }
-  c.innerHTML = recent.map(r => {
-    const cnt = allData.filter(d => (d.w||'').toLowerCase().includes(r.q.toLowerCase())).length;
-    const ta = getTimeAgo(r.time);
-    return `<span class="recent-tag" onclick="reuseSearch('${esc(r.q)}')" title="${cnt} 筆 · ${ta}"><span class="word">${esc(r.q)}</span><span class="field"> · ${cnt}筆 · ${ta}</span></span>`;
-  }).join('');
-}
-
-function reuseSearch(q) { document.getElementById('searchInput').value = q; doSearch(); }
-
-function clearRecent() {
-  if (!confirm('確定清空最近查詢記錄？')) return;
-  recent = [];
-  localStorage.setItem('kk_recent', JSON.stringify(recent));
-  renderRecent();
-}
-
-function getTimeAgo(ts) {
-  const diff = Date.now() - ts;
-  const m = Math.floor(diff/60000);
-  if (m<1) return '剛剛';
-  if (m<60) return m+'分鐘前';
-  const h = Math.floor(m/60);
-  if (h<24) return h+'小時前';
-  return Math.floor(h/24)+'天前';
-}
-
-// ══════ EDIT ══════
-function startEdit(realIdx, field) {
-  editing[realIdx] = field;
-  render();
-  setTimeout(() => {
-    const inp = document.getElementById(`inp_${realIdx}_${field}`);
-    if (inp) { inp.focus(); if (inp.select) inp.select(); }
-  }, 50);
-}
-
-function saveField(realIdx, field) {
-  const inp = document.getElementById(`inp_${realIdx}_${field}`);
-  if (!inp) { delete editing[realIdx]; render(); return; }
-  const item = allData[realIdx];
-  const oldVal = item[field] || '';
-  const newVal = inp.value.trim();
-  delete editing[realIdx];
-
-  if (newVal === oldVal) {
-    if (changes[realIdx] && changes[realIdx][field] !== undefined) {
-      delete changes[realIdx][field];
-      if (Object.keys(changes[realIdx]).length === 0) delete changes[realIdx];
-    }
-    render();
-    return;
-  }
-
-  if (!changes[realIdx]) changes[realIdx] = {};
-  changes[realIdx][field] = newVal;
-  render();
-  showToast(`已修改「${item.w}」${FIELD_NAMES[field]}`, 'success');
-  updateSyncLog();
-}
-
-// ══════ SYNC ══════
-function updateSyncLog() {
-  const ta = document.getElementById('syncOutput');
-  let lines = [`# 修改記錄 ${new Date().toLocaleString()}`, '# 格式：單字\\t欄位\\t原值\\t新值', ''];
-  for (const [k, fields] of Object.entries(changes)) {
-    const idx = parseInt(k);
-    const item = allData[idx];
-    for (const [f, v] of Object.entries(fields)) lines.push(`${item.w}\\t${f}\\t${item[f]||''}\\t${v}`);
-  }
-  ta.value = lines.length > 3 ? lines.join('\\n') : '暫無修改記錄...';
-  document.getElementById('changeSummary').textContent = changeKeys().length > 0 ? `${changeKeys().length} 筆有修改` : '';
-}
-
-function changeKeys() { return Object.keys(changes); }
-
-function toggleSync() { document.getElementById('syncPanel').classList.toggle('open'); }
-
-function copySync() {
-  const ta = document.getElementById('syncOutput');
-  if (!ta.value || ta.value === '暫無修改記錄...') { showToast('沒有修改記錄', 'error'); return; }
-  navigator.clipboard.writeText(ta.value).then(() => showToast('已複製 📋', 'success'));
-}
-
-function clearSync() {
-  if (!confirm('確定清空所有修改記錄？')) return;
-  changes = {};
-  document.getElementById('syncOutput').value = '暫無修改記錄...';
-  document.getElementById('changeSummary').textContent = '';
-  render();
-  showToast('已清空', '');
-}
-
-// ══════ TOAST ══════
-function showToast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + type;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-function esc(s) {
-  if (!s && s !== 0) return '';
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-// ══════ INIT ══════
-loadData();
-</script>
-</body>
-</html>
+  font-size: 16px;
+   258|  padding: 6px 10px;
+   259|  border: 2px solid #3b82f6;
+   260|  border-radius: 8px;
+   261|  outline: none;
+   262|  width: 100%;
+   263|}
+   264|.word-card .edit-input:focus {
+   265|  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+   266|}
+   267|.word-card .edit-input.mono {
+   268|  font-family: 'DM Mono', monospace;
+   269|}
+   270|.word-card .edit-select {
+   271|  font-family: inherit;
+   272|  font-size: 15px;
+   273|  padding: 6px 10px;
+   274|  border: 2px solid #3b82f6;
+   275|  border-radius: 8px;
+   276|  outline: none;
+   277|  background: #fff;
+   278|  width: 100%;
+   279|}
+   280|
+   281|/* ── Empty state ── */
+   282|.empty-state {
+   283|  text-align: center;
+   284|  padding: 60px 20px;
+   285|  color: #94a3b8;
+   286|}
+   287|.empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+   288|.empty-state .title { font-size: 18px; font-weight: 600; color: #64748b; margin-bottom: 6px; }
+   289|.empty-state .desc { font-size: 15px; }
+   290|
+   291|/* ── Sync panel ── */
+   292|.sync-panel {
+   293|  background: #fff;
+   294|  border-radius: 14px;
+   295|  padding: 14px 16px;
+   296|  margin-bottom: 12px;
+   297|  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+   298|  display: none;
+   299|}
+   300|.sync-panel.open { display: block; }
+   301|.sync-panel h3 { font-size: 16px; margin-bottom: 8px; color: #334155; }
+   302|.sync-panel p { font-size: 14px; color: #64748b; margin-bottom: 8px; }
+   303|.sync-panel textarea {
+   304|  width: 100%;
+   305|  min-height: 70px;
+   306|  padding: 10px;
+   307|  border: 2px solid #e2e8f0;
+   308|  border-radius: 8px;
+   309|  font-family: 'DM Mono', monospace;
+   310|  font-size: 13px;
+   311|  resize: vertical;
+   312|  outline: none;
+   313|}
+   314|.sync-panel .actions {
+   315|  margin-top: 8px;
+   316|  display: flex;
+   317|  gap: 8px;
+   318|  align-items: center;
+   319|}
+   320|.sync-panel .actions button {
+   321|  padding: 6px 14px;
+   322|  border: 1px solid #e2e8f0;
+   323|  border-radius: 8px;
+   324|  background: #fff;
+   325|  font-size: 14px;
+   326|  font-family: inherit;
+   327|  cursor: pointer;
+   328|}
+   329|.sync-panel .actions button:active { background: #f1f5f9; }
+   330|.sync-panel .summary { font-size: 13px; color: #64748b; }
+   331|
+   332|/* ── Pagination ── */
+   333|.pagination {
+   334|  display: flex;
+   335|  justify-content: center;
+   336|  align-items: center;
+   337|  gap: 4px;
+   338|  padding: 8px 0 20px;
+   339|  flex-wrap: wrap;
+   340|}
+   341|.pagination button {
+   342|  padding: 8px 14px;
+   343|  border: 1px solid #e2e8f0;
+   344|  border-radius: 8px;
+   345|  background: #fff;
+   346|  cursor: pointer;
+   347|  font-size: 15px;
+   348|  font-family: inherit;
+   349|}
+   350|.pagination button:active { border-color: #93c5fd; }
+   351|.pagination button.active { background: #1e40af; color: #fff; border-color: #1e40af; }
+   352|.pagination button:disabled { opacity: 0.3; }
+   353|.pagination .ellipsis { color: #94a3b8; font-size: 15px; padding: 0 2px; }
+   354|
+   355|/* ── Toast ── */
+   356|.toast {
+   357|  position: fixed;
+   358|  bottom: 24px;
+   359|  left: 50%;
+   360|  transform: translateX(-50%);
+   361|  background: #1e293b;
+   362|  color: #fff;
+   363|  padding: 10px 20px;
+   364|  border-radius: 10px;
+   365|  font-size: 16px;
+   366|  opacity: 0;
+   367|  transition: opacity 0.25s;
+   368|  z-index: 200;
+   369|  pointer-events: none;
+   370|  white-space: nowrap;
+   371|}
+   372|.toast.show { opacity: 1; }
+   373|.toast.success { background: #0d7a5f; }
+   374|.toast.error { background: #dc2626; }
+   375|</style>
+   376|</head>
+   377|<body>
+   378|
+   379|<div class="header">
+   380|  <div style="display:flex;justify-content:space-between;align-items:center;">
+   381|    <div>
+   382|      <h1>🔍 高中單字</h1>
+   383|      <div class="sub">點擊欄位即可修改</div>
+   384|    </div>
+   385|    <div class="count" id="statsBar">載入中...</div>
+   386|  </div>
+   387|</div>
+   388|
+   389|<div class="search-area">
+   390|  <input type="text" id="searchInput" placeholder="🔍 輸入單字搜尋..." oninput="doSearch()" autocomplete="off">
+   391|  <div class="filter-toggle">
+   392|    <span class="badge" id="resultCountMini"></span>
+   393|    <button class="filter-toggle-btn" onclick="toggleFilters()" id="filterToggleBtn">⚙️ 篩選</button>
+   394|  </div>
+   395|  <div class="filters" id="filterPanel">
+   396|    <select id="levelFilter" onchange="doSearch()">
+   397|      <option value="">全部級別</option>
+   398|      <option value="1">Level 1</option>
+   399|      <option value="2">Level 2</option>
+   400|      <option value="3">Level 3</option>
+   401|      <option value="4">Level 4</option>
+   402|      <option value="5">Level 5</option>
+   403|      <option value="6">Level 6</option>
+   404|    </select>
+   405|    <select id="cefrFilter" onchange="doSearch()">
+   406|      <option value="">全部 CEFR</option>
+   407|      <option value="A1">A1</option>
+   408|      <option value="A2">A2</option>
+   409|      <option value="B1">B1</option>
+   410|      <option value="B2">B2</option>
+   411|    </select>
+   412|    <select id="emptyFilter" onchange="doSearch()">
+   413|      <option value="">全部</option>
+   414|      <option value="kk">KK 空值</option>
+   415|      <option value="zh">中譯空值</option>
+   416|      <option value="ex">例句空值</option>
+   417|    </select>
+   418|    <button class="sync-btn" onclick="toggleSync()">🔄 同步 <span id="changeCount">0</span></button>
+   419|  </div>
+   420|</div>
+   421|
+   422|<div class="sync-panel" id="syncPanel">
+   423|  <h3>🔄 修改同步記錄</h3>
+   424|  <p>將下方腳本存為 <code>changes.tsv</code>，在 WSL 執行<br><code>python3 sync_kk.py &lt; changes.tsv</code></p>
+   425|  <textarea id="syncOutput" readonly placeholder="暫無修改記錄..."></textarea>
+   426|  <div class="actions">
+   427|    <button onclick="copySync()">📋 複製</button>
+   428|    <button onclick="clearSync()">🗑️ 清空</button>
+   429|    <span class="summary" id="changeSummary"></span>
+   430|  </div>
+   431|</div>
+   432|
+   433|<div class="result-count" id="resultCount">載入中...</div>
+   434|<div id="cardContainer"></div>
+   435|<div class="pagination" id="pagination"></div>
+   436|
+   437|<!-- Recent searches -->
+   438|<div class="recent-panel" id="recentPanel">
+   439|  <div class="recent-header">
+   440|    <h3>🕐 最近查詢</h3>
+   441|    <button onclick="clearRecent()">🗑️ 清空</button>
+   442|  </div>
+   443|  <div class="recent-tags" id="recentTags"></div>
+   444|</div>
+   445|
+   446|<div class="toast" id="toast"></div>
+   447|
+   448|<!-- Data -->
+   449|<script src="data.js?v=2"></script>
+   450|
+   451|<script>
+   452|// ══════ DATA ══════
+   453|let allData = [];
+   454|let filteredData = [];
+   455|let currentPage = 1;
+   456|const PER_PAGE = 15;
+   457|let changes = {};
+   458|let editing = {};
+   459|let recent = JSON.parse(localStorage.getItem('kk_recent') || '[]');
+   460|const MAX_RECENT = 20;
+   461|
+   462|const FIELD_NAMES = { k:'KK音標', z:'中譯', e:'例句', ez:'例句中譯', l:'級別', c:'CEFR' };
+   463|const FIELD_COLORS = { k:'#2563eb', z:'#0d7a5f', e:'#7c3aed', ez:'#64748b', l:'#f59e0b', c:'#0891b2' };
+   464|
+   465|// ══════ LOAD ══════
+   466|function loadData() {
+   467|  if (typeof WORD_DATA !== 'undefined' && WORD_DATA && WORD_DATA.length > 0) {
+   468|    allData = WORD_DATA;
+   469|    filteredData = allData;
+   470|    document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆`;
+   471|    renderRecent();
+   472|    render();
+   473|    return;
+   474|  }
+   475|  loadDataFetch();
+   476|}
+   477|
+   478|async function loadDataFetch() {
+   479|  const paths = [
+   480|    'word_data.json',
+   481|    './word_data.json',
+   482|    'https://andyjunyi.github.io/My_Projects/單字工具/高中單字KK音標/word_data.json'
+   483|  ];
+   484|  for (const url of paths) {
+   485|    try {
+   486|      const r = await fetch(url, { cache: 'no-cache' });
+   487|      if (!r.ok) continue;
+   488|      allData = await r.json();
+   489|      filteredData = allData;
+   490|      document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆`;
+   491|      renderRecent();
+   492|      render();
+   493|      return;
+   494|    } catch(e) {}
+   495|  }
+   496|  showLoadError();
+   497|}
+   498|
+   499|function showLoadError() {
+   500|  document.getElementById('statsBar').textContent = '❌ 無法載入';
+   501|
