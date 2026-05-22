@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KK 音標查詢系統 - 高中單字</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+  background: #f0f4ff;
+  color: #1e293b;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
+  border-radius: 14px;
+  padding: 18px 24px;
+  color: #fff;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.header h1 { font-size: 22px; font-weight: 800; }
+.header .sub { font-size: 13px; opacity: 0.8; }
+.header .count {
+  font-size: 13px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.controls input {
+  flex: 1; min-width: 180px;
+  padding: 9px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+.controls input:focus { border-color: #3b82f6; }
+.controls select {
+  padding: 9px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: #fff;
+}
+.controls select:focus { border-color: #3b82f6; }
+.btn {
+  padding: 8px 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.btn-primary {
+  background: #1e40af; color: #fff; border-color: #1e40af;
+}
+.btn-primary:hover { background: #1e3a8a; }
+.btn-save {
+  background: #0d7a5f; color: #fff; border-color: #0d7a5f;
+}
+.btn-save:hover { background: #065f46; }
+.btn-sync {
+  background: #7c3aed; color: #fff; border-color: #7c3aed;
+}
+.btn-sync:hover { background: #6d28d9; }
+.btn-danger {
+  background: #dc2626; color: #fff; border-color: #dc2626;
+}
+.btn-danger:hover { background: #b91c1c; }
+
+/* Results */
+.result-count {
+  font-size: 13px; color: #64748b; margin-bottom: 10px;
+}
+
+/* Table */
+.table-wrap {
+  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+th {
+  background: #f8fafc; padding: 10px 12px; text-align: left;
+  font-weight: 700; color: #475569; font-size: 12px;
+  border-bottom: 2px solid #e2e8f0; white-space: nowrap;
+}
+td {
+  padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle;
+}
+tr:hover td { background: #fafbff; }
+tr.selected td { background: #eff6ff; }
+
+.word-cell { font-weight: 600; color: #1e40af; }
+.kk-cell {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 14px; color: #334155;
+}
+.kk-input {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 14px; padding: 4px 8px;
+  border: 2px solid #93c5fd; border-radius: 6px;
+  width: 180px; outline: none;
+}
+.kk-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+.zh-cell { color: #475569; font-size: 12px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.level-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 600;
+}
+.level-1 { background: #e0e7ff; color: #3730a3; }
+.level-2 { background: #dbeafe; color: #1e40af; }
+.level-3 { background: #d1fae5; color: #065f46; }
+.level-4 { background: #fef3c7; color: #92400e; }
+.level-5 { background: #fee2e2; color: #991b1b; }
+.level-6 { background: #f3e8ff; color: #6b21a8; }
+.cefr-badge {
+  display: inline-block; padding: 2px 6px; border-radius: 6px;
+  font-size: 10px; font-weight: 600;
+}
+.cefr-A1 { background: #e0e7ff; color: #4338ca; }
+.cefr-A2 { background: #d1fae5; color: #065f46; }
+.cefr-B1 { background: #fef3c7; color: #92400e; }
+.cefr-B2 { background: #fee2e2; color: #991b1b; }
+
+.action-btn {
+  padding: 4px 10px; border: 1px solid #e2e8f0; border-radius: 6px;
+  background: #fff; cursor: pointer; font-size: 12px; transition: all 0.15s;
+}
+.action-btn:hover { border-color: #93c5fd; }
+.action-btn.save-kk { border-color: #0d7a5f; color: #0d7a5f; }
+.action-btn.save-kk:hover { background: #d1fae5; }
+.action-btn.cancel { border-color: #94a3b8; color: #64748b; }
+.action-btn.cancel:hover { background: #f1f5f9; }
+
+/* Pagination */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 6px; padding: 14px; flex-wrap: wrap;
+}
+.pagination .page-btn {
+  padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px;
+  background: #fff; cursor: pointer; font-size: 12px; font-family: inherit;
+}
+.pagination .page-btn:hover { border-color: #93c5fd; }
+.pagination .page-btn.active { background: #1e40af; color: #fff; border-color: #1e40af; }
+.pagination .page-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #1e293b; color: #fff; padding: 10px 24px; border-radius: 10px;
+  font-size: 14px; opacity: 0; transition: opacity 0.3s; z-index: 200;
+}
+.toast.show { opacity: 1; }
+.toast.success { background: #0d7a5f; }
+.toast.error { background: #dc2626; }
+
+/* Sync panel */
+.sync-panel {
+  background: #fff; border-radius: 12px; padding: 16px 20px;
+  margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: none;
+}
+.sync-panel.open { display: block; }
+.sync-panel h3 { font-size: 15px; margin-bottom: 10px; color: #334155; }
+.sync-panel textarea {
+  width: 100%; min-height: 60px; padding: 10px;
+  border: 2px solid #e2e8f0; border-radius: 8px;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  resize: vertical; outline: none;
+}
+.sync-panel textarea:focus { border-color: #7c3aed; }
+
+/* Detail panel */
+.detail-panel {
+  background: #fff; border-radius: 12px; padding: 16px 20px;
+  margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: none;
+}
+.detail-panel.open { display: block; }
+.detail-panel h3 { font-size: 15px; margin-bottom: 8px; }
+.detail-row { display: flex; margin-bottom: 6px; font-size: 13px; }
+.detail-label { width: 80px; color: #64748b; font-weight: 600; flex-shrink: 0; }
+.detail-value { color: #1e293b; }
+
+@media (max-width: 700px) {
+  .header { flex-direction: column; align-items: flex-start; }
+  .controls { flex-direction: column; }
+  .controls input { width: 100%; }
+  table { font-size: 12px; }
+  .kk-input { width: 140px; }
+  .zh-cell { max-width: 120px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🔍 KK 音標查詢系統</h1>
+    <div class="sub">高中 15000 單字 · 點擊 KK 音標可直接修改</div>
+  </div>
+  <div class="count" id="statsBar">載入中...</div>
+</div>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="🔍 搜尋單字（中英文皆可）..." oninput="doSearch()">
+  <select id="levelFilter" onchange="doSearch()">
+    <option value="">全部級別</option>
+    <option value="1">Level 1</option>
+    <option value="2">Level 2</option>
+    <option value="3">Level 3</option>
+    <option value="4">Level 4</option>
+    <option value="5">Level 5</option>
+    <option value="6">Level 6</option>
+  </select>
+  <select id="cefrFilter" onchange="doSearch()">
+    <option value="">全部 CEFR</option>
+    <option value="A1">A1</option>
+    <option value="A2">A2</option>
+    <option value="B1">B1</option>
+    <option value="B2">B2</option>
+  </select>
+  <select id="kkFilter" onchange="doSearch()">
+    <option value="">KK 狀態</option>
+    <option value="has">有 KK 音標</option>
+    <option value="empty">無 KK 音標</option>
+  </select>
+  <button class="btn btn-sync" onclick="toggleSync()">🔄 同步</button>
+</div>
+
+<div class="sync-panel" id="syncPanel">
+  <h3>🔄 同步修改記錄</h3>
+  <p style="font-size:13px;color:#64748b;margin-bottom:8px;">
+    下方顯示本次修改的內容，複製後可在 WSL 執行同步腳本更新 Excel/JSON/CSV。
+  </p>
+  <textarea id="syncOutput" readonly placeholder="暫無修改記錄..." readonly></textarea>
+  <div style="margin-top:8px;display:flex;gap:8px;">
+    <button class="btn" onclick="copySync()">📋 複製</button>
+    <button class="btn" onclick="clearSync()">🗑️ 清空</button>
+  </div>
+</div>
+
+<div class="result-count" id="resultCount">搜尋中...</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30px">#</th>
+        <th style="width:120px">單字</th>
+        <th style="width:200px">KK 音標</th>
+        <th style="width:50px">操作</th>
+        <th>中文釋義</th>
+        <th style="width:60px">級別</th>
+        <th style="width:50px">CEFR</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+<div class="pagination" id="pagination"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════ DATA ══════
+let allData = [];
+let filteredData = [];
+let currentPage = 1;
+const PER_PAGE = 50;
+let editMode = {};  // {index: true/false}
+let modifiedKK = {};  // {index: newKK}
+
+// ══════ LOAD DATA ══════
+async function loadData() {
+  try {
+    const resp = await fetch('word_data.json');
+    allData = await resp.json();
+    document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆單字`;
+    doSearch();
+  } catch(e) {
+    document.getElementById('statsBar').textContent = '❌ 載入失敗：' + e.message;
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">無法載入 word_data.json，請確認檔案存在</td></tr>';
+  }
+}
+
+// ══════ SEARCH ══════
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const level = document.getElementById('levelFilter').value;
+  const cefr = document.getElementById('cefrFilter').value;
+  const kk = document.getElementById('kkFilter').value;
+  
+  filteredData = allData.filter(item => {
+    // 搜尋
+    if (q) {
+      const matchWord = item.w.toLowerCase().includes(q);
+      const matchZh = item.z.toLowerCase().includes(q);
+      const matchKk = item.k.toLowerCase().includes(q);
+      if (!matchWord && !matchZh && !matchKk) return false;
+    }
+    // 級別
+    if (level && item.l !== level) return false;
+    // CEFR
+    if (cefr && item.c !== cefr) return false;
+    // KK 狀態
+    if (kk === 'has' && !item.k) return false;
+    if (kk === 'empty' && item.k) return false;
+    
+    return true;
+  });
+  
+  currentPage = 1;
+  render();
+}
+
+// ══════ RENDER ══════
+function render() {
+  const tbody = document.getElementById('tableBody');
+  const total = filteredData.length;
+  const totalPages = Math.ceil(total / PER_PAGE) || 1;
+  
+  document.getElementById('resultCount').textContent = `📖 共 ${total.toLocaleString()} 筆結果 (第 ${currentPage}/${totalPages} 頁)`;
+  
+  const start = (currentPage - 1) * PER_PAGE;
+  const end = Math.min(start + PER_PAGE, total);
+  const pageData = filteredData.slice(start, end);
+  
+  if (pageData.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">沒有符合的單字 🙁</td></tr>';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  
+  let html = '';
+  pageData.forEach((item, idx) => {
+    const realIdx = start + idx;
+    const isEditing = editMode[realIdx] || false;
+    const isModified = modifiedKK[realIdx] !== undefined;
+    const currentKK = isModified ? modifiedKK[realIdx] : (item.k || '');
+    
+    const levelClass = item.l ? `level-${item.l}` : '';
+    const cefrClass = item.c ? `cefr-${item.c}` : '';
+    
+    html += `<tr class="${isModified ? 'selected' : ''}">`;
+    html += `<td style="color:#94a3b8;font-size:11px;">${start + idx + 1}</td>`;
+    html += `<td class="word-cell">${esc(item.w)}</td>`;
+    
+    if (isEditing) {
+      html += `<td><input class="kk-input" id="kkInput_${realIdx}" value="${esc(currentKK)}" onkeydown="if(event.key==='Enter')saveKK(${realIdx})"></td>`;
+      html += `<td>
+        <button class="action-btn save-kk" onclick="saveKK(${realIdx})">💾</button>
+        <button class="action-btn cancel" onclick="cancelEdit(${realIdx})">✕</button>
+      </td>`;
+    } else {
+      html += `<td class="kk-cell">${currentKK || '<span style="color:#f59e0b;">無 KK</span>'}</td>`;
+      html += `<td><button class="action-btn" onclick="startEdit(${realIdx})">✏️</button></td>`;
+    }
+    
+    html += `<td class="zh-cell" title="${esc(item.z)}">${esc(item.z.length > 50 ? item.z.slice(0,50)+'...' : item.z)}</td>`;
+    html += `<td>${item.l ? `<span class="level-badge ${levelClass}">Lv.${item.l}</span>` : ''}</td>`;
+    html += `<td>${item.c ? `<span class="cefr-badge ${cefrClass}">${item.c}</span>` : ''}</td>`;
+    html += `</tr>`;
+  });
+  
+  tbody.innerHTML = html;
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const p = document.getElementById('pagination');
+  let html = '';
+  
+  html += `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>‹ 上一頁</button>`;
+  
+  const start = Math.max(1, currentPage - 2);
+  const end = Math.min(totalPages, currentPage + 2);
+  
+  if (start > 1) html += `<button class="page-btn" onclick="goPage(1)">1</button>`;
+  if (start > 2) html += `<span style="color:#94a3b8;">…</span>`;
+  
+  for (let i = start; i <= end; i++) {
+    html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  
+  if (end < totalPages - 1) html += `<span style="color:#94a3b8;">…</span>`;
+  if (end < totalPages) html += `<button class="page-btn" onclick="goPage(${totalPages})">${totalPages}</button>`;
+  
+  html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>下一頁 ›</button>`;
+  
+  p.innerHTML = html;
+}
+
+function goPage(page) {
+  const totalPages = Math.ceil(filteredData.length / PER_PAGE) || 1;
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  render();
+}
+
+// ══════ EDIT FUNCTIONS ══════
+function startEdit(idx) {
+  editMode[idx] = true;
+  render();
+  // Focus input
+  setTimeout(() => {
+    const inp = document.getElementById(`kkInput_${idx}`);
+    if (inp) inp.focus();
+  }, 50);
+}
+
+function saveKK(idx) {
+  const inp = document.getElementById(`kkInput_${idx}`);
+  if (!inp) return;
+  
+  const newKK = inp.value.trim();
+  const item = filteredData[idx];
+  
+  // 找到在 allData 中的原始索引
+  const realIdx = allData.indexOf(item);
+  if (realIdx === -1) return;
+  
+  const oldKK = allData[realIdx].k || '';
+  
+  if (newKK === oldKK) {
+    // 沒變更，直接取消編輯
+    delete editMode[idx];
+    delete modifiedKK[idx];
+    render();
+    return;
+  }
+  
+  // 儲存修改
+  modifiedKK[idx] = newKK;
+  delete editMode[idx];
+  render();
+  showToast(`已修改「${item.w}」KK 音標`, 'success');
+  updateSyncLog();
+}
+
+function cancelEdit(idx) {
+  delete editMode[idx];
+  render();
+}
+
+function esc(s) {
+  if (!s) return '';
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// ══════ SYNC LOG ══════
+function updateSyncLog() {
+  const ta = document.getElementById('syncOutput');
+  let lines = [];
+  for (const [idx, newKK] of Object.entries(modifiedKK)) {
+    const item = filteredData[parseInt(idx)];
+    const realIdx = allData.indexOf(item);
+    const word = item.w;
+    const oldKK = allData[realIdx].k || '';
+    const currentKK = modifiedKK[parseInt(idx)];
+    if (currentKK !== oldKK) {
+      lines.push(`${word}\t${oldKK}\t${currentKK}`);
+    }
+  }
+  if (lines.length > 0) {
+    ta.value = `# KK 音標修改記錄 (${new Date().toLocaleString()})\n# 格式：單字\t原音標\t新音標\n` + lines.join('\n');
+  } else {
+    ta.value = '暫無修改記錄...';
+  }
+}
+
+function toggleSync() {
+  document.getElementById('syncPanel').classList.toggle('open');
+}
+
+function copySync() {
+  const ta = document.getElementById('syncOutput');
+  if (!ta.value || ta.value === '暫無修改記錄...') {
+    showToast('沒有修改記錄可複製', 'error');
+    return;
+  }
+  navigator.clipboard.writeText(ta.value).then(() => {
+    showToast('已複製到剪貼簿 📋', 'success');
+  });
+}
+
+function clearSync() {
+  if (!confirm('確定清空所有修改記錄？')) return;
+  modifiedKK = {};
+  document.getElementById('syncOutput').value = '暫無修改記錄...';
+  render();
+  showToast('已清空修改記錄', '');
+}
+
+// ══════ APPLY CHANGES (同步到來源) ══════
+/* 
+這個函數會產生一個 Python 腳本，執行後會：
+1. 修改 word_list.xlsx 中的 KK 音標
+2. 重新產生 word_data.json
+3. 重新產生 word_list.json / word_list_pretty.json / word_list.csv
+
+使用方式：將下方 console 輸出的腳本儲存為 .py 執行
+*/
+function generateSyncScript() {
+  const changes = [];
+  for (const [idxStr, newKK] of Object.entries(modifiedKK)) {
+    const idx = parseInt(idxStr);
+    const item = filteredData[idx];
+    const realIdx = allData.indexOf(item);
+    if (realIdx >= 0 && newKK !== (allData[realIdx].k || '')) {
+      changes.push({word: item.w, newKK: newKK});
+    }
+  }
+  return changes;
+}
+
+// ══════ TOAST ══════
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ══════ INIT ══════
+loadData();
+</script>
+</body>
+</html>
