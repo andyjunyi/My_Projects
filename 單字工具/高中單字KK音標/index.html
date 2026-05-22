@@ -588,6 +588,9 @@ function render() {
     html += cardField('中文', realIdx, 'z', vals.z, '', isEdZ);
     // 例句
     html += cardField('例句', realIdx, 'e', vals.e, '', isEdE);
+    // 例句中譯
+    const isEdEz = editing[realIdx] === 'ez';
+    html += cardField('例句中譯', realIdx, 'ez', vals.ez, '', isEdEz);
 
     html += `</div>`;
   });
