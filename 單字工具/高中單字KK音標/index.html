@@ -566,7 +566,10 @@ function doSearch() {
 
   currentPage = 1;
   render();
-  if (q) document.getElementById('confirmBtn').textContent = '✓ 記錄';
+  if (q) {
+    document.getElementById('confirmBtn').textContent = '✓ 記錄';
+    document.getElementById('searchInput').value = '';
+  }
 }
 
 // ══════ RENDER (cards) ══════
