@@ -312,16 +312,42 @@ const FIELD_COLORS = {
 
 // ══════ LOAD ══════
 async function loadData() {
-  try {
-    const resp = await fetch('word_data.json');
-    allData = await resp.json();
-    document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆單字`;
-    renderRecent();
-    doSearch();
-  } catch(e) {
-    document.getElementById('statsBar').textContent = '❌ 載入失敗';
-    document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8;">無法載入 word_data.json</td></tr>';
+  // 嘗試多個路徑（GitHub Pages 根目錄 vs 子目錄）
+  const paths = [
+    'word_data.json',
+    './word_data.json',
+    'https://andyjunyi.github.io/My_Projects/單字工具/高中單字KK音標/word_data.json'
+  ];
+
+  for (const url of paths) {
+    try {
+      console.log('嘗試載入:', url);
+      const resp = await fetch(url, { cache: 'no-cache' });
+      if (!resp.ok) {
+        console.log('❌ 失敗:', url, resp.status);
+        continue;
+      }
+      allData = await resp.json();
+      console.log('✅ 成功載入:', url, allData.length, '筆');
+      document.getElementById('statsBar').textContent = `📦 ${allData.length.toLocaleString()} 筆單字`;
+      renderRecent();
+      doSearch();
+      return;
+    } catch(e) {
+      console.log('❌ 錯誤:', url, e.message);
+    }
   }
+
+  // 全部失敗
+  document.getElementById('statsBar').textContent = '❌ 無法載入資料';
+  document.getElementById('tableBody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:60px 20px;color:#94a3b8;">' +
+    '<div style="font-size:40px;margin-bottom:16px;">📁</div>' +
+    '<div style="font-size:16px;font-weight:600;color:#64748b;margin-bottom:8px;">無法載入單字資料</div>' +
+    '<div style="font-size:13px;">請確認 word_data.json 與此網頁在同一個資料夾</div>' +
+    '<div style="font-size:12px;color:#94a3b8;margin-top:8px;">' +
+    '預期路徑：word_data.json<br>' +
+    '或直接將 index.html + word_data.json 放在一起開啟</div>' +
+    '</td></tr>';
 }
 
 // ══════ SEARCH ══════
