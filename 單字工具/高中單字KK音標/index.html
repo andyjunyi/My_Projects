@@ -568,7 +568,7 @@ function doSearch() {
   render();
   if (q) {
     document.getElementById('confirmBtn').textContent = '✓ 記錄';
-    document.getElementById('searchInput').value = '';
+    setTimeout(() => { document.getElementById('searchInput').value = ''; }, 10);
   }
 }
 
