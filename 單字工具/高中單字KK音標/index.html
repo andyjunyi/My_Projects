@@ -539,8 +539,11 @@ function showLoadError() {
 }
 
 // ══════ SEARCH ══════
+let lastQuery = '';
+
 function doSearch() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  lastQuery = q;
   const level = document.getElementById('levelFilter').value;
   const cefr = document.getElementById('cefrFilter').value;
   const empty = document.getElementById('emptyFilter').value;
@@ -873,7 +876,9 @@ hr { border: none; border-top: 1px solid #ddd; margin: 4pt 0; }
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `單字表_${new Date().toISOString().slice(0,10)}.doc`;
+  // 檔名用查詢的單字
+  const wordName = lastQuery ? lastQuery : '全部單字';
+  a.download = `${wordName}.doc`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
