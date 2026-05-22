@@ -544,9 +544,9 @@ function doSearch() {
   currentPage = 1;
   render();
   if (q) {
-    // 精確匹配則自動記錄到最近查詢
-    const isExact = allData.some(d => d.w && d.w.toLowerCase() === q);
-    if (isExact) recordSearch(q);
+    // 精確匹配則自動記錄到最近查詢（用資料庫原始大小寫）
+    const match = allData.find(d => d.w && d.w.toLowerCase() === q);
+    if (match) recordSearch(match.w);
     setTimeout(() => {
       const inp = document.getElementById('searchInput');
       inp.value = '';
