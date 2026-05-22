@@ -423,7 +423,7 @@ body {
 
 <div class="search-area">
   <div class="search-row">
-    <input type="text" id="searchInput" placeholder="🔍 輸入單字搜尋..." oninput="doSearch()" autocomplete="off">
+    <input type="text" id="searchInput" placeholder="🔍 輸入單字搜尋..." onkeydown="if(event.key==='Enter'){event.preventDefault();doSearch()}" autocomplete="off">
     <button class="confirm-btn" id="confirmBtn" onclick="confirmWord()">✓ 記錄</button>
   </div>
   <div class="filter-toggle">
@@ -568,8 +568,8 @@ function doSearch() {
   render();
   if (q) {
     document.getElementById('confirmBtn').textContent = '✓ 記錄';
-    const inp = document.getElementById('searchInput');
     setTimeout(() => {
+      const inp = document.getElementById('searchInput');
       inp.value = '';
       inp.focus();
     }, 0);
