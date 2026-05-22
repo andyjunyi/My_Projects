@@ -122,6 +122,12 @@ def regenerate_json():
     with open(JSON_PATH, 'w', encoding='utf-8') as f:
         json.dump(words, f, ensure_ascii=False, separators=(',', ':'))
 
+    # 同步更新 data.js
+    js_path = os.path.join(BASE, 'data.js')
+    js_content = "const WORD_DATA = " + json.dumps(words, ensure_ascii=False, separators=(',', ':')) + ";"
+    with open(js_path, 'w', encoding='utf-8') as f:
+        f.write(js_content)
+
     return len(words)
 
 def sync_export():
