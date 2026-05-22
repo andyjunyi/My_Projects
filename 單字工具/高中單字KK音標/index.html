@@ -152,11 +152,29 @@ body {
 .recent-tag .field { color: #94a3b8; font-weight: 400; font-size: 12px; }
 
 /* ── Result count ── */
+.result-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
 .result-count {
   font-size: 15px;
   color: #64748b;
-  margin-bottom: 10px;
 }
+.download-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+.download-btn:active { background: #1d4ed8; }
+.download-btn:disabled { opacity: 0.5; }
 
 /* ── Word cards ── */
 .word-card {
@@ -431,7 +449,6 @@ body {
       <option value="ex">例句空值</option>
     </select>
     <button class="sync-btn" onclick="toggleSync()">🔄 同步 <span id="changeCount">0</span></button>
-    <button class="sync-btn" onclick="downloadWord()" style="background:#2563eb">📥 下載 Word</button>
   </div>
 </div>
 
@@ -446,7 +463,10 @@ body {
   </div>
 </div>
 
-<div class="result-count" id="resultCount">載入中...</div>
+<div class="result-area">
+  <div class="result-count" id="resultCount">載入中...</div>
+  <button class="download-btn" id="downloadBtn" onclick="downloadWord()">📥 下載 Word</button>
+</div>
 <div id="cardContainer"></div>
 <div class="pagination" id="pagination"></div>
 
@@ -819,9 +839,9 @@ function downloadWord() {
   // 確認對話框
   if (!confirm(`將下載目前搜尋結果 ${total} 筆單字為 Word 文件，確定嗎？`)) return;
   
-  const btn = event && event.target ? event.target : document.querySelector('.sync-btn:last-child');
+  const btn = document.getElementById('downloadBtn');
+  btn.disabled = true;
   btn.textContent = '⏳ 產生中...';
-  btn.style.opacity = '0.6';
   
   // 只取目前頁面顯示的單字 (filteredData)
   const payload = filteredData.map(item => ({
@@ -851,13 +871,13 @@ function downloadWord() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     btn.textContent = '📥 下載 Word';
-    btn.style.opacity = '1';
+    btn.disabled = false;
     showToast(`已下載 ${total} 筆單字 📄`, 'success');
   })
   .catch(err => {
     console.error(err);
     btn.textContent = '📥 下載 Word';
-    btn.style.opacity = '1';
+    btn.disabled = false;
     showToast('下載失敗，請確認 word_server.py 正在執行', 'error');
   });
 }
