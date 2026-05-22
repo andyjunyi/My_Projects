@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>KK 音標查詢系統 - 高中單字</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -465,7 +467,7 @@ body {
 
 <div class="result-area">
   <div class="result-count" id="resultCount">載入中...</div>
-  <button class="download-btn" id="downloadBtn" onclick="downloadWord()">📥 下載 Word</button>
+  <button class="download-btn" id="downloadBtn" onclick="downloadWord()">📥 下載 PDF</button>
 </div>
 <div id="cardContainer"></div>
 <div class="pagination" id="pagination"></div>
@@ -834,57 +836,78 @@ function showToast(msg, type='') {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ══════ WORD EXPORT (純前端) ══════
+// ══════ PDF EXPORT (純前端) ══════
 function downloadWord() {
   const total = filteredData.length;
   if (total === 0) { showToast('沒有單字可下載', 'error'); return; }
-  if (!confirm(`將下載目前搜尋結果 ${total} 筆單字為 Word 文件，確定嗎？`)) return;
+  if (!confirm(`將下載目前搜尋結果 ${total} 筆單字為 PDF，確定嗎？`)) return;
   
   const btn = document.getElementById('downloadBtn');
   btn.disabled = true;
   btn.textContent = '⏳ 產生中...';
   
-  // 產出 HTML 格式（Word 可開，副檔名 .doc）
-  let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:w="urn:schemas-microsoft-com:office:word"
-xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8"><title>單字表</title>
-<style>
-body { font-family: Calibri, sans-serif; font-size: 11pt; }
-.word { font-size: 12pt; font-weight: bold; margin-top: 6pt; margin-bottom: 2pt; }
-.example { font-size: 10pt; margin-top: 1pt; margin-bottom: 2pt; }
-.example-zh { font-size: 10pt; color: #666; margin-top: 1pt; margin-bottom: 6pt; }
-hr { border: none; border-top: 1px solid #ddd; margin: 4pt 0; }
-</style></head><body>`;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   
-  filteredData.forEach(item => {
+  // 中文字體（用標準內建）
+  const pageW = 190; // 可用寬度 mm
+  let y = 15;        // 起始 Y 位置
+  
+  filteredData.forEach((item, idx) => {
+    // 檢查是否需要換頁（預留空間）
+    if (y > 270) {
+      doc.addPage();
+      y = 15;
+    }
+    
     const w = item.w || '';
     const k = item.k || '';
     const z = item.z || '';
     const e = item.e || '';
     const ez = item.ez || '';
     
-    html += `<div class="word">${escHtml(w)}${k ? '  [' + escHtml(k) + ']' : ''}${z ? '  ' + escHtml(z) : ''}</div>`;
-    if (e) html += `<div class="example">${escHtml(e)}</div>`;
-    if (ez) html += `<div class="example-zh">${escHtml(ez)}</div>`;
-    html += `<hr>`;
+    // 第一行：單字 [KK] 中譯（粗體、較大字）
+    let line1 = w;
+    if (k) line1 += `  [${k}]`;
+    if (z) line1 += `  ${z}`;
+    
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text(line1, 10, y, { maxWidth: pageW });
+    y += 5.5;
+    
+    // 第二行：例句
+    if (e) {
+      doc.setFontSize(9);
+      doc.setFont(undefined, 'normal');
+      const lines = doc.splitTextToSize(e, pageW);
+      doc.text(lines, 10, y);
+      y += lines.length * 4 + 1;
+    }
+    
+    // 第三行：例句中譯
+    if (ez) {
+      doc.setFontSize(9);
+      // jsPDF 沒有灰色捷徑，用 setTextColor
+      doc.setTextColor(100, 100, 100);
+      const lines = doc.splitTextToSize(ez, pageW);
+      doc.text(lines, 10, y);
+      y += lines.length * 4 + 1;
+      doc.setTextColor(0, 0, 0);
+    }
+    
+    // 分隔線
+    y += 2;
+    doc.setDrawColor(220, 220, 220);
+    doc.line(10, y, 200, y);
+    y += 3;
   });
   
-  html += '</body></html>';
-  
-  const blob = new Blob([html], { type: 'application/msword;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  // 檔名用查詢的單字
+  // 存檔
   const wordName = lastQuery ? lastQuery : '全部單字';
-  a.download = `${wordName}.doc`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  doc.save(`${wordName}.pdf`);
   
-  btn.textContent = '📥 下載 Word';
+  btn.textContent = '📥 下載 PDF';
   btn.disabled = false;
   showToast(`已下載 ${total} 筆單字 📄`, 'success');
 }
