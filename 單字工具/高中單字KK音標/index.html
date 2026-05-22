@@ -536,7 +536,7 @@ function doSearch() {
 
   currentPage = 1;
   render();
-  if (q) recordSearch(q);
+  if (q && filteredData.some(d => d.w === q)) recordSearch(q);
 }
 
 // ══════ RENDER (cards) ══════
