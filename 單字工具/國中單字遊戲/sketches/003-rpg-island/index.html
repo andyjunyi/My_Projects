@@ -2,229 +2,375 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>單字島 · 遊戲化養成風</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單字島 · 魔王挑戰</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-    background: #e8f5e9;
-    color: #2e7d32;
+    background: linear-gradient(135deg, #1a3a2a 0%, #2e7d32 50%, #1b5e20 100%);
     min-height: 100vh;
+    color: #fff;
+    padding: 24px;
+  }
+  .app {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  /* ===== 頂部：角色 + 狀態 ===== */
+  .top-bar {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px 28px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
   }
-  .container {
-    width: 100%;
-    max-width: 420px;
-    padding: 16px;
-  }
-  /* 角色 + 進度 */
-  .character-bar {
-    background: #fff;
-    border-radius: 24px 24px 24px 24px;
-    padding: 16px;
+  .player {
     display: flex;
     align-items: center;
-    gap: 14px;
-    box-shadow: 0 2px 12px rgba(46,125,50,0.08);
-    margin-bottom: 20px;
+    gap: 18px;
   }
-  .character-bar .char {
-    font-size: 52px;
-    width: 64px;
-    text-align: center;
+  .player .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a5d6a7, #43a047);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
   }
-  .character-bar .info {
-    flex: 1;
-  }
-  .character-bar .info .name {
-    font-size: 16px;
-    font-weight: 700;
-    color: #1b5e20;
-  }
-  .character-bar .info .level {
-    font-size: 12px;
-    color: #66bb6a;
-    margin-bottom: 6px;
-  }
-  .xp-bar-bg {
-    width: 100%;
-    height: 8px;
-    background: #e8f5e9;
-    border-radius: 8px;
+  .player .nameplate .name { font-size: 20px; font-weight: 700; }
+  .player .nameplate .title { font-size: 13px; color: #a5d6a7; }
+  .xp-section { flex: 1; max-width: 300px; margin: 0 24px; }
+  .xp-section .xp-label { font-size: 12px; color: #a5d6a7; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .xp-bar {
+    width: 100%; height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
     overflow: hidden;
   }
   .xp-bar-fill {
     width: 67%;
     height: 100%;
-    background: linear-gradient(90deg, #66bb6a, #43a047);
-    border-radius: 8px;
+    background: linear-gradient(90deg, #ffd54f, #ffb300);
+    border-radius: 10px;
     transition: width 0.5s;
   }
-  .character-bar .coins {
-    font-size: 14px;
-    font-weight: 700;
-    color: #f9a825;
-    text-align: center;
+  .stats-row {
+    display: flex;
+    gap: 20px;
   }
-  .character-bar .coins span { display: block; font-size: 10px; color: #a5d6a7; font-weight: 400; }
+  .stat-item { text-align: center; }
+  .stat-item .num { font-size: 22px; font-weight: 800; }
+  .stat-item .lbl { font-size: 11px; color: #a5d6a7; }
 
-  /* 每日任務 */
-  .quest-banner {
-    background: linear-gradient(135deg, #a5d6a7, #66bb6a);
+  /* ===== 內容區：左地圖 + 右資訊 ===== */
+  .main-content {
+    display: flex;
+    gap: 24px;
+  }
+  .map-panel {
+    flex: 2;
+    background: rgba(255,255,255,0.06);
     border-radius: 20px;
-    padding: 18px;
-    color: #1b5e20;
-    margin-bottom: 20px;
+    padding: 24px;
+    backdrop-filter: blur(6px);
+  }
+  .side-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* 地圖標題 */
+  .map-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
+  }
+  .map-header h2 { font-size: 22px; font-weight: 700; }
+  .map-header .filter select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 13px;
     cursor: pointer;
   }
-  .quest-banner .left .title {
-    font-size: 16px;
-    font-weight: 800;
-  }
-  .quest-banner .left .sub {
-    font-size: 12px;
-    opacity: 0.8;
-    margin-top: 2px;
-  }
-  .quest-banner .badge {
-    background: #1b5e20;
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 14px;
-  }
+  .map-header .filter select option { background: #2e7d32; color: #fff; }
 
-  /* 地圖格子 */
+  /* ===== 地圖節點 ===== */
   .map-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 16px;
   }
-  .map-node {
-    background: #fff;
-    border-radius: 16px;
-    padding: 14px 8px;
+  .node {
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 24px 16px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(46,125,50,0.06);
     cursor: pointer;
-    transition: transform 0.12s;
+    transition: transform 0.15s, background 0.15s;
+    border: 2px solid transparent;
   }
-  .map-node:active { transform: scale(0.95); }
-  .map-node .icon { font-size: 30px; }
-  .map-node .label { font-size: 12px; font-weight: 600; color: #388e3c; margin-top: 4px; }
-  .map-node .sub { font-size: 10px; color: #81c784; }
-  .map-node.locked { opacity: 0.4; }
+  .node:hover { transform: translateY(-3px); background: rgba(255,255,255,0.14); }
+  .node:active { transform: scale(0.96); }
+  .node .icon { font-size: 48px; margin-bottom: 8px; }
+  .node .label { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .node .sub { font-size: 12px; color: #a5d6a7; }
+  .node .desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .node.locked { opacity: 0.35; cursor: not-allowed; }
+  .node.locked:hover { transform: none; background: rgba(255,255,255,0.08); }
+  .node.boss {
+    background: linear-gradient(135deg, rgba(244,67,54,0.25), rgba(244,67,54,0.1));
+    border-color: rgba(244,67,54,0.3);
+  }
+  .node.boss .icon { font-size: 52px; }
+  .node.boss .label { color: #ef5350; }
 
-  /* 道具欄 */
-  .items-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+  /* ===== 右側面板 ===== */
+  .panel-box {
+    background: rgba(255,255,255,0.06);
+    border-radius: 18px;
+    padding: 20px;
+    backdrop-filter: blur(6px);
   }
-  .item-slot {
-    flex: 1;
-    background: #fff;
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    border: 1px solid #c8e6c9;
-  }
-  .item-slot .icon { font-size: 22px; }
-  .item-slot .lbl { font-size: 10px; color: #558b2f; margin-top: 2px; }
-  .item-slot .count { font-size: 11px; color: #689f38; font-weight: 600; }
-
-  /* 冒險日誌 */
-  .log-section .title {
+  .panel-box h3 {
     font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #a5d6a7;
     display: flex;
-    justify-content: space-between;
-    color: #2e7d32;
+    align-items: center;
+    gap: 6px;
   }
-  .log-section .title a { font-size: 12px; color: #66bb6a; text-decoration: none; }
-  .log-entry {
-    background: #fff;
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .inv-item {
+    background: rgba(255,255,255,0.06);
     border-radius: 12px;
-    padding: 12px 14px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .inv-item .icon { font-size: 28px; }
+  .inv-item .lbl { font-size: 12px; margin-top: 2px; }
+  .inv-item .count { font-size: 14px; font-weight: 700; color: #ffd54f; }
+
+  /* 今日任務 */
+  .quest-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
-    border: 1px solid #c8e6c9;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .log-entry .en { font-size: 14px; font-weight: 600; color: #1b5e20; }
-  .log-entry .zh { font-size: 11px; color: #81c784; }
-  .log-entry .xp { font-size: 12px; font-weight: 700; color: #66bb6a; }
+  .quest-item:last-child { border-bottom: none; }
+  .quest-item .left { display: flex; align-items: center; gap: 10px; }
+  .quest-item .left .icon { font-size: 20px; }
+  .quest-item .left .txt .title { font-size: 13px; font-weight: 600; }
+  .quest-item .left .txt .prog { font-size: 11px; color: #a5d6a7; }
+  .quest-item .reward { font-size: 13px; font-weight: 700; color: #ffd54f; }
+  .quest-item.done { opacity: 0.5; }
+  .quest-item.done .reward { color: #66bb6a; }
+
+  /* 最近學習 */
+  .word-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .word-row:last-child { border-bottom: none; }
+  .word-row .en { font-size: 15px; font-weight: 600; }
+  .word-row .zh { font-size: 12px; color: #a5d6a7; }
+  .word-row .xp { font-size: 12px; font-weight: 600; color: #ffd54f; }
+
+  /* ===== 底部 ===== */
+  .bottom-nav {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+  }
+  .bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.12s;
+    padding: 6px 20px;
+    border-radius: 10px;
+  }
+  .bottom-nav .nav-item:hover { opacity: 0.7; }
+  .bottom-nav .nav-item.active { opacity: 1; background: rgba(255,255,255,0.08); }
+  .bottom-nav .nav-item .icon { font-size: 24px; }
+  .bottom-nav .nav-item .lbl { font-size: 12px; }
+
+  @media (max-width: 768px) {
+    .main-content { flex-direction: column; }
+    .top-bar { flex-wrap: wrap; gap: 12px; }
+    .xp-section { max-width: 100%; margin: 8px 0; }
+    .map-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
-<div class="container">
-  <!-- 角色 -->
-  <div class="character-bar">
-    <div class="char">🧙</div>
-    <div class="info">
-      <div class="name">單字法師</div>
-      <div class="level">Lv. 7 · 見習魔法使</div>
-      <div class="xp-bar-bg"><div class="xp-bar-fill"></div></div>
+<div class="app">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="player">
+      <div class="avatar">🧙</div>
+      <div class="nameplate">
+        <div class="name">單字法師</div>
+        <div class="title">Lv. 7 見習魔法使</div>
+      </div>
     </div>
-    <div class="coins">🪙 1,280<span>金幣</span></div>
+    <div class="xp-section">
+      <div class="xp-label"><span>下一級 450 / 1,200 XP</span><span>67%</span></div>
+      <div class="xp-bar"><div class="xp-bar-fill"></div></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="num">1280</div><div class="lbl">🪙 金幣</div></div>
+      <div class="stat-item"><div class="num">47</div><div class="lbl">📝 今日</div></div>
+      <div class="stat-item"><div class="num">3🔥</div><div class="lbl">連續天</div></div>
+    </div>
   </div>
 
-  <!-- 每日 -->
-  <div class="quest-banner">
-    <div class="left">
-      <div class="title">📜 每日任務</div>
-      <div class="sub">完成 10 題獲得額外經驗值</div>
+  <!-- Main -->
+  <div class="main-content">
+    <!-- 地圖 -->
+    <div class="map-panel">
+      <div class="map-header">
+        <h2>🗺️ 冒險地圖</h2>
+        <div class="filter">
+          <select>
+            <option>全部模式</option>
+            <option>國一單字</option>
+            <option>國二單字</option>
+            <option>國三單字</option>
+            <option>會考總複習</option>
+          </select>
+        </div>
+      </div>
+      <div class="map-grid">
+        <div class="node">
+          <div class="icon">🃏</div>
+          <div class="label">翻牌配對</div>
+          <div class="sub">記憶力考驗</div>
+          <div class="desc">翻開兩張牌，配對中英文</div>
+        </div>
+        <div class="node">
+          <div class="icon">⌨️</div>
+          <div class="label">打字挑戰</div>
+          <div class="sub">限時拼字</div>
+          <div class="desc">看中文，限時打出英文單字</div>
+        </div>
+        <div class="node">
+          <div class="icon">🎯</div>
+          <div class="label">四選一</div>
+          <div class="sub">快問快答</div>
+          <div class="desc">四個選項選出正確答案</div>
+        </div>
+        <div class="node">
+          <div class="icon">🧩</div>
+          <div class="label">拼字遊戲</div>
+          <div class="sub">字母重組</div>
+          <div class="desc">把打亂的字母排回單字</div>
+        </div>
+        <div class="node">
+          <div class="icon">🏃</div>
+          <div class="label">單字馬拉松</div>
+          <div class="sub">無限挑戰</div>
+          <div class="desc">混合題型，答錯即結束</div>
+        </div>
+        <div class="node boss locked">
+          <div class="icon">🐉</div>
+          <div class="label">魔王關卡</div>
+          <div class="sub">Lv.10 解鎖</div>
+          <div class="desc">擊敗魔王，獲得稀有獎勵</div>
+        </div>
+      </div>
     </div>
-    <div class="badge">+50 XP</div>
+
+    <!-- 側欄 -->
+    <div class="side-panel">
+      <!-- 道具 -->
+      <div class="panel-box">
+        <h3>🎒 道具欄</h3>
+        <div class="inventory-grid">
+          <div class="inv-item"><div class="icon">💖</div><div class="lbl">愛心</div><div class="count">× 5</div></div>
+          <div class="inv-item"><div class="icon">⏰</div><div class="lbl">加時券</div><div class="count">× 3</div></div>
+          <div class="inv-item"><div class="icon">💡</div><div class="lbl">提示</div><div class="count">× 8</div></div>
+          <div class="inv-item"><div class="icon">📕</div><div class="lbl">錯誤本</div><div class="count">12 題</div></div>
+        </div>
+      </div>
+
+      <!-- 每日任務 -->
+      <div class="panel-box">
+        <h3>📜 每日任務</h3>
+        <div class="quest-item">
+          <div class="left"><span class="icon">📖</span><div class="txt"><div class="title">練習 10 個單字</div><div class="prog">進度 7/10</div></div></div>
+          <div class="reward">+30 XP</div>
+        </div>
+        <div class="quest-item">
+          <div class="left"><span class="icon">✅</span><div class="txt"><div class="title">連續答對 5 題</div><div class="prog">進度 5/5</div></div></div>
+          <div class="reward">+20 XP ✅</div>
+        </div>
+        <div class="quest-item">
+          <div class="left"><span class="icon">🏆</span><div class="txt"><div class="title">玩 3 種不同模式</div><div class="prog">進度 2/3</div></div></div>
+          <div class="reward">+50 XP</div>
+        </div>
+      </div>
+
+      <!-- 最近學習 -->
+      <div class="panel-box">
+        <h3>📖 最近學習</h3>
+        <div class="word-row">
+          <div><div class="en">adventure</div><div class="zh">冒險 /ədˈvɛntʃər/ (名)</div></div>
+          <div class="xp">+8 XP</div>
+        </div>
+        <div class="word-row">
+          <div><div class="en">beautiful</div><div class="zh">美麗的 /ˈbjuːtəfəl/ (形)</div></div>
+          <div class="xp">+6 XP</div>
+        </div>
+        <div class="word-row">
+          <div><div class="en">knowledge</div><div class="zh">知識 /ˈnɒlɪdʒ/ (名)</div></div>
+          <div class="xp">+10 XP</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 地圖 -->
-  <div class="map-grid">
-    <div class="map-node"><div class="icon">🃏</div><div class="label">翻牌</div><div class="sub">記憶</div></div>
-    <div class="map-node"><div class="icon">⌨️</div><div class="label">打字</div><div class="sub">拼字</div></div>
-    <div class="map-node"><div class="icon">🎯</div><div class="label">選擇</div><div class="sub">四選一</div></div>
-    <div class="map-node"><div class="icon">🧩</div><div class="label">拼字</div><div class="sub">重組</div></div>
-    <div class="map-node"><div class="icon">🏃</div><div class="label">馬拉松</div><div class="sub">無限</div></div>
-    <div class="map-node locked"><div class="icon">🔒</div><div class="label">魔王關</div><div class="sub">Lv.10 解鎖</div></div>
-  </div>
-
-  <!-- 道具 -->
-  <div class="items-row">
-    <div class="item-slot"><div class="icon">💖</div><div class="lbl">愛心</div><div class="count">×5</div></div>
-    <div class="item-slot"><div class="icon">⏰</div><div class="lbl">加時</div><div class="count">×3</div></div>
-    <div class="item-slot"><div class="icon">💡</div><div class="lbl">提示</div><div class="count">×8</div></div>
-    <div class="item-slot"><div class="icon">📕</div><div class="lbl">錯誤本</div><div class="count">12</div></div>
-  </div>
-
-  <!-- 冒險日誌 -->
-  <div class="log-section">
-    <div class="title">
-      <span>📖 冒險日誌</span>
-      <a href="#">全部 →</a>
-    </div>
-    <div class="log-entry">
-      <div><div class="en">adventure</div><div class="zh">冒險 (名)</div></div>
-      <div class="xp">+8 XP</div>
-    </div>
-    <div class="log-entry">
-      <div><div class="en">beautiful</div><div class="zh">美麗的 (形)</div></div>
-      <div class="xp">+6 XP</div>
-    </div>
-    <div class="log-entry">
-      <div><div class="en">knowledge</div><div class="zh">知識 (名)</div></div>
-      <div class="xp">+10 XP</div>
-    </div>
+  <!-- Bottom -->
+  <div class="bottom-nav">
+    <div class="nav-item active"><div class="icon">🏠</div><div class="lbl">冒險</div></div>
+    <div class="nav-item"><div class="icon">📚</div><div class="lbl">單字本</div></div>
+    <div class="nav-item"><div class="icon">🏆</div><div class="lbl">成就</div></div>
+    <div class="nav-item"><div class="icon">📊</div><div class="lbl">分析</div></div>
+    <div class="nav-item"><div class="icon">⚙️</div><div class="lbl">設定</div></div>
   </div>
 </div>
 </body>
