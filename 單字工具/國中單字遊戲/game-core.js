@@ -153,6 +153,7 @@ function renderGameUI(mode, gs) {
         flex: 1; display: flex; flex-direction: column;
         align-items: center; justify-content: center;
         min-height: 300px;
+        width: 100%;
       }
       .progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; }
       .progress-fill { height: 100%; background: var(--gold); border-radius: 6px; transition: width 0.3s; }

@@ -9,9 +9,10 @@
   .memory-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 450px;
+    gap: 12px;
+    max-width: 500px;
     width: 100%;
+    margin: 0 auto;
   }
   .memory-card {
     aspect-ratio: 1;
@@ -19,19 +20,19 @@
     border: 2px solid var(--glass-border);
     border-radius: var(--radius-md);
     display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700;
+    font-size: 18px; font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    padding: 6px;
+    padding: 8px;
     text-align: center;
     word-break: break-all;
     color: #fff;
   }
-  .memory-card.flipped { background: rgba(255,255,255,0.15); border-color: var(--green-300); transform: scale(1.02); }
-  .memory-card.matched { background: rgba(76,175,80,0.2); border-color: var(--green-500); cursor: default; opacity: 0.6; transform: scale(0.95); }
-  .memory-card.en { font-size: 15px; }
-  .memory-card.zh { font-size: 12px; }
-  .memory-pairs { font-size: 14px; margin-bottom: 12px; color: var(--green-200); }
+  .memory-card.flipped { background: rgba(255,255,255,0.15); border-color: var(--green-300); }
+  .memory-card.matched { background: rgba(76,175,80,0.2); border-color: var(--green-500); cursor: default; opacity: 0.5; }
+  .memory-card.en { font-size: 16px; }
+  .memory-card.zh { font-size: 13px; }
+  .memory-pairs { font-size: 15px; margin-bottom: 14px; color: var(--green-200); text-align: center; }
   ${gameStyles}
 </style>
 </head>
