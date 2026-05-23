@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單字馬拉松 · 單字島</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .m-zh { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .m-kk { font-size: 15px; color: var(--green-200); margin-bottom: 16px; }
+  .m-mode-tag {
+    font-size: 12px; background: var(--glass); padding: 4px 12px;
+    border-radius: 12px; margin-bottom: 16px; display: inline-block;
+  }
+  .m-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 500px; }
+  .m-opt {
+    background: var(--glass);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.12s;
+    text-align: center; font-family: inherit; color: #fff;
+  }
+  .m-opt:hover { background: var(--glass-hover); border-color: var(--green-300); }
+  .m-opt.correct { background: rgba(76,175,80,0.3); border-color: var(--green-500); }
+  .m-opt.wrong { background: rgba(239,83,80,0.3); border-color: var(--red); }
+  .m-opt:disabled { cursor: default; }
+  .m-lives { font-size: 22px; margin-bottom: 10px; }
+  .m-feedback { font-size: 14px; min-height: 24px; margin-top: 10px; }
+  .m-streak { font-size: 14px; color: var(--gold); margin-bottom: 8px; }
+  .m-input-wrap { display: flex; gap: 8px; width: 100%; max-width: 400px; }
+  .m-input-wrap input {
+    flex: 1; padding: 12px 16px; font-size: 18px;
+    background: rgba(255,255,255,0.1); border: 2px solid var(--glass-border);
+    border-radius: var(--radius-sm); color: #fff; outline: none;
+    font-family: inherit; text-align: center;
+  }
+  .m-input-wrap input:focus { border-color: var(--green-300); }
+  .m-input-wrap input.correct { border-color: var(--green-500); }
+  .m-input-wrap input.wrong { border-color: var(--red); }
+  ${gameStyles}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="topBar" class="top-bar"></div>
+  <div class="game-area panel fade-in" id="gameArea">
+    <div class="game-header">
+      <div class="game-title">🏃 單字馬拉松</div>
+      <div class="game-status">
+        <span id="roundDisplay">第 1 題</span>
+        <span id="scoreDisplay">🏆 0</span>
+        <span id="mStreak">🔥 0</span>
+      </div>
+    </div>
+    <div id="gameContent" class="game-content"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+let gs, currentWord, startTime, lives, streak, questionCount;
+
+document.addEventListener('DOMContentLoaded', () => {
+  gs = { mode: 'marathon', round: 0, score: 0, correct: 0, wrong: 0, streak: 0, results: [] };
+  lives = 3;
+  streak = 0;
+  questionCount = 0;
+  startGame();
+});
+
+function startGame() {
+  document.getElementById('gameContent').innerHTML = `
+    <div class="result-panel fade-in">
+      <div class="result-icon">🏃</div>
+      <div class="result-title">單字馬拉松</div>
+      <div style="font-size:14px;color:var(--green-200);margin-bottom:16px;">
+        混合題型 · 你有 ${'💖'.repeat(lives)} 顆愛心<br>答錯扣一顆，歸零就結束！
+      </div>
+      <button class="btn btn-primary pulse" onclick="startRound()">開始挑戰！</button>
+    </div>
+  `;
+}
+
+function startRound() {
+  if (lives <= 0) { endGame(); return; }
+  
+  currentWord = [...WORD_DATA].sort(() => Math.random() - 0.5)[0];
+  startTime = Date.now();
+  questionCount++;
+  
+  document.getElementById('roundDisplay').textContent = `第 ${questionCount} 題`;
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('mStreak').textContent = `🔥 ${streak}`;
+  
+  // 隨機選擇題型：0=四選一, 1=打字
+  const mode = Math.random() < 0.5 ? 'quiz' : 'type';
+  
+  if (mode === 'quiz') {
+    const distractors = getDistractors(WORD_DATA, currentWord.w, 3);
+    const options = [{ z: currentWord.z, correct: true }, ...distractors.map(d => ({ z: d.z, correct: false }))];
+    options.sort(() => Math.random() - 0.5);
+    
+    document.getElementById('gameContent').innerHTML = `
+      <div class="m-lives">${'💖'.repeat(lives)}${'🤍'.repeat(3 - lives)}</div>
+      <div class="m-streak">🔥 ${streak} 連對</div>
+      <div class="m-mode-tag">🎯 四選一</div>
+      <div class="m-zh">${currentWord.w}</div>
+      <div class="m-kk">${currentWord.k || ''}</div>
+      <div class="m-options">
+        ${options.map((o, i) => `<button class="m-opt" data-correct="${o.correct}" onclick="answerMarathon(this, ${o.correct})">${o.z}</button>`).join('')}
+      </div>
+      <div class="m-feedback" id="mFeedback"></div>
+    `;
+  } else {
+    const hintChars = currentWord.w.length > 3 ? currentWord.w[0] + '_'.repeat(currentWord.w.length - 1) : '';
+    document.getElementById('gameContent').innerHTML = `
+      <div class="m-lives">${'💖'.repeat(lives)}${'🤍'.repeat(3 - lives)}</div>
+      <div class="m-streak">🔥 ${streak} 連對</div>
+      <div class="m-mode-tag">⌨️ 打字</div>
+      <div class="m-zh">${currentWord.z ? currentWord.z.replace(/\(.+?\)/g, '').trim() : ''}</div>
+      <div class="m-kk">${currentWord.k || ''}</div>
+      <div style="font-size:13px;color:var(--gold);margin-bottom:12px;">${hintChars ? '💡 ' + hintChars : ''}</div>
+      <div class="m-input-wrap">
+        <input type="text" id="mInput" autocomplete="off" autocorrect="off"
+               placeholder="輸入英文..." onkeydown="if(event.key==='Enter') checkMarathon()">
+      </div>
+      <div style="margin-top:8px;">
+        <button class="btn btn-primary btn-sm" onclick="checkMarathon()">✅ 送出</button>
+        <button class="btn btn-ghost btn-sm" onclick="skipMarathon()">⏭️ 跳過</button>
+      </div>
+      <div class="m-feedback" id="mFeedback"></div>
+    `;
+    setTimeout(() => {
+      const inp = document.getElementById('mInput');
+      if (inp) inp.focus();
+    }, 100);
+  }
+}
+
+function answerMarathon(el, correct) {
+  document.querySelectorAll('.m-opt').forEach(b => b.disabled = true);
+  
+  if (correct) {
+    el.classList.add('correct');
+    gs.correct++; streak++; gs.score += 10 + streak * 2;
+    gs.results.push({ word: currentWord.w, correct: true, time: 0 });
+    document.getElementById('mFeedback').innerHTML = `✅ 正確！ ${currentWord.z ? currentWord.z.substring(0, 25) : ''}`;
+  } else {
+    el.classList.add('wrong');
+    lives--; streak = 0;
+    gs.wrong++; gs.results.push({ word: currentWord.w, correct: false, time: 0 });
+    document.querySelectorAll('.m-opt').forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); });
+    document.getElementById('mFeedback').innerHTML = `❌ 正確答案：${currentWord.z ? currentWord.z.substring(0, 25) : ''}`;
+  }
+  
+  updateScore();
+  
+  if (lives <= 0) {
+    setTimeout(endGame, 1200);
+  } else {
+    setTimeout(startRound, 1000);
+  }
+}
+
+function checkMarathon() {
+  const input = document.getElementById('mInput');
+  if (!input) return;
+  const ans = input.value.trim().toLowerCase();
+  const correct = ans === currentWord.w.toLowerCase();
+  
+  input.classList.add(correct ? 'correct' : 'wrong');
+  input.disabled = true;
+  
+  if (correct) {
+    gs.correct++; streak++; gs.score += 10 + streak * 2;
+    gs.results.push({ word: currentWord.w, correct: true, time: 0 });
+    document.getElementById('mFeedback').innerHTML = `✅ 正確！`;
+  } else {
+    lives--; streak = 0;
+    gs.wrong++; gs.results.push({ word: currentWord.w, correct: false, time: 0 });
+    document.getElementById('mFeedback').innerHTML = `❌ 正確答案：<strong>${currentWord.w}</strong>`;
+  }
+  
+  updateScore();
+  
+  if (lives <= 0) {
+    setTimeout(endGame, 1200);
+  } else {
+    setTimeout(startRound, 1000);
+  }
+}
+
+function skipMarathon() {
+  lives--; streak = 0;
+  gs.wrong++; gs.results.push({ word: currentWord.w, correct: false, time: 0 });
+  document.getElementById('mFeedback').innerHTML = `⏭️ 正確答案：<strong>${currentWord.w}</strong>`;
+  updateScore();
+  
+  if (lives <= 0) {
+    setTimeout(endGame, 1000);
+  } else {
+    setTimeout(startRound, 800);
+  }
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('mStreak').textContent = `🔥 ${streak}`;
+}
+
+function endGame() {
+  const p = getPlayer();
+  p.totalCorrect += gs.correct;
+  p.totalWrong += gs.wrong;
+  p.gamesPlayed++;
+  p.coins += gs.correct * 2;
+  if (streak > p.maxStreak) p.maxStreak = streak;
+  if (streak > p.streak) p.streak = streak;
+  
+  const xp = gs.correct * 8;
+  addXp(p, xp, '單字馬拉松');
+  updateQuest(p, 'practice_10', gs.correct + gs.wrong);
+  updateQuest(p, 'streak_5', streak);
+  
+  const wrongWords = gs.results.filter(r => !r.correct).map(r => r.word);
+  wrongWords.forEach(w => addErrorWord(p, w));
+  
+  const recent = load('recentWords', []);
+  gs.results.slice(0, 10).forEach(r => { if (!recent.includes(r.word)) recent.unshift(r.word); });
+  if (recent.length > 200) recent.length = 200;
+  save('recentWords', recent);
+  
+  checkAchievements(p);
+  setPlayer(p);
+  
+  document.getElementById('gameContent').innerHTML = `
+    <div class="result-panel fade-in">
+      <div class="result-icon">${gs.correct >= 20 ? '🌟' : gs.correct >= 10 ? '👍' : '💪'}</div>
+      <div class="result-title">馬拉松結束！</div>
+      <div class="result-stats">
+        <div class="rs-row">
+          <div class="rs-item"><div class="rs-num">${questionCount}</div><div class="rs-lbl">總題數</div></div>
+          <div class="rs-item"><div class="rs-num">${gs.correct}</div><div class="rs-lbl">✅ 正確</div></div>
+          <div class="rs-item"><div class="rs-num">${gs.wrong}</div><div class="rs-lbl">❌ 錯誤</div></div>
+        </div>
+        <div class="rs-row">
+          <div class="rs-item"><div class="rs-num">${gs.score}</div><div class="rs-lbl">🏆 得分</div></div>
+          <div class="rs-item"><div class="rs-num">${questionCount > 0 ? Math.round(gs.correct / questionCount * 100) : 0}%</div><div class="rs-lbl">正確率</div></div>
+          <div class="rs-item"><div class="rs-num">${streak}</div><div class="rs-lbl">🔥 最後連對</div></div>
+        </div>
+      </div>
+      <div class="result-reward"><span>+${xp} XP</span><span>🪙 ${gs.correct * 2}</span></div>
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="location.reload()">🔄 再來一次</button>
+        <button class="btn btn-ghost" onclick="navigate('index.html')">🏠 回冒險地圖</button>
+      </div>
+    </div>
+  `;
+  updateTopBar(p);
+}
+</script>
+</body>
+</html>

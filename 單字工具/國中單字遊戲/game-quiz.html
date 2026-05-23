@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四選一 · 單字島</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .quiz-word { font-size: 36px; font-weight: 800; margin-bottom: 6px; }
+  .quiz-kk { font-size: 16px; color: var(--green-200); margin-bottom: 20px; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 500px; }
+  .quiz-opt {
+    background: var(--glass);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+    font-family: inherit;
+    color: #fff;
+  }
+  .quiz-opt:hover { background: var(--glass-hover); border-color: var(--green-300); }
+  .quiz-opt:active { transform: scale(0.96); }
+  .quiz-opt.correct { background: rgba(76,175,80,0.3); border-color: var(--green-500); }
+  .quiz-opt.wrong { background: rgba(239,83,80,0.3); border-color: var(--red); }
+  .quiz-opt:disabled { cursor: default; opacity: 0.7; }
+  .quiz-opt.correct:disabled, .quiz-opt.wrong:disabled { opacity: 1; }
+  .quiz-hint { font-size: 12px; color: var(--green-200); margin-bottom: 12px; cursor: pointer; }
+  .quiz-feedback { margin-top: 16px; font-size: 15px; min-height: 24px; }
+  ${gameStyles}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="topBar" class="top-bar"></div>
+  <div class="game-area panel fade-in" id="gameArea">
+    <div class="game-header">
+      <div class="game-title">🎯 四選一</div>
+      <div class="game-status">
+        <span id="roundDisplay">1/10</span>
+        <span id="scoreDisplay">🏆 0</span>
+        <span id="streakDisplay">🔥 0</span>
+        <span id="timerDisplay">⏱️ 15s</span>
+      </div>
+    </div>
+    <div id="gameContent" class="game-content"></div>
+    <div class="game-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="game-core.js"></script>
+<script>
+let gs, timerInterval, startTime;
+
+document.addEventListener('DOMContentLoaded', () => {
+  gs = new GameState('quiz');
+  if (gs.words.length < 4) {
+    document.getElementById('gameContent').innerHTML = '<div style="text-align:center;padding:40px;">❌ 題目不足，請選擇其他級別</div>';
+    return;
+  }
+  renderGameUI('quiz', gs);
+  updateTopBar(getPlayer());
+  showQuestion();
+});
+
+function showQuestion() {
+  if (gs.isDone) { renderGameOver(gs); return; }
+  
+  const word = gs.nextWord();
+  startTime = Date.now();
+  
+  // 選三個干擾選項
+  const distractors = getDistractors(gs.words, word.w, 3);
+  const options = [{ w: word.w, z: word.z, correct: true }, ...distractors.map(d => ({ w: d.w, z: d.z, correct: false }))];
+  options.sort(() => Math.random() - 0.5);
+  
+  document.getElementById('roundDisplay').textContent = `${gs.currentRound}/${gs.totalRounds}`;
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+  document.getElementById('progressFill').style.width = `${(gs.round - 1) / gs.config.rounds * 100}%`;
+  
+  const content = document.getElementById('gameContent');
+  content.innerHTML = `
+    <div class="quiz-word">${word.w}</div>
+    <div class="quiz-kk">${word.k || ''}</div>
+    ${gs.config.timePerRound > 0 ? `<div class="quiz-hint" id="useHint" onclick="useHint()">💡 使用提示 (${getPlayer().hints})</div>` : ''}
+    <div class="quiz-options" id="quizOptions">
+      ${options.map((o, i) => `<button class="quiz-opt" data-idx="${i}" onclick="answer(this, ${o.correct})">${o.z}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+  `;
+  
+  if (gs.config.timePerRound > 0) startTimer();
+}
+
+function answer(el, correct) {
+  clearInterval(timerInterval);
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(b => b.disabled = true);
+  
+  const correctEl = [...opts].find(b => b.dataset.correct === 'true');
+  // 找出正確選項
+  const content = document.getElementById('gameContent');
+  const buttons = content.querySelectorAll('.quiz-opt');
+  buttons.forEach(b => {
+    const idx = parseInt(b.dataset.idx);
+    // We need to know which one is correct
+  });
+  
+  // Mark correct one
+  const allBtns = document.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+  
+  if (el.dataset.correct === 'true') {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    // Show correct answer
+    allBtns.forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); });
+  }
+  
+  const timeSpent = (Date.now() - startTime) / 1000;
+  gs.addResult(el.dataset.correct === 'true', timeSpent);
+  updateScore();
+  
+  setTimeout(showQuestion, 1000);
+}
+
+function startTimer() {
+  gs.timeLeft = gs.config.timePerRound;
+  document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+  timerInterval = setInterval(() => {
+    gs.timeLeft--;
+    document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+    if (gs.timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timeUp();
+    }
+  }, 1000);
+}
+
+function timeUp() {
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(b => b.disabled = true);
+  // Show correct
+  opts.forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); });
+  gs.addResult(false, gs.config.timePerRound);
+  updateScore();
+  setTimeout(showQuestion, 1000);
+}
+
+function useHint() {
+  const p = getPlayer();
+  if (p.hints <= 0) { showToast('提示不夠了！', 'bad'); return; }
+  useItem(p, 'hint');
+  const opts = document.querySelectorAll('.quiz-opt');
+  // 移除兩個錯誤選項
+  let removed = 0;
+  opts.forEach(b => {
+    if (b.dataset.correct !== 'true' && removed < 2) {
+      b.style.display = 'none';
+      removed++;
+    }
+  });
+  document.getElementById('useHint').textContent = `💡 使用提示 (${p.hints})`;
+  showToast('💡 已移除兩個錯誤選項');
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+}
+</script>
+</body>
+</html>

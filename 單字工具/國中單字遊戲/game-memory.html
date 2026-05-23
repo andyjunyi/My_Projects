@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>翻牌配對 · 單字島</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 450px;
+    width: 100%;
+  }
+  .memory-card {
+    aspect-ratio: 1;
+    background: var(--glass);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 6px;
+    text-align: center;
+    word-break: break-all;
+    color: #fff;
+  }
+  .memory-card.flipped { background: rgba(255,255,255,0.15); border-color: var(--green-300); transform: scale(1.02); }
+  .memory-card.matched { background: rgba(76,175,80,0.2); border-color: var(--green-500); cursor: default; opacity: 0.6; transform: scale(0.95); }
+  .memory-card.en { font-size: 15px; }
+  .memory-card.zh { font-size: 12px; }
+  .memory-pairs { font-size: 14px; margin-bottom: 12px; color: var(--green-200); }
+  ${gameStyles}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="topBar" class="top-bar"></div>
+  <div class="game-area panel fade-in" id="gameArea">
+    <div class="game-header">
+      <div class="game-title">🃏 翻牌配對</div>
+      <div class="game-status">
+        <span id="pairsDisplay">🃏 0 / 6 對</span>
+        <span id="scoreDisplay">🏆 0</span>
+        <span id="movesDisplay">🔄 0</span>
+      </div>
+    </div>
+    <div id="gameContent" class="game-content"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+let pairs, cards, flipped, matched, moves, canFlip, startTime, gs;
+
+document.addEventListener('DOMContentLoaded', () => {
+  gs = { mode: 'memory', round: 0, score: 0, correct: 0, wrong: 0, streak: 0, results: [] };
+  startGame();
+});
+
+function startGame() {
+  const words = [...WORD_DATA].sort(() => Math.random() - 0.5).slice(0, 6);
+  pairs = words;
+  cards = [];
+  words.forEach(w => {
+    cards.push({ id: w.w + '_en', pairId: w.w, type: 'en', text: w.w, word: w });
+    cards.push({ id: w.w + '_zh', pairId: w.w, type: 'zh', text: w.z ? w.z.replace(/\(.+?\)/g, '').trim().substring(0, 15) : '', word: w });
+  });
+  cards.sort(() => Math.random() - 0.5);
+  
+  flipped = [];
+  matched = [];
+  moves = 0;
+  canFlip = true;
+  startTime = Date.now();
+  gs.correct = 0; gs.wrong = 0; gs.score = 0;
+  
+  renderBoard();
+}
+
+function renderBoard() {
+  document.getElementById('gameContent').innerHTML = `
+    <div class="memory-pairs">配對 ${matched.length / 2} / ${pairs.length} 對</div>
+    <div class="memory-grid">
+      ${cards.map((c, i) => `
+        <div class="memory-card ${c.type} ${matched.includes(c.pairId) ? 'matched' : ''} ${flipped.includes(i) ? 'flipped' : ''}"
+             data-idx="${i}" onclick="flipCard(${i})">
+          ${matched.includes(c.pairId) ? (c.type === 'en' ? '✅' : '✅') : flipped.includes(i) ? c.text : '❓'}
+        </div>
+      `).join('')}
+    </div>
+  `;
+  document.getElementById('pairsDisplay').textContent = `🃏 ${matched.length / 2} / ${pairs.length} 對`;
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('movesDisplay').textContent = `🔄 ${moves}`;
+}
+
+function flipCard(idx) {
+  if (!canFlip) return;
+  if (flipped.includes(idx)) return;
+  if (matched.includes(cards[idx].pairId)) return;
+  if (flipped.length >= 2) return;
+  
+  flipped.push(idx);
+  moves++;
+  renderBoard();
+  
+  if (flipped.length === 2) {
+    canFlip = false;
+    const [i1, i2] = flipped;
+    const c1 = cards[i1], c2 = cards[i2];
+    
+    if (c1.pairId === c2.pairId && c1.type !== c2.type) {
+      // 配對成功
+      matched.push(c1.pairId);
+      gs.correct++;
+      gs.score += 20;
+      gs.results.push({ word: c1.pairId, correct: true, time: 0 });
+      flipped = [];
+      canFlip = true;
+      renderBoard();
+      
+      if (matched.length === pairs.length * 2) {
+        setTimeout(() => endGame(), 500);
+      }
+    } else {
+      // 配對失敗
+      gs.wrong++;
+      gs.results.push({ word: c1.pairId, correct: false, time: 0 });
+      setTimeout(() => {
+        flipped = [];
+        canFlip = true;
+        renderBoard();
+      }, 1000);
+    }
+  }
+}
+
+function endGame() {
+  const timeSpent = Math.round((Date.now() - startTime) / 1000);
+  const p = getPlayer();
+  p.totalCorrect += gs.correct;
+  p.totalWrong += gs.wrong;
+  p.gamesPlayed++;
+  p.coins += gs.correct * 3;
+  
+  const xp = gs.correct * 10;
+  addXp(p, xp, '翻牌配對');
+  updateQuest(p, 'practice_10', gs.correct + gs.wrong);
+  
+  const recent = load('recentWords', []);
+  pairs.forEach(w => { if (!recent.includes(w.w)) recent.unshift(w.w); });
+  if (recent.length > 200) recent.length = 200;
+  save('recentWords', recent);
+  
+  checkAchievements(p);
+  setPlayer(p);
+  
+  document.getElementById('gameContent').innerHTML = `
+    <div class="result-panel fade-in">
+      <div class="result-icon">🌟</div>
+      <div class="result-title">全部配對完成！</div>
+      <div class="result-stats">
+        <div class="rs-row">
+          <div class="rs-item"><div class="rs-num">${pairs.length}</div><div class="rs-lbl">配對數</div></div>
+          <div class="rs-item"><div class="rs-num">${moves}</div><div class="rs-lbl">翻牌次數</div></div>
+          <div class="rs-item"><div class="rs-num">${timeSpent}s</div><div class="rs-lbl">用時</div></div>
+        </div>
+      </div>
+      <div class="result-reward"><span>+${xp} XP</span><span>🪙 ${gs.correct * 3}</span></div>
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="startGame()">🔄 再玩一次</button>
+        <button class="btn btn-ghost" onclick="navigate('index.html')">🏠 回冒險地圖</button>
+      </div>
+    </div>
+  `;
+  updateTopBar(p);
+}
+</script>
+</body>
+</html>

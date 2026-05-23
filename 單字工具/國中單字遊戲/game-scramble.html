@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拼字遊戲 · 單字島</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .scramble-zh { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .scramble-kk { font-size: 15px; color: var(--green-200); margin-bottom: 16px; }
+  .scramble-tiles {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 20px; max-width: 400px;
+  }
+  .scramble-tile {
+    width: 48px; height: 52px;
+    background: var(--glass-hover);
+    border: 2px solid var(--green-300);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.1s;
+    user-select: none;
+    color: #fff;
+  }
+  .scramble-tile:active { transform: scale(0.9); }
+  .scramble-tile.used { opacity: 0.2; pointer-events: none; }
+  .scramble-answer {
+    display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+    min-height: 52px; margin-bottom: 14px;
+  }
+  .scramble-slot {
+    width: 48px; height: 52px;
+    border: 2px dashed var(--glass-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    color: var(--gold);
+    cursor: pointer;
+  }
+  .scramble-slot.filled { border-style: solid; border-color: var(--gold); background: rgba(255,215,0,0.08); }
+  .scramble-feedback { font-size: 15px; min-height: 24px; margin-top: 8px; }
+  .scramble-actions { display: flex; gap: 8px; }
+  ${gameStyles}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="topBar" class="top-bar"></div>
+  <div class="game-area panel fade-in" id="gameArea">
+    <div class="game-header">
+      <div class="game-title">🧩 拼字遊戲</div>
+      <div class="game-status">
+        <span id="roundDisplay">1/8</span>
+        <span id="scoreDisplay">🏆 0</span>
+        <span id="streakDisplay">🔥 0</span>
+        <span id="timerDisplay">⏱️ 25s</span>
+      </div>
+    </div>
+    <div id="gameContent" class="game-content"></div>
+    <div class="game-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="game-core.js"></script>
+<script>
+let gs, timerInterval, startTime, currentWord;
+let selectedTiles = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  gs = new GameState('scramble');
+  if (gs.words.length < 5) {
+    document.getElementById('gameContent').innerHTML = '<div style="text-align:center;padding:40px;">❌ 題目不足</div>';
+    return;
+  }
+  renderGameUI('scramble', gs);
+  updateTopBar(getPlayer());
+  showQuestion();
+});
+
+function showQuestion() {
+  if (gs.isDone) { renderGameOver(gs); return; }
+  
+  currentWord = gs.nextWord();
+  startTime = Date.now();
+  selectedTiles = [];
+  
+  document.getElementById('roundDisplay').textContent = `${gs.currentRound}/${gs.totalRounds}`;
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+  document.getElementById('progressFill').style.width = `${(gs.round - 1) / gs.config.rounds * 100}%`;
+  
+  // 打亂字母
+  const letters = currentWord.w.toLowerCase().split('');
+  for (let i = letters.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [letters[i], letters[j]] = [letters[j], letters[i]];
+  }
+  
+  const content = document.getElementById('gameContent');
+  content.innerHTML = `
+    <div class="scramble-zh">${currentWord.z ? currentWord.z.replace(/\(.+?\)/g, '').trim() : ''}</div>
+    <div class="scramble-kk">${currentWord.k || ''}</div>
+    <div class="scramble-answer" id="scrambleAnswer"></div>
+    <div class="scramble-tiles" id="scrambleTiles">
+      ${letters.map((l, i) => `<div class="scramble-tile" data-idx="${i}" onclick="pickTile(${i})">${l}</div>`).join('')}
+    </div>
+    <div class="scramble-actions">
+      <button class="btn btn-primary" onclick="checkScramble()">✅ 確認</button>
+      <button class="btn btn-ghost btn-sm" onclick="resetScramble()">↩️ 重設</button>
+      <button class="btn btn-ghost btn-sm" onclick="skipScramble()">⏭️ 跳過</button>
+    </div>
+    <div class="scramble-feedback" id="scrambleFeedback"></div>
+  `;
+  
+  if (gs.config.timePerRound > 0) startTimer();
+}
+
+function pickTile(idx) {
+  const tile = document.querySelector(`.scramble-tile[data-idx="${idx}"]`);
+  if (!tile || tile.classList.contains('used')) return;
+  
+  tile.classList.add('used');
+  selectedTiles.push(idx);
+  
+  const answer = document.getElementById('scrambleAnswer');
+  const slot = document.createElement('div');
+  slot.className = 'scramble-slot filled';
+  slot.textContent = currentWord.w.toLowerCase()[idx];
+  slot.onclick = () => unselectTile(idx);
+  answer.appendChild(slot);
+}
+
+function unselectTile(idx) {
+  const tile = document.querySelector(`.scramble-tile[data-idx="${idx}"]`);
+  if (!tile) return;
+  tile.classList.remove('used');
+  selectedTiles = selectedTiles.filter(i => i !== idx);
+  
+  const answer = document.getElementById('scrambleAnswer');
+  const slots = answer.querySelectorAll('.scramble-slot');
+  slots.forEach(s => { if (s.textContent === currentWord.w.toLowerCase()[idx]) s.remove(); });
+}
+
+function resetScramble() {
+  document.querySelectorAll('.scramble-tile').forEach(t => t.classList.remove('used'));
+  document.getElementById('scrambleAnswer').innerHTML = '';
+  selectedTiles = [];
+}
+
+function checkScramble() {
+  clearInterval(timerInterval);
+  const ans = selectedTiles.map(i => currentWord.w.toLowerCase()[i]).join('');
+  const correct = ans === currentWord.w.toLowerCase();
+  
+  const timeSpent = (Date.now() - startTime) / 1000;
+  gs.addResult(correct, timeSpent);
+  updateScore();
+  
+  document.getElementById('scrambleFeedback').innerHTML = correct
+    ? `✅ 正確！ ${currentWord.z ? currentWord.z.substring(0, 30) : ''}`
+    : `❌ 正確答案：<strong>${currentWord.w}</strong>`;
+  
+  document.querySelectorAll('.scramble-tile').forEach(t => t.style.pointerEvents = 'none');
+  document.querySelectorAll('.scramble-slot').forEach(s => s.style.pointerEvents = 'none');
+  
+  setTimeout(showQuestion, 1200);
+}
+
+function skipScramble() {
+  clearInterval(timerInterval);
+  gs.addResult(false, gs.config.timePerRound);
+  updateScore();
+  document.getElementById('scrambleFeedback').innerHTML = `⏭️ 正確答案：<strong>${currentWord.w}</strong>`;
+  setTimeout(showQuestion, 800);
+}
+
+function startTimer() {
+  gs.timeLeft = gs.config.timePerRound;
+  document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+  timerInterval = setInterval(() => {
+    gs.timeLeft--;
+    document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+    if (gs.timeLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('scrambleFeedback').innerHTML = `⏱️ 時間到！正確答案：<strong>${currentWord.w}</strong>`;
+      gs.addResult(false, gs.config.timePerRound);
+      updateScore();
+      document.querySelectorAll('.scramble-tile').forEach(t => t.style.pointerEvents = 'none');
+      setTimeout(showQuestion, 1200);
+    }
+  }, 1000);
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+}
+</script>
+</body>
+</html>

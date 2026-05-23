@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打字挑戰 · 單字島</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .type-zh { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .type-kk { font-size: 16px; color: var(--green-200); margin-bottom: 4px; }
+  .type-hint-char { font-size: 13px; color: var(--gold); margin-bottom: 16px; min-height: 20px; }
+  .type-input-wrap { display: flex; gap: 10px; margin-bottom: 16px; width: 100%; max-width: 400px; }
+  .type-input-wrap input {
+    flex: 1; padding: 14px 18px; font-size: 20px;
+    background: rgba(255,255,255,0.1); border: 2px solid var(--glass-border);
+    border-radius: var(--radius-sm); color: #fff; outline: none;
+    font-family: inherit; text-align: center; letter-spacing: 2px;
+  }
+  .type-input-wrap input:focus { border-color: var(--green-300); }
+  .type-input-wrap input.correct { border-color: var(--green-500); background: rgba(76,175,80,0.15); }
+  .type-input-wrap input.wrong { border-color: var(--red); background: rgba(239,83,80,0.15); }
+  .type-feedback { font-size: 15px; min-height: 24px; }
+  .type-actions { display: flex; gap: 8px; }
+  ${gameStyles}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="topBar" class="top-bar"></div>
+  <div class="game-area panel fade-in" id="gameArea">
+    <div class="game-header">
+      <div class="game-title">⌨️ 打字挑戰</div>
+      <div class="game-status">
+        <span id="roundDisplay">1/10</span>
+        <span id="scoreDisplay">🏆 0</span>
+        <span id="streakDisplay">🔥 0</span>
+        <span id="timerDisplay">⏱️ 20s</span>
+      </div>
+    </div>
+    <div id="gameContent" class="game-content"></div>
+    <div class="game-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="game-core.js"></script>
+<script>
+let gs, timerInterval, startTime, currentWord;
+
+document.addEventListener('DOMContentLoaded', () => {
+  gs = new GameState('type');
+  if (gs.words.length < 5) {
+    document.getElementById('gameContent').innerHTML = '<div style="text-align:center;padding:40px;">❌ 題目不足</div>';
+    return;
+  }
+  renderGameUI('type', gs);
+  updateTopBar(getPlayer());
+  showQuestion();
+});
+
+function showQuestion() {
+  if (gs.isDone) { renderGameOver(gs); return; }
+  
+  currentWord = gs.nextWord();
+  startTime = Date.now();
+  
+  document.getElementById('roundDisplay').textContent = `${gs.currentRound}/${gs.totalRounds}`;
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+  document.getElementById('progressFill').style.width = `${(gs.round - 1) / gs.config.rounds * 100}%`;
+  
+  const content = document.getElementById('gameContent');
+  const hintChars = currentWord.w.length > 3 ? currentWord.w[0] + '_'.repeat(currentWord.w.length - 1) : '';
+  
+  content.innerHTML = `
+    <div class="type-zh">${currentWord.z ? currentWord.z.replace(/\(.+?\)/g, '').trim() : ''}</div>
+    <div class="type-kk">${currentWord.k || ''}</div>
+    <div class="type-hint-char" id="hintChar">${hintChars ? '💡 ' + hintChars : ''}</div>
+    <div class="type-input-wrap">
+      <input type="text" id="typeInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+             placeholder="輸入英文..." onkeydown="if(event.key==='Enter') checkAnswer()">
+    </div>
+    <div class="type-actions">
+      <button class="btn btn-primary" onclick="checkAnswer()">✅ 送出</button>
+      <button class="btn btn-ghost btn-sm" onclick="useTypeHint()">💡 提示 (${getPlayer().hints})</button>
+      <button class="btn btn-ghost btn-sm" onclick="skipWord()">⏭️ 跳過</button>
+    </div>
+    <div class="type-feedback" id="typeFeedback"></div>
+  `;
+  
+  document.getElementById('typeInput').focus();
+  if (gs.config.timePerRound > 0) startTimer();
+}
+
+function checkAnswer() {
+  clearInterval(timerInterval);
+  const input = document.getElementById('typeInput');
+  const ans = input.value.trim().toLowerCase();
+  const correct = ans === currentWord.w.toLowerCase();
+  
+  const timeSpent = (Date.now() - startTime) / 1000;
+  gs.addResult(correct, timeSpent);
+  updateScore();
+  
+  input.classList.add(correct ? 'correct' : 'wrong');
+  input.disabled = true;
+  
+  document.getElementById('typeFeedback').innerHTML = correct
+    ? `✅ 正確！ ${currentWord.z}`
+    : `❌ 正確答案：<strong>${currentWord.w}</strong> ${currentWord.z ? currentWord.z.substring(0, 30) : ''}`;
+  
+  setTimeout(showQuestion, 1200);
+}
+
+function startTimer() {
+  gs.timeLeft = gs.config.timePerRound;
+  document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+  timerInterval = setInterval(() => {
+    gs.timeLeft--;
+    document.getElementById('timerDisplay').textContent = `⏱️ ${gs.timeLeft}s`;
+    if (gs.timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timeUpType();
+    }
+  }, 1000);
+}
+
+function timeUpType() {
+  const input = document.getElementById('typeInput');
+  input.disabled = true;
+  input.value = '';
+  input.classList.add('wrong');
+  gs.addResult(false, gs.config.timePerRound);
+  updateScore();
+  document.getElementById('typeFeedback').innerHTML = `⏱️ 時間到！正確答案：<strong>${currentWord.w}</strong>`;
+  setTimeout(showQuestion, 1200);
+}
+
+function useTypeHint() {
+  const p = getPlayer();
+  if (p.hints <= 0) { showToast('提示不夠了！', 'bad'); return; }
+  useItem(p, 'hint');
+  const w = currentWord.w;
+  // 顯示更多字母
+  const shown = document.getElementById('hintChar').textContent.replace('💡 ', '');
+  let newHint = '';
+  for (let i = 0; i < w.length; i++) {
+    if (i < shown.length && shown[i] !== '_') newHint += shown[i];
+    else if (Math.random() < 0.3 || i === w.length - 1) newHint += w[i];
+    else newHint += '_';
+  }
+  document.getElementById('hintChar').textContent = '💡 ' + newHint;
+  showToast('💡 顯示了部分字母');
+}
+
+function skipWord() {
+  clearInterval(timerInterval);
+  gs.addResult(false, gs.config.timePerRound);
+  updateScore();
+  document.getElementById('typeFeedback').innerHTML = `⏭️ 跳過：<strong>${currentWord.w}</strong> ${currentWord.z ? currentWord.z.substring(0, 20) : ''}`;
+  setTimeout(showQuestion, 800);
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = `🏆 ${gs.score}`;
+  document.getElementById('streakDisplay').textContent = `🔥 ${gs.streak}`;
+}
+</script>
+</body>
+</html>
