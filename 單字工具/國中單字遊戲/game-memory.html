@@ -144,6 +144,7 @@ function flipCard(idx) {
 }
 
 function endGame() {
+  try {
   const timeSpent = Math.round((Date.now() - startTime) / 1000);
   const p = getPlayer();
   p.totalCorrect += gs.correct;
@@ -153,9 +154,7 @@ function endGame() {
   
   const xp = gs.correct * 10;
   p.xp += xp;
-  while (p.level < 50 && p.xp >= getXpForLevel(p.level)) {
-    p.level++;
-  }
+  while (p.level < 50 && p.xp >= getXpForLevel(p.level)) { p.level++; }
   updateQuest(p, 'practice_10', gs.correct + gs.wrong);
   
   const recent = load('recentWords', []);
@@ -165,8 +164,10 @@ function endGame() {
   
   setPlayer(p);
   
-  // 直接更新畫面，不依賴 updateTopBar（可能會出錯）
-  document.getElementById('gameContent').innerHTML = `
+  const el = document.getElementById('gameContent');
+  if (!el) { alert('找不到 gameContent！'); return; }
+  
+  el.innerHTML = `
     <div class="result-panel fade-in">
       <div class="result-icon">🌟</div>
       <div class="result-title">全部配對完成！</div>
@@ -179,14 +180,12 @@ function endGame() {
       </div>
       <div class="result-reward"><span>+${xp} XP</span><span>🪙 ${gs.correct * 3}</span></div>
       <div class="result-actions">
-        <button class="btn btn-primary" onclick="location.reload()">🔄 再玩一次</button>
+        <button class="btn btn-primary" onclick="window.location.href='game-memory.html'">🔄 再玩一次</button>
         <button class="btn btn-ghost" onclick="window.location.href='index.html'">🏠 回冒險地圖</button>
       </div>
     </div>
   `;
-  
-  // 安全更新 topBar（try-catch 避免被錯誤中斷）
-  try { updateTopBar(p); } catch(e) {}
+  } catch(e) { alert('錯誤：' + e.message); }
 }
 </script>
 </body>
