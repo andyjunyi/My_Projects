@@ -144,7 +144,6 @@ function useTypeHint() {
   if (p.hints <= 0) { showToast('提示不夠了！', 'bad'); return; }
   useItem(p, 'hint');
   const w = currentWord.w;
-  // 顯示更多字母
   const shown = document.getElementById('hintChar').textContent.replace('💡 ', '');
   let newHint = '';
   for (let i = 0; i < w.length; i++) {
