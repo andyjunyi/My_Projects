@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>單字遊戲 · 復古電玩風</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 100%;
+    max-width: 420px;
+    padding: 16px;
+  }
+  /* 標題列 */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 2px solid #e94560;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .coin {
+    background: #16213e;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #f5a623;
+    border: 1px solid #f5a623;
+  }
+  /* 模式選單 */
+  .mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mode-card {
+    background: linear-gradient(145deg, #16213e, #0f3460);
+    border-radius: 16px;
+    padding: 18px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid rgba(233, 69, 96, 0.15);
+  }
+  .mode-card:active { transform: scale(0.96); }
+  .mode-card .icon {
+    font-size: 36px;
+    margin-bottom: 6px;
+  }
+  .mode-card .label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .mode-card .sub {
+    font-size: 11px;
+    color: #8899aa;
+    margin-top: 2px;
+  }
+  /* 日挑戰 */
+  .daily-banner {
+    background: linear-gradient(135deg, #e94560, #c23152);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .daily-banner .left .title { font-size: 16px; font-weight: 800; color: #fff; }
+  .daily-banner .left .desc { font-size: 12px; color: rgba(255,255,255,0.8); }
+  .daily-banner .badge {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+  }
+  /* 錯誤本 */
+  .wrong-book {
+    background: #16213e;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid rgba(233,69,96,0.2);
+  }
+  .wrong-book .left { display: flex; align-items: center; gap: 10px; }
+  .wrong-book .left .icon { font-size: 24px; }
+  .wrong-book .left .info .title { font-size: 14px; font-weight: 700; }
+  .wrong-book .left .info .count { font-size: 12px; color: #e94560; }
+  .wrong-book .arrow { font-size: 18px; color: #8899aa; }
+  /* 練習統計 */
+  .stats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    flex: 1;
+    background: #16213e;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 22px; font-weight: 800; color: #f5a623; }
+  .stat-box .lbl { font-size: 11px; color: #8899aa; margin-top: 2px; }
+  /* 單字列表 */
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .section-title a { color: #e94560; font-size: 12px; text-decoration: none; }
+  .word-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: #16213e;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .word-item .en { font-size: 15px; font-weight: 700; color: #fff; }
+  .word-item .zh { font-size: 12px; color: #8899aa; }
+  .word-item .play {
+    background: #0f3460;
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    color: #e94560;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  /* 底部導航 */
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 8px;
+  }
+  .bottom-nav .nav-item {
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.15s;
+  }
+  .bottom-nav .nav-item.active { opacity: 1; }
+  .bottom-nav .nav-item .icon { font-size: 22px; }
+  .bottom-nav .nav-item .lbl { font-size: 10px; color: #8899aa; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>🎮 單字大挑戰</h1>
+    <div class="coin">🪙 1,280</div>
+  </div>
+
+  <!-- Game Modes -->
+  <div class="mode-grid">
+    <div class="mode-card">
+      <div class="icon">🃏</div>
+      <div class="label">翻牌配對</div>
+      <div class="sub">記憶力考驗</div>
+    </div>
+    <div class="mode-card">
+      <div class="icon">⌨️</div>
+      <div class="label">打字挑戰</div>
+      <div class="sub">限時拼字</div>
+    </div>
+    <div class="mode-card">
+      <div class="icon">🎯</div>
+      <div class="label">四選一</div>
+      <div class="sub">快問快答</div>
+    </div>
+    <div class="mode-card">
+      <div class="icon">🧩</div>
+      <div class="label">拼字遊戲</div>
+      <div class="sub">字母重組</div>
+    </div>
+  </div>
+
+  <!-- 馬拉松 CTA -->
+  <div class="daily-banner">
+    <div class="left">
+      <div class="title">🏃 單字馬拉松</div>
+      <div class="desc">混合題型 · 答錯出局</div>
+    </div>
+    <div class="badge">▶</div>
+  </div>
+
+  <!-- 錯誤本 -->
+  <div class="wrong-book">
+    <div class="left">
+      <span class="icon">📕</span>
+      <div class="info">
+        <div class="title">我的錯誤本</div>
+        <div class="count">12 個單字待複習</div>
+      </div>
+    </div>
+    <span class="arrow">›</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-box"><div class="num">47</div><div class="lbl">今日練習</div></div>
+    <div class="stat-box"><div class="num">89%</div><div class="lbl">正確率</div></div>
+    <div class="stat-box"><div class="num">3🔥</div><div class="lbl">連續天數</div></div>
+  </div>
+
+  <!-- 最近學的單字 -->
+  <div class="section-title">
+    <span>📖 最近學的單字</span>
+    <a href="#">查看全部 →</a>
+  </div>
+  <div class="word-item">
+    <div><div class="en">adventure</div><div class="zh">冒險 (名)</div></div>
+    <button class="play">▶</button>
+  </div>
+  <div class="word-item">
+    <div><div class="en">beautiful</div><div class="zh">美麗的 (形)</div></div>
+    <button class="play">▶</button>
+  </div>
+  <div class="word-item">
+    <div><div class="en">knowledge</div><div class="zh">知識 (名)</div></div>
+    <button class="play">▶</button>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item active"><div class="icon">🏠</div><div class="lbl">首頁</div></div>
+    <div class="nav-item"><div class="icon">📚</div><div class="lbl">單字本</div></div>
+    <div class="nav-item"><div class="icon">📊</div><div class="lbl">成績</div></div>
+    <div class="nav-item"><div class="icon">⚙️</div><div class="lbl">設定</div></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單字遊戲 · 三種風格比較</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #fff; padding: 16px; }
+  h1 { text-align: center; font-size: 24px; margin-bottom: 4px; }
+  .sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 20px; }
+  .variant { margin-bottom: 30px; }
+  .variant h2 { font-size: 18px; margin-bottom: 10px; padding-left: 4px; }
+  .phone-frame {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    border: 3px solid #333;
+    border-radius: 32px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+  .phone-frame iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+    display: block;
+  }
+  .desc {
+    max-width: 380px;
+    margin: 10px auto 0;
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #ccc;
+  }
+  .desc strong { color: #fff; }
+  .vote { text-align: center; margin-top: 20px; padding: 16px; background: #1e1e1e; border-radius: 12px; }
+  .vote a { color: #4da6ff; }
+  @media (max-width: 420px) {
+    .phone-frame iframe { height: 600px; }
+  }
+</style>
+</head>
+<body>
+  <h1>🎮 國中單字遊戲</h1>
+  <p class="sub">三種風格比較 — 滑動瀏覽</p>
+
+  <div class="variant">
+    <h2>🎮 復古電玩風</h2>
+    <div class="phone-frame"><iframe src="sketches/001-playful-gameboy/index.html"></iframe></div>
+    <div class="desc">
+      <strong>暗色系 · 霓虹配色 · Game Boy 風格</strong><br>
+      深藍底色 + 螢光紅/橘，視覺衝擊強。<br>
+      模式用卡片網格呈現，適合喜歡遊戲感的學生。
+    </div>
+  </div>
+
+  <div class="variant">
+    <h2>✨ 清新簡約風</h2>
+    <div class="phone-frame"><iframe src="sketches/002-clean-wordquest/index.html"></iframe></div>
+    <div class="desc">
+      <strong>白底 · iOS 風格 · 乾淨清爽</strong><br>
+      Apple 設計語言，白底 + 藍色主色。<br>
+      模式用橫向滑動選單，簡潔大方。
+    </div>
+  </div>
+
+  <div class="variant">
+    <h2>🧙 RPG 養成風</h2>
+    <div class="phone-frame"><iframe src="sketches/003-rpg-island/index.html"></iframe></div>
+    <div class="desc">
+      <strong>森林色系 · 角色升級 · 地圖解鎖</strong><br>
+      法師角色 + 經驗值條 + 道具系統。<br>
+      玩遊戲賺 XP 升級，解鎖魔王關卡。
+    </div>
+  </div>
+
+  <div class="vote">
+    <p style="font-size:16px;margin-bottom:8px;"><strong>你喜歡哪一種？</strong></p>
+    <p style="color:#aaa;font-size:14px;">
+      🎮 復古電玩風 ｜ ✨ 清新簡約風 ｜ 🧙 RPG 養成風
+    </p>
+  </div>
+</body>
+</html>

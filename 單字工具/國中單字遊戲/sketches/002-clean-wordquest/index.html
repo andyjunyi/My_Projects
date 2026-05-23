@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Word Quest · 清新簡約風</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px 16px;
+  }
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .header h1 span { color: #007aff; }
+  .header .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #007aff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  /* 每日挑戰 */
+  .daily-card {
+    background: linear-gradient(135deg, #007aff, #5856d6);
+    border-radius: 20px;
+    padding: 20px;
+    color: #fff;
+    margin-bottom: 24px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .daily-card::after {
+    content: '🏃';
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    font-size: 48px;
+    opacity: 0.2;
+  }
+  .daily-card .tag {
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    padding: 3px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .daily-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .daily-card p { font-size: 13px; opacity: 0.85; }
+  /* 模式 */
+  .section-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #86868b;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .mode-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mode-list::-webkit-scrollbar { display: none; }
+  .mode-pill {
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: transform 0.12s;
+    border: 1px solid #e5e5ea;
+    min-width: 120px;
+  }
+  .mode-pill:active { transform: scale(0.96); }
+  .mode-pill .icon { font-size: 28px; margin-bottom: 4px; }
+  .mode-pill .label { font-size: 13px; font-weight: 600; }
+  .mode-pill .sub { font-size: 11px; color: #8e8e93; margin-top: 1px; }
+  /* Quick Access */
+  .quick-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .quick-item {
+    flex: 1;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #e5e5ea;
+    cursor: pointer;
+  }
+  .quick-item .num { font-size: 24px; font-weight: 700; color: #007aff; }
+  .quick-item .lbl { font-size: 12px; color: #8e8e93; margin-top: 4px; }
+  /* 錯誤本 */
+  .error-book {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e5ea;
+    margin-bottom: 24px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .error-book .left { display: flex; align-items: center; gap: 10px; }
+  .error-book .left .icon { font-size: 22px; }
+  .error-book .info .title { font-size: 14px; font-weight: 600; }
+  .error-book .info .count { font-size: 12px; color: #ff3b30; }
+  .error-book .arrow { color: #c7c7cc; font-size: 20px; }
+  /* 單字卡片 */
+  .word-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e5ea;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .word-card .en { font-size: 15px; font-weight: 600; }
+  .word-card .zh { font-size: 12px; color: #8e8e93; margin-top: 2px; }
+  .word-card .kk { font-size: 11px; color: #aeaeb2; }
+  .word-card .btn {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #f2f2f7;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* 底部 */
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    margin-top: 8px;
+    border-top: 1px solid #e5e5ea;
+  }
+  .bottom-nav .item {
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.12s;
+  }
+  .bottom-nav .item.active { opacity: 1; }
+  .bottom-nav .item .icon { font-size: 22px; }
+  .bottom-nav .item .lbl { font-size: 10px; color: #8e8e93; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Word<span>Quest</span></h1>
+    <div class="avatar">A</div>
+  </div>
+
+  <div class="daily-card">
+    <span class="tag">🔥 每日挑戰</span>
+    <h2>今天 10 題</h2>
+    <p>混合題型 · 看看你能得幾分</p>
+  </div>
+
+  <div class="section-label">遊戲模式</div>
+  <div class="mode-list">
+    <div class="mode-pill"><div class="icon">🃏</div><div class="label">翻牌配對</div><div class="sub">記憶力</div></div>
+    <div class="mode-pill"><div class="icon">⌨️</div><div class="label">打字挑戰</div><div class="sub">限時拼字</div></div>
+    <div class="mode-pill"><div class="icon">🎯</div><div class="label">四選一</div><div class="sub">快答</div></div>
+    <div class="mode-pill"><div class="icon">🧩</div><div class="label">拼字遊戲</div><div class="sub">字母重組</div></div>
+    <div class="mode-pill"><div class="icon">🏃</div><div class="label">馬拉松</div><div class="sub">無限挑戰</div></div>
+  </div>
+
+  <div class="quick-row">
+    <div class="quick-item"><div class="num">47</div><div class="lbl">今日練習</div></div>
+    <div class="quick-item"><div class="num">89%</div><div class="lbl">正確率</div></div>
+    <div class="quick-item"><div class="num">3🔥</div><div class="lbl">連續天數</div></div>
+  </div>
+
+  <div class="error-book">
+    <div class="left">
+      <span class="icon">📕</span>
+      <div class="info">
+        <div class="title">我的錯誤本</div>
+        <div class="count">12 個單字待複習</div>
+      </div>
+    </div>
+    <span class="arrow">›</span>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <span style="font-size:15px;font-weight:600;">📖 最近學習</span>
+    <span style="font-size:12px;color:#007aff;cursor:pointer;">查看全部 →</span>
+  </div>
+
+  <div class="word-card">
+    <div><div class="en">adventure</div><div class="zh">冒險 (名)</div><div class="kk">/ədˈvɛntʃər/</div></div>
+    <button class="btn">▶</button>
+  </div>
+  <div class="word-card">
+    <div><div class="en">beautiful</div><div class="zh">美麗的 (形)</div><div class="kk">/ˈbjuːtəfʊl/</div></div>
+    <button class="btn">▶</button>
+  </div>
+  <div class="word-card">
+    <div><div class="en">knowledge</div><div class="zh">知識 (名)</div><div class="kk">/ˈnɒlɪdʒ/</div></div>
+    <button class="btn">▶</button>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="item active"><div class="icon">🏠</div><div class="lbl">首頁</div></div>
+    <div class="item"><div class="icon">📚</div><div class="lbl">單字</div></div>
+    <div class="item"><div class="icon">📊</div><div class="lbl">分析</div></div>
+    <div class="item"><div class="icon">⚙️</div><div class="lbl">設定</div></div>
+  </div>
+</div>
+</body>
+</html>
