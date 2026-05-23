@@ -14,32 +14,32 @@
   .game-content { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:300px; width:100%; }
   .memory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:640px; width:100%; margin:0 auto; }
   .memory-card {
-    min-height:80px; background:var(--glass); border:2px solid var(--glass-border);
-    border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center;
+    min-height:80px; background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.1);
+    border-radius:16px; display:flex; align-items:center; justify-content:center;
     font-size:18px; font-weight:700; cursor:pointer; transition:all 0.2s; padding:10px 6px;
     text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#fff;
   }
-  .memory-card.flipped { background:rgba(255,255,255,0.15); border-color:var(--green-300); }
-  .memory-card.matched { background:rgba(76,175,80,0.2); border-color:var(--green-500); cursor:default; opacity:0.5; }
+  .memory-card.flipped { background:rgba(255,255,255,0.15); border-color:#81c784; }
+  .memory-card.matched { background:rgba(76,175,80,0.2); border-color:#4caf50; cursor:default; opacity:0.5; }
   .memory-card.en { font-size:20px; letter-spacing:0.5px; }
   .memory-card.zh { font-size:14px; }
-  .memory-pairs { font-size:16px; margin-bottom:16px; color:var(--green-200); text-align:center; }
+  .memory-pairs { font-size:16px; margin-bottom:16px; color:#a5d6a7; text-align:center; }
   .result-panel { text-align:center; max-width:450px; width:100%; }
   .result-icon { font-size:64px; margin-bottom:8px; }
-  .result-title { font-size:24px; font-weight:800; margin-bottom:20px; }
+  .result-title { font-size:24px; font-weight:800; margin-bottom:20px; color:#fff; }
   .result-stats { margin-bottom:16px; }
   .rs-row { display:flex; gap:8px; margin-bottom:8px; }
-  .rs-item { flex:1; background:var(--glass); border-radius:var(--radius-sm); padding:10px; }
-  .rs-num { font-size:24px; font-weight:800; }
-  .rs-lbl { font-size:11px; color:var(--green-200); }
+  .rs-item { flex:1; background:rgba(255,255,255,0.06); border-radius:10px; padding:10px; }
+  .rs-num { font-size:24px; font-weight:800; color:#fff; }
+  .rs-lbl { font-size:11px; color:#a5d6a7; }
   .result-reward {
-    font-size:22px; font-weight:800; color:var(--gold); background:rgba(255,215,0,0.1);
-    border-radius:var(--radius-md); padding:12px 24px; display:inline-flex; gap:24px; margin-bottom:20px;
+    font-size:22px; font-weight:800; color:#ffd54f; background:rgba(255,215,0,0.1);
+    border-radius:16px; padding:12px 24px; display:inline-flex; gap:24px; margin-bottom:20px;
   }
   .result-actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-  .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 24px; border:none; border-radius:var(--radius-sm); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; }
-  .btn-primary { background:var(--green-500); color:#fff; }
-  .btn-ghost { background:var(--glass); color:#fff; border:1px solid var(--glass-border); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 24px; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn-primary { background:#4caf50; color:#fff; }
+  .btn-ghost { background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.1); }
 </style>
 </head>
 <body>
@@ -59,40 +59,64 @@
 
 <script src="data.js"></script>
 <script>
-// ===== 獨立翻牌遊戲（無外部依賴）=====
-let cards = [], flipped = [], matched = [], moves = 0, canFlip = true, startTime;
-let pairs = [];
+/* === 純 ES5 翻牌遊戲（相容 iPad Safari）=== */
+var cards = [], flipped = [], matched = [], moves = 0, canFlip = true, startTime;
+var pairs = [];
+
+function shuffleArray(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+  }
+  return arr;
+}
 
 function startGame() {
-  const words = [...WORD_DATA].sort(() => Math.random() - 0.5).slice(0, 6);
+  var shuffled = WORD_DATA.slice().sort(function() { return 0.5 - Math.random(); });
+  var words = shuffled.slice(0, 6);
   pairs = words;
   cards = [];
-  words.forEach(w => {
-    const zh = w.z ? w.z.replace(/\(.+?\)/g, '').trim().substring(0, 15) : w.w;
-    cards.push({ id: w.w + '_en', pairId: w.w, type: 'en', text: w.w });
-    cards.push({ id: w.w + '_zh', pairId: w.w, type: 'zh', text: zh });
-  });
-  cards.sort(() => Math.random() - 0.5);
-  flipped = []; matched = []; moves = 0; canFlip = true;
-  startTime = Date.now();
+  
+  for (var w = 0; w < words.length; w++) {
+    var wi = words[w];
+    var zhText = wi.z || wi.w;
+    zhText = zhText.replace(/\(.+?\)/g, '').trim().substring(0, 15);
+    cards.push({ id: wi.w + '_en', pairId: wi.w, type: 'en', text: wi.w });
+    cards.push({ id: wi.w + '_zh', pairId: wi.w, type: 'zh', text: zhText });
+  }
+  shuffleArray(cards);
+  flipped = [];
+  matched = [];
+  moves = 0;
+  canFlip = true;
+  startTime = new Date().getTime();
   renderBoard();
 }
 
 function renderBoard() {
-  const el = document.getElementById('gameContent');
-  el.innerHTML = '<div class="memory-pairs">配對 ' + matched.length + ' / ' + pairs.length + ' 對</div>' +
-    '<div class="memory-grid">' +
-    cards.map((c, i) => {
-      const isMatched = matched.indexOf(c.pairId) !== -1;
-      const isFlipped = flipped.indexOf(i) !== -1;
-      const cls = 'memory-card ' + c.type + (isMatched ? ' matched' : '') + (isFlipped ? ' flipped' : '');
-      const txt = isMatched ? '✅' : (isFlipped ? c.text : '❓');
-      return '<div class="' + cls + '" data-idx="' + i + '" onclick="flipCard(' + i + ')">' + txt + '</div>';
-    }).join('') +
-    '</div>';
-  document.getElementById('pairsDisplay').textContent = matched.length + ' / ' + pairs.length + ' 對';
-  document.getElementById('scoreDisplay').textContent = '🏆 ' + (matched.length * 20);
-  document.getElementById('movesDisplay').textContent = '🔄 ' + moves;
+  var el = document.getElementById('gameContent');
+  if (!el) return;
+  
+  var html = '<div class="memory-pairs">配對 ' + matched.length + ' / ' + pairs.length + ' 對</div>';
+  html += '<div class="memory-grid">';
+  
+  for (var i = 0; i < cards.length; i++) {
+    var c = cards[i];
+    var isMatched = matched.indexOf(c.pairId) !== -1;
+    var isFlipped = flipped.indexOf(i) !== -1;
+    var cls = 'memory-card ' + c.type;
+    if (isMatched) cls += ' matched';
+    if (isFlipped) cls += ' flipped';
+    var txt = isMatched ? '✅' : (isFlipped ? c.text : '❓');
+    html += '<div class="' + cls + '" onclick="flipCard(' + i + ')">' + txt + '</div>';
+  }
+  
+  html += '</div>';
+  el.innerHTML = html;
+  
+  document.getElementById('pairsDisplay').innerHTML = matched.length + ' / ' + pairs.length + ' 對';
+  document.getElementById('scoreDisplay').innerHTML = '🏆 ' + (matched.length * 20);
+  document.getElementById('movesDisplay').innerHTML = '🔄 ' + moves;
 }
 
 function flipCard(idx) {
@@ -107,20 +131,19 @@ function flipCard(idx) {
   
   if (flipped.length === 2) {
     canFlip = false;
-    const c1 = cards[flipped[0]], c2 = cards[flipped[1]];
+    var c1 = cards[flipped[0]];
+    var c2 = cards[flipped[1]];
     
     if (c1.pairId === c2.pairId && c1.type !== c2.type) {
-      // 配對成功
       matched.push(c1.pairId);
       flipped = [];
       canFlip = true;
       renderBoard();
       
       if (matched.length >= pairs.length) {
-        setTimeout(endGame, 500);
+        setTimeout(function() { endGame(); }, 500);
       }
     } else {
-      // 配對失敗
       setTimeout(function() {
         flipped = [];
         canFlip = true;
@@ -131,13 +154,14 @@ function flipCard(idx) {
 }
 
 function endGame() {
-  const timeSpent = Math.round((Date.now() - startTime) / 1000);
-  const el = document.getElementById('gameContent');
+  var elapsed = Math.round((new Date().getTime() - startTime) / 1000);
+  var el = document.getElementById('gameContent');
   if (!el) return;
   
+  /* 儲存玩家資料 */
   try {
-    // 儲存到 localStorage
-    const p = JSON.parse(localStorage.getItem('wordquest_player')) || {
+    var pStr = localStorage.getItem('wordquest_player');
+    var p = pStr ? JSON.parse(pStr) : {
       level:1, xp:0, coins:0, totalCorrect:0, totalWrong:0,
       gamesPlayed:0, hearts:5, hints:3, timeItems:2, streak:0, maxStreak:0,
       errorWords:[], achievements:[], dailyDate:'', dailyProgress:{},
@@ -147,35 +171,29 @@ function endGame() {
     p.gamesPlayed++;
     p.coins += matched.length * 3;
     p.xp += matched.length * 10;
-    while (p.level < 50) {
-      const caps = [0,100,300,600,1000,1500,2100,2800,3600,4500,5500,6600,7800,9100,10500,12000,13600,15300,17100,19000,21000,23100,25300,27600,30000,32500,35100,37800,40600,43500,46500,49600,52800,56100,59500,63000,66600,70300,74100,78000,82000,86100,90300,94600,99000,103500,108100,112800,117600,122500];
-      if (p.level < caps.length && p.xp >= caps[p.level]) { p.level++; }
-      else break;
-    }
+    var caps = [0,100,300,600,1000,1500,2100,2800,3600,4500,5500,6600,7800,9100,10500,12000,13600,15300,17100,19000,21000,23100,25300,27600,30000,32500,35100,37800,40600,43500,46500,49600,52800,56100,59500,63000,66600,70300,74100,78000,82000,86100,90300,94600,99000,103500,108100,112800,117600,122500];
+    while (p.level < 50 && caps.length > p.level && p.xp >= caps[p.level]) { p.level++; }
     localStorage.setItem('wordquest_player', JSON.stringify(p));
   } catch(e) {}
   
-  const xp = matched.length * 10;
+  var xp = matched.length * 10;
   el.innerHTML =
     '<div class="result-panel">' +
-      '<div class="result-icon">🌟</div>' +
-      '<div class="result-title">全部配對完成！</div>' +
-      '<div class="result-stats">' +
-        '<div class="rs-row">' +
-          '<div class="rs-item"><div class="rs-num">' + pairs.length + '</div><div class="rs-lbl">配對數</div></div>' +
-          '<div class="rs-item"><div class="rs-num">' + moves + '</div><div class="rs-lbl">翻牌次數</div></div>' +
-          '<div class="rs-item"><div class="rs-num">' + timeSpent + 's</div><div class="rs-lbl">用時</div></div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="result-reward"><span>+' + xp + ' XP</span><span>🪙 ' + (matched.length * 3) + '</span></div>' +
-      '<div class="result-actions">' +
-        '<button class="btn btn-primary" onclick="startGame()">🔄 再玩一次</button>' +
-        '<button class="btn btn-ghost" onclick="window.location.href=\'index.html\'">🏠 回冒險地圖</button>' +
-      '</div>' +
-    '</div>';
+    '<div class="result-icon">🌟</div>' +
+    '<div class="result-title">全部配對完成！</div>' +
+    '<div class="result-stats">' +
+    '<div class="rs-row">' +
+    '<div class="rs-item"><div class="rs-num">' + pairs.length + '</div><div class="rs-lbl">配對數</div></div>' +
+    '<div class="rs-item"><div class="rs-num">' + moves + '</div><div class="rs-lbl">翻牌次數</div></div>' +
+    '<div class="rs-item"><div class="rs-num">' + elapsed + 's</div><div class="rs-lbl">用時</div></div>' +
+    '</div></div>' +
+    '<div class="result-reward"><span>+' + xp + ' XP</span><span>🪙 ' + (matched.length * 3) + '</span></div>' +
+    '<div class="result-actions">' +
+    '<button class="btn btn-primary" onclick="startGame()">🔄 再玩一次</button>' +
+    '<button class="btn btn-ghost" onclick="window.location.href=\'index.html\'">🏠 回冒險地圖</button>' +
+    '</div></div>';
 }
 
-// 啟動
 startGame();
 </script>
 </body>
