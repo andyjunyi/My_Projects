@@ -127,8 +127,11 @@ function flipCard(idx) {
       canFlip = true;
       renderBoard();
       
-      if (matched.length === pairs.length * 2) {
-        setTimeout(() => endGame(), 500);
+      // debug
+      console.log('matched:', matched.length, 'pairs:', pairs.length, 'total needed:', pairs.length * 2);
+      
+      if (matched.length >= pairs.length) {
+        setTimeout(() => endGame(), 600);
       }
     } else {
       // 配對失敗
