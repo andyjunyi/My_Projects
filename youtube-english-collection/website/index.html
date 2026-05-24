@@ -174,15 +174,14 @@
     letter-spacing: .5px;
   }
   .vocab-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    display: block;
     margin-bottom: 12px;
   }
   .vocab-item {
     background: var(--card2);
-    border-radius: 10px;
-    padding: 10px 12px;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 4px;
   }
   .vocab-word {
     font-size: 15px;
@@ -494,12 +493,11 @@ function renderCard(v) {
 
   const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
 
-  const vocab = (v.vocabulary || []).slice(0, 4).map(w => `
-    <div class="vocab-item">
-      <div class="vocab-word">${w.word}</div>
-      <div class="vocab-pos">${w.part_of_speech || ''}</div>
-      <div class="vocab-meaning">${w.meaning}</div>
-      <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
+  const vocab = (v.vocabulary || []).slice(0, 5).map(w => `
+    <div class="vocab-item" style="display:flex;align-items:baseline;gap:8px">
+      <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word}</div>
+      <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
+      <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
     </div>
   `).join('');
 
@@ -545,11 +543,13 @@ function openDrawer(videoId) {
 
   const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
   const vocab = (v.vocabulary || []).map(w => `
-    <div class="vocab-item">
-      <div class="vocab-word">${w.word}</div>
-      <div class="vocab-pos">${w.part_of_speech || ''}</div>
-      <div class="vocab-meaning">${w.meaning}</div>
-      <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
+    <div class="vocab-item" style="margin-bottom:6px">
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word}</div>
+        <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
+        <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
+      </div>
+      ${w.example ? `<div class="vocab-example" style="font-size:12px;color:var(--text2);margin-top:2px;padding-left:calc(14px + 8px + 8px)">「${w.example}」</div>` : ''}
     </div>
   `).join('');
   const examples = (v.example_sentences || []).map(e => `
@@ -624,11 +624,12 @@ function renderVocabTab() {
       共 ${allVocab.length} 個單字，點擊可看原文
     </div>
     ${allVocab.map(w => `
-      <div class="vocab-item" style="margin-bottom:8px;cursor:pointer" onclick="openDrawer('${w.videoId}')">
-        <div class="vocab-word">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
-        <div class="vocab-meaning">${w.meaning}</div>
-        <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
-        <div style="font-size:11px;color:var(--text2);margin-top:4px">📺 ${w.videoTitle}</div>
+      <div class="vocab-item" style="margin-bottom:6px;cursor:pointer" onclick="openDrawer('${w.videoId}')">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
+          <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px;padding-left:calc(14px + 8px)">📺 ${w.videoTitle}</div>
       </div>
     `).join('')}
   `;
