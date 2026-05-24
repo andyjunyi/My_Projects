@@ -402,36 +402,39 @@
 </div>
 
 <script>
-const DATA_URL = 'https://andyjunyi.github.io/My_Projects/youtube-english-collection/website/sample_videos.json';
-const EMBEDDED = [];  // embedded fallback removed, always fetch from CDN
 const DATA = { samples: [] };
 let filteredVideos = [];
 let currentFilter = 'all';
 let currentTab = 'browse';
 
-// Load data from JSON file (works both on GitHub Pages and local served via Live Server)
-fetch(DATA_URL)
-  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-  .then(data => {
-    DATA.samples = data.samples;
-    init();
-  })
-  .catch(err => {
-    console.warn('Fetch failed, trying embedded data:', err);
-    // Fallback: show a friendly error
-    document.getElementById('content').innerHTML = `
-      <div class="empty-state" style="padding:40px 20px">
-        <div style="font-size:40px;margin-bottom:16px">📭</div>
-        <div style="font-size:16px;font-weight:600;margin-bottom:8px">資料載入失敗</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.6">
-          請確認你是否已將網站部署到 GitHub Pages，或使用 Live Server 開啟本機檔案。
-        </div>
-      </div>
-    `;
-    document.querySelector('.header .stats').innerHTML = `
-      <span style="color:var(--accent)">⚠️ 離線模式 — 部分功能不可用</span>
-    `;
-  });
+// Load data - try fetch first, fallback to XHR for local file:// protocol
+function loadData() {
+  const url = 'https://andyjunyi.github.io/My_Projects/youtube-english-collection/website/sample_videos.json';
+  
+  // Try fetch
+  fetch(url)
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => { DATA.samples = data.samples; init(); })
+    .catch(() => {
+      // Fallback: try XHR (works for local file:// in some browsers)
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'sample_videos.json', true);
+      xhr.onload = function() {
+        if (xhr.status === 200 || xhr.status === 0) {
+          try {
+            DATA.samples = JSON.parse(xhr.responseText).samples;
+          } catch(e) {
+            DATA.samples = [];
+          }
+        }
+        init();
+      };
+      xhr.onerror = function() { init(); };
+      xhr.send();
+    });
+}
+
+loadData();
 
 function init() {
   updateStats();
