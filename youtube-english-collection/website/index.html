@@ -87,11 +87,52 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all .2s;
+    flex-shrink: 0;
   }
   .filter-btn.active {
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
+  }
+
+  /* Tag Dropdown */
+  .tag-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 20px 12px;
+  }
+  .tag-dropdown {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 14px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23aaa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
+  }
+  .tag-dropdown option { background: var(--card); color: var(--text); }
+  .tag-label {
+    font-size: 13px;
+    color: var(--text2);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .tag-clear {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
   }
 
   /* Video List */
@@ -374,6 +415,14 @@
   <button class="filter-btn active" data-filter="all">全部</button>
 </div>
 
+<div class="tag-row" id="tagRow">
+  <span class="tag-label">🏷️ 標籤</span>
+  <select class="tag-dropdown" id="tagDropdown">
+    <option value="">選擇標籤篩選...</option>
+  </select>
+  <button class="tag-clear" id="tagClear">✕ 清除</button>
+</div>
+
 <div class="content" id="content"></div>
 
 <!-- Drawer -->
@@ -451,17 +500,9 @@ function updateStats() {
 }
 
 function buildFilters() {
-  // Collect all unique categories and tags
   const cats = new Set(DATA.samples.map(v => v.category || '其他'));
-  const allTags = new Set();
-  DATA.samples.forEach(v => {
-    (v.related_topics || []).forEach(t => allTags.add(t));
-  });
-  
   const container = document.getElementById('filters');
-  container.innerHTML = '<button class="filter-btn active" data-filter="all">全部</button>';
   
-  // Add category buttons
   cats.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'filter-btn';
@@ -471,25 +512,41 @@ function buildFilters() {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = cat;
+      document.getElementById('tagDropdown').value = '';
       renderBrowse();
     };
     container.appendChild(btn);
   });
   
-  // Add tag buttons
-  allTags.forEach(tag => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn';
-    btn.dataset.filter = 'tag:' + tag;
-    btn.textContent = '#' + tag;
-    btn.onclick = () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = 'tag:' + tag;
-      renderBrowse();
-    };
-    container.appendChild(btn);
+  // Fill tag dropdown
+  const allTags = new Set();
+  DATA.samples.forEach(v => {
+    (v.related_topics || []).forEach(t => allTags.add(t));
   });
+  const dropdown = document.getElementById('tagDropdown');
+  allTags.forEach(tag => {
+    const opt = document.createElement('option');
+    opt.value = 'tag:' + tag;
+    opt.textContent = '# ' + tag;
+    dropdown.appendChild(opt);
+  });
+  
+  dropdown.onchange = () => {
+    const val = dropdown.value;
+    if (val) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      currentFilter = val;
+      renderBrowse();
+    }
+  };
+  
+  document.getElementById('tagClear').onclick = () => {
+    document.getElementById('tagDropdown').value = '';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    currentFilter = 'all';
+    renderBrowse();
+  };
 }
 
 // ====== RENDER BROWSE ======
