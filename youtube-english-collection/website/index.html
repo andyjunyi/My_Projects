@@ -416,11 +416,13 @@
 </div>
 
 <div class="tag-row" id="tagRow">
-  <span class="tag-label">🏷️ 標籤</span>
+  <span class="tag-label">🔍</span>
+  <input class="tag-dropdown" id="searchInput" type="search" placeholder="搜尋單字、中文、標籤..." style="flex:2">
+  <span class="tag-label" style="margin-left:4px">🏷️</span>
   <select class="tag-dropdown" id="tagDropdown">
-    <option value="">選擇標籤篩選...</option>
+    <option value="">標籤</option>
   </select>
-  <button class="tag-clear" id="tagClear">✕ 清除</button>
+  <button class="tag-clear" id="tagClear">✕</button>
 </div>
 
 <div class="content" id="content"></div>
@@ -513,6 +515,7 @@ function buildFilters() {
       btn.classList.add('active');
       currentFilter = cat;
       document.getElementById('tagDropdown').value = '';
+      document.getElementById('searchInput').value = '';
       renderBrowse();
     };
     container.appendChild(btn);
@@ -535,6 +538,7 @@ function buildFilters() {
     const val = dropdown.value;
     if (val) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('searchInput').value = '';
       currentFilter = val;
       renderBrowse();
     }
@@ -542,10 +546,21 @@ function buildFilters() {
   
   document.getElementById('tagClear').onclick = () => {
     document.getElementById('tagDropdown').value = '';
+    document.getElementById('searchInput').value = '';
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
     currentFilter = 'all';
     renderBrowse();
+  };
+  
+  // Search input
+  let searchTimer;
+  document.getElementById('searchInput').oninput = () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      currentFilter = 'search';
+      renderBrowse();
+    }, 200);
   };
 }
 
@@ -555,11 +570,34 @@ function renderBrowse() {
   currentTab = 'browse';
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'browse'));
 
-  filteredVideos = currentFilter === 'all'
-    ? DATA.samples
-    : currentFilter.startsWith('tag:')
-      ? DATA.samples.filter(v => (v.related_topics || []).includes(currentFilter.slice(4)))
-      : DATA.samples.filter(v => (v.category || '其他') === currentFilter);
+  // Determine filtered list
+  const searchQ = document.getElementById('searchInput').value.trim().toLowerCase();
+  
+  if (searchQ) {
+    // Search mode: search in title, summary, vocabulary, tags
+    filteredVideos = DATA.samples.filter(v => {
+      const inTitle = v.title.toLowerCase().includes(searchQ);
+      const inSummary = (v.summary_zh || '').toLowerCase().includes(searchQ);
+      const inVocab = (v.vocabulary || []).some(w => 
+        (w.word || '').toLowerCase().includes(searchQ) || 
+        (w.meaning || '').toLowerCase().includes(searchQ)
+      );
+      const inTags = (v.related_topics || []).some(t => t.toLowerCase().includes(searchQ));
+      const inExamples = (v.example_sentences || []).some(e => 
+        (e.en || '').toLowerCase().includes(searchQ) || 
+        (e.zh || '').toLowerCase().includes(searchQ)
+      );
+      return inTitle || inSummary || inVocab || inTags || inExamples;
+    });
+  } else if (currentFilter === 'all') {
+    filteredVideos = DATA.samples;
+  } else if (currentFilter.startsWith('tag:')) {
+    filteredVideos = DATA.samples.filter(v => (v.related_topics || []).includes(currentFilter.slice(4)));
+  } else if (currentFilter === 'search') {
+    filteredVideos = DATA.samples;
+  } else {
+    filteredVideos = DATA.samples.filter(v => (v.category || '其他') === currentFilter);
+  }
 
   if (filteredVideos.length === 0) {
     container.innerHTML = '<div class="empty-state">📭 此分類尚無影片</div>';
