@@ -598,7 +598,7 @@ function renderBrowse() {
 function renderCard(v) {
   const duration = v.duration_sec ? formatDuration(v.duration_sec) : '';
   const diffClass = (v.difficulty || '').includes('初級') ? 'badge-green' : 'badge-yellow';
-  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '發音/習語' ? 'badge-blue' : 'badge-gray';
+  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '搭配詞' ? 'badge-blue' : 'badge-gray';
 
   const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
 
@@ -659,7 +659,7 @@ function openDrawer(videoId) {
 
   const duration = v.duration_sec ? formatDuration(v.duration_sec) : '';
   const diffClass = (v.difficulty || '').includes('初級') ? 'badge-green' : 'badge-yellow';
-  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '發音/習語' ? 'badge-blue' : 'badge-gray';
+  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '搭配詞' ? 'badge-blue' : 'badge-gray';
 
   const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
   const vocab = (v.vocabulary || []).map(w => `
