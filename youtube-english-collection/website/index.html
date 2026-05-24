@@ -510,10 +510,10 @@ function renderCard(v) {
     </div>
   `).join('');
 
-  const tip = v.teaching_tip ? `
+  const tip = v.student_tip ? `
     <div class="teaching-tip">
-      <div class="teaching-tip-title">💡 教學提示</div>
-      <p>${v.teaching_tip}</p>
+      <div class="teaching-tip-title">💡 學習小提示</div>
+      <p>${v.student_tip}</p>
     </div>
   ` : '';
 
@@ -558,10 +558,10 @@ function openDrawer(videoId) {
       <div class="example-zh">${e.zh}</div>
     </div>
   `).join('');
-  const tip = v.teaching_tip ? `
+  const tip = v.student_tip ? `
     <div class="teaching-tip">
-      <div class="teaching-tip-title">💡 教學提示</div>
-      <p>${v.teaching_tip}</p>
+      <div class="teaching-tip-title">💡 學習小提示</div>
+      <p>${v.student_tip}</p>
     </div>
   ` : '';
 
