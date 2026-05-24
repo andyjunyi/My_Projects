@@ -1,0 +1,39 @@
+{
+  "video_id": "qtkmvATv_7k",
+  "channel": "馬丁英語 English with Martin",
+  "channel_url": "https://www.youtube.com/@MaDingYingYu",
+  "title": "「有道理」英文到底該怎麼說？",
+  "title_original": "「有道理」英文到底該怎麼說？",
+  "published": "2026-05-18",
+  "url": "https://www.youtube.com/watch?v=qtkmvATv_7k",
+  "duration_sec": 103,
+  "views": null,
+  "likes": null,
+  "comments": null,
+  "category": "日常口語",
+  "tags": ["日常口語", "同意用語", "常用表達", "初級"],
+  "difficulty": "★☆☆ 初級",
+  "summary_zh": "「有道理」在英文中有多種表達，從簡單的 That makes sense 到口語的 Fair enough，讓你聽起來更像母語者。",
+  "key_points": [
+    "That makes sense. — 最常用，表示合理、說得通",
+    "That's a good point. — 同意對方提出的觀點",
+    "Fair enough. — 口語：好吧，也算有道理",
+    "I see what you mean. — 我懂你的意思",
+    "That explains it. — 原來如此，這就說得通了"
+  ],
+  "vocabulary": [
+    {"word": "make sense", "part_of_speech": "phr", "meaning": "有道理、說得通", "example": "That makes sense.", "example_zh": "有道理。"},
+    {"word": "point", "part_of_speech": "n", "meaning": "觀點、論點", "example": "That's a good point.", "example_zh": "說得好，有道理。"},
+    {"word": "fair", "part_of_speech": "adj", "meaning": "合理的、公平的", "example": "Fair enough.", "example_zh": "好吧，算你有道理。"},
+    {"word": "explain", "part_of_speech": "v", "meaning": "解釋、說明", "example": "That explains why he was late.", "example_zh": "這就解釋了他為什麼遲到。"}
+  ],
+  "example_sentences": [
+    {"en": "A: If we leave now, we'll miss the traffic. B: That makes sense.", "zh": "A：如果我們現在出發，就能避開車潮。B：有道理。"},
+    {"en": "A: Practice makes perfect. B: That's a good point.", "zh": "A：熟能生巧。B：說得好。"},
+    {"en": "A: I'd rather stay home tonight. B: Fair enough.", "zh": "A：我今晚寧可待在家。B：好吧，也行。"},
+    {"en": "I see what you mean about the project timeline.", "zh": "我懂你說的專案時程的意思了。"}
+  ],
+  "teaching_tip": "學生最常講 I think you are right 或 You are reasonable，但這太正式。That makes sense 是最萬用的回應，Fair enough 適合輕鬆對話。",
+  "related_topics": ["同意與回應", "日常對話", "口語表達"],
+  "collected_at": "2026-05-24T21:30:00+08:00"
+}

@@ -1,0 +1,41 @@
+{
+  "video_id": "a0VDR8EA-R8",
+  "channel": "馬丁英語 English with Martin",
+  "channel_url": "https://www.youtube.com/@MaDingYingYu",
+  "title": "「你怎麼了？」別再只會說 What's wrong with you?",
+  "title_original": "「你怎么了？」别再只会说 What’s wrong with you?",
+  "published": "2026-05-21",
+  "url": "https://www.youtube.com/watch?v=a0VDR8EA-R8",
+  "duration_sec": 91,
+  "views": 5833,
+  "likes": 331,
+  "comments": 16,
+  "category": "常見錯誤糾正",
+  "tags": ["日常口語", "語氣對比", "關心用語", "初級"],
+  "difficulty": "★☆☆ 初級",
+  "summary_zh": "很多人一看到「你怎麼了」就直翻成 What's wrong with you?，但這句在英文裡語氣其實很重，像在責怪對方。本片教你不同情境下該用哪句話才自然又得體。",
+  "key_points": [
+    "What's wrong with you? 語氣像在罵人「你有毛病嗎？」，千萬別用來關心人",
+    "Are you okay? / What's wrong? 不加 with you 就溫和很多",
+    "What happened? 中性問發生什麼事，最安全",
+    "Is everything alright? 更體貼溫柔的說法"
+  ],
+  "vocabulary": [
+    {"word": "upset", "part_of_speech": "adj", "meaning": "心煩的、難過的", "example": "You seem upset.", "example_zh": "你看起來心情不好"},
+    {"word": "down", "part_of_speech": "adj", "meaning": "情緒低落的", "example": "You look a bit down.", "example_zh": "你看起來有點悶悶不樂"},
+    {"word": "alright", "part_of_speech": "adj", "meaning": "沒事、還好", "example": "Is everything alright?", "example_zh": "一切都還好嗎？"},
+    {"word": "wrong", "part_of_speech": "adj", "meaning": "不對勁的、有問題的", "example": "What's wrong? You don't seem yourself.", "example_zh": "怎麼了？你看起來不太對勁"}
+  ],
+  "example_sentences": [
+    {"en": "Hey, are you okay? You look a bit down.", "zh": "嘿，你還好嗎？你看起來有點悶。"},
+    {"en": "What happened? You seem upset.", "zh": "發生什麼事了？你看起來心情不好。"},
+    {"en": "Is everything alright? I'm here if you need to talk.", "zh": "一切都好嗎？需要聊聊的話我在這。"},
+    {"en": "You don't seem yourself today. What's wrong?", "zh": "你今天不太像平常的你。怎麼了？"}
+  ],
+  "common_mistakes": [
+    {"wrong": "What's wrong with you?", "correct": "What's wrong? / Are you okay?", "note": "加 with you 語氣變差，像在指責對方有問題"}
+  ],
+  "teaching_tip": "教學生時可以強調：中文的「你怎麼了」翻譯時要看語氣。關心的時候用 Are you okay?，問原因用 What happened?，不要直接套用 What's wrong with you?。也可以讓學生角色扮演練習不同語氣。",
+  "related_topics": ["安慰用語", "日常關心對話", "語氣與禮貌"],
+  "collected_at": "2026-05-24T21:30:00+08:00"
+}

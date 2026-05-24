@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>馬丁英語學習庫 · 試看版</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --text: #eee;
+    --text2: #aaa;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --blue: #60a5fa;
+    --border: #2a2a4a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--accent2), var(--card));
+    padding: 32px 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .header .sub {
+    color: var(--text2);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .header .stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .header .stats span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-green { background: rgba(74,222,128,.15); color: var(--green); }
+  .badge-yellow { background: rgba(251,191,36,.15); color: var(--yellow); }
+  .badge-blue { background: rgba(96,165,250,.15); color: var(--blue); }
+  .badge-gray { background: rgba(255,255,255,.08); color: var(--text2); }
+
+  /* Filters */
+  .filters {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display:none; }
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* Video List */
+  .content { padding: 12px 16px 80px; max-width: 720px; margin: 0 auto; }
+
+  .video-card {
+    background: var(--card);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    transition: all .2s;
+  }
+  .video-card:active { transform: scale(.98); }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .card-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .card-summary {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  /* Key Points */
+  .key-points {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+  .key-points-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .key-point {
+    font-size: 13px;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .key-point::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 6px;
+  }
+
+  /* Vocabulary */
+  .vocab-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .vocab-item {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .vocab-word {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 2px;
+  }
+  .vocab-pos {
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .vocab-meaning {
+    font-size: 13px;
+    margin: 4px 0;
+  }
+  .vocab-example {
+    font-size: 12px;
+    color: var(--text2);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Example Sentences */
+  .examples-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .example-item {
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    line-height: 1.5;
+  }
+  .example-item:last-child { border: none; }
+  .example-en { color: var(--green); }
+  .example-zh { color: var(--text2); font-size: 12px; }
+
+  /* Teaching Tip */
+  .teaching-tip {
+    background: linear-gradient(135deg, rgba(233,69,96,.08), rgba(15,52,96,.08));
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin-top: 10px;
+  }
+  .teaching-tip-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .teaching-tip p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* Video Link */
+  .video-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .2s;
+  }
+  .video-link:hover { background: rgba(255,255,255,.12); }
+  .video-link svg { width: 16px; height: 16px; fill: var(--accent); }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text2);
+    font-size: 14px;
+  }
+
+  /* Footer nav */
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 4px 16px;
+    transition: color .2s;
+  }
+  .tab-btn.active { color: var(--accent); }
+  .tab-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+  /* Drawer */
+  .drawer-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+  }
+  .drawer-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .drawer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    z-index: 101;
+    transform: translateY(100%);
+    transition: transform .3s ease;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+  .drawer.show { transform: translateY(0); }
+  .drawer-handle {
+    width: 36px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .drawer-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .video-card { animation: fadeUp .4s ease both; }
+  .video-card:nth-child(1) { animation-delay: .05s; }
+  .video-card:nth-child(2) { animation-delay: .1s; }
+  .video-card:nth-child(3) { animation-delay: .15s; }
+  .video-card:nth-child(4) { animation-delay: .2s; }
+  .video-card:nth-child(5) { animation-delay: .25s; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📺 馬丁英語學習庫</h1>
+  <div class="sub">English with Martin · 試看版</div>
+  <div class="stats">
+    <span>🎬 <span id="totalVideos">-</span> 部影片</span>
+    <span>📚 <span id="totalVocab">-</span> 個單字</span>
+    <span>🏷️ <span id="totalCats">-</span> 個分類</span>
+  </div>
+</div>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all">全部</button>
+</div>
+
+<div class="content" id="content"></div>
+
+<!-- Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-handle"></div>
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <div id="drawerContent"></div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="browse">
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    <span>瀏覽</span>
+  </button>
+  <button class="tab-btn" data-tab="vocab">
+    <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+    <span>單字</span>
+  </button>
+  <button class="tab-btn" data-tab="about">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span>關於</span>
+  </button>
+</div>
+
+<script>
+const DATA_URL = 'https://andyjunyi.github.io/My_Projects/youtube-english/sample_videos.json';
+const DATA = { samples: [] };
+let filteredVideos = [];
+let currentFilter = 'all';
+let currentTab = 'browse';
+
+// Load data
+fetch(DATA_URL)
+  .then(r => r.json())
+  .then(data => {
+    DATA.samples = data.samples;
+    init();
+  })
+  .catch(() => {
+    // Fallback: embedded data
+    DATA.samples = [];
+    init();
+  });
+
+function init() {
+  updateStats();
+  buildFilters();
+  renderBrowse();
+}
+
+function updateStats() {
+  const videos = DATA.samples;
+  const allVocab = videos.reduce((s, v) => s + (v.vocabulary ? v.vocabulary.length : 0), 0);
+  const cats = new Set(videos.map(v => v.category || '其他'));
+  document.getElementById('totalVideos').textContent = videos.length;
+  document.getElementById('totalVocab').textContent = allVocab;
+  document.getElementById('totalCats').textContent = cats.size;
+}
+
+function buildFilters() {
+  const cats = new Set(DATA.samples.map(v => v.category || '其他'));
+  const container = document.getElementById('filters');
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.filter = cat;
+    btn.textContent = cat;
+    btn.onclick = () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = cat;
+      renderBrowse();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// ====== RENDER BROWSE ======
+function renderBrowse() {
+  const container = document.getElementById('content');
+  currentTab = 'browse';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'browse'));
+
+  filteredVideos = currentFilter === 'all'
+    ? DATA.samples
+    : DATA.samples.filter(v => (v.category || '其他') === currentFilter);
+
+  if (filteredVideos.length === 0) {
+    container.innerHTML = '<div class="empty-state">📭 此分類尚無影片</div>';
+    return;
+  }
+
+  container.innerHTML = filteredVideos.map(v => renderCard(v)).join('');
+}
+
+function renderCard(v) {
+  const duration = v.duration_sec ? formatDuration(v.duration_sec) : '';
+  const diffClass = (v.difficulty || '').includes('初級') ? 'badge-green' : 'badge-yellow';
+  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '發音/習語' ? 'badge-blue' : 'badge-gray';
+
+  const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
+
+  const vocab = (v.vocabulary || []).slice(0, 4).map(w => `
+    <div class="vocab-item">
+      <div class="vocab-word">${w.word}</div>
+      <div class="vocab-pos">${w.part_of_speech || ''}</div>
+      <div class="vocab-meaning">${w.meaning}</div>
+      <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
+    </div>
+  `).join('');
+
+  const examples = (v.example_sentences || []).slice(0, 2).map(e => `
+    <div class="example-item">
+      <div class="example-en">${e.en}</div>
+      <div class="example-zh">${e.zh}</div>
+    </div>
+  `).join('');
+
+  const tip = v.teaching_tip ? `
+    <div class="teaching-tip">
+      <div class="teaching-tip-title">💡 教學提示</div>
+      <p>${v.teaching_tip}</p>
+    </div>
+  ` : '';
+
+  return `
+    <div class="video-card" onclick="openDrawer('${v.video_id}')">
+      <div class="card-header">
+        <div class="card-title">${v.title}</div>
+      </div>
+      <div class="card-meta">
+        <span class="badge ${catBadge}">${v.category || '日常口語'}</span>
+        <span class="badge ${diffClass}">${v.difficulty || '★☆☆'}</span>
+        ${duration ? `<span class="badge badge-gray">${duration}</span>` : ''}
+      </div>
+      <div class="card-summary">${v.summary_zh || ''}</div>
+      ${vocab ? `<div class="vocab-title">📖 單字</div><div class="vocab-grid">${vocab}</div>` : ''}
+      ${tip}
+    </div>
+  `;
+}
+
+// ====== DRAWER ======
+function openDrawer(videoId) {
+  const v = DATA.samples.find(s => s.video_id === videoId);
+  if (!v) return;
+
+  const duration = v.duration_sec ? formatDuration(v.duration_sec) : '';
+  const diffClass = (v.difficulty || '').includes('初級') ? 'badge-green' : 'badge-yellow';
+  const catBadge = v.category === '常見錯誤糾正' ? 'badge-yellow' : v.category === '發音/習語' ? 'badge-blue' : 'badge-gray';
+
+  const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
+  const vocab = (v.vocabulary || []).map(w => `
+    <div class="vocab-item">
+      <div class="vocab-word">${w.word}</div>
+      <div class="vocab-pos">${w.part_of_speech || ''}</div>
+      <div class="vocab-meaning">${w.meaning}</div>
+      <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
+    </div>
+  `).join('');
+  const examples = (v.example_sentences || []).map(e => `
+    <div class="example-item">
+      <div class="example-en">${e.en}</div>
+      <div class="example-zh">${e.zh}</div>
+    </div>
+  `).join('');
+  const tip = v.teaching_tip ? `
+    <div class="teaching-tip">
+      <div class="teaching-tip-title">💡 教學提示</div>
+      <p>${v.teaching_tip}</p>
+    </div>
+  ` : '';
+
+  document.getElementById('drawerContent').innerHTML = `
+    <div class="card-title" style="font-size:17px;margin-bottom:8px">${v.title}</div>
+    <div class="card-meta">
+      <span class="badge ${catBadge}">${v.category || '日常口語'}</span>
+      <span class="badge ${diffClass}">${v.difficulty || '★☆☆'}</span>
+      ${duration ? `<span class="badge badge-gray">${duration}</span>` : ''}
+      <span class="badge badge-gray">📅 ${v.published}</span>
+    </div>
+    <div class="card-summary" style="margin:8px 0 12px">${v.summary_zh || ''}</div>
+    ${keyPoints ? `<div class="key-points"><div class="key-points-title">🎯 重點整理</div>${keyPoints}</div>` : ''}
+    ${vocab ? `<div class="vocab-title">📖 單字表</div><div class="vocab-grid">${vocab}</div>` : ''}
+    ${examples ? `<div class="examples-title">💬 例句</div>${examples}` : ''}
+    ${tip}
+    <a class="video-link" href="${v.url}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+      在 YouTube 上觀看
+    </a>
+  `;
+
+  document.getElementById('drawerOverlay').classList.add('show');
+  document.getElementById('drawer').classList.add('show');
+}
+
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('show');
+  document.getElementById('drawer').classList.remove('show');
+}
+
+document.getElementById('drawerOverlay').onclick = closeDrawer;
+document.getElementById('drawerClose').onclick = closeDrawer;
+
+// ====== TAB BAR ======
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    if (tab === 'browse') renderBrowse();
+    else if (tab === 'vocab') renderVocabTab();
+    else if (tab === 'about') renderAboutTab();
+  };
+});
+
+// ====== VOCAB TAB ======
+function renderVocabTab() {
+  currentTab = 'vocab';
+  const container = document.getElementById('content');
+  const allVocab = [];
+  DATA.samples.forEach(v => {
+    (v.vocabulary || []).forEach(w => {
+      allVocab.push({...w, videoTitle: v.title, videoId: v.video_id});
+    });
+  });
+
+  container.innerHTML = `
+    <div style="padding:8px 0 12px;font-size:14px;color:var(--text2)">
+      共 ${allVocab.length} 個單字，點擊可看原文
+    </div>
+    ${allVocab.map(w => `
+      <div class="vocab-item" style="margin-bottom:8px;cursor:pointer" onclick="openDrawer('${w.videoId}')">
+        <div class="vocab-word">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
+        <div class="vocab-meaning">${w.meaning}</div>
+        <div class="vocab-example">${w.example ? `「${w.example}」` : ''}</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">📺 ${w.videoTitle}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ====== ABOUT TAB ======
+function renderAboutTab() {
+  currentTab = 'about';
+  document.getElementById('content').innerHTML = `
+    <div style="padding:20px 0">
+      <h2 style="font-size:18px;margin-bottom:12px">關於這個學習庫</h2>
+      <p style="font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:16px">
+        這是將 YouTube 頻道 <strong>馬丁英語 English with Martin</strong> 的影片內容，
+        透過 AI 自動摘要、整理單字與例句，製作而成的結構化英語學習資料庫。
+      </p>
+      <div style="background:var(--card2);border-radius:12px;padding:16px;margin-bottom:16px">
+        <div style="font-size:13px;color:var(--text2);margin-bottom:8px">📊 目前狀態</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:20px;font-weight:700">216</div><div style="font-size:12px;color:var(--text2)">收錄影片</div></div>
+          <div><div style="font-size:20px;font-weight:700">3</div><div style="font-size:12px;color:var(--text2)">分類</div></div>
+          <div><div style="font-size:20px;font-weight:700">648+</div><div style="font-size:12px;color:var(--text2)">單字片語</div></div>
+          <div><div style="font-size:20px;font-weight:700">432+</div><div style="font-size:12px;color:var(--text2)">實用例句</div></div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.6">
+        💡 試看版僅展示 5 支精選影片。完整版將包含全部 216 支影片、
+        分類篩選、進階搜尋、單字卡複習等功能。
+      </p>
+    </div>
+  `;
+}
+
+function formatDuration(sec) {
+  if (!sec) return '';
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+// Render browse by default
+</script>
+</body>
+</html>
