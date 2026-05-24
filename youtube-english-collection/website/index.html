@@ -451,8 +451,17 @@ function updateStats() {
 }
 
 function buildFilters() {
+  // Collect all unique categories and tags
   const cats = new Set(DATA.samples.map(v => v.category || '其他'));
+  const allTags = new Set();
+  DATA.samples.forEach(v => {
+    (v.related_topics || []).forEach(t => allTags.add(t));
+  });
+  
   const container = document.getElementById('filters');
+  container.innerHTML = '<button class="filter-btn active" data-filter="all">全部</button>';
+  
+  // Add category buttons
   cats.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'filter-btn';
@@ -462,6 +471,21 @@ function buildFilters() {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = cat;
+      renderBrowse();
+    };
+    container.appendChild(btn);
+  });
+  
+  // Add tag buttons
+  allTags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.filter = 'tag:' + tag;
+    btn.textContent = '#' + tag;
+    btn.onclick = () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = 'tag:' + tag;
       renderBrowse();
     };
     container.appendChild(btn);
@@ -476,7 +500,9 @@ function renderBrowse() {
 
   filteredVideos = currentFilter === 'all'
     ? DATA.samples
-    : DATA.samples.filter(v => (v.category || '其他') === currentFilter);
+    : currentFilter.startsWith('tag:')
+      ? DATA.samples.filter(v => (v.related_topics || []).includes(currentFilter.slice(4)))
+      : DATA.samples.filter(v => (v.category || '其他') === currentFilter);
 
   if (filteredVideos.length === 0) {
     container.innerHTML = '<div class="empty-state">📭 此分類尚無影片</div>';
