@@ -417,12 +417,9 @@
 
 <div class="tag-row" id="tagRow">
   <span class="tag-label">🔍</span>
-  <input class="tag-dropdown" id="searchInput" type="search" placeholder="搜尋單字、中文、標籤..." style="flex:2">
-  <span class="tag-label" style="margin-left:4px">🏷️</span>
-  <select class="tag-dropdown" id="tagDropdown">
-    <option value="">標籤</option>
-  </select>
-  <button class="tag-clear" id="tagClear">✕</button>
+  <input class="tag-dropdown" id="searchInput" type="search" placeholder="搜尋單字、中文、標籤..." style="flex:1">
+  <button class="tag-clear" id="searchClear" style="display:none">✕</button>
+  <button class="tag-clear" id="tagClear" style="margin-left:auto">清除</button>
 </div>
 
 <div class="content" id="content"></div>
@@ -514,53 +511,46 @@ function buildFilters() {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = cat;
-      document.getElementById('tagDropdown').value = '';
       document.getElementById('searchInput').value = '';
+      document.getElementById('searchClear').style.display = 'none';
       renderBrowse();
     };
     container.appendChild(btn);
   });
   
-  // Fill tag dropdown
-  const allTags = new Set();
-  DATA.samples.forEach(v => {
-    (v.related_topics || []).forEach(t => allTags.add(t));
-  });
-  const dropdown = document.getElementById('tagDropdown');
-  allTags.forEach(tag => {
-    const opt = document.createElement('option');
-    opt.value = 'tag:' + tag;
-    opt.textContent = '# ' + tag;
-    dropdown.appendChild(opt);
-  });
+  // Search input
+  let searchTimer;
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
   
-  dropdown.onchange = () => {
-    const val = dropdown.value;
-    if (val) {
+  searchInput.oninput = () => {
+    clearTimeout(searchTimer);
+    if (searchInput.value.trim()) {
+      searchClear.style.display = '';
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('searchInput').value = '';
-      currentFilter = val;
-      renderBrowse();
+    } else {
+      searchClear.style.display = 'none';
     }
+    searchTimer = setTimeout(() => {
+      renderBrowse();
+    }, 200);
   };
   
-  document.getElementById('tagClear').onclick = () => {
-    document.getElementById('tagDropdown').value = '';
-    document.getElementById('searchInput').value = '';
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  searchClear.onclick = () => {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
     currentFilter = 'all';
     renderBrowse();
   };
   
-  // Search input
-  let searchTimer;
-  document.getElementById('searchInput').oninput = () => {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      currentFilter = 'search';
-      renderBrowse();
-    }, 200);
+  document.getElementById('tagClear').onclick = () => {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    currentFilter = 'all';
+    renderBrowse();
   };
 }
 
@@ -591,8 +581,6 @@ function renderBrowse() {
     });
   } else if (currentFilter === 'all') {
     filteredVideos = DATA.samples;
-  } else if (currentFilter.startsWith('tag:')) {
-    filteredVideos = DATA.samples.filter(v => (v.related_topics || []).includes(currentFilter.slice(4)));
   } else if (currentFilter === 'search') {
     filteredVideos = DATA.samples;
   } else {
