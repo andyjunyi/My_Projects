@@ -532,6 +532,11 @@ function renderCard(v) {
         ${duration ? `<span class="badge badge-gray">${duration}</span>` : ''}
       </div>
       <div class="card-summary">${v.summary_zh || ''}</div>
+      ${v.related_topics ? `
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">
+          ${v.related_topics.slice(0, 6).map(t => `<span class="badge badge-gray" style="font-size:11px">#${t}</span>`).join('')}
+        </div>
+      ` : ''}
       ${vocab ? `<div class="vocab-title">📖 單字</div><div class="vocab-grid">${vocab}</div>` : ''}
       ${tip}
     </div>
@@ -583,6 +588,11 @@ function openDrawer(videoId) {
       <span class="badge badge-gray">📅 ${v.published}</span>
     </div>
     <div class="card-summary" style="margin:8px 0 12px">${v.summary_zh || ''}</div>
+    ${v.related_topics ? `
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">
+        ${v.related_topics.map(t => `<span class="badge badge-gray" style="font-size:11px">#${t}</span>`).join('')}
+      </div>
+    ` : ''}
     ${keyPoints ? `<div class="key-points"><div class="key-points-title">🎯 重點整理</div>${keyPoints}</div>` : ''}
     ${vocab ? `<div class="vocab-title">📖 單字表</div><div class="vocab-grid">${vocab}</div>` : ''}
     ${examples ? `<div class="examples-title">💬 例句</div>${examples}` : ''}
