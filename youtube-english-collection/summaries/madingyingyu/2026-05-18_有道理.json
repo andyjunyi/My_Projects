@@ -30,30 +30,22 @@
     {
       "word": "That makes sense",
       "part_of_speech": "phr",
-      "meaning": "有道理、說得通",
-      "example": "A: Let's leave early to avoid traffic. B: That makes sense.",
-      "example_zh": "A：我們早點出發避開車潮。B：有道理。"
+      "meaning": "有道理、說得通"
     },
     {
       "word": "That's a good point",
       "part_of_speech": "phr",
-      "meaning": "說得好、有道理（同意觀點）",
-      "example": "A: Practice makes perfect. B: That's a good point.",
-      "example_zh": "A：熟能生巧。B：說得好。"
+      "meaning": "說得好、有道理（同意觀點）"
     },
     {
       "word": "Fair enough",
       "part_of_speech": "phr",
-      "meaning": "好吧、算你有道理（口語）",
-      "example": "A: I'd rather stay home tonight. B: Fair enough.",
-      "example_zh": "A：我今晚寧可待在家。B：好吧，也行。"
+      "meaning": "好吧、算你有道理（口語）"
     },
     {
       "word": "I see what you mean",
       "part_of_speech": "phr",
-      "meaning": "我懂你的意思",
-      "example": "I see what you mean about the project timeline.",
-      "example_zh": "我懂你說的專案時程的意思了。"
+      "meaning": "我懂你的意思"
     }
   ],
   "example_sentences": [

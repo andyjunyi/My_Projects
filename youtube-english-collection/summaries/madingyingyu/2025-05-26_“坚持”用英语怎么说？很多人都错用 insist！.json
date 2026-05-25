@@ -27,37 +27,27 @@
     {
       "word": "insist",
       "part_of_speech": "v",
-      "meaning": "堅持說、堅持認為（不是堅持做）",
-      "example": "He insisted that he was right.",
-      "example_zh": "他堅持認為自己是對的。"
+      "meaning": "堅持說、堅持認為（不是堅持做）"
     },
     {
       "word": "stick to",
       "part_of_speech": "phr",
-      "meaning": "堅持做、堅守",
-      "example": "Stick to your goals and don't give up.",
-      "example_zh": "堅持你的目標，不要放棄。"
+      "meaning": "堅持做、堅守"
     },
     {
       "word": "keep going",
       "part_of_speech": "phr",
-      "meaning": "繼續堅持下去",
-      "example": "Even when it's hard, just keep going.",
-      "example_zh": "即使很難，也要繼續堅持下去。"
+      "meaning": "繼續堅持下去"
     },
     {
       "word": "persevere",
       "part_of_speech": "v",
-      "meaning": "堅持不懈（較正式）",
-      "example": "She persevered through all the difficulties.",
-      "example_zh": "她堅持度過了所有困難。"
+      "meaning": "堅持不懈（較正式）"
     },
     {
       "word": "stick with it",
       "part_of_speech": "phr",
-      "meaning": "坚持下去（口語）",
-      "example": "Learning a language is hard, but stick with it!",
-      "example_zh": "學語言很難，但堅持下去！"
+      "meaning": "坚持下去（口語）"
     }
   ],
   "example_sentences": [

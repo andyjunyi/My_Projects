@@ -609,10 +609,6 @@ function renderCard(v) {
         <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;padding-left:calc(14px + 8px + 8px);margin-top:2px">
-        ${w.example ? `<span style="font-size:12px;color:var(--green)">${w.example}</span>` : ''}
-        ${w.example_zh ? `<span style="font-size:12px;color:var(--text2)">${w.example_zh}</span>` : ''}
-      </div>
     </div>
   `).join('');
 
@@ -674,10 +670,6 @@ function openDrawer(videoId) {
         <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word}</div>
         <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;padding-left:calc(14px + 8px + 8px);margin-top:2px">
-        ${w.example ? `<span style="font-size:12px;color:var(--green)">${w.example}</span>` : ''}
-        ${w.example_zh ? `<span style="font-size:12px;color:var(--text2)">${w.example_zh}</span>` : ''}
       </div>
     </div>
   `).join('');
@@ -762,10 +754,6 @@ function renderVocabTab() {
         <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
           <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
           <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-left:calc(14px + 8px);margin-top:2px">
-          ${w.example ? `<span style="font-size:12px;color:var(--green)">${w.example}</span>` : ''}
-          ${w.example_zh ? `<span style="font-size:12px;color:var(--text2)">${w.example_zh}</span>` : ''}
         </div>
         <div style="font-size:11px;color:var(--text2);margin-top:2px;padding-left:calc(14px + 8px)">📺 ${w.videoTitle}</div>
       </div>
