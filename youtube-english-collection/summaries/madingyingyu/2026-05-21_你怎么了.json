@@ -27,32 +27,39 @@
   ],
   "vocabulary": [
     {
-      "word": "upset",
-      "part_of_speech": "adj",
-      "meaning": "心煩的、難過的",
-      "example": "You seem upset.",
-      "example_zh": "你看起來心情不好"
+      "word": "What's wrong with you?",
+      "part_of_speech": "phr",
+      "meaning": "你有毛病嗎？（語氣差，像在責怪）",
+      "example": "What's wrong with you? Why would you say that?",
+      "example_zh": "你有毛病嗎？你為什麼要那樣說？"
     },
     {
-      "word": "down",
-      "part_of_speech": "adj",
-      "meaning": "情緒低落的",
-      "example": "You look a bit down.",
-      "example_zh": "你看起來有點悶悶不樂"
+      "word": "What's wrong?",
+      "part_of_speech": "phr",
+      "meaning": "怎麼了？（溫和關心）",
+      "example": "You look upset. What's wrong?",
+      "example_zh": "你看起來心情不好。怎麼了？"
     },
     {
-      "word": "alright",
-      "part_of_speech": "adj",
-      "meaning": "沒事、還好",
-      "example": "Is everything alright?",
-      "example_zh": "一切都還好嗎？"
+      "word": "Are you okay?",
+      "part_of_speech": "phr",
+      "meaning": "你還好嗎？（最安全的關心用語）",
+      "example": "Hey, are you okay? You seem a bit down.",
+      "example_zh": "嘿，你還好嗎？你看起來有點悶。"
     },
     {
-      "word": "wrong",
-      "part_of_speech": "adj",
-      "meaning": "不對勁的、有問題的",
-      "example": "What's wrong? You don't seem yourself.",
-      "example_zh": "怎麼了？你看起來不太對勁"
+      "word": "What happened?",
+      "part_of_speech": "phr",
+      "meaning": "發生什麼事了？（中性問句）",
+      "example": "What happened? You don't look yourself.",
+      "example_zh": "發生什麼事了？你看起來不太對勁。"
+    },
+    {
+      "word": "Is everything alright?",
+      "part_of_speech": "phr",
+      "meaning": "一切都好嗎？（更體貼的說法）",
+      "example": "Is everything alright? I'm here if you need to talk.",
+      "example_zh": "一切都好嗎？需要聊聊的話我在這。"
     }
   ],
   "example_sentences": [

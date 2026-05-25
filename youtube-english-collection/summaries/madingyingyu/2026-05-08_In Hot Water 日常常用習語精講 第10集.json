@@ -28,8 +28,8 @@
       "word": "in hot water",
       "part_of_speech": "phr",
       "meaning": "陷入麻煩、惹上麻煩",
-      "example": "He found himself in hot water after missing the deadline.",
-      "example_zh": "他錯過截止日後就陷入了麻煩。"
+      "example": "He's in hot water with his boss for being late.",
+      "example_zh": "他因為遲到被老闆盯上了。"
     },
     {
       "word": "in deep water",
@@ -41,16 +41,16 @@
     {
       "word": "in a pickle",
       "part_of_speech": "phr",
-      "meaning": "處於困境、進退兩難",
-      "example": "I'm in a pickle — I promised two people I'd go to their parties.",
-      "example_zh": "我進退兩難——我答應了兩個人要去他們的派對。"
+      "meaning": "進退兩難",
+      "example": "I'm in a pickle — I promised both of them I'd go.",
+      "example_zh": "我進退兩難——我答應了兩個人都要去。"
     },
     {
-      "word": "in a jam",
+      "word": "land in trouble",
       "part_of_speech": "phr",
-      "meaning": "遇到麻煩",
-      "example": "I'm in a bit of a jam. Can you help me?",
-      "example_zh": "我有點麻煩。你能幫我嗎？"
+      "meaning": "惹上麻煩",
+      "example": "He landed in hot water after making those comments.",
+      "example_zh": "他說那些話之後就惹上麻煩了。"
     }
   ],
   "example_sentences": [

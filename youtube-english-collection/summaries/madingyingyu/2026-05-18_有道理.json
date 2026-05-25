@@ -28,32 +28,32 @@
   ],
   "vocabulary": [
     {
-      "word": "make sense",
+      "word": "That makes sense",
       "part_of_speech": "phr",
       "meaning": "有道理、說得通",
-      "example": "That makes sense.",
-      "example_zh": "有道理。"
+      "example": "A: Let's leave early to avoid traffic. B: That makes sense.",
+      "example_zh": "A：我們早點出發避開車潮。B：有道理。"
     },
     {
-      "word": "point",
-      "part_of_speech": "n",
-      "meaning": "觀點、論點",
-      "example": "That's a good point.",
-      "example_zh": "說得好，有道理。"
+      "word": "That's a good point",
+      "part_of_speech": "phr",
+      "meaning": "說得好、有道理（同意觀點）",
+      "example": "A: Practice makes perfect. B: That's a good point.",
+      "example_zh": "A：熟能生巧。B：說得好。"
     },
     {
-      "word": "fair",
-      "part_of_speech": "adj",
-      "meaning": "合理的、公平的",
-      "example": "Fair enough.",
-      "example_zh": "好吧，算你有道理。"
+      "word": "Fair enough",
+      "part_of_speech": "phr",
+      "meaning": "好吧、算你有道理（口語）",
+      "example": "A: I'd rather stay home tonight. B: Fair enough.",
+      "example_zh": "A：我今晚寧可待在家。B：好吧，也行。"
     },
     {
-      "word": "explain",
-      "part_of_speech": "v",
-      "meaning": "解釋、說明",
-      "example": "That explains why he was late.",
-      "example_zh": "這就解釋了他為什麼遲到。"
+      "word": "I see what you mean",
+      "part_of_speech": "phr",
+      "meaning": "我懂你的意思",
+      "example": "I see what you mean about the project timeline.",
+      "example_zh": "我懂你說的專案時程的意思了。"
     }
   ],
   "example_sentences": [

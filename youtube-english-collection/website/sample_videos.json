@@ -29,32 +29,39 @@
       ],
       "vocabulary": [
         {
-          "word": "upset",
-          "part_of_speech": "adj",
-          "meaning": "心煩的、難過的",
-          "example": "You seem upset.",
-          "example_zh": "你看起來心情不好"
+          "word": "What's wrong with you?",
+          "part_of_speech": "phr",
+          "meaning": "你有毛病嗎？（語氣差，像在責怪）",
+          "example": "What's wrong with you? Why would you say that?",
+          "example_zh": "你有毛病嗎？你為什麼要那樣說？"
         },
         {
-          "word": "down",
-          "part_of_speech": "adj",
-          "meaning": "情緒低落的",
-          "example": "You look a bit down.",
-          "example_zh": "你看起來有點悶悶不樂"
+          "word": "What's wrong?",
+          "part_of_speech": "phr",
+          "meaning": "怎麼了？（溫和關心）",
+          "example": "You look upset. What's wrong?",
+          "example_zh": "你看起來心情不好。怎麼了？"
         },
         {
-          "word": "alright",
-          "part_of_speech": "adj",
-          "meaning": "沒事、還好",
-          "example": "Is everything alright?",
-          "example_zh": "一切都還好嗎？"
+          "word": "Are you okay?",
+          "part_of_speech": "phr",
+          "meaning": "你還好嗎？（最安全的關心用語）",
+          "example": "Hey, are you okay? You seem a bit down.",
+          "example_zh": "嘿，你還好嗎？你看起來有點悶。"
         },
         {
-          "word": "wrong",
-          "part_of_speech": "adj",
-          "meaning": "不對勁的、有問題的",
-          "example": "What's wrong? You don't seem yourself.",
-          "example_zh": "怎麼了？你看起來不太對勁"
+          "word": "What happened?",
+          "part_of_speech": "phr",
+          "meaning": "發生什麼事了？（中性問句）",
+          "example": "What happened? You don't look yourself.",
+          "example_zh": "發生什麼事了？你看起來不太對勁。"
+        },
+        {
+          "word": "Is everything alright?",
+          "part_of_speech": "phr",
+          "meaning": "一切都好嗎？（更體貼的說法）",
+          "example": "Is everything alright? I'm here if you need to talk.",
+          "example_zh": "一切都好嗎？需要聊聊的話我在這。"
         }
       ],
       "example_sentences": [
@@ -124,8 +131,8 @@
           "word": "in hot water",
           "part_of_speech": "phr",
           "meaning": "陷入麻煩、惹上麻煩",
-          "example": "He found himself in hot water after missing the deadline.",
-          "example_zh": "他錯過截止日後就陷入了麻煩。"
+          "example": "He's in hot water with his boss for being late.",
+          "example_zh": "他因為遲到被老闆盯上了。"
         },
         {
           "word": "in deep water",
@@ -137,16 +144,16 @@
         {
           "word": "in a pickle",
           "part_of_speech": "phr",
-          "meaning": "處於困境、進退兩難",
-          "example": "I'm in a pickle — I promised two people I'd go to their parties.",
-          "example_zh": "我進退兩難——我答應了兩個人要去他們的派對。"
+          "meaning": "進退兩難",
+          "example": "I'm in a pickle — I promised both of them I'd go.",
+          "example_zh": "我進退兩難——我答應了兩個人都要去。"
         },
         {
-          "word": "in a jam",
+          "word": "land in trouble",
           "part_of_speech": "phr",
-          "meaning": "遇到麻煩",
-          "example": "I'm in a bit of a jam. Can you help me?",
-          "example_zh": "我有點麻煩。你能幫我嗎？"
+          "meaning": "惹上麻煩",
+          "example": "He landed in hot water after making those comments.",
+          "example_zh": "他說那些話之後就惹上麻煩了。"
         }
       ],
       "example_sentences": [
@@ -210,22 +217,29 @@
           "word": "overthink",
           "part_of_speech": "v",
           "meaning": "想太多、過度思考",
-          "example": "You're overthinking it.",
-          "example_zh": "你想太多了。"
+          "example": "You're overthinking it. Just go for it!",
+          "example_zh": "你想太多了。就去試試吧！"
         },
         {
-          "word": "read into",
+          "word": "Don't overthink it",
+          "part_of_speech": "phr",
+          "meaning": "別想太多",
+          "example": "Don't overthink it. The answer is simple.",
+          "example_zh": "別想太多，答案很簡單。"
+        },
+        {
+          "word": "read too much into",
           "part_of_speech": "phr",
           "meaning": "過度解讀",
-          "example": "You're reading too much into what he said.",
-          "example_zh": "你把他說的話想得太複雜了。"
+          "example": "You're reading too much into his message.",
+          "example_zh": "你把他那條訊息想得太複雜了。"
         },
         {
-          "word": "deep",
-          "part_of_speech": "adj",
-          "meaning": "深奧的、複雜的",
-          "example": "It's not that deep.",
-          "example_zh": "沒那麼複雜。"
+          "word": "It's not that deep",
+          "part_of_speech": "phr",
+          "meaning": "沒那麼複雜（口語）",
+          "example": "A: Do you think he's mad? B: It's not that deep.",
+          "example_zh": "A：你覺得他在生氣嗎？B：沒那麼複雜。"
         }
       ],
       "example_sentences": [
@@ -288,32 +302,32 @@
       ],
       "vocabulary": [
         {
-          "word": "make sense",
+          "word": "That makes sense",
           "part_of_speech": "phr",
           "meaning": "有道理、說得通",
-          "example": "That makes sense.",
-          "example_zh": "有道理。"
+          "example": "A: Let's leave early to avoid traffic. B: That makes sense.",
+          "example_zh": "A：我們早點出發避開車潮。B：有道理。"
         },
         {
-          "word": "point",
-          "part_of_speech": "n",
-          "meaning": "觀點、論點",
-          "example": "That's a good point.",
-          "example_zh": "說得好，有道理。"
+          "word": "That's a good point",
+          "part_of_speech": "phr",
+          "meaning": "說得好、有道理（同意觀點）",
+          "example": "A: Practice makes perfect. B: That's a good point.",
+          "example_zh": "A：熟能生巧。B：說得好。"
         },
         {
-          "word": "fair",
-          "part_of_speech": "adj",
-          "meaning": "合理的、公平的",
-          "example": "Fair enough.",
-          "example_zh": "好吧，算你有道理。"
+          "word": "Fair enough",
+          "part_of_speech": "phr",
+          "meaning": "好吧、算你有道理（口語）",
+          "example": "A: I'd rather stay home tonight. B: Fair enough.",
+          "example_zh": "A：我今晚寧可待在家。B：好吧，也行。"
         },
         {
-          "word": "explain",
-          "part_of_speech": "v",
-          "meaning": "解釋、說明",
-          "example": "That explains why he was late.",
-          "example_zh": "這就解釋了他為什麼遲到。"
+          "word": "I see what you mean",
+          "part_of_speech": "phr",
+          "meaning": "我懂你的意思",
+          "example": "I see what you mean about the project timeline.",
+          "example_zh": "我懂你說的專案時程的意思了。"
         }
       ],
       "example_sentences": [
@@ -373,25 +387,39 @@
       ],
       "vocabulary": [
         {
-          "word": "expression",
-          "part_of_speech": "n",
-          "meaning": "表達方式",
-          "example": "This is a very useful English expression for '“坚持”'.",
-          "example_zh": "這是一個表達「“坚持”」非常有用的英文說法。"
+          "word": "insist",
+          "part_of_speech": "v",
+          "meaning": "堅持說、堅持認為（不是堅持做）",
+          "example": "He insisted that he was right.",
+          "example_zh": "他堅持認為自己是對的。"
         },
         {
-          "word": "natural",
-          "part_of_speech": "adj",
-          "meaning": "自然的",
-          "example": "This sounds more natural in English.",
-          "example_zh": "這在英文中聽起來更自然。"
+          "word": "stick to",
+          "part_of_speech": "phr",
+          "meaning": "堅持做、堅守",
+          "example": "Stick to your goals and don't give up.",
+          "example_zh": "堅持你的目標，不要放棄。"
         },
         {
-          "word": "context",
-          "part_of_speech": "n",
-          "meaning": "語境、上下文",
-          "example": "The right expression depends on the context.",
-          "example_zh": "正確的表達取決於語境。"
+          "word": "keep going",
+          "part_of_speech": "phr",
+          "meaning": "繼續堅持下去",
+          "example": "Even when it's hard, just keep going.",
+          "example_zh": "即使很難，也要繼續堅持下去。"
+        },
+        {
+          "word": "persevere",
+          "part_of_speech": "v",
+          "meaning": "堅持不懈（較正式）",
+          "example": "She persevered through all the difficulties.",
+          "example_zh": "她堅持度過了所有困難。"
+        },
+        {
+          "word": "stick with it",
+          "part_of_speech": "phr",
+          "meaning": "坚持下去（口語）",
+          "example": "Learning a language is hard, but stick with it!",
+          "example_zh": "學語言很難，但堅持下去！"
         }
       ],
       "example_sentences": [
