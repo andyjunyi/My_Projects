@@ -604,9 +604,9 @@ function renderCard(v) {
 
   const vocab = (v.vocabulary || []).slice(0, 5).map(w => `
     <div class="vocab-item">
-      <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
         <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word}</div>
-        <div class="vocab-pos" style="font-size:11px;color:var(--text2)">${w.part_of_speech || ''}</div>
+        <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
       </div>
     </div>
@@ -666,9 +666,9 @@ function openDrawer(videoId) {
   const keyPoints = (v.key_points || []).map(kp => `<div class="key-point">${kp}</div>`).join('');
   const vocab = (v.vocabulary || []).map(w => `
     <div class="vocab-item" style="margin-bottom:6px">
-      <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
         <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word}</div>
-        <div class="vocab-pos" style="font-size:11px;color:var(--text2)">${w.part_of_speech || ''}</div>
+        <div class="vocab-pos" style="font-size:11px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
       </div>
     </div>
@@ -751,8 +751,8 @@ function renderVocabTab() {
     </div>
     ${allVocab.map(w => `
       <div class="vocab-item" style="margin-bottom:6px;cursor:pointer" onclick="openDrawer('${w.videoId}')">
-        <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
-          <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word} <span class="vocab-pos" style="font-size:11px;color:var(--text2)">${w.part_of_speech || ''}</span></div>
+        <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+          <div class="vocab-word" style="font-size:14px;margin:0;white-space:nowrap">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
           <div class="vocab-meaning" style="font-size:13px;color:var(--text2)">${w.meaning}</div>
         </div>
         <div style="font-size:11px;color:var(--text2);margin-top:2px;padding-left:calc(14px + 8px)">📺 ${w.videoTitle}</div>
