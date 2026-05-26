@@ -667,7 +667,7 @@ function renderCard(v) {
         <div class="vocab-pos" style="font-size:12px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:15px;color:var(--text2)">${w.meaning}</div>
       </div>
-      ${w.example ? `<div style="font-size:14px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
+      ${w.example ? `<div style="font-size:16px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
       ${w.example_zh ? `<div style="font-size:14px;color:var(--text2);margin-top:2px;font-style:italic">${w.example_zh}</div>` : ''}
     </div>
   `).join('');
@@ -731,7 +731,7 @@ function openDrawer(videoId) {
         <div class="vocab-pos" style="font-size:12px">${w.part_of_speech || ''}</div>
         <div class="vocab-meaning" style="font-size:15px;color:var(--text2)">${w.meaning}</div>
       </div>
-      ${w.example ? `<div style="font-size:14px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
+      ${w.example ? `<div style="font-size:16px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
       ${w.example_zh ? `<div style="font-size:14px;color:var(--text2);margin-top:2px;font-style:italic">${w.example_zh}</div>` : ''}
     </div>
   `).join('');
@@ -817,7 +817,7 @@ function renderVocabTab() {
           <div class="vocab-word" style="font-size:16px;margin:0;white-space:nowrap">${w.word} <span class="vocab-pos">${w.part_of_speech || ''}</span></div>
           <div class="vocab-meaning" style="font-size:15px;color:var(--text2)">${w.meaning}</div>
         </div>
-        ${w.example ? `<div style="font-size:14px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
+        ${w.example ? `<div style="font-size:16px;color:var(--green);margin-top:3px">${w.example}</div>` : ''}
         ${w.example_zh ? `<div style="font-size:14px;color:var(--text2);margin-top:2px;font-style:italic">${w.example_zh}</div>` : ''}
         <div style="font-size:13px;color:var(--text2);margin-top:3px;padding-left:calc(16px + 8px)">📺 ${w.videoTitle}</div>
       </div>
