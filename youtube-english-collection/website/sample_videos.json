@@ -235,22 +235,30 @@
         {
           "word": "overthink",
           "part_of_speech": "v",
-          "meaning": "想太多、過度思考"
+          "meaning": "想太多、過度思考",
+          "example": "You're overthinking it. Just go for it!",
+          "example_zh": "你想太多了。就去試試吧！"
         },
         {
           "word": "Don't overthink it",
           "part_of_speech": "phr",
-          "meaning": "別想太多"
+          "meaning": "別想太多",
+          "example": "Don't overthink it. The answer is simple.",
+          "example_zh": "別想太多，答案很簡單。"
         },
         {
           "word": "read too much into",
           "part_of_speech": "phr",
-          "meaning": "過度解讀"
+          "meaning": "過度解讀",
+          "example": "You're reading too much into his message.",
+          "example_zh": "你把他那條訊息想得太複雜了。"
         },
         {
           "word": "It's not that deep",
           "part_of_speech": "phr",
-          "meaning": "沒那麼複雜（口語）"
+          "meaning": "沒那麼複雜（口語）",
+          "example": "A: Do you think he's mad at me? B: It's not that deep, relax.",
+          "example_zh": "A：你覺得他在生我的氣嗎？B：沒那麼複雜，放輕鬆。"
         }
       ],
       "example_sentences": [
