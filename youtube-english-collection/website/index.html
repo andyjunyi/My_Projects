@@ -415,6 +415,14 @@
   <button class="filter-btn active" data-filter="all">全部</button>
 </div>
 
+<div class="tag-row">
+  <span class="tag-label">📌</span>
+  <select class="tag-dropdown" id="topicSelect">
+    <option value="">全部主題</option>
+  </select>
+  <button class="tag-clear" id="topicClear" style="display:none">清除</button>
+</div>
+
 <div class="tag-row" id="tagRow">
   <span class="tag-label">🔍</span>
   <input class="tag-dropdown" id="searchInput" type="search" placeholder="搜尋單字、中文、標籤..." style="flex:1">
@@ -513,11 +521,44 @@ function buildFilters() {
       currentFilter = cat;
       document.getElementById('searchInput').value = '';
       document.getElementById('searchClear').style.display = 'none';
+      document.getElementById('topicSelect').value = '';
+      document.getElementById('topicClear').style.display = 'none';
       renderBrowse();
     };
     container.appendChild(btn);
   });
-  
+
+  // Topic dropdown - collect all unique tags across videos
+  const allTags = new Set();
+  DATA.samples.forEach(v => (v.tags || []).forEach(t => allTags.add(t)));
+  const sortedTags = [...allTags].sort();
+  const topicSelect = document.getElementById('topicSelect');
+  let currentTopic = '';
+  sortedTags.forEach(tag => {
+    const opt = document.createElement('option');
+    opt.value = tag;
+    opt.textContent = tag;
+    topicSelect.appendChild(opt);
+  });
+  topicSelect.onchange = () => {
+    currentTopic = topicSelect.value;
+    if (currentTopic) {
+      document.getElementById('topicClear').style.display = '';
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+      currentFilter = 'all';
+    } else {
+      document.getElementById('topicClear').style.display = 'none';
+    }
+    renderBrowse();
+  };
+  document.getElementById('topicClear').onclick = () => {
+    topicSelect.value = '';
+    currentTopic = '';
+    document.getElementById('topicClear').style.display = 'none';
+    renderBrowse();
+  };
+
   // Search input
   let searchTimer;
   const searchInput = document.getElementById('searchInput');
@@ -528,6 +569,8 @@ function buildFilters() {
     if (searchInput.value.trim()) {
       searchClear.style.display = '';
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('topicSelect').value = '';
+      document.getElementById('topicClear').style.display = 'none';
     } else {
       searchClear.style.display = 'none';
     }
@@ -541,6 +584,8 @@ function buildFilters() {
     searchClear.style.display = 'none';
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
     currentFilter = 'all';
+    document.getElementById('topicSelect').value = '';
+    document.getElementById('topicClear').style.display = 'none';
     renderBrowse();
   };
   
@@ -550,6 +595,8 @@ function buildFilters() {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
     currentFilter = 'all';
+    document.getElementById('topicSelect').value = '';
+    document.getElementById('topicClear').style.display = 'none';
     renderBrowse();
   };
 }
@@ -579,12 +626,23 @@ function renderBrowse() {
       );
       return inTitle || inSummary || inVocab || inTags || inExamples;
     });
-  } else if (currentFilter === 'all') {
-    filteredVideos = DATA.samples;
-  } else if (currentFilter === 'search') {
-    filteredVideos = DATA.samples;
   } else {
-    filteredVideos = DATA.samples.filter(v => (v.category || '其他') === currentFilter);
+    // Start with full list, then apply category and topic filters
+    let list = DATA.samples;
+    
+    // Category filter
+    if (currentFilter !== 'all' && currentFilter !== 'search') {
+      list = list.filter(v => (v.category || '其他') === currentFilter);
+    }
+    
+    // Topic filter
+    const topicSelect = document.getElementById('topicSelect');
+    const selectedTopic = topicSelect ? topicSelect.value : '';
+    if (selectedTopic) {
+      list = list.filter(v => (v.tags || []).includes(selectedTopic));
+    }
+    
+    filteredVideos = list;
   }
 
   if (filteredVideos.length === 0) {
