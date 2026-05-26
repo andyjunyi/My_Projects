@@ -281,53 +281,77 @@ async function downloadBatch() {
 async function generateAndDownload(data, filename) {
   const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel } = window.docx;
 
+  const BLUE = '215E99';
+  const ORANGE = 'BF4E14';
+  const GREEN = '4EA72E';
+
   const doc = new Document({
     sections: [{
       properties: {},
       children: [
         new Paragraph({
-          alignment: AlignmentType.LEFT,
-          spacing: { after: 120 },
+          spacing: { after: 0 },
           children: [
             new TextRun({
               text: data.w,
               bold: true,
-              size: 44,
-              font: { name: 'Times New Roman' },
+              size: 40,
+              font: { name: 'Arial Unicode MS' },
+              color: BLUE,
             }),
             new TextRun({
-              text: `  [${data.k}]`,
-              size: 28,
-              font: { name: 'Times New Roman' },
-              color: '666666',
+              text: ' ',
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
             }),
             new TextRun({
-              text: `  ${data.d}`,
+              text: '[',
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
+              color: ORANGE,
+            }),
+            new TextRun({
+              text: data.k,
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
+              color: ORANGE,
+            }),
+            new TextRun({
+              text: ']',
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
+              color: ORANGE,
+            }),
+            new TextRun({
+              text: ' ',
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
+            }),
+            new TextRun({
+              text: data.d,
               size: 28,
-              font: { name: '標楷體' },
+              font: { name: 'Arial Unicode MS' },
             }),
           ],
         }),
         new Paragraph({
-          spacing: { before: 80 },
+          spacing: { before: 160 },
           children: [
             new TextRun({
               text: data.e,
-              size: 26,
-              font: { name: 'Times New Roman' },
-              italics: true,
-              color: '2E7D32',
+              size: 32,
+              font: { name: 'Arial Unicode MS' },
             }),
           ],
         }),
         new Paragraph({
-          spacing: { before: 40, after: 120 },
+          spacing: { after: 160 },
           children: [
             new TextRun({
               text: data.z,
-              size: 26,
-              font: { name: '標楷體' },
-              color: '666666',
+              size: 28,
+              font: { name: 'Arial Unicode MS' },
+              color: GREEN,
             }),
           ],
         }),
