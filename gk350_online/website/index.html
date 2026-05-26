@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>高考單字卡 · 線上產生器</title>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --text: #eee;
+    --text2: #aaa;
+    --green: #4ade80;
+    --border: #2a2a4a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--accent2), var(--card));
+    padding: 32px 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header .sub { color: var(--text2); font-size: 14px; }
+  .content { padding: 20px 16px 40px; max-width: 600px; margin: 0 auto; }
+
+  .input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .input-group input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 16px;
+    outline: none;
+    transition: border .2s;
+  }
+  .input-group input:focus { border-color: var(--accent); }
+  .input-group button {
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .input-group button:disabled { opacity: .4; cursor: not-allowed; }
+
+  .match-info {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 16px;
+    min-height: 20px;
+  }
+
+  /* Preview Card */
+  .preview {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    display: none;
+  }
+  .preview.show { display: block; }
+  .preview-word {
+    font-size: 20px;
+    font-weight: 700;
+    color: #60a5fa;
+    margin-bottom: 4px;
+  }
+  .preview-kk {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .preview-def {
+    font-size: 15px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .preview-example {
+    font-size: 14px;
+    color: var(--green);
+    margin-bottom: 2px;
+  }
+  .preview-example-zh {
+    font-size: 14px;
+    color: var(--text2);
+    font-style: italic;
+  }
+
+  .batch-area {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    min-height: 80px;
+    margin-bottom: 8px;
+    font-family: inherit;
+  }
+  .batch-area:focus { border-color: var(--accent); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .badge-green { background: rgba(74,222,128,.15); color: var(--green); }
+  .badge-gray { background: rgba(255,255,255,.08); color: var(--text2); }
+
+  .btn-outline {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--text); }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .empty-state .big { font-size: 40px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📖 高考單字卡產生器</h1>
+  <div class="sub">gk_350 · 輸入單字下載 Word 講義</div>
+</div>
+
+<div class="content">
+
+  <!-- Single word input -->
+  <div class="input-group">
+    <input type="text" id="wordInput" placeholder="輸入單字，如 adapt" autocomplete="off"
+           onkeydown="if(event.key==='Enter')lookup()">
+    <button id="searchBtn" onclick="lookup()">🔍 查詢</button>
+  </div>
+
+  <div class="match-info" id="matchInfo"></div>
+
+  <!-- Preview -->
+  <div class="preview" id="preview">
+    <div class="preview-word" id="pvWord"></div>
+    <div class="preview-kk" id="pvKk"></div>
+    <div class="preview-def" id="pvDef"></div>
+    <div class="preview-example" id="pvEx"></div>
+    <div class="preview-example-zh" id="pvExZh"></div>
+    <div style="margin-top:14px">
+      <button class="btn-outline" onclick="downloadSingle()">⬇️ 下載 Word 講義</button>
+    </div>
+  </div>
+
+  <!-- Batch mode -->
+  <details style="margin-bottom:16px">
+    <summary style="cursor:pointer;color:var(--text2);font-size:13px;padding:4px 0">📋 批次產生（每行一個單字）</summary>
+    <textarea class="batch-area" id="batchInput" placeholder="adapt&#10;adopt&#10;affect&#10;..."></textarea>
+    <button class="btn-outline" onclick="downloadBatch()" id="batchBtn">⬇️ 批次下載全部 Word 講義</button>
+    <div class="match-info" id="batchInfo"></div>
+  </details>
+
+</div>
+
+<script>
+let WORDS = [];
+
+// Load word data
+fetch('words.json')
+  .then(r => r.json())
+  .then(data => { WORDS = data; })
+  .catch(() => { document.getElementById('matchInfo').textContent = '⚠️ 資料載入失敗'; });
+
+function findWord(word) {
+  const q = word.trim().toLowerCase();
+  return WORDS.find(w => w.w.toLowerCase() === q) || null;
+}
+
+function lookup() {
+  const input = document.getElementById('wordInput');
+  const preview = document.getElementById('preview');
+  const info = document.getElementById('matchInfo');
+  const q = input.value.trim();
+
+  if (!q) {
+    preview.classList.remove('show');
+    info.textContent = '';
+    return;
+  }
+
+  const found = findWord(q);
+  if (!found) {
+    preview.classList.remove('show');
+    info.textContent = `❌ 找不到「${q}」`;
+    return;
+  }
+
+  preview.classList.add('show');
+  info.textContent = '';
+  document.getElementById('pvWord').textContent = found.w;
+  document.getElementById('pvKk').textContent = `[${found.k}]`;
+  document.getElementById('pvDef').textContent = found.d;
+  document.getElementById('pvEx').textContent = found.e;
+  document.getElementById('pvExZh').textContent = found.z;
+}
+
+async function downloadSingle() {
+  const input = document.getElementById('wordInput');
+  const found = findWord(input.value);
+  if (!found) return;
+  await generateAndDownload(found, `${found.w}.docx`);
+}
+
+async function downloadBatch() {
+  const text = document.getElementById('batchInput').value;
+  const words = text.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!words.length) return;
+
+  const btn = document.getElementById('batchBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 產生中...';
+
+  const info = document.getElementById('batchInfo');
+  let success = 0, errors = [];
+
+  for (const word of words) {
+    const found = findWord(word);
+    if (!found) {
+      errors.push(word);
+      continue;
+    }
+    await generateAndDownload(found, `${found.w}.docx`);
+    success++;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⬇️ 批次下載全部 Word 講義';
+  info.textContent = errors.length
+    ? `✅ 成功 ${success} 個，找不到：${errors.join(', ')}`
+    : `✅ 已下載 ${success} 個檔案`;
+}
+
+async function generateAndDownload(data, filename) {
+  const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel } = window.docx;
+
+  const doc = new Document({
+    sections: [{
+      properties: {},
+      children: [
+        new Paragraph({
+          alignment: AlignmentType.LEFT,
+          spacing: { after: 120 },
+          children: [
+            new TextRun({
+              text: data.w,
+              bold: true,
+              size: 44,
+              font: { name: 'Times New Roman' },
+            }),
+            new TextRun({
+              text: `  [${data.k}]`,
+              size: 28,
+              font: { name: 'Times New Roman' },
+              color: '666666',
+            }),
+            new TextRun({
+              text: `  ${data.d}`,
+              size: 28,
+              font: { name: '標楷體' },
+            }),
+          ],
+        }),
+        new Paragraph({
+          spacing: { before: 80 },
+          children: [
+            new TextRun({
+              text: data.e,
+              size: 26,
+              font: { name: 'Times New Roman' },
+              italics: true,
+              color: '2E7D32',
+            }),
+          ],
+        }),
+        new Paragraph({
+          spacing: { before: 40, after: 120 },
+          children: [
+            new TextRun({
+              text: data.z,
+              size: 26,
+              font: { name: '標楷體' },
+              color: '666666',
+            }),
+          ],
+        }),
+      ],
+    }],
+  });
+
+  const blob = await Packer.toBlob(doc);
+  saveAs(blob, filename);
+}
+</script>
+
+</body>
+</html>

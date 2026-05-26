@@ -1,0 +1,4 @@
+# Ignore generated docx files
+輸出docx/
+# Ignore full word list (not needed for web)
+word_list.csv
