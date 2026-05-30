@@ -261,15 +261,32 @@
 let WORDS = [];
 let WORDS_READY = false;
 
-fetch('words.json')
-  .then(r => r.json())
-  .then(data => {
-    WORDS = data;
+function setInfo(msg) {
+  document.getElementById('matchInfo').textContent = msg;
+}
+
+// Load both parts in parallel
+Promise.all([
+  fetch('words_p1.json').then(r => r.json()),
+  fetch('words_p2.json').then(r => r.json())
+])
+  .then(([p1, p2]) => {
+    WORDS = p1.concat(p2);
     WORDS_READY = true;
-    document.getElementById('matchInfo').textContent = '✅ 已載入 ' + data.length + ' 個單字';
+    setInfo('✅ 已載入 ' + WORDS.length + ' 個單字');
   })
   .catch(() => {
-    document.getElementById('matchInfo').textContent = '⚠️ 資料載入失敗，請重整頁面';
+    // Fallback: try loading the single file
+    fetch('words.json')
+      .then(r => r.json())
+      .then(data => {
+        WORDS = data;
+        WORDS_READY = true;
+        setInfo('✅ 已載入 ' + data.length + ' 個單字');
+      })
+      .catch(() => {
+        setInfo('⚠️ 資料載入失敗，請重整頁面');
+      });
   });
 
 function findWord(word) {
@@ -286,7 +303,7 @@ function lookup() {
 
   if (!q) {
     preview.classList.remove('show');
-    info.textContent = WORDS_READY ? '' : '⏳ 載入中... (' + WORDS.length + '/12814)';
+    info.textContent = WORDS_READY ? '' : '⏳ 載入中 (4.8MB + 3.3MB)...';
     return;
   }
 
