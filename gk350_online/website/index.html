@@ -259,13 +259,21 @@
 
 <script>
 let WORDS = [];
+let WORDS_READY = false;
 
 fetch('words.json')
   .then(r => r.json())
-  .then(data => { WORDS = data; })
-  .catch(() => { document.getElementById('matchInfo').textContent = '⚠️ 資料載入失敗'; });
+  .then(data => {
+    WORDS = data;
+    WORDS_READY = true;
+    document.getElementById('matchInfo').textContent = '✅ 已載入 ' + data.length + ' 個單字';
+  })
+  .catch(() => {
+    document.getElementById('matchInfo').textContent = '⚠️ 資料載入失敗，請重整頁面';
+  });
 
 function findWord(word) {
+  if (!WORDS_READY) return null;
   const q = word.trim().toLowerCase();
   return WORDS.find(w => w.w.toLowerCase() === q) || null;
 }
@@ -278,7 +286,12 @@ function lookup() {
 
   if (!q) {
     preview.classList.remove('show');
-    info.textContent = '';
+    info.textContent = WORDS_READY ? '' : '⏳ 載入中... (' + WORDS.length + '/12814)';
+    return;
+  }
+
+  if (!WORDS_READY) {
+    info.textContent = '⏳ 資料載入中，請稍後...';
     return;
   }
 
