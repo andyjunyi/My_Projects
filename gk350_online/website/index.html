@@ -358,11 +358,11 @@ function lookup() {
     el.style.cssText = 'font-size:13px;line-height:1.7';
     const parts = [];
     if (hasSyn) {
-      const words = found.syn.map(s => s.w + (s.m ? '(' + s.m + ')' : '')).join(', ');
+      const words = found.syn.map(s => s.w + (s.m ? s.m : '')).join(', ');
       parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--green').trim() + '">同 ' + words + '</span>');
     }
     if (hasAnt) {
-      const words = found.ant.map(a => a.w + (a.m ? '(' + a.m + ')' : '')).join(', ');
+      const words = found.ant.map(a => a.w + (a.m ? a.m : '')).join(', ');
       parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--accent').trim() + '"> 反 ' + words + '</span>');
     }
     el.innerHTML = parts.join('　');
@@ -479,10 +479,10 @@ async function generateAndDownload(data, filename) {
   // Synonyms & Antonyms — combined, single line
   let synPart = '';
   if (data.syn && data.syn.length) {
-    synPart += '同 ' + data.syn.map(s => s.w + (s.m ? '(' + s.m + ')' : '')).join(', ');
+    synPart += '同 ' + data.syn.map(s => s.w + (s.m ? s.m : '')).join(', ');
   }
   if (data.ant && data.ant.length) {
-    synPart += (synPart ? '　' : '') + '反 ' + data.ant.map(a => a.w + (a.m ? '(' + a.m + ')' : '')).join(', ');
+    synPart += (synPart ? '　' : '') + '反 ' + data.ant.map(a => a.w + (a.m ? a.m : '')).join(', ');
   }
   if (synPart) {
     children.push(new Paragraph({
