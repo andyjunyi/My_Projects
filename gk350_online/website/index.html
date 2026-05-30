@@ -18,6 +18,7 @@
     --green: #4ade80;
     --blue: #60a5fa;
     --orange: #fb923c;
+    --yellow: #fbbf24;
     --border: #2a2a4a;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -87,59 +88,91 @@
   .preview.show { display: block; }
 
   .pv-word {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--blue);
     margin-bottom: 2px;
   }
   .pv-kk {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--orange);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
-  .pv-def {
-    font-size: 14px;
-    margin-bottom: 4px;
-    line-height: 1.5;
-    color: var(--text);
-  }
-  .pv-def + .pv-def { margin-top: 2px; }
+
   .pv-section-title {
     font-size: 12px;
     color: var(--text2);
     font-weight: 600;
-    margin: 14px 0 4px;
+    margin: 16px 0 6px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
   }
-  .pv-ex {
+
+  .pv-def {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+  .pv-pos-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-right: 4px;
+    background: rgba(96,165,250,.15);
+    color: var(--blue);
+  }
+
+  .pv-ex-card {
+    background: rgba(255,255,255,.03);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .pv-ex-en {
     font-size: 13px;
     color: var(--green);
-    margin-bottom: 1px;
+    margin-bottom: 2px;
     line-height: 1.4;
   }
   .pv-ex-zh {
     font-size: 13px;
     color: var(--text2);
     font-style: italic;
-    margin-bottom: 8px;
   }
-  .pv-syn {
+
+  .pv-syn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pv-syn-item {
     font-size: 13px;
-    color: var(--text2);
-    display: inline-block;
-    margin-right: 12px;
-    margin-bottom: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
-  .pv-syn .tag {
-    display: inline-block;
+  .pv-syn-item.syn { background: rgba(74,222,128,.1); color: var(--green); }
+  .pv-syn-item.ant { background: rgba(233,69,96,.1); color: var(--accent); }
+  .pv-syn-tag {
     font-size: 10px;
-    padding: 1px 5px;
-    border-radius: 4px;
-    margin-right: 3px;
+    font-weight: 700;
+    padding: 0 4px;
   }
-  .tag-syn { background: rgba(74,222,128,.15); color: var(--green); }
-  .tag-ant { background: rgba(233,69,96,.15); color: var(--accent); }
+
+  .pv-meta {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text2);
+    display: flex;
+    gap: 12px;
+  }
+  .pv-meta span { background: rgba(255,255,255,.05); padding: 2px 8px; border-radius: 4px; }
 
   .btn-outline {
     padding: 10px 18px;
@@ -154,25 +187,6 @@
     margin-top: 16px;
   }
   .btn-outline:hover { border-color: var(--accent); color: var(--text); }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text2);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .empty-state .big { font-size: 40px; margin-bottom: 12px; }
-
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    margin-bottom: 12px;
-  }
-  .badge-green { background: rgba(74,222,128,.15); color: var(--green); }
-  .badge-gray { background: rgba(255,255,255,.08); color: var(--text2); }
 
   .batch-area {
     width: 100%;
@@ -197,12 +211,11 @@
 
 <div class="header">
   <h1>📖 高考單字卡產生器</h1>
-  <div class="sub">gk_350 · 海詞詞典精編 · 輸入單字下載 Word 講義</div>
+  <div class="sub">gk_350 · 海詞詞典精編 · 完整資料一覽</div>
 </div>
 
 <div class="content">
 
-  <!-- Single word input -->
   <div class="input-group">
     <input type="text" id="wordInput" placeholder="輸入單字，如 adapt" autocomplete="off"
            onkeydown="if(event.key==='Enter')lookup()">
@@ -211,15 +224,26 @@
 
   <div class="match-info" id="matchInfo"></div>
 
-  <!-- Preview -->
   <div class="preview" id="preview">
+    <!-- Word -->
     <div class="pv-word" id="pvWord"></div>
     <div class="pv-kk" id="pvKk"></div>
+
+    <!-- Definitions -->
+    <div class="pv-section-title">📖 釋義</div>
     <div id="pvDefs"></div>
-    <div class="pv-section-title">📝 例句</div>
+
+    <!-- Examples -->
+    <div class="pv-section-title">💬 例句</div>
     <div id="pvExamples"></div>
+
+    <!-- Synonyms & Antonyms -->
     <div class="pv-section-title" id="pvSynTitle" style="display:none">🔗 同反義詞</div>
     <div id="pvSyns"></div>
+
+    <!-- Meta info -->
+    <div class="pv-meta" id="pvMeta" style="display:none"></div>
+
     <button class="btn-outline" onclick="downloadSingle()">⬇️ 下載 Word 講義</button>
   </div>
 
@@ -236,7 +260,6 @@
 <script>
 let WORDS = [];
 
-// Load word data
 fetch('words.json')
   .then(r => r.json())
   .then(data => { WORDS = data; })
@@ -272,61 +295,104 @@ function lookup() {
   // Word
   document.getElementById('pvWord').textContent = found.w;
 
-  // KK phonetics
-  const kk = found.k ? '美 [ ' + found.k + ' ]' : '';
-  document.getElementById('pvKk').textContent = kk;
+  // KK
+  document.getElementById('pvKk').textContent = found.k ? '美 [ ' + found.k + ' ]' : '';
 
-  // Definitions
+  // Definitions with POS badges
   const defsEl = document.getElementById('pvDefs');
   defsEl.innerHTML = '';
   if (found.d && found.d.length) {
-    const title = document.createElement('div');
-    title.className = 'pv-section-title';
-    title.textContent = '📖 釋義';
-    defsEl.appendChild(title);
     found.d.forEach(def => {
       const el = document.createElement('div');
       el.className = 'pv-def';
-      el.textContent = def;
+      if (def.p) {
+        const badge = document.createElement('span');
+        badge.className = 'pv-pos-badge';
+        badge.textContent = def.p;
+        el.appendChild(badge);
+      }
+      const txt = document.createTextNode(def.m);
+      el.appendChild(txt);
       defsEl.appendChild(el);
     });
   }
 
-  // Examples
+  // Examples with POS
   const exEl = document.getElementById('pvExamples');
   exEl.innerHTML = '';
   if (found.e && found.e.length) {
-    found.e.forEach((en, i) => {
+    found.e.forEach(ex => {
+      const card = document.createElement('div');
+      card.className = 'pv-ex-card';
+
       const enEl = document.createElement('div');
-      enEl.className = 'pv-ex';
-      enEl.textContent = en;
-      exEl.appendChild(enEl);
-      if (found.z && found.z[i]) {
+      enEl.className = 'pv-ex-en';
+      let enText = ex.e;
+      if (ex.p) {
+        enText = '(' + ex.p + ') ' + enText;
+      }
+      enEl.textContent = enText;
+      card.appendChild(enEl);
+
+      if (ex.z) {
         const zhEl = document.createElement('div');
         zhEl.className = 'pv-ex-zh';
-        zhEl.textContent = found.z[i];
-        exEl.appendChild(zhEl);
+        zhEl.textContent = ex.z;
+        card.appendChild(zhEl);
       }
+
+      exEl.appendChild(card);
     });
   }
 
-  // Synonyms
+  // Synonyms & Antonyms
   const synEl = document.getElementById('pvSyns');
   const synTitle = document.getElementById('pvSynTitle');
   synEl.innerHTML = '';
-  if (found.s && found.s.length) {
+  const hasSyn = found.syn && found.syn.length;
+  const hasAnt = found.ant && found.ant.length;
+
+  if (hasSyn || hasAnt) {
     synTitle.style.display = 'block';
-    found.s.forEach(s => {
-      const el = document.createElement('span');
-      el.className = 'pv-syn';
-      const tag = s.type === '反' ? '反' : '同';
-      const tagClass = s.type === '反' ? 'tag-ant' : 'tag-syn';
-      el.innerHTML = '<span class="tag ' + tagClass + '">' + tag + '</span>'
-                   + s.w + (s.m ? ' · ' + s.m : '');
-      synEl.appendChild(el);
-    });
+    const group = document.createElement('div');
+    group.className = 'pv-syn-group';
+
+    if (hasSyn) {
+      found.syn.forEach(s => {
+        const item = document.createElement('span');
+        item.className = 'pv-syn-item syn';
+        item.innerHTML = '<span class="pv-syn-tag">同</span> ' + s.w + (s.m ? ' · ' + s.m : '');
+        group.appendChild(item);
+      });
+    }
+    if (hasAnt) {
+      found.ant.forEach(a => {
+        const item = document.createElement('span');
+        item.className = 'pv-syn-item ant';
+        item.innerHTML = '<span class="pv-syn-tag">反</span> ' + a.w + (a.m ? ' · ' + a.m : '');
+        group.appendChild(item);
+      });
+    }
+    synEl.appendChild(group);
   } else {
     synTitle.style.display = 'none';
+  }
+
+  // Meta info
+  const metaEl = document.getElementById('pvMeta');
+  metaEl.innerHTML = '';
+  if (found.src || found.tag) {
+    metaEl.style.display = 'flex';
+    if (found.src) {
+      const s = document.createElement('span');
+      s.textContent = '📡 ' + found.src;
+      metaEl.appendChild(s);
+    }
+    if (found.tag) {
+      const t = document.createElement('span');
+      t.textContent = '🏷️ ' + found.tag;
+      metaEl.appendChild(t);
+    }
   }
 }
 
@@ -345,16 +411,12 @@ async function downloadBatch() {
   const btn = document.getElementById('batchBtn');
   btn.disabled = true;
   btn.textContent = '⏳ 產生中...';
-
   const info = document.getElementById('batchInfo');
   let success = 0, errors = [];
 
   for (const word of words) {
     const found = findWord(word);
-    if (!found) {
-      errors.push(word);
-      continue;
-    }
+    if (!found) { errors.push(word); continue; }
     await generateAndDownload(found, found.w + '.docx');
     success++;
   }
@@ -366,7 +428,7 @@ async function downloadBatch() {
     : '✅ 已下載 ' + success + ' 個檔案';
 }
 
-// Colors for Word template
+// Colors
 const BLUE = '215E99';
 const ORANGE = 'BF4E14';
 const GREEN = '4EA72E';
@@ -374,75 +436,84 @@ const GRAY = '666666';
 
 async function generateAndDownload(data, filename) {
   const { Document, Packer, Paragraph, TextRun } = window.docx;
-
   const children = [];
 
-  // === Line 1: Word + KK + Definitions ===
-  const line1 = [new TextRun({ text: data.w, bold: true, size: 40, font: { name: 'Arial Unicode MS' }, color: BLUE })];
-
+  // Line 1: Word + KK + first definition
+  const line1 = [];
+  line1.push(new TextRun({ text: data.w, bold: true, size: 40, font: { name: 'Arial Unicode MS' }, color: BLUE }));
   if (data.k) {
     line1.push(new TextRun({ text: '  [', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
     line1.push(new TextRun({ text: data.k, size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
     line1.push(new TextRun({ text: ']', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
   }
-
-  // Add first definition inline if exists
-  if (data.d && data.d.length) {
+  if (data.d && data.d[0]) {
     line1.push(new TextRun({ text: '  ', size: 28, font: { name: 'Arial Unicode MS' } }));
-    line1.push(new TextRun({ text: data.d[0], size: 28, font: { name: 'Arial Unicode MS' } }));
+    line1.push(new TextRun({ text: data.d[0].m, size: 28, font: { name: 'Arial Unicode MS' } }));
   }
+  children.push(new Paragraph({ spacing: { after: 0 }, children: line1 }));
 
-  children.push(new Paragraph({
-    spacing: { after: 0 },
-    children: line1
-  }));
-
-  // Extra definitions on separate lines
+  // Extra definitions
   if (data.d && data.d.length > 1) {
     for (let i = 1; i < data.d.length; i++) {
+      const def = data.d[i];
       children.push(new Paragraph({
-        spacing: { before: 20, after: 0 },
-        children: [new TextRun({ text: data.d[i], size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY })]
+        spacing: { before: 30, after: 0 },
+        children: [
+          new TextRun({ text: '(' + def.p + ') ', size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY, bold: true }),
+          new TextRun({ text: def.m, size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY })
+        ]
       }));
     }
   }
 
-  // === Examples ===
+  // All examples
   if (data.e && data.e.length) {
-    for (let i = 0; i < data.e.length; i++) {
+    data.e.forEach((ex, i) => {
+      const enText = ex.p ? '(' + ex.p + ') ' + ex.e : ex.e;
       children.push(new Paragraph({
-        spacing: { before: 120 },
-        children: [new TextRun({ text: data.e[i], size: 28, font: { name: 'Arial Unicode MS' } })]
+        spacing: { before: i === 0 ? 160 : 100 },
+        children: [new TextRun({ text: enText, size: 28, font: { name: 'Arial Unicode MS' } })]
       }));
-      if (data.z && data.z[i]) {
+      if (ex.z) {
         children.push(new Paragraph({
-          spacing: { after: 80 },
-          children: [new TextRun({ text: data.z[i], size: 26, font: { name: 'Arial Unicode MS' }, color: GREEN })]
+          spacing: { after: 0 },
+          children: [new TextRun({ text: ex.z, size: 26, font: { name: 'Arial Unicode MS' }, color: GREEN })]
         }));
       }
-    }
+    });
   }
 
-  // === Synonyms & Antonyms ===
-  if (data.s && data.s.length) {
-    let parts = [];
-    data.s.forEach(s => {
-      const label = s.type === '反' ? '反' : '同';
-      parts.push(label + ' ' + s.w + (s.m ? ' · ' + s.m : ''));
-    });
+  // Synonyms
+  if (data.syn && data.syn.length) {
+    let parts = data.syn.map(s => '同 ' + s.w + (s.m ? ' · ' + s.m : ''));
     children.push(new Paragraph({
       spacing: { before: 160 },
       children: [
-        new TextRun({ text: '【同反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+        new TextRun({ text: '【同義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
         new TextRun({ text: '   ' + parts.join('  |  '), size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
       ]
     }));
   }
 
-  const doc = new Document({
-    sections: [{ properties: {}, children }]
-  });
+  // Antonyms
+  if (data.ant && data.ant.length) {
+    let parts = data.ant.map(a => '反 ' + a.w + (a.m ? ' · ' + a.m : ''));
+    children.push(new Paragraph({
+      spacing: { before: 60 },
+      children: [
+        new TextRun({ text: '【反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+        new TextRun({ text: '   ' + parts.join('  |  '), size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
+      ]
+    }));
+  }
 
+  // Source info
+  children.push(new Paragraph({
+    spacing: { before: 200 },
+    children: [new TextRun({ text: '資料來源：' + (data.src || '海詞 dict.cn'), size: 18, font: { name: 'Arial Unicode MS' }, color: '999999', italics: true })]
+  }));
+
+  const doc = new Document({ sections: [{ properties: {}, children }] });
   const blob = await Packer.toBlob(doc);
   saveAs(blob, filename);
 }
