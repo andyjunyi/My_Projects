@@ -345,7 +345,7 @@ function lookup() {
     });
   }
 
-  // Synonyms & Antonyms
+  // Synonyms & Antonyms — one line, comma separated
   const synEl = document.getElementById('pvSyns');
   const synTitle = document.getElementById('pvSynTitle');
   synEl.innerHTML = '';
@@ -354,26 +354,19 @@ function lookup() {
 
   if (hasSyn || hasAnt) {
     synTitle.style.display = 'block';
-    const group = document.createElement('div');
-    group.className = 'pv-syn-group';
-
+    const el = document.createElement('div');
+    el.style.cssText = 'font-size:13px;line-height:1.7';
+    const parts = [];
     if (hasSyn) {
-      found.syn.forEach(s => {
-        const item = document.createElement('span');
-        item.className = 'pv-syn-item syn';
-        item.innerHTML = '<span class="pv-syn-tag">同</span> ' + s.w + (s.m ? ' · ' + s.m : '');
-        group.appendChild(item);
-      });
+      const words = found.syn.map(s => s.w).join(', ');
+      parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--green').trim() + '">同 ' + words + '</span>');
     }
     if (hasAnt) {
-      found.ant.forEach(a => {
-        const item = document.createElement('span');
-        item.className = 'pv-syn-item ant';
-        item.innerHTML = '<span class="pv-syn-tag">反</span> ' + a.w + (a.m ? ' · ' + a.m : '');
-        group.appendChild(item);
-      });
+      const words = found.ant.map(a => a.w).join(', ');
+      parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--accent').trim() + '"> 反 ' + words + '</span>');
     }
-    synEl.appendChild(group);
+    el.innerHTML = parts.join('　');
+    synEl.appendChild(el);
   } else {
     synTitle.style.display = 'none';
   }
@@ -483,26 +476,20 @@ async function generateAndDownload(data, filename) {
     });
   }
 
-  // Synonyms
+  // Synonyms & Antonyms — combined, single line
+  let synPart = '';
   if (data.syn && data.syn.length) {
-    let parts = data.syn.map(s => '同 ' + s.w + (s.m ? ' · ' + s.m : ''));
+    synPart += '同 ' + data.syn.map(s => s.w).join(', ');
+  }
+  if (data.ant && data.ant.length) {
+    synPart += (synPart ? '　' : '') + '反 ' + data.ant.map(a => a.w).join(', ');
+  }
+  if (synPart) {
     children.push(new Paragraph({
       spacing: { before: 160 },
       children: [
-        new TextRun({ text: '【同義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
-        new TextRun({ text: '   ' + parts.join('  |  '), size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
-      ]
-    }));
-  }
-
-  // Antonyms
-  if (data.ant && data.ant.length) {
-    let parts = data.ant.map(a => '反 ' + a.w + (a.m ? ' · ' + a.m : ''));
-    children.push(new Paragraph({
-      spacing: { before: 60 },
-      children: [
-        new TextRun({ text: '【反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
-        new TextRun({ text: '   ' + parts.join('  |  '), size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
+        new TextRun({ text: '【同反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+        new TextRun({ text: '  ' + synPart, size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
       ]
     }));
   }
