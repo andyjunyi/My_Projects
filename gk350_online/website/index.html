@@ -16,6 +16,8 @@
     --text: #eee;
     --text2: #aaa;
     --green: #4ade80;
+    --blue: #60a5fa;
+    --orange: #fb923c;
     --border: #2a2a4a;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -83,32 +85,94 @@
     display: none;
   }
   .preview.show { display: block; }
-  .preview-word {
-    font-size: 20px;
+
+  .pv-word {
+    font-size: 22px;
     font-weight: 700;
-    color: #60a5fa;
-    margin-bottom: 4px;
-  }
-  .preview-kk {
-    font-size: 14px;
-    color: var(--text2);
-    margin-bottom: 8px;
-  }
-  .preview-def {
-    font-size: 15px;
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  .preview-example {
-    font-size: 14px;
-    color: var(--green);
+    color: var(--blue);
     margin-bottom: 2px;
   }
-  .preview-example-zh {
+  .pv-kk {
     font-size: 14px;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .pv-def {
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .pv-def + .pv-def { margin-top: 2px; }
+  .pv-section-title {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 600;
+    margin: 14px 0 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .pv-ex {
+    font-size: 13px;
+    color: var(--green);
+    margin-bottom: 1px;
+    line-height: 1.4;
+  }
+  .pv-ex-zh {
+    font-size: 13px;
     color: var(--text2);
     font-style: italic;
+    margin-bottom: 8px;
   }
+  .pv-syn {
+    font-size: 13px;
+    color: var(--text2);
+    display: inline-block;
+    margin-right: 12px;
+    margin-bottom: 4px;
+  }
+  .pv-syn .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin-right: 3px;
+  }
+  .tag-syn { background: rgba(74,222,128,.15); color: var(--green); }
+  .tag-ant { background: rgba(233,69,96,.15); color: var(--accent); }
+
+  .btn-outline {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--text); }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .empty-state .big { font-size: 40px; margin-bottom: 12px; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .badge-green { background: rgba(74,222,128,.15); color: var(--green); }
+  .badge-gray { background: rgba(255,255,255,.08); color: var(--text2); }
 
   .batch-area {
     width: 100%;
@@ -126,45 +190,14 @@
   }
   .batch-area:focus { border-color: var(--accent); }
 
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    margin-bottom: 12px;
-  }
-  .badge-green { background: rgba(74,222,128,.15); color: var(--green); }
-  .badge-gray { background: rgba(255,255,255,.08); color: var(--text2); }
-
-  .btn-outline {
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text2);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all .2s;
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--text); }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text2);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .empty-state .big { font-size: 40px; margin-bottom: 12px; }
+  details summary { cursor:pointer; color:var(--text2); font-size:13px; padding:4px 0; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>📖 高考單字卡產生器</h1>
-  <div class="sub">gk_350 · 輸入單字下載 Word 講義</div>
+  <div class="sub">gk_350 · 海詞詞典精編 · 輸入單字下載 Word 講義</div>
 </div>
 
 <div class="content">
@@ -173,28 +206,28 @@
   <div class="input-group">
     <input type="text" id="wordInput" placeholder="輸入單字，如 adapt" autocomplete="off"
            onkeydown="if(event.key==='Enter')lookup()">
-    <button id="searchBtn" onclick="lookup()">🔍 查詢</button>
+    <button onclick="lookup()">🔍 查詢</button>
   </div>
 
   <div class="match-info" id="matchInfo"></div>
 
   <!-- Preview -->
   <div class="preview" id="preview">
-    <div class="preview-word" id="pvWord"></div>
-    <div class="preview-kk" id="pvKk"></div>
-    <div class="preview-def" id="pvDef"></div>
-    <div class="preview-example" id="pvEx"></div>
-    <div class="preview-example-zh" id="pvExZh"></div>
-    <div style="margin-top:14px">
-      <button class="btn-outline" onclick="downloadSingle()">⬇️ 下載 Word 講義</button>
-    </div>
+    <div class="pv-word" id="pvWord"></div>
+    <div class="pv-kk" id="pvKk"></div>
+    <div id="pvDefs"></div>
+    <div class="pv-section-title">📝 例句</div>
+    <div id="pvExamples"></div>
+    <div class="pv-section-title" id="pvSynTitle" style="display:none">🔗 同反義詞</div>
+    <div id="pvSyns"></div>
+    <button class="btn-outline" onclick="downloadSingle()">⬇️ 下載 Word 講義</button>
   </div>
 
   <!-- Batch mode -->
   <details style="margin-bottom:16px">
-    <summary style="cursor:pointer;color:var(--text2);font-size:13px;padding:4px 0">📋 批次產生（每行一個單字）</summary>
+    <summary>📋 批次產生（每行一個單字）</summary>
     <textarea class="batch-area" id="batchInput" placeholder="adapt&#10;adopt&#10;affect&#10;..."></textarea>
-    <button class="btn-outline" onclick="downloadBatch()" id="batchBtn">⬇️ 批次下載全部 Word 講義</button>
+    <button class="btn-outline" onclick="downloadBatch()" id="batchBtn" style="margin-top:0">⬇️ 批次下載全部 Word 講義</button>
     <div class="match-info" id="batchInfo"></div>
   </details>
 
@@ -229,24 +262,79 @@ function lookup() {
   const found = findWord(q);
   if (!found) {
     preview.classList.remove('show');
-    info.textContent = `❌ 找不到「${q}」`;
+    info.textContent = '❌ 找不到「' + q + '」';
     return;
   }
 
   preview.classList.add('show');
   info.textContent = '';
+
+  // Word
   document.getElementById('pvWord').textContent = found.w;
-  document.getElementById('pvKk').textContent = `[${found.k}]`;
-  document.getElementById('pvDef').textContent = found.d;
-  document.getElementById('pvEx').textContent = found.e;
-  document.getElementById('pvExZh').textContent = found.z;
+
+  // KK phonetics
+  const kk = found.k ? '美 [ ' + found.k + ' ]' : '';
+  document.getElementById('pvKk').textContent = kk;
+
+  // Definitions
+  const defsEl = document.getElementById('pvDefs');
+  defsEl.innerHTML = '';
+  if (found.d && found.d.length) {
+    const title = document.createElement('div');
+    title.className = 'pv-section-title';
+    title.textContent = '📖 釋義';
+    defsEl.appendChild(title);
+    found.d.forEach(def => {
+      const el = document.createElement('div');
+      el.className = 'pv-def';
+      el.textContent = def;
+      defsEl.appendChild(el);
+    });
+  }
+
+  // Examples
+  const exEl = document.getElementById('pvExamples');
+  exEl.innerHTML = '';
+  if (found.e && found.e.length) {
+    found.e.forEach((en, i) => {
+      const enEl = document.createElement('div');
+      enEl.className = 'pv-ex';
+      enEl.textContent = en;
+      exEl.appendChild(enEl);
+      if (found.z && found.z[i]) {
+        const zhEl = document.createElement('div');
+        zhEl.className = 'pv-ex-zh';
+        zhEl.textContent = found.z[i];
+        exEl.appendChild(zhEl);
+      }
+    });
+  }
+
+  // Synonyms
+  const synEl = document.getElementById('pvSyns');
+  const synTitle = document.getElementById('pvSynTitle');
+  synEl.innerHTML = '';
+  if (found.s && found.s.length) {
+    synTitle.style.display = 'block';
+    found.s.forEach(s => {
+      const el = document.createElement('span');
+      el.className = 'pv-syn';
+      const tag = s.type === '反' ? '反' : '同';
+      const tagClass = s.type === '反' ? 'tag-ant' : 'tag-syn';
+      el.innerHTML = '<span class="tag ' + tagClass + '">' + tag + '</span>'
+                   + s.w + (s.m ? ' · ' + s.m : '');
+      synEl.appendChild(el);
+    });
+  } else {
+    synTitle.style.display = 'none';
+  }
 }
 
 async function downloadSingle() {
   const input = document.getElementById('wordInput');
   const found = findWord(input.value);
   if (!found) return;
-  await generateAndDownload(found, `${found.w}.docx`);
+  await generateAndDownload(found, found.w + '.docx');
 }
 
 async function downloadBatch() {
@@ -267,96 +355,92 @@ async function downloadBatch() {
       errors.push(word);
       continue;
     }
-    await generateAndDownload(found, `${found.w}.docx`);
+    await generateAndDownload(found, found.w + '.docx');
     success++;
   }
 
   btn.disabled = false;
   btn.textContent = '⬇️ 批次下載全部 Word 講義';
   info.textContent = errors.length
-    ? `✅ 成功 ${success} 個，找不到：${errors.join(', ')}`
-    : `✅ 已下載 ${success} 個檔案`;
+    ? '✅ 成功 ' + success + ' 個，找不到：' + errors.join(', ')
+    : '✅ 已下載 ' + success + ' 個檔案';
 }
 
-async function generateAndDownload(data, filename) {
-  const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel } = window.docx;
+// Colors for Word template
+const BLUE = '215E99';
+const ORANGE = 'BF4E14';
+const GREEN = '4EA72E';
+const GRAY = '666666';
 
-  const BLUE = '215E99';
-  const ORANGE = 'BF4E14';
-  const GREEN = '4EA72E';
+async function generateAndDownload(data, filename) {
+  const { Document, Packer, Paragraph, TextRun } = window.docx;
+
+  const children = [];
+
+  // === Line 1: Word + KK + Definitions ===
+  const line1 = [new TextRun({ text: data.w, bold: true, size: 40, font: { name: 'Arial Unicode MS' }, color: BLUE })];
+
+  if (data.k) {
+    line1.push(new TextRun({ text: '  [', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
+    line1.push(new TextRun({ text: data.k, size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
+    line1.push(new TextRun({ text: ']', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
+  }
+
+  // Add first definition inline if exists
+  if (data.d && data.d.length) {
+    line1.push(new TextRun({ text: '  ', size: 28, font: { name: 'Arial Unicode MS' } }));
+    line1.push(new TextRun({ text: data.d[0], size: 28, font: { name: 'Arial Unicode MS' } }));
+  }
+
+  children.push(new Paragraph({
+    spacing: { after: 0 },
+    children: line1
+  }));
+
+  // Extra definitions on separate lines
+  if (data.d && data.d.length > 1) {
+    for (let i = 1; i < data.d.length; i++) {
+      children.push(new Paragraph({
+        spacing: { before: 20, after: 0 },
+        children: [new TextRun({ text: data.d[i], size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY })]
+      }));
+    }
+  }
+
+  // === Examples ===
+  if (data.e && data.e.length) {
+    for (let i = 0; i < data.e.length; i++) {
+      children.push(new Paragraph({
+        spacing: { before: 120 },
+        children: [new TextRun({ text: data.e[i], size: 28, font: { name: 'Arial Unicode MS' } })]
+      }));
+      if (data.z && data.z[i]) {
+        children.push(new Paragraph({
+          spacing: { after: 80 },
+          children: [new TextRun({ text: data.z[i], size: 26, font: { name: 'Arial Unicode MS' }, color: GREEN })]
+        }));
+      }
+    }
+  }
+
+  // === Synonyms & Antonyms ===
+  if (data.s && data.s.length) {
+    let parts = [];
+    data.s.forEach(s => {
+      const label = s.type === '反' ? '反' : '同';
+      parts.push(label + ' ' + s.w + (s.m ? ' · ' + s.m : ''));
+    });
+    children.push(new Paragraph({
+      spacing: { before: 160 },
+      children: [
+        new TextRun({ text: '【同反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+        new TextRun({ text: '   ' + parts.join('  |  '), size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
+      ]
+    }));
+  }
 
   const doc = new Document({
-    sections: [{
-      properties: {},
-      children: [
-        new Paragraph({
-          spacing: { after: 0 },
-          children: [
-            new TextRun({
-              text: data.w,
-              bold: true,
-              size: 40,
-              font: { name: 'Arial Unicode MS' },
-              color: BLUE,
-            }),
-            new TextRun({
-              text: ' ',
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-            }),
-            new TextRun({
-              text: '[',
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-              color: ORANGE,
-            }),
-            new TextRun({
-              text: data.k,
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-              color: ORANGE,
-            }),
-            new TextRun({
-              text: ']',
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-              color: ORANGE,
-            }),
-            new TextRun({
-              text: ' ',
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-            }),
-            new TextRun({
-              text: data.d,
-              size: 28,
-              font: { name: 'Arial Unicode MS' },
-            }),
-          ],
-        }),
-        new Paragraph({
-          spacing: { before: 160 },
-          children: [
-            new TextRun({
-              text: data.e,
-              size: 32,
-              font: { name: 'Arial Unicode MS' },
-            }),
-          ],
-        }),
-        new Paragraph({
-          spacing: { after: 160 },
-          children: [
-            new TextRun({
-              text: data.z,
-              size: 28,
-              font: { name: 'Arial Unicode MS' },
-              color: GREEN,
-            }),
-          ],
-        }),
-      ],
-    }],
+    sections: [{ properties: {}, children }]
   });
 
   const blob = await Packer.toBlob(doc);
