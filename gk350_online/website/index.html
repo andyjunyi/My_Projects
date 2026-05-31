@@ -211,7 +211,6 @@
 
 <div class="header">
   <h1>📖 高考單字卡產生器</h1>
-  <div class="sub">gk_350 · 海詞詞典精編 · 完整資料一覽</div>
 </div>
 
 <div class="content">
@@ -321,6 +320,7 @@ function lookup() {
 
   preview.classList.add('show');
   info.textContent = '';
+  input.value = '';
 
   // Word
   document.getElementById('pvWord').textContent = found.w;
@@ -359,7 +359,7 @@ function lookup() {
       enEl.className = 'pv-ex-en';
       let enText = ex.e;
       if (ex.p) {
-        enText = '(' + ex.p + ') ' + enText;
+        enText = enText + ' (' + ex.p + ')';
       }
       enEl.textContent = enText;
       card.appendChild(enEl);
@@ -492,7 +492,7 @@ async function generateAndDownload(data, filename) {
   // All examples
   if (data.e && data.e.length) {
     data.e.forEach((ex, i) => {
-      const enText = ex.p ? '(' + ex.p + ') ' + ex.e : ex.e;
+      const enText = ex.p ? ex.e + ' (' + ex.p + ')' : ex.e;
       children.push(new Paragraph({
         spacing: { before: i === 0 ? 160 : 100 },
         children: [new TextRun({ text: enText, size: 28, font: { name: 'Arial Unicode MS' } })]
