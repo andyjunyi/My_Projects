@@ -520,14 +520,14 @@ async function generateAndDownload(data, filename) {
       const enText = ex.p ? ex.e + ' (' + ex.p + ')' : ex.e;
       // English sentence
       children.push(new Paragraph({
-        spacing: { before: 120, line: 360 },
+        spacing: { before: 120, line: 180 },
         indent: { left: 540, hanging: 340 },
-        children: [new TextRun({ text: enText, size: 28, font: 'Arial Unicode MS' })]
+        children: [new TextRun({ text: '• ' + enText, size: 28, font: 'Arial Unicode MS' })]
       }));
       // Chinese translation
       if (ex.z) {
         children.push(new Paragraph({
-          spacing: { after: 0, line: 360 },
+          spacing: { after: 0, line: 180 },
           indent: { left: 520 },
           children: [new TextRun({ text: ex.z, size: 26, font: 'Arial Unicode MS', color: GREEN })]
         }));
@@ -548,7 +548,7 @@ async function generateAndDownload(data, filename) {
         spacing: { before: 40, after: 0 },
         indent: { left: 567, hanging: 340 },
         children: [
-          new TextRun({ text: c.phrase, size: 28, font: 'Arial Unicode MS', color: ORANGE }),
+          new TextRun({ text: '• ' + c.phrase, size: 28, font: 'Arial Unicode MS', color: ORANGE }),
           new TextRun({ text: '  → ' + c.zh, size: 28, font: 'Arial Unicode MS', color: GRAY })
         ]
       }));
