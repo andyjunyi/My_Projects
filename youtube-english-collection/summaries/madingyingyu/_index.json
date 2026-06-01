@@ -1,9 +1,39 @@
 {
   "channel": "馬丁英語 English with Martin",
   "channel_url": "https://www.youtube.com/@MaDingYingYu",
-  "total_videos": 216,
-  "last_updated": "2026-05-24T21:44:46+08:00",
+  "total_videos": 218,
+  "last_updated": "2026-06-02T06:00:00+08:00",
   "videos": [
+    {
+      "video_id": "ICPS-Lrzwc8",
+      "title": "「最近」別再只說 recently！很多人都用錯了",
+      "published": "2026-06-01",
+      "difficulty": "★☆☆ 初級",
+      "category": "常見錯誤糾正",
+      "tags": [
+        "用法辨析",
+        "時間表達",
+        "常見錯誤",
+        "初級"
+      ],
+      "url": "https://www.youtube.com/watch?v=ICPS-Lrzwc8",
+      "file": "2026-06-01_「最近」別再只說 recently！很多人都用錯了.json"
+    },
+    {
+      "video_id": "OwFtAf8e5ng",
+      "title": "「摸魚」英文怎麼說？比 lazy 更自然的4種說法",
+      "published": "2026-05-25",
+      "difficulty": "★☆☆ 初級",
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "常用表達",
+        "職場英文",
+        "初級"
+      ],
+      "url": "https://www.youtube.com/watch?v=OwFtAf8e5ng",
+      "file": "2026-05-25_「摸魚」英文怎麼說？比 lazy 更自然的4種說法.json"
+    },
     {
       "video_id": "a0VDR8EA-R8",
       "title": "「你怎麼了？」別再只會說 What's wrong with you?",

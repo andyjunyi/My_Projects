@@ -1,6 +1,127 @@
 {
   "samples": [
     {
+      "video_id": "ICPS-Lrzwc8",
+      "channel": "馬丁英語 English with Martin",
+      "channel_url": "https://www.youtube.com/@MaDingYingYu",
+      "title": "「最近」別再只說 recently！很多人都用錯了",
+      "title_original": "「最近」别再只說 recently！很多人都用錯了",
+      "published": "2026-06-01",
+      "url": "https://www.youtube.com/watch?v=ICPS-Lrzwc8",
+      "duration_sec": 95,
+      "views": 2123,
+      "likes": 224,
+      "comments": 11,
+      "category": "常見錯誤糾正",
+      "tags": [
+        "用法辨析",
+        "時間表達",
+        "常見錯誤",
+        "初級"
+      ],
+      "difficulty": "★☆☆ 初級",
+      "summary_zh": "這部影片糾正了中文學習者常見的翻譯錯誤：看到「最近」就直譯成 \"recently\"。馬丁老師指出，中文的「最近」可以指過去（最近發生的事）也可以指將來（最近即將發生的事），而英語中這兩種情況需要用不同的詞表達。過去要用 \"recently\" / \"lately\"，將來則要用 \"soon\" / \"in the near future\" / \"coming up\" 等。",
+      "key_points": [
+        "中文「最近」有兩種時態：指過去 vs 指將來，英語不能用同一種表達",
+        "表達過去「最近」：recently / lately / these days（用來描述近期發生的事）",
+        "表達將來「最近」：soon / in the near future / coming up（用來描述即將發生的事）",
+        "lately 通常帶有「一直以來的趨勢」含義，recently 則更中性",
+        "學會有時態意識，比死記單字更重要"
+      ],
+      "vocabulary": [
+        {
+          "word": "recently",
+          "part_of_speech": "adv",
+          "meaning": "最近（指過去）",
+          "example": "I saw her recently.",
+          "example_zh": "我最近見過她。"
+        },
+        {
+          "word": "lately",
+          "part_of_speech": "adv",
+          "meaning": "近來（強調延續一段時間）",
+          "example": "I haven't been sleeping well lately.",
+          "example_zh": "我近來睡眠不太好。"
+        },
+        {
+          "word": "soon",
+          "part_of_speech": "adv",
+          "meaning": "不久、很快（指將來）",
+          "example": "I'll be graduating soon.",
+          "example_zh": "我快要畢業了。"
+        },
+        {
+          "word": "in the near future",
+          "part_of_speech": "phrase",
+          "meaning": "在不久的將來",
+          "example": "We plan to launch a new product in the near future.",
+          "example_zh": "我們計劃在不久的將來推出新產品。"
+        },
+        {
+          "word": "coming up",
+          "part_of_speech": "phrase",
+          "meaning": "即將到來",
+          "example": "There's a big exam coming up.",
+          "example_zh": "有一場大考即將到來。"
+        },
+        {
+          "word": "these days",
+          "part_of_speech": "phrase",
+          "meaning": "現在、這段時間",
+          "example": "Everyone is busy these days.",
+          "example_zh": "大家這段時間都很忙。"
+        }
+      ],
+      "example_sentences": [
+        {
+          "en": "I started learning Python recently.",
+          "zh": "我最近開始學 Python。"
+        },
+        {
+          "en": "She has been really stressed out lately.",
+          "zh": "她最近壓力很大。"
+        },
+        {
+          "en": "The new movie is coming out soon.",
+          "zh": "那部新電影最近就要上映了。"
+        },
+        {
+          "en": "We're moving to a new office in the near future.",
+          "zh": "我們最近要搬去新的辦公室。"
+        },
+        {
+          "en": "What have you been up to these days?",
+          "zh": "你最近在忙什麼？"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "wrong": "I will have a meeting recently.",
+          "correct": "I will have a meeting soon.",
+          "note": "recently 只能用在過去或完成式，不能用來描述未來的事"
+        },
+        {
+          "wrong": "Recently, I will graduate.",
+          "correct": "I will graduate soon.",
+          "note": "中文的「最近」在指未來時，英文要用 soon 而非 recently"
+        },
+        {
+          "wrong": "I am recently very busy.",
+          "correct": "I've been very busy lately / recently.",
+          "note": "描述近期狀態，英文習慣用現在完成式"
+        }
+      ],
+      "teaching_tip": "建議先讓學生意識到中文「最近」的歧義（過去 vs 將來），再分別給出對應的英文表達。可以用時間軸圖示：左邊是 recently/lately（過去到現在），右邊是 soon/in the near future（現在到未來）。最後用「我最近見到他」vs「我最近要考試」做對比練習。",
+      "student_tip": "看到「最近」先問自己：這句話說的是過去的事還是將來的事？過去用 recently/lately，將來用 soon/coming up/in the near future。千萬不要一律翻成 recently！",
+      "related_topics": [
+        "時間副詞",
+        "現在完成式",
+        "未來式表達",
+        "常見翻譯錯誤"
+      ],
+      "collected_at": "2026-06-02T06:00:00+08:00"
+    },
+    {
       "video_id": "OwFtAf8e5ng",
       "channel": "馬丁英語 English with Martin",
       "channel_url": "https://www.youtube.com/channel/UCgkssuoDKp18TmcriHQuLdA",
