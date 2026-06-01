@@ -411,11 +411,11 @@ function lookup() {
     const parts = [];
     if (hasSyn) {
       const words = found.syn.map(s => s.w + (s.m ? ' ' + s.m : '')).join(', ');
-      parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--green').trim() + '">(同) ' + words + '</span>');
+      parts.push('<span style="color:var(--accent)">(同) ' + words + '</span>');
     }
     if (hasAnt) {
       const words = found.ant.map(a => a.w + (a.m ? ' ' + a.m : '')).join(', ');
-      parts.push('<span style="color:' + getComputedStyle(document.body).getPropertyValue('--accent').trim() + '"> (反) ' + words + '</span>');
+      parts.push('<span style="color:var(--green)"> (反) ' + words + '</span>');
     }
     el.innerHTML = parts.join('　');
     synEl.appendChild(el);
@@ -570,7 +570,7 @@ async function generateAndDownload(data, filename) {
         indent: { left: 600 },
         children: [
           new TextRun({ text: '(同)', size: 28, font: 'Arial Unicode MS', bold: true, color: 'FF0000' }),
-          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: GRAY })
+          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: 'FF0000' })
         ]
       }));
     }
@@ -581,7 +581,7 @@ async function generateAndDownload(data, filename) {
         indent: { left: 600 },
         children: [
           new TextRun({ text: '(反)', size: 28, font: 'Arial Unicode MS', bold: true, color: '3A7C22' }),
-          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: GRAY })
+          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: '3A7C22' })
         ]
       }));
     }
