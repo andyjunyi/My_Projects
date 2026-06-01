@@ -485,92 +485,112 @@ async function generateAndDownload(data, filename) {
   const { Document, Packer, Paragraph, TextRun } = window.docx;
   const children = [];
 
-  // Line 1: Word + KK + first definition
+  // Line 1: Word + KK + POS badge + first definition
   const line1 = [];
-  line1.push(new TextRun({ text: data.w, bold: true, size: 40, font: { name: 'Arial Unicode MS' }, color: BLUE }));
+  line1.push(new TextRun({ text: data.w, bold: true, size: 40, font: 'Arial Unicode MS', color: BLUE }));
   if (data.k) {
-    line1.push(new TextRun({ text: '  [', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
-    line1.push(new TextRun({ text: data.k, size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
-    line1.push(new TextRun({ text: ']', size: 32, font: { name: 'Arial Unicode MS' }, color: ORANGE }));
+    line1.push(new TextRun({ text: '  [' + data.k + ']', size: 32, font: 'Arial Unicode MS', color: ORANGE }));
   }
   if (data.d && data.d[0]) {
-    line1.push(new TextRun({ text: '  ', size: 28, font: { name: 'Arial Unicode MS' } }));
-    line1.push(new TextRun({ text: data.d[0].m, size: 28, font: { name: 'Arial Unicode MS' } }));
+    line1.push(new TextRun({ text: '  ', size: 28, font: 'Arial Unicode MS' }));
+    if (data.d[0].p) {
+      line1.push(new TextRun({ text: '(' + data.d[0].p + ')', size: 26, font: 'Arial Unicode MS', color: GRAY, bold: true }));
+    }
+    line1.push(new TextRun({ text: '  ' + data.d[0].m, size: 28, font: 'Arial Unicode MS' }));
   }
   children.push(new Paragraph({ spacing: { after: 0 }, children: line1 }));
 
-  // Extra definitions
+  // Extra definitions (d[1+]) — separate lines
   if (data.d && data.d.length > 1) {
     for (let i = 1; i < data.d.length; i++) {
       const def = data.d[i];
       children.push(new Paragraph({
         spacing: { before: 30, after: 0 },
         children: [
-          new TextRun({ text: '(' + def.p + ') ', size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY, bold: true }),
-          new TextRun({ text: def.m, size: 26, font: { name: 'Arial Unicode MS' }, color: GRAY })
+          new TextRun({ text: '(' + def.p + ') ', size: 26, font: 'Arial Unicode MS', color: GRAY, bold: true }),
+          new TextRun({ text: def.m, size: 26, font: 'Arial Unicode MS', color: GRAY })
         ]
       }));
     }
   }
 
-  // All examples
+  // All examples — template-style numbered pairs
   if (data.e && data.e.length) {
     data.e.forEach((ex, i) => {
       const enText = ex.p ? ex.e + ' (' + ex.p + ')' : ex.e;
+      // English sentence
       children.push(new Paragraph({
-        spacing: { before: i === 0 ? 160 : 100 },
-        children: [new TextRun({ text: enText, size: 28, font: { name: 'Arial Unicode MS' } })]
+        spacing: { before: 120, line: 360 },
+        indent: { left: 540, hanging: 340 },
+        children: [new TextRun({ text: enText, size: 28, font: 'Arial Unicode MS' })]
       }));
+      // Chinese translation
       if (ex.z) {
         children.push(new Paragraph({
-          spacing: { after: 0 },
-          children: [new TextRun({ text: ex.z, size: 26, font: { name: 'Arial Unicode MS' }, color: GREEN })]
+          spacing: { after: 0, line: 360 },
+          indent: { left: 520 },
+          children: [new TextRun({ text: ex.z, size: 26, font: 'Arial Unicode MS', color: GREEN })]
         }));
       }
     });
   }
 
-  // Collocations — only if data exists
+  // Collocations — template-style with indent
   if (data.col && data.col.length) {
     children.push(new Paragraph({
       spacing: { before: 160 },
       children: [
-        new TextRun({ text: '【常見搭配片語】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+        new TextRun({ text: '【常見搭配片語】', size: 22, font: 'Arial Unicode MS', bold: true, color: GRAY }),
       ]
     }));
     data.col.forEach(c => {
       children.push(new Paragraph({
         spacing: { before: 40, after: 0 },
+        indent: { left: 567, hanging: 340 },
         children: [
-          new TextRun({ text: '  • ' + c.phrase, size: 24, font: { name: 'Arial Unicode MS' }, color: ORANGE }),
-          new TextRun({ text: '  → ' + c.zh, size: 24, font: { name: 'Arial Unicode MS' }, color: GRAY })
+          new TextRun({ text: c.phrase, size: 28, font: 'Arial Unicode MS', color: ORANGE }),
+          new TextRun({ text: '  → ' + c.zh, size: 28, font: 'Arial Unicode MS', color: GRAY })
         ]
       }));
     });
   }
 
-  // Synonyms & Antonyms — combined, single line
-  let synPart = '';
-  if (data.syn && data.syn.length) {
-    synPart += '(同)' + data.syn.map(s => s.w + (s.m ? ' ' + s.m : '')).join(', ');
-  }
-  if (data.ant && data.ant.length) {
-    synPart += (synPart ? '　' : '') + '(反)' + data.ant.map(a => a.w + (a.m ? ' ' + a.m : '')).join(', ');
-  }
-  if (synPart) {
+  // Synonyms & Antonyms — separate lines, template colors
+  if ((data.syn && data.syn.length) || (data.ant && data.ant.length)) {
     children.push(new Paragraph({
       spacing: { before: 160 },
       children: [
-        new TextRun({ text: '【同反義詞】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
-        new TextRun({ text: '  ' + synPart, size: 22, font: { name: 'Arial Unicode MS' }, color: GRAY })
+        new TextRun({ text: '【同反義詞】', size: 28, font: 'Arial Unicode MS', bold: true, color: GRAY }),
       ]
     }));
+    if (data.syn && data.syn.length) {
+      const words = data.syn.map(s => s.w + (s.m ? ' ' + s.m : '')).join(', ');
+      children.push(new Paragraph({
+        spacing: { before: 160 },
+        indent: { left: 600 },
+        children: [
+          new TextRun({ text: '(同)', size: 28, font: 'Arial Unicode MS', bold: true, color: 'FF0000' }),
+          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: GRAY })
+        ]
+      }));
+    }
+    if (data.ant && data.ant.length) {
+      const words = data.ant.map(a => a.w + (a.m ? ' ' + a.m : '')).join(', ');
+      children.push(new Paragraph({
+        spacing: { before: 160 },
+        indent: { left: 600 },
+        children: [
+          new TextRun({ text: '(反)', size: 28, font: 'Arial Unicode MS', bold: true, color: '3A7C22' }),
+          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: GRAY })
+        ]
+      }));
+    }
   }
 
-  // Source info
+  // Source info — template footer
   children.push(new Paragraph({
     spacing: { before: 200 },
-    children: [new TextRun({ text: '資料來源：' + (data.src || '海詞 dict.cn'), size: 18, font: { name: 'Arial Unicode MS' }, color: '999999', italics: true })]
+    children: [new TextRun({ text: '資料來源：' + (data.src || '海詞 dict.cn'), size: 18, font: 'Arial Unicode MS', color: '999999', italics: true })]
   }));
 
   const doc = new Document({ sections: [{ properties: {}, children }] });
