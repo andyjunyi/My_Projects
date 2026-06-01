@@ -236,6 +236,10 @@
     <div class="pv-section-title">💬 例句</div>
     <div id="pvExamples"></div>
 
+    <!-- Collocations -->
+    <div class="pv-section-title" id="pvColTitle" style="display:none">🔗 常見搭配片語</div>
+    <div id="pvCols"></div>
+
     <!-- Synonyms & Antonyms -->
     <div class="pv-section-title" id="pvSynTitle" style="display:none">🔗 同反義詞</div>
     <div id="pvSyns"></div>
@@ -375,6 +379,24 @@ function lookup() {
     });
   }
 
+  // Collocations section (between examples and synonyms)
+  const colEl = document.getElementById('pvCols');
+  const colTitle = document.getElementById('pvColTitle');
+  colEl.innerHTML = '';
+  if (found.col && found.col.length) {
+    colTitle.style.display = 'block';
+    found.col.forEach(c => {
+      const el = document.createElement('div');
+      el.style.cssText = 'font-size:13px;line-height:1.7;margin-bottom:2px';
+      el.innerHTML = '<span style="color:var(--orange)">•</span> ' +
+        '<span style="color:#ddd">' + c.phrase + '</span>' +
+        ' <span style="color:var(--text2)">→ ' + c.zh + '</span>';
+      colEl.appendChild(el);
+    });
+  } else {
+    colTitle.style.display = 'none';
+  }
+
   // Synonyms & Antonyms — one line, comma separated
   const synEl = document.getElementById('pvSyns');
   const synTitle = document.getElementById('pvSynTitle');
@@ -420,8 +442,10 @@ function lookup() {
 }
 
 async function downloadSingle() {
-  const input = document.getElementById('wordInput');
-  const found = findWord(input.value);
+  const wordEl = document.getElementById('pvWord');
+  const word = wordEl.textContent;
+  if (!word) return;
+  const found = findWord(word);
   if (!found) return;
   await generateAndDownload(found, found.w + '.docx');
 }
@@ -503,6 +527,25 @@ async function generateAndDownload(data, filename) {
           children: [new TextRun({ text: ex.z, size: 26, font: { name: 'Arial Unicode MS' }, color: GREEN })]
         }));
       }
+    });
+  }
+
+  // Collocations — only if data exists
+  if (data.col && data.col.length) {
+    children.push(new Paragraph({
+      spacing: { before: 160 },
+      children: [
+        new TextRun({ text: '【常見搭配片語】', size: 22, font: { name: 'Arial Unicode MS' }, bold: true, color: GRAY }),
+      ]
+    }));
+    data.col.forEach(c => {
+      children.push(new Paragraph({
+        spacing: { before: 40, after: 0 },
+        children: [
+          new TextRun({ text: '  • ' + c.phrase, size: 24, font: { name: 'Arial Unicode MS' }, color: ORANGE }),
+          new TextRun({ text: '  → ' + c.zh, size: 24, font: { name: 'Arial Unicode MS' }, color: GRAY })
+        ]
+      }));
     });
   }
 
