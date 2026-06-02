@@ -1,9 +1,25 @@
 {
   "channel": "馬丁英語 English with Martin",
   "channel_url": "https://www.youtube.com/@MaDingYingYu",
-  "total_videos": 218,
-  "last_updated": "2026-06-02T06:00:00+08:00",
+  "total_videos": 219,
+  "last_updated": "2026-06-03T00:07:16+08:00",
   "videos": [
+    {
+      "video_id": "dJpCJqTwQKM",
+      "title": "「我不太想」用英語怎麼說？",
+      "published": "2026-06-02",
+      "difficulty": "★☆☆ 初級",
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "拒絕表達",
+        "禮貌用語",
+        "常用句型",
+        "初級"
+      ],
+      "url": "https://www.youtube.com/watch?v=dJpCJqTwQKM",
+      "file": "2026-06-02_「我不太想」用英語怎麼說？.json"
+    },
     {
       "video_id": "ICPS-Lrzwc8",
       "title": "「最近」別再只說 recently！很多人都用錯了",
