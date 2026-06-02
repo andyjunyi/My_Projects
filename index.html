@@ -3,546 +3,368 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My_Projects - 專案結構總覽</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<title>My_Projects · 專案總覽</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Noto Sans TC', 'Nunito', sans-serif;
-  background: #f0f4ff;
-  color: #1e293b;
-  padding: 20px;
-}
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --text: #eee;
+    --text2: #aaa;
+    --text3: #666;
+    --border: #2a2a4a;
+    --hover: #2a2a4a;
+    --code: #60a5fa;
+    --web: #4ade80;
+    --data: #fbbf24;
+    --doc: #fb923c;
+    --image: #c084fc;
+    --video: #e879f9;
+    --config: #94a3b8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-/* === Header === */
-.header {
-  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
-  border-radius: 16px;
-  padding: 28px 32px;
-  color: #fff;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.header h1 { font-size: 28px; font-weight: 800; letter-spacing: 1px; }
-.header .sub {
-  font-size: 14px; opacity: 0.85;
-}
-.header .stats {
-  display: flex; gap: 20px; font-size: 13px; background: rgba(255,255,255,0.15);
-  padding: 8px 16px; border-radius: 10px;
-}
-.header .stats span { white-space: nowrap; }
+  .header {
+    background: linear-gradient(135deg, #0f3460, #1a1a2e);
+    padding: 28px 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+  .header .sub { color: var(--text2); font-size: 13px; }
+  .header .stats {
+    display: flex; gap: 16px; justify-content: center;
+    margin-top: 10px; font-size: 12px; color: var(--text2);
+  }
+  .header .stats span { white-space: nowrap; }
+  .header .stats strong { color: var(--text); }
 
-/* === Controls === */
-.controls {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.controls input {
-  flex: 1; min-width: 200px;
-  padding: 10px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.controls input:focus { border-color: #3b82f6; }
-.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn {
-  padding: 8px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 13px;
-  font-family: inherit;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-.btn.active { border-color: #3b82f6; background: #eff6ff; color: #1e40af; font-weight: 600; }
-.btn:hover { border-color: #93c5fd; }
-.btn-add {
-  background: #1e40af; color: #fff; border-color: #1e40af;
-}
-.btn-add:hover { background: #1e3a8a; }
+  .content { padding: 16px; max-width: 800px; margin: 0 auto; }
 
-/* === Category grid === */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
-}
+  /* Search bar */
+  .search-row {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .search-row input {
+    flex: 1; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+    color: var(--text); font-size: 14px; outline: none;
+    font-family: inherit;
+    transition: border .2s;
+  }
+  .search-row input:focus { border-color: var(--accent); }
+  .search-row select {
+    padding: 10px 12px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card);
+    color: var(--text); font-size: 13px; outline: none;
+    font-family: inherit; cursor: pointer;
+    min-width: 80px;
+  }
 
-/* === Category card === */
-.cat-card {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-.cat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  /* Project cards */
+  .projects { display: flex; flex-direction: column; gap: 8px; }
 
-.cat-header {
-  padding: 14px 18px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-}
-.cat-header h2 { font-size: 16px; font-weight: 700; }
-.cat-header .count {
-  font-size: 12px;
-  background: rgba(255,255,255,0.25);
-  padding: 2px 10px;
-  border-radius: 20px;
-}
+  .project {
+    background: var(--card); border-radius: 12px;
+    border: 1px solid var(--border); overflow: hidden;
+    transition: border-color .2s;
+  }
+  .project:hover { border-color: var(--accent2); }
+  .project.open { border-color: var(--accent); }
 
-.cat-body { padding: 8px 0; }
+  .project-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; cursor: pointer; user-select: none;
+    transition: background .15s;
+  }
+  .project-header:hover { background: rgba(255,255,255,.02); }
 
-.project-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 18px;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 14px;
-  transition: background 0.15s;
-  gap: 8px;
-}
-.project-item:last-child { border-bottom: none; }
-.project-item:hover { background: #f8fafc; }
-.project-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.project-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.project-desc {
-  font-size: 12px; color: #94a3b8;
-}
-.project-actions { display: flex; gap: 6px; flex-shrink: 0; }
-.btn-sm {
-  padding: 3px 10px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 11px;
-  font-family: inherit;
-  transition: all 0.15s;
-}
-.btn-sm:hover { border-color: #93c5fd; }
-.btn-sm-del:hover { border-color: #fca5a5; color: #dc2626; }
+  .project-icon {
+    font-size: 20px; width: 28px; text-align: center;
+    flex-shrink: 0;
+  }
+  .project-name {
+    flex: 1; font-size: 15px; font-weight: 600;
+  }
+  .project-meta {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--text3); white-space: nowrap;
+  }
+  .project-meta .tag {
+    background: rgba(255,255,255,.06); padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .project-meta .tag.web { background: rgba(74,222,128,.12); color: var(--web); }
+  .project-arrow {
+    color: var(--text3); font-size: 12px;
+    transition: transform .2s; flex-shrink: 0;
+  }
+  .project.open .project-arrow { transform: rotate(90deg); }
 
-/* === Modal === */
-.modal-overlay {
-  display: none;
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 100;
-  justify-content: center; align-items: center;
-}
-.modal-overlay.active { display: flex; }
-.modal {
-  background: #fff;
-  border-radius: 16px;
-  padding: 28px;
-  width: 90%; max-width: 480px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
-.modal h3 { font-size: 18px; margin-bottom: 16px; }
-.modal .field { margin-bottom: 14px; }
-.modal label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #475569; }
-.modal input, .modal select {
-  width: 100%; padding: 9px 12px;
-  border: 2px solid #e2e8f0; border-radius: 8px;
-  font-size: 14px; font-family: inherit;
-  outline: none;
-}
-.modal input:focus, .modal select:focus { border-color: #3b82f6; }
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
-.modal-actions .btn { padding: 8px 20px; font-size: 14px; }
+  /* File tree */
+  .file-tree {
+    display: none; border-top: 1px solid var(--border);
+    padding: 8px 0; background: rgba(0,0,0,.15);
+  }
+  .project.open .file-tree { display: block; }
 
-/* === Empty state === */
-.empty {
-  text-align: center;
-  padding: 60px 20px;
-  color: #94a3b8;
-  font-size: 15px;
-}
+  .tree-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 16px 4px 32px; font-size: 13px;
+    transition: background .1s; cursor: default;
+  }
+  .tree-item:hover { background: rgba(255,255,255,.03); }
+  .tree-item .fi { font-size: 14px; width: 20px; text-align: center; flex-shrink: 0; }
+  .tree-item .fn { flex: 1; color: var(--text); }
+  .tree-item .fm { color: var(--text3); font-size: 11px; white-space: nowrap; }
+  .tree-item .fs { color: var(--text3); font-size: 11px; white-space: nowrap; width: 60px; text-align: right; }
 
-/* === Toast === */
-.toast {
-  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-  background: #1e293b; color: #fff;
-  padding: 10px 24px; border-radius: 10px;
-  font-size: 14px;
-  opacity: 0; transition: opacity 0.3s;
-  z-index: 200;
-}
-.toast.show { opacity: 1; }
+  /* Subdirectory toggle */
+  .tree-dir {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 16px 4px 32px; font-size: 13px;
+    cursor: pointer; color: var(--text2); font-weight: 500;
+    transition: background .1s;
+  }
+  .tree-dir:hover { background: rgba(255,255,255,.03); }
+  .tree-dir .arrow { font-size: 10px; transition: transform .2s; width: 12px; text-align: center; }
+  .tree-dir.open .arrow { transform: rotate(90deg); }
+  .tree-dir .di { font-size: 14px; width: 20px; text-align: center; }
 
-/* === Responsive === */
-@media (max-width: 600px) {
-  .grid { grid-template-columns: 1fr; }
-  .header { flex-direction: column; align-items: flex-start; }
-  .header .stats { width: 100%; justify-content: space-around; }
-}
+  .tree-children { display: none; }
+  .tree-dir.open + .tree-children { display: block; }
+
+  /* Type color dots */
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-code   { background: var(--code); }
+  .dot-web    { background: var(--web); }
+  .dot-data   { background: var(--data); }
+  .dot-doc    { background: var(--doc); }
+  .dot-image  { background: var(--image); }
+  .dot-video  { background: var(--video); }
+  .dot-config { background: var(--config); }
+  .dot-default{ background: var(--text3); }
+
+  /* Type badges in header */
+  .type-badges {
+    display: flex; gap: 3px; flex-wrap: wrap;
+  }
+  .type-badge {
+    font-size: 10px; padding: 1px 6px; border-radius: 3px;
+    background: rgba(255,255,255,.06); color: var(--text3);
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center; padding: 60px 20px;
+    color: var(--text3); font-size: 15px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 20px;
+    font-size: 11px; color: var(--text3);
+  }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <h1>📁 My_Projects</h1>
-    <div class="sub">完整專案結構總覽 · 點擊分類可摺疊</div>
-  </div>
+  <h1>📁 My_Projects</h1>
+  <div class="sub">自動掃描 · 即時檔案列表</div>
   <div class="stats" id="statsBar">
-    <span>📂 <span id="catCount">0</span> 分類</span>
-    <span>📦 <span id="projCount">0</span> 專案</span>
-    <span>📄 <span id="refCount">7</span> 參考文件</span>
+    <span>📂 <strong id="catCount">0</strong> 專案</span>
+    <span>📦 <strong id="fileCount">0</strong> 檔案</span>
+    <span id="dataInfo">⏳ 載入中...</span>
   </div>
 </div>
 
-<div class="controls">
-  <input type="text" id="searchInput" placeholder="🔍 搜尋分類或專案名稱..." oninput="render()">
-  <div class="btn-group">
+<div class="content">
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="🔍 搜尋專案或檔案名稱..." oninput="render()">
+    <select id="filterType" onchange="render()">
+      <option value="">全部</option>
+      <option value="web">🌐 網站</option>
+      <option value="code">📄 程式碼</option>
+      <option value="doc">📝 文件</option>
+      <option value="data">📊 資料</option>
+      <option value="image">🖼️ 圖片</option>
+      <option value="video">🎬 影片</option>
+    </select>
   </div>
-  <button class="btn btn-add" onclick="openModal()">＋ 新增專案</button>
+  <div class="projects" id="grid"></div>
 </div>
 
-<div class="grid" id="grid"></div>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <h3 id="modalTitle">新增專案</h3>
-    <div class="field">
-      <label>分類</label>
-      <select id="modalCat"></select>
-    </div>
-    <div class="field">
-      <label>專案名稱</label>
-      <input id="modalName" placeholder="例如：voc-999">
-    </div>
-    <div class="field">
-      <label>說明（選填）</label>
-      <input id="modalDesc" placeholder="例如：新單字查詢系統">
-    </div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">取消</button>
-      <button class="btn btn-add" id="modalSaveBtn" onclick="saveProject()">新增</button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
+<div class="footer">自動產生 — 重新整理頁面即可更新</div>
 
 <script>
-// ══════ DATA ══════
-const COLORS = {
-  '單字工具': '#2563eb',
-  '國中會考': '#0d7a5f',
-  '大學學測': '#7c3aed',
-  '多益與其他考試': '#f59e0b',
-  '教學互動工具': '#dc2626',
-  '文法句型': '#db2777',
-  '發音與KK音標': '#4f46e5',
-  '翻譯與句子分析': '#0891b2',
-  '影音與上傳工具': '#ea580c',
-  '參考資料': '#64748b',
-  '養生與草本': '#e65100',
-};
+let DATA = null;
 
-let data = [
-  { cat: '單字工具', items: [
-    { name: '2000-voc', desc: '' },
-    { name: '935-Voc', desc: '' },
-    { name: 'Voc_15000', desc: '高中15000單字資料庫' },
-    { name: 'jr-voc', desc: '' },
-    { name: 'sr-collocation', desc: 'React 搭配詞學習' },
-    { name: 'voc-935', desc: '32天935字攻略' },
-    { name: 'voc-B-level', desc: '2000單查詢系統' },
-    { name: 'voc-king', desc: '即時搶答遊戲' },
-    { name: 'voc_online', desc: '' },
-    { name: '高中單字KK音標', desc: '15000單字 KK音標資料庫 (含查詢網頁)' },
-  ]},
-  { cat: '國中會考', items: [
-    { name: 'cap-eng', desc: '英文閱讀分析' },
-    { name: 'cap-listening', desc: '聽力資料庫' },
-  ]},
-  { cat: '大學學測', items: [
-    { name: 'gsat-english-hub', desc: 'React 全方位學習平台' },
-  ]},
-  { cat: '多益與其他考試', items: [
-    { name: 'toeic', desc: '多益模擬測驗' },
-    { name: 'gk350_online', desc: '高考350詞線上版' },
-    { name: 'gk-300', desc: '高考300詞講義產出' },
-  ]},
-  { cat: '教學互動工具', items: [
-    { name: 'collocation-backup', desc: '搭配詞比對' },
-    { name: 'dwhs-english', desc: '大灣學測平台' },
-    { name: 'jutor-qr', desc: 'QR Code 出題系統' },
-    { name: 'jutor_intro', desc: 'Jutor 資源總覽' },
-    { name: '學生線上測驗', desc: '' },
-    { name: 'Daily-English-Speaking', desc: '口語對話練習平台' },
-    { name: 'youtube-english-collection', desc: '生活英語口袋酷' },
-  ]},
-  { cat: '養生與草本', items: [
-    { name: 'herbals', desc: '🍊 陳皮代茶飲指南' },
-  ]},
-  { cat: '文法句型', items: [
-    { name: 'grammar', desc: '實驗中' },
-    { name: 'sentence-pattern-site', desc: 'Next.js 句型平台' },
-  ]},
-  { cat: '發音與KK音標', items: [
-    { name: 'KK_Lookup', desc: 'Flask + AI 補字查詢' },
-    { name: 'phonics-site', desc: '自然發音學習站' },
-    { name: 'phonics參考資源', desc: '5份發音/KK/自然發音教材' },
-    { name: '高中KK音標', desc: '複製教材' },
-  ]},
-  { cat: '翻譯與句子分析', items: [
-    { name: 'chinese-to-english', desc: 'React 中翻英引導' },
-    { name: 'sentence-analyzer', desc: '長句解析器' },
-    { name: 'translation', desc: '翻譯工具三合一' },
-  ]},
-  { cat: '影音與上傳工具', items: [
-    { name: 'Andy-Youtube', desc: '學測字彙影片平台' },
-    { name: 'photo-text-overlay', desc: '照片文字疊加工具' },
-  ]},
-];
-
-const REFS = [
-  '🎨 UI-設計風格規範.md',
-  '📖 單字系統開發參考.md',
-  '📝 考試分析網站開發參考.md',
-  '🛠️ 教學互動工具開發參考.md',
-  '📚 發音文法翻譯影音開發參考.md',
-  '📋 資料格式通用規範.md',
-  '🤖 AI協作開發慣例.md',
-];
-
-// ══════ STATE ══════
-let collapsed = {};
-let editingIdx = null; // {catIdx, itemIdx} or null for new
-
-// ══════ PERSIST ══════
-function saveState() {
-  localStorage.setItem('myprojects_data', JSON.stringify(data));
-  localStorage.setItem('myprojects_collapsed', JSON.stringify(collapsed));
+async function init() {
+  try {
+    const resp = await fetch('projects_data.json?' + Date.now());
+    DATA = await resp.json();
+    document.getElementById('dataInfo').textContent =
+      '🔄 ' + DATA.generated;
+    render();
+  } catch(e) {
+    document.getElementById('dataInfo').textContent = '⚠️ 載入失敗';
+  }
 }
-function loadState() {
-  const d = localStorage.getItem('myprojects_data');
-  if (d) { try { data = JSON.parse(d); } catch(e) {} }
-  const c = localStorage.getItem('myprojects_collapsed');
-  if (c) { try { collapsed = JSON.parse(c); } catch(e) {} }
-}
-loadState();
 
-// ══════ RENDER ══════
 function render() {
+  if (!DATA) return;
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const typeFilter = document.getElementById('filterType').value;
+
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
-  let totalProjs = 0;
-  let totalCats = 0;
 
-  for (const group of data) {
-    const items = group.items.filter(p =>
-      !q || p.name.toLowerCase().includes(q) || group.cat.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)
-    );
-    if (items.length === 0 && q) continue;
-    totalCats++;
-    totalProjs += items.length;
+  let showProjects = DATA.projects;
 
-    const color = COLORS[group.cat] || '#64748b';
-    const isCollapsed = collapsed[group.cat];
+  // Type filter: only show projects with matching file types
+  if (typeFilter) {
+    showProjects = showProjects.filter(p => p.tc && p.tc[typeFilter]);
+  }
 
+  // Search
+  if (q) {
+    showProjects = showProjects.filter(p => {
+      if (p.n.toLowerCase().includes(q)) return true;
+      if (p.d && p.d.toLowerCase().includes(q)) return true;
+      return fileSearch(p.c, q);
+    });
+  }
+
+  // Stats
+  let totalFiles = 0;
+  showProjects.forEach(p => totalFiles += p.fc);
+  document.getElementById('catCount').textContent = showProjects.length;
+  document.getElementById('fileCount').textContent = totalFiles;
+
+  if (!showProjects.length) {
+    grid.innerHTML = '<div class="empty">沒有符合的項目 🙁</div>';
+    return;
+  }
+
+  for (const proj of showProjects) {
     const card = document.createElement('div');
-    card.className = 'cat-card';
+    card.className = 'project';
 
-    // Header
-    const hdr = document.createElement('div');
-    hdr.className = 'cat-header';
-    hdr.style.background = color;
-    hdr.innerHTML = `<h2>${group.cat}</h2><span class="count">${items.length}</span>`;
-    hdr.onclick = () => {
-      collapsed[group.cat] = !collapsed[group.cat];
-      saveState();
-      render();
-    };
-    card.appendChild(hdr);
+    const isWeb = proj.wh;
 
-    // Body
-    if (!isCollapsed) {
-      const body = document.createElement('div');
-      body.className = 'cat-body';
-      for (const [idx, p] of items.entries()) {
-        const item = document.createElement('div');
-        item.className = 'project-item';
-        item.innerHTML = `
-          <div class="project-name">
-            <span class="project-dot" style="background:${color}"></span>
-            <span>${p.name}</span>
-            ${p.desc ? `<span class="project-desc">${p.desc}</span>` : ''}
-          </div>
-          <div class="project-actions">
-            <button class="btn-sm" onclick="editProject('${group.cat}', '${p.name}')">✏️</button>
-            <button class="btn-sm btn-sm-del" onclick="deleteProject('${group.cat}', '${p.name}')">🗑️</button>
-          </div>
-        `;
-        body.appendChild(item);
+    // Type badges
+    let badgeHtml = '';
+    if (proj.tc) {
+      const order = ['web','code','data','doc','image'];
+      for (const t of order) {
+        if (proj.tc[t]) {
+          badgeHtml += `<span class="type-badge">${t}</span>`;
+        }
       }
-      card.appendChild(body);
     }
+
+    card.innerHTML = `
+      <div class="project-header" onclick="toggleProject(this)">
+        <span class="project-icon">${isWeb ? '🌐' : '📁'}</span>
+        <span class="project-name">${proj.n}</span>
+        <div class="project-meta">
+          <span class="tag ${isWeb ? 'web' : ''}">${proj.fc} 檔</span>
+          ${badgeHtml ? `<span class="type-badges">${badgeHtml}</span>` : ''}
+        </div>
+        <span class="project-arrow">▶</span>
+      </div>
+      <div class="file-tree">
+        ${renderTree(proj.c, q)}
+      </div>
+    `;
 
     grid.appendChild(card);
   }
-
-  // Refs card
-  const refCard = document.createElement('div');
-  refCard.className = 'cat-card';
-  const refHdr = document.createElement('div');
-  refHdr.className = 'cat-header';
-  refHdr.style.background = '#64748b';
-  refHdr.innerHTML = '<h2>📁 參考資料</h2><span class="count">7</span>';
-  refCard.appendChild(refHdr);
-
-  const refBody = document.createElement('div');
-  refBody.className = 'cat-body';
-  for (const r of REFS) {
-    const item = document.createElement('div');
-    item.className = 'project-item';
-    item.innerHTML = `<div class="project-name"><span>${r}</span></div>`;
-    refBody.appendChild(item);
-  }
-  refCard.appendChild(refBody);
-  grid.appendChild(refCard);
-
-  // Stats
-  document.getElementById('catCount').textContent = totalCats;
-  document.getElementById('projCount').textContent = totalProjs;
-
-  if (totalCats === 0 && totalProjs === 0 && q) {
-    grid.innerHTML = '<div class="empty">沒有符合的項目 🙁</div>';
-  }
-
-  saveState();
 }
 
-// ══════ CRUD ══════
-function openModal(cat, name) {
-  const overlay = document.getElementById('modal');
-  const sel = document.getElementById('modalCat');
-  sel.innerHTML = '';
-  for (const g of data) {
-    const opt = document.createElement('option');
-    opt.value = g.cat;
-    opt.textContent = g.cat;
-    sel.appendChild(opt);
+function toggleProject(el) {
+  const card = el.closest('.project');
+  card.classList.toggle('open');
+}
+
+function toggleDir(el) {
+  el.classList.toggle('open');
+}
+
+function fileSearch(content, q) {
+  if (!content) return false;
+  for (const f of (content.files || [])) {
+    if (f.n.toLowerCase().includes(q)) return true;
+  }
+  for (const d of (content.dirs || [])) {
+    if (d.n.toLowerCase().includes(q)) return true;
+    if (fileSearch(d.c, q)) return true;
+  }
+  return false;
+}
+
+function highlightText(text, q) {
+  if (!q) return text;
+  const idx = text.toLowerCase().indexOf(q);
+  if (idx === -1) return text;
+  return text.slice(0, idx) + '<mark style="background:#e9456044;color:#eee">' +
+         text.slice(idx, idx + q.length) + '</mark>' +
+         text.slice(idx + q.length);
+}
+
+function renderTree(content, q) {
+  if (!content || content.error) {
+    return '<div class="tree-item" style="color:var(--text3);padding-left:32px">⚠️ 無法讀取</div>';
   }
 
-  if (cat) {
-    // Edit mode
-    editingIdx = findItem(cat, name);
-    document.getElementById('modalTitle').textContent = '編輯專案';
-    document.getElementById('modalSaveBtn').textContent = '儲存';
-    sel.value = cat;
-    document.getElementById('modalName').value = name;
-    const item = data[editingIdx.catIdx].items[editingIdx.itemIdx];
-    document.getElementById('modalDesc').value = item.desc || '';
-  } else {
-    // New mode
-    editingIdx = null;
-    document.getElementById('modalTitle').textContent = '新增專案';
-    document.getElementById('modalSaveBtn').textContent = '新增';
-    document.getElementById('modalName').value = '';
-    document.getElementById('modalDesc').value = '';
+  let html = '';
+
+  // Directories
+  for (const dir of content.dirs) {
+    const matched = q && dir.n.toLowerCase().includes(q);
+    html += `
+      <div class="tree-dir" onclick="toggleDir(this)">
+        <span class="arrow">▶</span>
+        <span class="di">📁</span>
+        <span class="fn">${q ? highlightText(dir.n, q) : dir.n}</span>
+        <span class="fm">${dir.fc} 項</span>
+        <span class="fs">${dir.m}</span>
+      </div>
+      <div class="tree-children">
+        ${dir.c ? renderTree(dir.c, q) : ''}
+      </div>
+    `;
   }
 
-  overlay.classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('active');
-  editingIdx = null;
-}
-
-function saveProject() {
-  const cat = document.getElementById('modalCat').value;
-  const name = document.getElementById('modalName').value.trim();
-  const desc = document.getElementById('modalDesc').value.trim();
-  if (!name) { showToast('請輸入專案名稱'); return; }
-
-  if (editingIdx) {
-    // Update
-    data[editingIdx.catIdx].items[editingIdx.itemIdx].name = name;
-    data[editingIdx.catIdx].items[editingIdx.itemIdx].desc = desc;
-    showToast(`已更新「${name}」`);
-  } else {
-    // Add
-    const group = data.find(g => g.cat === cat);
-    if (group) {
-      group.items.push({ name, desc });
-      showToast(`已新增「${name}」`);
-    }
+  // Files
+  for (const f of content.files) {
+    const dotClass = f.t || 'default';
+    const fnDisplay = q ? highlightText(f.n, q) : f.n;
+    html += `
+      <div class="tree-item">
+        <span class="dot dot-${dotClass}"></span>
+        <span class="fi">${f.i}</span>
+        <span class="fn">${fnDisplay}</span>
+        <span class="fm">${f.m}</span>
+        <span class="fs">${f.s}</span>
+      </div>
+    `;
   }
 
-  closeModal();
-  render();
+  return html || '<div class="tree-item" style="color:var(--text3)">（空資料夾）</div>';
 }
 
-function editProject(cat, name) { openModal(cat, name); }
-
-function deleteProject(cat, name) {
-  if (!confirm(`確定要刪除「${name}」？`)) return;
-  for (const [ci, g] of data.entries()) {
-    const ii = g.items.findIndex(p => p.name === name);
-    if (ii > -1) {
-      g.items.splice(ii, 1);
-      if (g.items.length === 0) { data.splice(ci, 1); }
-      showToast(`已刪除「${name}」`);
-      render();
-      return;
-    }
-  }
-}
-
-function findItem(cat, name) {
-  for (const [ci, g] of data.entries()) {
-    const ii = g.items.findIndex(p => p.name === name);
-    if (ii > -1) return { catIdx: ci, itemIdx: ii };
-  }
-  return null;
-}
-
-// ══════ TOAST ══════
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-// ══════ INIT ══════
-render();
+init();
 </script>
 </body>
 </html>
