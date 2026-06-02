@@ -9,3 +9,10 @@
 文法句型/sentence-pattern-site
 發音與KK音標/phonics-site
 翻譯與句子分析/translation
+Daily-English-Speaking
+photo-text-overlay/dist/
+photo-text-overlay/build/
+photo-text-overlay/*.spec
+gk350_online/website/scripts/
+gk350_online/website/*.ps1
+gk350_online/website/start_server.bat
