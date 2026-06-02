@@ -500,15 +500,15 @@ async function generateAndDownload(data, filename) {
   }
   children.push(new Paragraph({ spacing: { after: 0 }, children: line1 }));
 
-  // Extra definitions (d[1+]) — separate lines
+  // Extra definitions (d[1+]) — separate lines, same format as first
   if (data.d && data.d.length > 1) {
     for (let i = 1; i < data.d.length; i++) {
       const def = data.d[i];
       children.push(new Paragraph({
         spacing: { before: 30, after: 0 },
         children: [
-          new TextRun({ text: '(' + def.p + ') ', size: 26, font: 'Arial Unicode MS', color: GRAY, bold: true }),
-          new TextRun({ text: def.m, size: 26, font: 'Arial Unicode MS', color: GRAY })
+          new TextRun({ text: '(' + def.p + ') ', size: 26, font: 'Arial Unicode MS', bold: true, color: GRAY }),
+          new TextRun({ text: def.m, size: 28, font: 'Arial Unicode MS' })
         ]
       }));
     }
@@ -528,8 +528,8 @@ async function generateAndDownload(data, filename) {
       if (ex.z) {
         children.push(new Paragraph({
           spacing: { after: 0, line: 180 },
-          indent: { left: 520 },
-          children: [new TextRun({ text: ex.z, size: 26, font: 'Arial Unicode MS', color: GREEN })]
+          indent: { left: 454 },
+          children: [new TextRun({ text: ex.z, size: 24, font: 'Arial Unicode MS', color: GREEN })]
         }));
       }
     });
@@ -580,20 +580,24 @@ async function generateAndDownload(data, filename) {
         spacing: { before: 160 },
         indent: { left: 600 },
         children: [
-          new TextRun({ text: '(反)', size: 28, font: 'Arial Unicode MS', bold: true, color: '3A7C22' }),
-          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: '3A7C22' })
+          new TextRun({ text: '(反)', size: 28, font: 'Arial Unicode MS', bold: true, color: 'FF0000' }),
+          new TextRun({ text: ' ' + words, size: 28, font: 'Arial Unicode MS', color: 'FF0000' })
         ]
       }));
     }
   }
 
-  // Source info — template footer
-  children.push(new Paragraph({
-    spacing: { before: 200 },
-    children: [new TextRun({ text: '資料來源：' + (data.src || '海詞 dict.cn'), size: 18, font: 'Arial Unicode MS', color: '999999', italics: true })]
-  }));
-
-  const doc = new Document({ sections: [{ properties: {}, children }] });
+  const doc = new Document({
+    sections: [{
+      properties: {
+        page: {
+          size: { width: 11906, height: 16838 },
+          margin: { top: 567, right: 1134, bottom: 567, left: 1134 }
+        }
+      },
+      children
+    }]
+  });
   const blob = await Packer.toBlob(doc);
   saveAs(blob, filename);
 }
