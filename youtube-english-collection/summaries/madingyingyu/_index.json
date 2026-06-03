@@ -1,9 +1,24 @@
 {
   "channel": "馬丁英語 English with Martin",
   "channel_url": "https://www.youtube.com/@MaDingYingYu",
-  "total_videos": 219,
-  "last_updated": "2026-06-03T00:07:16+08:00",
+  "total_videos": 220,
+  "last_updated": "2026-06-04T00:10:27+08:00",
   "videos": [
+    {
+      "video_id": "VfSisO6S6t8",
+      "title": "「看情況」別再只說 It depends！",
+      "published": "2026-06-03",
+      "difficulty": "★☆☆ 初級",
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "常用句型",
+        "慣用語",
+        "初級"
+      ],
+      "url": "https://www.youtube.com/watch?v=VfSisO6S6t8",
+      "file": "2026-06-03_「看情況」別再只說 It depends！.json"
+    },
     {
       "video_id": "dJpCJqTwQKM",
       "title": "「我不太想」用英語怎麼說？",

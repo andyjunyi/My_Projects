@@ -1,6 +1,124 @@
 {
   "samples": [
     {
+      "video_id": "VfSisO6S6t8",
+      "channel": "馬丁英語 English with Martin",
+      "channel_url": "https://www.youtube.com/@MaDingYingYu",
+      "title": "「看情況」別再只說 It depends！",
+      "title_original": "「看情况」别再只说 It depends！",
+      "published": "2026-06-03",
+      "url": "https://www.youtube.com/watch?v=VfSisO6S6t8",
+      "duration_sec": 74,
+      "views": null,
+      "likes": null,
+      "comments": null,
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "常用句型",
+        "慣用語",
+        "初級"
+      ],
+      "difficulty": "★☆☆ 初級",
+      "summary_zh": "這部74秒的短影片教大家如何用英語表達「看情況」的意思，告別只會說「It depends」的單調用法。馬丁老師介紹多種更自然、更有變化的說法：最常見的是「We'll see」和「See how it goes」，表示先看看情況再說；「Play it by ear」是道地慣用語，意思是見機行事、隨機應變；「Take it slow and see how it goes」強調慢慢來、邊走邊看；「Let's see how things go and take it from there」則表示先觀察進展再決定下一步。影片透過多組情境對話展示這些表達在實際對話中的自然用法。",
+      "key_points": [
+        "\"We'll see\" 是最簡單直接的替代說法，表達先看看情況再決定",
+        "\"We'll see how it goes\" / \"See how things go\" 強調觀察進展",
+        "\"Play it by ear\" 是道地慣用語，原指不看樂譜憑耳朵演奏，引申為見機行事",
+        "\"Take it slow and see how it goes\" 強調慢慢來、不急著做決定",
+        "\"Let's see how things go and take it from there\" 適合正式場合，表示先觀察進展再定下一步"
+      ],
+      "vocabulary": [
+        {
+          "word": "We'll see",
+          "part_of_speech": "phrase",
+          "meaning": "再看看、看情況",
+          "example": "A: Are you going to the party? B: We'll see.",
+          "example_zh": "A：你要去派對嗎？B：看情況再說。"
+        },
+        {
+          "word": "see how it goes",
+          "part_of_speech": "phrase",
+          "meaning": "看看情況如何、邊走邊看",
+          "example": "Let's just see how it goes and take it from there.",
+          "example_zh": "我們先看看情況如何，再來決定下一步。"
+        },
+        {
+          "word": "play it by ear",
+          "part_of_speech": "idiom",
+          "meaning": "見機行事、隨機應變",
+          "example": "We don't have a plan yet — we'll just play it by ear.",
+          "example_zh": "我們還沒有計劃，就隨機應變吧。"
+        },
+        {
+          "word": "take it slow",
+          "part_of_speech": "phrase",
+          "meaning": "慢慢來、不急",
+          "example": "Let's just take it slow and see how it goes.",
+          "example_zh": "我們慢慢來，看看情況再說。"
+        },
+        {
+          "word": "take it from there",
+          "part_of_speech": "phrase",
+          "meaning": "從那裡開始、再決定下一步",
+          "example": "We'll assess the situation first, then take it from there.",
+          "example_zh": "我們先評估情況，再決定下一步。"
+        },
+        {
+          "word": "see how things go",
+          "part_of_speech": "phrase",
+          "meaning": "看看事情發展如何",
+          "example": "I'll see how things go before making a decision.",
+          "example_zh": "我先看看情況如何再做決定。"
+        }
+      ],
+      "example_sentences": [
+        {
+          "en": "We'll see how things go and take it from there.",
+          "zh": "我們先觀察進展，再決定下一步。"
+        },
+        {
+          "en": "Let's play it by ear and see what happens.",
+          "zh": "我們見機行事，看看會怎樣。"
+        },
+        {
+          "en": "We're going to play it by ear — no fixed plans.",
+          "zh": "我們打算隨機應變，沒有固定計劃。"
+        },
+        {
+          "en": "Let's just take it slow and see how it goes.",
+          "zh": "我們慢慢來，先看看情況。"
+        },
+        {
+          "en": "Are you planning on liking this video or just playing it by ear?",
+          "zh": "你是打算按讚，還是看情況再說？"
+        }
+      ],
+      "common_mistakes": [
+        {
+          "wrong": "It depends. (每句都用，顯得很單調)",
+          "correct": "We'll see. / We'll play it by ear.",
+          "note": "「It depends」雖然沒錯，但每次都用會顯得很呆板。視情境改用 We'll see 或 play it by ear 讓對話更自然。"
+        },
+        {
+          "wrong": "I will see situation.",
+          "correct": "We'll see how it goes. / See how things go.",
+          "note": "中文直譯 I will see the situation 不是自然英文。要說 See how it goes 或 See how things go。"
+        }
+      ],
+      "teaching_tip": "可以先列出中文「看情況」的三種不同語境：1) 真的不確定未來→We'll see; 2) 想先觀察發展→See how it goes; 3) 完全沒計劃到時再說→Play it by ear。讓學生配對練習，每組一個情境用不同表達回答。特別強調 play it by ear 的由來（不靠譜彈琴）幫助記憶。",
+      "student_tip": "想說「看情況」的時候，別只會 It depends！根據情境選擇：We'll see（最簡單）、See how it goes（觀察進展）、Play it by ear（隨機應變）。Play it by ear 是超高頻慣用語，看美劇電影常聽到！",
+      "related_topics": [
+        "慣用語",
+        "日常會話",
+        "未來式表達",
+        "情境用語",
+        "隨機應變",
+        "play it by ear"
+      ],
+      "collected_at": "2026-06-04T00:00:00+08:00"
+    },
+    {
       "video_id": "dJpCJqTwQKM",
       "channel": "馬丁英語 English with Martin",
       "channel_url": "https://www.youtube.com/@MaDingYingYu",
