@@ -1,9 +1,25 @@
 {
   "channel": "馬丁英語 English with Martin",
   "channel_url": "https://www.youtube.com/@MaDingYingYu",
-  "total_videos": 220,
-  "last_updated": "2026-06-04T00:10:27+08:00",
+  "total_videos": 221,
+  "last_updated": "2026-06-08T00:20:14+08:00",
   "videos": [
+    {
+      "video_id": "j0hIuWBK1H0",
+      "title": "「生疏了」用英語怎麼說？其實要分兩種情況",
+      "published": "2026-06-07",
+      "difficulty": "★☆☆ 初級",
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "常用句型",
+        "慣用語",
+        "初級",
+        "生疏"
+      ],
+      "url": "https://www.youtube.com/watch?v=j0hIuWBK1H0",
+      "file": "2026-06-07_「生疏了」用英語怎麼說？其實要分兩種情況.json"
+    },
     {
       "video_id": "VfSisO6S6t8",
       "title": "「看情況」別再只說 It depends！",

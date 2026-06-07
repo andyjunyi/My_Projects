@@ -1,0 +1,84 @@
+{
+  "video_id": "j0hIuWBK1H0",
+  "channel": "馬丁英語 English with Martin",
+  "channel_url": "https://www.youtube.com/@MaDingYingYu",
+  "title": "「生疏了」用英語怎麼說？其實要分兩種情況",
+  "title_original": "「生疏了」用英语怎么说？其实要分两种情况",
+  "published": "2026-06-07",
+  "url": "https://www.youtube.com/watch?v=j0hIuWBK1H0",
+  "duration_sec": 102,
+  "difficulty": "★☆☆ 初級",
+  "category": "日常口語",
+  "tags": ["日常口語", "常用句型", "慣用語", "初級", "生疏"],
+  "summary_zh": "這部102秒的短影片教大家如何用英語表達中文「生疏了」的概念。馬丁老師指出，中文的「生疏」在英文中其實需要分兩種情況來表達：第一種是技能或能力上的生疏，因為很久沒練習而變得生疏——英文用「rusty」來表達；第二種是人際關係上的生疏，兩人之間不再那麼親近、說話沒以前自然——英文可以用「feel distant」或「not as close as before」來表達。影片透過多組例句展示兩種用法的實際對話情境。",
+  "key_points": [
+    "中文的「生疏」在英文需分兩種情況表達：技能生疏 vs. 關係生疏",
+    "技能生疏用 \"rusty\"：因一段時間沒用而變得不再熟練",
+    "人際關係生疏用 \"feel distant\"：表示關係變得疏遠、不再親近",
+    "人際關係生疏也可用 \"not as close as before / we used to be\"：表示不像以前那麼熟了",
+    "\"My French is rusty\" 表示法文很久沒用而生疏了",
+    "\"Why do you feel distant from John?\" 詢問為什麼覺得和某人關係疏遠"
+  ],
+  "vocabulary": [
+    {
+      "word": "rusty",
+      "part_of_speech": "adjective",
+      "meaning": "生疏的、荒廢的（指技能因久未練習而變差）",
+      "example": "My Spanish is pretty rusty — I haven't practiced in years.",
+      "example_zh": "我的西班牙語很生疏了——我已經好幾年沒練習了。"
+    },
+    {
+      "word": "feel distant",
+      "part_of_speech": "phrase",
+      "meaning": "感到疏遠、有距離感",
+      "example": "I can see how you'd feel distant though.",
+      "example_zh": "不過我能理解你為什麼會覺得疏遠。"
+    },
+    {
+      "word": "feel distant from someone",
+      "part_of_speech": "phrase",
+      "meaning": "覺得和某人不親近了",
+      "example": "Why do you feel distant from John?",
+      "example_zh": "你為什麼覺得和約翰疏遠了？"
+    },
+    {
+      "word": "not as close as (we used to be)",
+      "part_of_speech": "phrase",
+      "meaning": "不像以前那麼親近了",
+      "example": "I feel like it's my fault that we're not as close as we used to be.",
+      "example_zh": "我覺得是我們的錯，讓我們不像以前那麼親近了。"
+    },
+    {
+      "word": "not as close as one once was",
+      "part_of_speech": "phrase",
+      "meaning": "不如從前親近（較正式的說法）",
+      "example": "Listen, I know that we're not as close as we once were.",
+      "example_zh": "聽著，我知道我們不像從前那麼親近了。"
+    }
+  ],
+  "example_sentences": [
+    {
+      "en": "If you haven't hit the like button in a while, why not like this video? You don't want to get rusty!",
+      "zh": "如果你有一段時間沒按讚了，不如按個讚吧？你不想變得生疏吧！"
+    },
+    {
+      "en": "Family's not as close as they used to be.",
+      "zh": "家人不像以前那麼親近了。"
+    },
+    {
+      "en": "We're not as close as we used to be since you two broke up.",
+      "zh": "自從你們兩個分手後，我們就不像以前那麼親近了。"
+    },
+    {
+      "en": "My guitar skills are rusty — I haven't played in months.",
+      "zh": "我的吉他技巧生疏了——我已經好幾個月沒彈了。"
+    },
+    {
+      "en": "I know we've been distant lately, and I want to fix that.",
+      "zh": "我知道我們最近疏遠了，我想改善這個狀況。"
+    }
+  ],
+  "transcript_raw": "生疏了用英語怎麼說？其實要分兩種情況。中文裡的「生疏了」，在英文裡不只一種意思，主要可以分成兩種。第一種：技能上的生疏，因為很久沒用、生疏了。這種生疏英語裡會說 rusty，表示因為一段時間沒用，變得不再熟了。第二種：關係上的生疏，兩人之間不再那麼熟，說話沒以前自然。這種生疏英語裡會說 feel distant，表示關係變遠了，不再那麼親近。也可以說 we're not as close as before，表示不像以前那麼熟了。",
+  "ai_generated": true,
+  "model": "faster-whisper"
+}

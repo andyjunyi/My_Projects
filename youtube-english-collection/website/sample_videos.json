@@ -1,6 +1,58 @@
 {
   "samples": [
     {
+      "video_id": "j0hIuWBK1H0",
+      "channel": "馬丁英語 English with Martin",
+      "channel_url": "https://www.youtube.com/@MaDingYingYu",
+      "title": "「生疏了」用英語怎麼說？其實要分兩種情況",
+      "title_original": "「生疏了」用英语怎么说？其实要分两种情况",
+      "published": "2026-06-07",
+      "url": "https://www.youtube.com/watch?v=j0hIuWBK1H0",
+      "duration_sec": 102,
+      "views": null,
+      "likes": null,
+      "comments": null,
+      "category": "日常口語",
+      "tags": [
+        "日常口語",
+        "常用句型",
+        "慣用語",
+        "初級",
+        "生疏"
+      ],
+      "difficulty": "★☆☆ 初級",
+      "summary_zh": "這部102秒的短影片教大家如何用英語表達中文「生疏了」的概念。馬丁老師指出，中文的「生疏」在英文中其實需要分兩種情況來表達：第一種是技能或能力上的生疏，因為很久沒練習而變得生疏——英文用「rusty」來表達；第二種是人際關係上的生疏，兩人之間不再那麼親近、說話沒以前自然——英文可以用「feel distant」或「not as close as before」來表達。",
+      "key_points": [
+        "中文的「生疏」在英文需分兩種情況表達：技能生疏 vs. 關係生疏",
+        "技能生疏用 \"rusty\"：因一段時間沒用而變得不再熟練",
+        "人際關係生疏用 \"feel distant\"：表示關係變得疏遠、不再親近",
+        "人際關係生疏也可用 \"not as close as before / we used to be\"：表示不像以前那麼熟了"
+      ],
+      "vocabulary": [
+        {
+          "word": "rusty",
+          "part_of_speech": "adjective",
+          "meaning": "生疏的、荒廢的（指技能因久未練習而變差）",
+          "example": "My Spanish is pretty rusty — I haven't practiced in years.",
+          "example_zh": "我的西班牙語很生疏了——我已經好幾年沒練習了。"
+        },
+        {
+          "word": "feel distant",
+          "part_of_speech": "phrase",
+          "meaning": "感到疏遠、有距離感",
+          "example": "Why do you feel distant from John?",
+          "example_zh": "你為什麼覺得和約翰疏遠了？"
+        },
+        {
+          "word": "not as close as we used to be",
+          "part_of_speech": "phrase",
+          "meaning": "不像以前那麼親近了",
+          "example": "I feel like it's my fault that we're not as close as we used to be.",
+          "example_zh": "我覺得是我的錯，讓我們不像以前那麼親近了。"
+        }
+      ]
+    },
+    {
       "video_id": "VfSisO6S6t8",
       "channel": "馬丁英語 English with Martin",
       "channel_url": "https://www.youtube.com/@MaDingYingYu",
